@@ -15,9 +15,10 @@ import iOSDFULibrary
 fileprivate let scanner = MetaWearScanner()
 
 class DevicesTableViewController: UITableViewController {
+
+    var vm: DevicesScanningVM!
+
     var hud: MBProgressHUD?
-    var scannerModel: ScannerModel!
-    var connectedDevices: [MetaWear] = []
 
     @IBOutlet weak var scanningSwitch: UISwitch!
     @IBOutlet weak var metaBootSwitch: UISwitch!
@@ -28,34 +29,52 @@ class DevicesTableViewController: UITableViewController {
 
 extension DevicesTableViewController {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        vm = DevicesTableScanningVM()
+        vm.delegate = self
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.setHidesBackButton(true, animated: false)
-        setScanning(scanningSwitch.isOn)
+        vm.startScanning()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        setScanning(false)
+        vm.stopScanning()
     }
 
 }
 
 // MARK: - Updates
 
-extension DevicesTableViewController: ScannerModelDelegate {
-    func scannerModel(_ scannerModel: ScannerModel, didAddItemAt idx: Int) {
-        let indexPath = IndexPath(row: idx, section: 1)
+extension DevicesTableViewController: DevicesScanningCoordinatorDelegate {
+
+    func didAddDiscoveredDevice(at index: Int) {
+        let indexPath = IndexPath(row: index, section: 1)
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
 
-    func scannerModel(_ scannerModel: ScannerModel, confirmBlinkingItem item: ScannerModelItem, callback: @escaping (Bool) -> Void) {
+    func updateScanningStatus() {
+        scanningSwitch.isOn = vm.isScanning
 
+        if vm.isScanning {
+            activity.startAnimating()
+        } else {
+            activity.stopAnimating()
+        }
     }
 
-    func scannerModel(_ scannerModel: ScannerModel, errorDidOccur error: Error) {
-
+    func updateMetaBootStatus() {
+        metaBootSwitch.isOn = vm.useMetaBootMode
     }
+
+    func reloadConnectedDevices() {
+        tableView.reloadData()
+    }
+
 }
 
 // MARK: - UITableView
@@ -67,7 +86,11 @@ extension DevicesTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? connectedDevices.count : scannerModel.items.count
+        switch section {
+            case 0: return vm.connectedDevices.count
+            case 1: return vm.discoveredDevices.count
+            default: return 0
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -78,63 +101,47 @@ extension DevicesTableViewController {
 
         let setDevice = indexPath.section == 0
         if setDevice {
-            cell.vm?.configure(cell, for: connectedDevices[indexPath.row])
+            cell.vm?.configure(cell, for: vm.connectedDevices[indexPath.row])
         } else {
-            cell.vm?.configure(cell, for: scannerModel.items[indexPath.row])
+            cell.vm?.configure(cell, for: vm.discoveredDevices[indexPath.row])
         }
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Connected Devices" : "Devices"
-    }
-
-    // MARK: - Table view delegate
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-        let device = indexPath.section == 0 ? connectedDevices[indexPath.row] : scannerModel.items[indexPath.row].device
-        performSegue(withIdentifier: "DeviceDetails", sender: device)
+        switch section {
+            case 0: return "Connected Devices"
+            case 1: return "Devices"
+            default: return "Error"
+        }
     }
 }
 
 // MARK: - Intents
 
 extension DevicesTableViewController {
-    
-    func setScanning(_ on: Bool) {
-        if on {
-            activity.startAnimating()
-            if metaBootSwitch.isOn {
-                scannerModel = ScannerModel(delegate: self, scanner: scanner, adTimeout: 5) { device -> Bool in
-                    return device.isMetaBoot
-                }
-            } else {
-                scannerModel = ScannerModel(delegate: self, scanner: scanner, adTimeout: 5) { device -> Bool in
-                    return !device.isMetaBoot
-                }
-            }
-        } else {
-            activity.stopAnimating()
-        }
-        scannerModel.isScanning = on
-        connectedDevices = scanner.deviceMap.filter{ $0.key.state == .connected }.map{ $0.value }
-        tableView.reloadData()
-    }
+
 
     @IBAction func scanningSwitchPressed(_ sender: UISwitch) {
-        setScanning(sender.isOn)
+        vm.setScanningState(to: sender.isOn)
     }
     
-    @IBAction func metaBootSwitchPressed(_ sender: Any) {
-        setScanning(scanningSwitch.isOn)
+    @IBAction func metaBootSwitchPressed(_ sender: UISwitch) {
+        vm.setUseMetaBoot(to: sender.isOn)
     }
-    
-    // MARK: - Table view data source
 
-    
-    // MARK: - Navigation
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        var device: MetaWear? = nil
+        switch indexPath.section {
+            case 0: device = vm.connectedDevices[indexPath.row]
+            case 1: device = vm.discoveredDevices[indexPath.row].device
+            default: break
+        }
+        guard let device = device else { return }
+        performSegue(withIdentifier: "DeviceDetails", sender: device)
+    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
