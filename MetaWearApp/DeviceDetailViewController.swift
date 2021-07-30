@@ -249,6 +249,8 @@ extension DeviceDetailViewController {
             return "Disconnected"
         case .disconnecting:
             return "Disconnecting"
+
+        @unknown default: return "Unknown API Value"
         }
     }
     
@@ -335,7 +337,7 @@ extension DeviceDetailViewController {
                 tempChannelSelector.insertSegment(withTitle: "\(i)", at: Int(i), animated: false)
             }
             tempChannelSelector.selectedSegmentIndex = 0
-            tempChannelSelectorPressed(tempChannelSelector)
+            tempChannelSelectorPressed(tempChannelSelector!)
         }
         
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_ACCELEROMETER) == MetaWearCpp.MBL_MW_MODULE_ACC_TYPE_BMI160 {
@@ -489,9 +491,13 @@ extension DeviceDetailViewController: DFUProgressDelegate {
 
 extension DeviceDetailViewController {
 
+    func updateMBProgressHUDToShowAdded() {
+        hud = MBProgressHUD.showAdded(to: UIApplication.shared.windows.first(where: \.isKeyWindow)!, animated: true)
+    }
+
     func connectDevice(_ on: Bool) {
         if on {
-            let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+            let hud = MBProgressHUD.showAdded(to: UIApplication.shared.windows.first(where: \.isKeyWindow)!, animated: true)
             hud.label.text = "Connecting..."
             device.connectAndSetup().continueWith(.mainThread) { t in
 //                t.result?.continueWith(.mainThread) { t in
@@ -708,7 +714,7 @@ extension DeviceDetailViewController {
     
     @IBAction func updateFirmware(_ sender: Any) {
         // Pause the screen while update is going on
-        hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        updateMBProgressHUDToShowAdded()
         hud.mode = .determinateHorizontalBar
         hud.label.text = "Updating..."
         device.updateFirmware(delegate: self).continueWith { t in
@@ -911,7 +917,7 @@ extension DeviceDetailViewController {
             mbl_mw_logging_flush_page(device.board)
         }
         
-        hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        updateMBProgressHUDToShowAdded()
         hud.mode = .determinateHorizontalBar
         hud.label.text = "Downloading..."
         accelerometerBMI160Data.removeAll()
@@ -1167,7 +1173,7 @@ extension DeviceDetailViewController {
             mbl_mw_gyro_bmi160_disable_rotation_sampling(device.board)
         }
 
-        hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        updateMBProgressHUDToShowAdded()
         hud.mode = .determinateHorizontalBar
         hud.label.text = "Downloading..."
         gyroBMI160Data.removeAll()
@@ -1291,7 +1297,7 @@ extension DeviceDetailViewController {
             mbl_mw_logging_flush_page(device.board)
         }
         
-        hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        updateMBProgressHUDToShowAdded()
         hud.mode = .determinateHorizontalBar
         hud.label.text = "Downloading..."
         magnetometerBMM150Data.removeAll()
@@ -2056,7 +2062,7 @@ extension DeviceDetailViewController {
             mbl_mw_logging_flush_page(device.board)
         }
         
-        hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        updateMBProgressHUDToShowAdded()
         hud.mode = .determinateHorizontalBar
         hud.label.text = "Downloading..."
         
