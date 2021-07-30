@@ -18,8 +18,6 @@ class DevicesTableViewController: UITableViewController {
 
     var vm: DevicesScanningVM!
 
-    var hud: MBProgressHUD?
-
     @IBOutlet weak var scanningSwitch: UISwitch!
     @IBOutlet weak var metaBootSwitch: UISwitch!
     @IBOutlet weak var activity: UIActivityIndicatorView!
