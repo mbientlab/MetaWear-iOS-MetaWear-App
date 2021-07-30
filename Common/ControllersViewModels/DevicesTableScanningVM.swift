@@ -37,11 +37,13 @@ extension DevicesTableScanningVM: DevicesScanningVM {
 
     func startScanning() {
         bluetoothScanner.isScanning = true
+        isScanning = bluetoothScanner.isScanning
         fetchConnectedDevices()
     }
 
     func stopScanning() {
         bluetoothScanner.isScanning = false
+        isScanning = bluetoothScanner.isScanning
     }
 
     func setUseMetaBoot(to useMetaBoot: Bool) {
