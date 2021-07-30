@@ -15,7 +15,7 @@ import BoltsSwift
 import MBProgressHUD
 import iOSDFULibrary
 
-class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDelegate {
+class DeviceDetailViewController: StaticDataTableViewController {
     var device: MetaWear!
     var bmi270: Bool = false
     
@@ -178,6 +178,12 @@ class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDele
     var controller: UIDocumentInteractionController!
     var initiator: DFUServiceInitiator?
     var dfuController: DFUServiceController?
+
+}
+
+// MARK: - Lifecycle
+
+extension DeviceDetailViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -196,6 +202,19 @@ class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDele
         // Start off the connection flow
         connectDevice(true)
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        isObserving = false
+        streamingCleanup.forEach { $0.value() }
+        streamingCleanup.removeAll()
+    }
+}
+
+// MARK: - StaticDataTableViewController
+
+extension DeviceDetailViewController {
     
     override func showHeader(forSection section: Int, vissibleRows: Int) -> Bool {
         return vissibleRows != 0
@@ -203,14 +222,6 @@ class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDele
     
     override func showFooter(forSection section: Int, vissibleRows: Int) -> Bool {
         return vissibleRows != 0
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        isObserving = false
-        streamingCleanup.forEach { $0.value() }
-        streamingCleanup.removeAll()
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -221,6 +232,12 @@ class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDele
             }
         }
     }
+
+}
+
+// MARK: - Presentation
+
+extension DeviceDetailViewController {
     
     func nameForState() -> String {
         switch device.peripheral.state {
@@ -453,7 +470,25 @@ class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDele
         // Make the magic happen!
         reloadData(animated: true)
     }
-    
+
+}
+
+extension DeviceDetailViewController: DFUProgressDelegate {
+
+    func dfuProgressDidChange(for part: Int,
+                              outOf totalParts: Int,
+                              to progress: Int,
+                              currentSpeedBytesPerSecond: Double,
+                              avgSpeedBytesPerSecond: Double) {
+
+        hud?.progress = Float(progress) / 100.0
+    }
+}
+
+// MARK: - Intent Processing
+
+extension DeviceDetailViewController {
+
     func connectDevice(_ on: Bool) {
         if on {
             let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
@@ -486,23 +521,117 @@ class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDele
             device.cancelConnection()
         }
     }
-    
-    @IBAction func connectionSwitchPressed(_ sender: Any) {
-        connectDevice(connectionSwitch.isOn)
+
+    func setLedColor(_ color: MblMwLedColor) {
+        var pattern = MblMwLedPattern(high_intensity: 31,
+                                      low_intensity: 31,
+                                      rise_time_ms: 0,
+                                      high_time_ms: 2000,
+                                      fall_time_ms: 0,
+                                      pulse_duration_ms: 2000,
+                                      delay_time_ms: 0,
+                                      repeat_count: 0xFF)
+        mbl_mw_led_stop_and_clear(device.board)
+        mbl_mw_led_write_pattern(device.board, &pattern, color)
+        mbl_mw_led_play(device.board)
     }
-    
-    @IBAction func setNamePressed(_ sender: Any) {
-        if UserDefaults.standard.object(forKey: "ihaveseennamemessage") == nil {
-            UserDefaults.standard.set(1, forKey: "ihaveseennamemessage")
-            UserDefaults.standard.synchronize()
-            showAlertTitle("Notice", message: "Because of how iOS caches names, you have to disconnect and re-connect a few times or force close and re-launch the app before you see the new name!")
+
+    func send(_ data: Data, title: String) {
+        // Get current Time/Date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM_dd_yyyy-HH_mm_ss"
+        let dateString = dateFormatter.string(from: Date())
+        let name = "\(title)_\(dateString).csv"
+        let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(name)
+        do {
+            try data.write(to: fileURL, options: .atomic)
+            // Popup the default share screen
+            self.controller = UIDocumentInteractionController(url: fileURL)
+            if !self.controller.presentOptionsMenu(from: view.bounds, in: view, animated: true) {
+                self.showAlertTitle("Error", message: "No programs installed that could save the file")
+            }
+        } catch let error {
+            self.showAlertTitle("Error", message: error.localizedDescription)
         }
-        nameTextField.resignFirstResponder()
-        let name = nameTextField.text!
-        mbl_mw_settings_set_device_name(device.board, name, UInt8(name.count))
-        setNameButton.isEnabled = false
     }
-    
+
+    func updateAccelerometerBMI160Settings() {
+        switch self.accelerometerBMI160Scale.selectedSegmentIndex {
+        case 0:
+            mbl_mw_acc_bosch_set_range(device.board, MBL_MW_ACC_BOSCH_RANGE_2G)
+            self.accelerometerBMI160Graph.fullScale = 2
+        case 1:
+            mbl_mw_acc_bosch_set_range(device.board, MBL_MW_ACC_BOSCH_RANGE_4G)
+            self.accelerometerBMI160Graph.fullScale = 4
+        case 2:
+            mbl_mw_acc_bosch_set_range(device.board, MBL_MW_ACC_BOSCH_RANGE_8G)
+            self.accelerometerBMI160Graph.fullScale = 8
+        case 3:
+            mbl_mw_acc_bosch_set_range(device.board, MBL_MW_ACC_BOSCH_RANGE_16G)
+            self.accelerometerBMI160Graph.fullScale = 16
+        default:
+            fatalError("Unexpected accelerometerBMI160Scale value")
+        }
+        mbl_mw_acc_set_odr(device.board, Float(accelerometerBMI160Frequency.titleForSegment(at: accelerometerBMI160Frequency.selectedSegmentIndex)!)!)
+        mbl_mw_acc_bosch_write_acceleration_config(device.board)
+    }
+
+    func updateGyroBMI160Settings() {
+        switch self.gyroBMI160Scale.selectedSegmentIndex {
+        case 0:
+            mbl_mw_gyro_bmi160_set_range(device.board, MBL_MW_GYRO_BOSCH_RANGE_125dps)
+            self.gyroBMI160Graph.fullScale = 1
+        case 1:
+            mbl_mw_gyro_bmi160_set_range(device.board, MBL_MW_GYRO_BOSCH_RANGE_250dps)
+            self.gyroBMI160Graph.fullScale = 2
+        case 2:
+            mbl_mw_gyro_bmi160_set_range(device.board, MBL_MW_GYRO_BOSCH_RANGE_500dps)
+            self.gyroBMI160Graph.fullScale = 4
+        case 3:
+            mbl_mw_gyro_bmi160_set_range(device.board, MBL_MW_GYRO_BOSCH_RANGE_1000dps)
+            self.gyroBMI160Graph.fullScale = 8
+        case 4:
+            mbl_mw_gyro_bmi160_set_range(device.board, MBL_MW_GYRO_BOSCH_RANGE_2000dps)
+            self.gyroBMI160Graph.fullScale = 16
+        default:
+            fatalError("Unexpected gyroBMI160Scale value")
+        }
+        switch self.gyroBMI160Frequency.selectedSegmentIndex {
+        case 0:
+            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_1600Hz)
+        case 1:
+            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_800Hz)
+        case 2:
+            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_400Hz)
+        case 3:
+            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_200Hz)
+        case 4:
+            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_100Hz)
+        case 5:
+            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_50Hz)
+        case 6:
+            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_25Hz)
+        default:
+            fatalError("Unexpected gyroBMI160Frequency value")
+        }
+        mbl_mw_gyro_bmi160_write_config(device.board)
+    }
+
+    func updateSensorFusionSettings() {
+        mbl_mw_sensor_fusion_set_acc_range(device.board, MBL_MW_SENSOR_FUSION_ACC_RANGE_16G)
+        mbl_mw_sensor_fusion_set_gyro_range(device.board, MBL_MW_SENSOR_FUSION_GYRO_RANGE_2000DPS)
+        mbl_mw_sensor_fusion_set_mode(device.board, MblMwSensorFusionMode(UInt32(sensorFusionMode.selectedSegmentIndex + 1)))
+        sensorFusionMode.isEnabled = false
+        sensorFusionOutput.isEnabled = false
+        sensorFusionData = Data()
+        sensorFusionGraph.fullScale = 8
+    }
+}
+
+// MARK: - Intents
+
+extension DeviceDetailViewController: UITextFieldDelegate {
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // return NO to not change text
         self.setNameButton.isEnabled = true
@@ -518,11 +647,31 @@ class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDele
         // Make sure we only use ASCII characters
         return string.data(using: String.Encoding.ascii) != nil
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // called when 'return' key pressed. return NO to ignore.
         textField.resignFirstResponder()
         return true
+    }
+
+}
+
+extension DeviceDetailViewController {
+    
+    @IBAction func connectionSwitchPressed(_ sender: Any) {
+        connectDevice(connectionSwitch.isOn)
+    }
+    
+    @IBAction func setNamePressed(_ sender: Any) {
+        if UserDefaults.standard.object(forKey: "ihaveseennamemessage") == nil {
+            UserDefaults.standard.set(1, forKey: "ihaveseennamemessage")
+            UserDefaults.standard.synchronize()
+            showAlertTitle("Notice", message: "Because of how iOS caches names, you have to disconnect and re-connect a few times or force close and re-launch the app before you see the new name!")
+        }
+        nameTextField.resignFirstResponder()
+        let name = nameTextField.text!
+        mbl_mw_settings_set_device_name(device.board, name, UInt8(name.count))
+        setNameButton.isEnabled = false
     }
     
     @IBAction func readBatteryPressed(_ sender: Any) {
@@ -627,21 +776,7 @@ class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDele
         let signal = mbl_mw_switch_get_state_data_signal(device.board)!
         streamingCleanup.removeValue(forKey: signal)?()
     }
-    
-    func setLedColor(_ color: MblMwLedColor) {
-        var pattern = MblMwLedPattern(high_intensity: 31,
-                                      low_intensity: 31,
-                                      rise_time_ms: 0,
-                                      high_time_ms: 2000,
-                                      fall_time_ms: 0,
-                                      pulse_duration_ms: 2000,
-                                      delay_time_ms: 0,
-                                      repeat_count: 0xFF)
-        mbl_mw_led_stop_and_clear(device.board)
-        mbl_mw_led_write_pattern(device.board, &pattern, color)
-        mbl_mw_led_play(device.board)
-    }
-    
+
     @IBAction func turn(onGreenLEDPressed sender: Any) {
         setLedColor(MBL_MW_LED_COLOR_GREEN)
     }
@@ -708,46 +843,6 @@ class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDele
         if channelTypeLabel.text == "BMP280" {
             mbl_mw_baro_bosch_stop(device.board)
         }
-    }
-    
-    func send(_ data: Data, title: String) {
-        // Get current Time/Date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM_dd_yyyy-HH_mm_ss"
-        let dateString = dateFormatter.string(from: Date())
-        let name = "\(title)_\(dateString).csv"
-        let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(name)
-        do {
-            try data.write(to: fileURL, options: .atomic)
-            // Popup the default share screen
-            self.controller = UIDocumentInteractionController(url: fileURL)
-            if !self.controller.presentOptionsMenu(from: view.bounds, in: view, animated: true) {
-                self.showAlertTitle("Error", message: "No programs installed that could save the file")
-            }
-        } catch let error {
-            self.showAlertTitle("Error", message: error.localizedDescription)
-        }
-    }
-
-    func updateAccelerometerBMI160Settings() {
-        switch self.accelerometerBMI160Scale.selectedSegmentIndex {
-        case 0:
-            mbl_mw_acc_bosch_set_range(device.board, MBL_MW_ACC_BOSCH_RANGE_2G)
-            self.accelerometerBMI160Graph.fullScale = 2
-        case 1:
-            mbl_mw_acc_bosch_set_range(device.board, MBL_MW_ACC_BOSCH_RANGE_4G)
-            self.accelerometerBMI160Graph.fullScale = 4
-        case 2:
-            mbl_mw_acc_bosch_set_range(device.board, MBL_MW_ACC_BOSCH_RANGE_8G)
-            self.accelerometerBMI160Graph.fullScale = 8
-        case 3:
-            mbl_mw_acc_bosch_set_range(device.board, MBL_MW_ACC_BOSCH_RANGE_16G)
-            self.accelerometerBMI160Graph.fullScale = 16
-        default:
-            fatalError("Unexpected accelerometerBMI160Scale value")
-        }
-        mbl_mw_acc_set_odr(device.board, Float(accelerometerBMI160Frequency.titleForSegment(at: accelerometerBMI160Frequency.selectedSegmentIndex)!)!)
-        mbl_mw_acc_bosch_write_acceleration_config(device.board)
     }
 
     @IBAction func accelerometerBMI160StartStreamPressed(_ sender: Any) {
@@ -956,47 +1051,6 @@ class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDele
             accelerometerBMI160StepCount = 0
             accelerometerBMI160StepLabel.text = "Step Count: 0"
         }
-    }
-
-    func updateGyroBMI160Settings() {
-        switch self.gyroBMI160Scale.selectedSegmentIndex {
-        case 0:
-            mbl_mw_gyro_bmi160_set_range(device.board, MBL_MW_GYRO_BOSCH_RANGE_125dps)
-            self.gyroBMI160Graph.fullScale = 1
-        case 1:
-            mbl_mw_gyro_bmi160_set_range(device.board, MBL_MW_GYRO_BOSCH_RANGE_250dps)
-            self.gyroBMI160Graph.fullScale = 2
-        case 2:
-            mbl_mw_gyro_bmi160_set_range(device.board, MBL_MW_GYRO_BOSCH_RANGE_500dps)
-            self.gyroBMI160Graph.fullScale = 4
-        case 3:
-            mbl_mw_gyro_bmi160_set_range(device.board, MBL_MW_GYRO_BOSCH_RANGE_1000dps)
-            self.gyroBMI160Graph.fullScale = 8
-        case 4:
-            mbl_mw_gyro_bmi160_set_range(device.board, MBL_MW_GYRO_BOSCH_RANGE_2000dps)
-            self.gyroBMI160Graph.fullScale = 16
-        default:
-            fatalError("Unexpected gyroBMI160Scale value")
-        }
-        switch self.gyroBMI160Frequency.selectedSegmentIndex {
-        case 0:
-            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_1600Hz)
-        case 1:
-            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_800Hz)
-        case 2:
-            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_400Hz)
-        case 3:
-            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_200Hz)
-        case 4:
-            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_100Hz)
-        case 5:
-            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_50Hz)
-        case 6:
-            mbl_mw_gyro_bmi160_set_odr(device.board, MBL_MW_GYRO_BOSCH_ODR_25Hz)
-        default:
-            fatalError("Unexpected gyroBMI160Frequency value")
-        }
-        mbl_mw_gyro_bmi160_write_config(device.board)
     }
 
     @IBAction func gyroBMI160StartStreamPressed(_ sender: Any) {
@@ -1754,17 +1808,6 @@ class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDele
         }
     }
 
-    func updateSensorFusionSettings() {
-        mbl_mw_sensor_fusion_set_acc_range(device.board, MBL_MW_SENSOR_FUSION_ACC_RANGE_16G)
-        mbl_mw_sensor_fusion_set_gyro_range(device.board, MBL_MW_SENSOR_FUSION_GYRO_RANGE_2000DPS)
-        mbl_mw_sensor_fusion_set_mode(device.board, MblMwSensorFusionMode(UInt32(sensorFusionMode.selectedSegmentIndex + 1)))
-        sensorFusionMode.isEnabled = false
-        sensorFusionOutput.isEnabled = false
-        sensorFusionData = Data()
-        sensorFusionGraph.fullScale = 8
-    }
-
-    
     @IBAction func resetSensorFusionPressed(_ sender: Any) {
         mbl_mw_sensor_fusion_reset_orientation(device.board)
     }
@@ -2055,10 +2098,4 @@ class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDele
         send(sensorFusionData, title: "SensorFusion")
     }
 
-}
-
-extension DeviceDetailViewController: DFUProgressDelegate {
-    func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
-        hud?.progress = Float(progress) / 100.0
-    }
 }
