@@ -1,9 +1,9 @@
 //
-//  DeviceTableViewCell.swift
-//  MetaWearApiTest
+//  DeviceTableViewCellVM.swift
+//  DeviceTableViewCellVM
 //
-//  Created by Stephen Schiffli on 7/26/18.
-//  Copyright © 2018 MbientLab. All rights reserved.
+//  Created by Ryan Ferrell on 7/30/21.
+//  Copyright © 2021 MbientLab. All rights reserved.
 //
 
 import UIKit

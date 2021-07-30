@@ -2,7 +2,7 @@
 //  Images.swift
 //  Images
 //
-//  Created by Ryan on 7/30/21.
+//  Created by Ryan Ferrell on 7/30/21.
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
