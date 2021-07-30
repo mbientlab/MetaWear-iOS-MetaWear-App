@@ -74,9 +74,9 @@ class DevicesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! DeviceTableViewCell
         if indexPath.section == 0 {
-            cell.device = connectedDevices[indexPath.row]
+            cell.vm.device = connectedDevices[indexPath.row]
         } else {
-            cell.model = scannerModel.items[indexPath.row]
+            cell.vm.model = scannerModel.items[indexPath.row]
         }
         return cell
     }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		15EEEFEC5020F1A40C2A78FE /* Pods_MetaWearApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868BDE849ECD8FB83384791B /* Pods_MetaWearApp.framework */; };
+		94CD3AA726B3ED1400854FBA /* DeviceTableViewCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AA626B3ED1400854FBA /* DeviceTableViewCellVM.swift */; };
 		AB19083425B9060100249906 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB19083325B9060100249906 /* StartViewController.swift */; };
 		AB5D5F3C25B7D47300D2591C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F3B25B7D47300D2591C /* AppDelegate.swift */; };
 		AB5D5F4325B7D47300D2591C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB5D5F4125B7D47300D2591C /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		77B06B10ACA7CA5E4B050C51 /* Pods-MetaWearApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearApp.debug.xcconfig"; path = "Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp.debug.xcconfig"; sourceTree = "<group>"; };
 		868BDE849ECD8FB83384791B /* Pods_MetaWearApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MetaWearApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		94CD3AA626B3ED1400854FBA /* DeviceTableViewCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCellVM.swift; sourceTree = "<group>"; };
 		AB19083325B9060100249906 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		AB5D5F3825B7D47300D2591C /* MetaWearApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetaWearApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB5D5F3B25B7D47300D2591C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,9 +66,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		94CD3AA526B3ECF200854FBA /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				94CD3AA626B3ED1400854FBA /* DeviceTableViewCellVM.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		AB5D5F2F25B7D47300D2591C = {
 			isa = PBXGroup;
 			children = (
+				94CD3AA526B3ECF200854FBA /* Common */,
 				AB5D5F8425B8A5CF00D2591C /* Accelerometer */,
 				AB5D5F3A25B7D47300D2591C /* MetaWearApp */,
 				AB5D5F3925B7D47300D2591C /* Products */,
@@ -86,8 +97,8 @@
 		AB5D5F3A25B7D47300D2591C /* MetaWearApp */ = {
 			isa = PBXGroup;
 			children = (
-				AB5D5F9825B8AA4A00D2591C /* SceneDelegate.swift */,
 				AB5D5F3B25B7D47300D2591C /* AppDelegate.swift */,
+				AB5D5F9825B8AA4A00D2591C /* SceneDelegate.swift */,
 				AB5D5F8925B8A5E100D2591C /* MetaWearApp-Bridging-Header.h */,
 				AB19083325B9060100249906 /* StartViewController.swift */,
 				AB5D5F8F25B8A7B400D2591C /* DevicesTableViewController.swift */,
@@ -160,8 +171,10 @@
 		AB5D5F3025B7D47300D2591C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = MBL;
 				LastSwiftUpdateCheck = 1230;
 				LastUpgradeCheck = 1230;
+				ORGANIZATIONNAME = MbientLab;
 				TargetAttributes = {
 					AB5D5F3725B7D47300D2591C = {
 						CreatedOnToolsVersion = 12.3;
@@ -250,6 +263,7 @@
 				AB19083425B9060100249906 /* StartViewController.swift in Sources */,
 				AB5D5F8725B8A5CF00D2591C /* APLGraphView.m in Sources */,
 				AB5D5F9225B8A7B400D2591C /* DevicesTableViewController.swift in Sources */,
+				94CD3AA726B3ED1400854FBA /* DeviceTableViewCellVM.swift in Sources */,
 				AB5D5F9025B8A7B400D2591C /* DeviceDetailViewController.swift in Sources */,
 				AB5D5F9125B8A7B400D2591C /* DeviceTableViewCell.swift in Sources */,
 				AB5D5F9925B8AA4A00D2591C /* SceneDelegate.swift in Sources */,
@@ -404,7 +418,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = S2273LZ6GL;
+				DEVELOPMENT_TEAM = FVC2SFVFYG;
 				INFOPLIST_FILE = MetaWearApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -428,7 +442,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = S2273LZ6GL;
+				DEVELOPMENT_TEAM = FVC2SFVFYG;
 				INFOPLIST_FILE = MetaWearApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
