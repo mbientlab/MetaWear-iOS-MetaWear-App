@@ -11,17 +11,20 @@ import MetaWear
 
 class DeviceTableViewCell: UITableViewCell {
 
-    let vm = DeviceTableViewCellVM()
+    static let identifier = "DeviceTableViewCell"
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.vm.cell = self
+    var vm: DeviceCellVM? = nil
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        vm?.cancelSubscriptions()
     }
 }
 
-extension DeviceTableViewCell: DeviceCellDelegate {
+extension DeviceTableViewCell: DeviceCell {
 
     func updateView() {
+        guard let vm = vm else { return }
         (viewWithTag(1) as! UILabel).text = vm.uuid
         (viewWithTag(2) as! UILabel).text = vm.rssi
         (viewWithTag(3) as! UILabel).isHidden = !vm.isConnected

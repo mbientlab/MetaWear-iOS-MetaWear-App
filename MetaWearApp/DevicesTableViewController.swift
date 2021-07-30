@@ -1,9 +1,9 @@
 //
-//  DevicesTableViewController.swift
-//  MetaWearApiTest
+//  DeviceTableViewCellVM.swift
+//  DeviceTableViewCellVM
 //
-//  Created by Stephen Schiffli on 11/2/16.
-//  Copyright © 2016 MbientLab. All rights reserved.
+//  Created by Ryan on 7/30/21.
+//  Copyright © 2021 MbientLab. All rights reserved.
 //
 
 import UIKit
@@ -22,17 +22,86 @@ class DevicesTableViewController: UITableViewController {
     @IBOutlet weak var scanningSwitch: UISwitch!
     @IBOutlet weak var metaBootSwitch: UISwitch!
     @IBOutlet weak var activity: UIActivityIndicatorView!
+}
+
+// MARK: - Lifecycle
+
+extension DevicesTableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.setHidesBackButton(true, animated: false)
         setScanning(scanningSwitch.isOn)
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         setScanning(false)
     }
+
+}
+
+// MARK: - Updates
+
+extension DevicesTableViewController: ScannerModelDelegate {
+    func scannerModel(_ scannerModel: ScannerModel, didAddItemAt idx: Int) {
+        let indexPath = IndexPath(row: idx, section: 1)
+        tableView.insertRows(at: [indexPath], with: .automatic)
+    }
+
+    func scannerModel(_ scannerModel: ScannerModel, confirmBlinkingItem item: ScannerModelItem, callback: @escaping (Bool) -> Void) {
+
+    }
+
+    func scannerModel(_ scannerModel: ScannerModel, errorDidOccur error: Error) {
+
+    }
+}
+
+// MARK: - UITableView
+
+extension DevicesTableViewController {
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? connectedDevices.count : scannerModel.items.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: DeviceTableViewCell.identifier, for: indexPath) as! DeviceTableViewCell
+
+        cell.vm = DevicesTableViewCellVM()
+
+        let setDevice = indexPath.section == 0
+        if setDevice {
+            cell.vm?.configure(cell, for: connectedDevices[indexPath.row])
+        } else {
+            cell.vm?.configure(cell, for: scannerModel.items[indexPath.row])
+        }
+
+        return cell
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "Connected Devices" : "Devices"
+    }
+
+    // MARK: - Table view delegate
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        let device = indexPath.section == 0 ? connectedDevices[indexPath.row] : scannerModel.items[indexPath.row].device
+        performSegue(withIdentifier: "DeviceDetails", sender: device)
+    }
+}
+
+// MARK: - Intents
+
+extension DevicesTableViewController {
     
     func setScanning(_ on: Bool) {
         if on {
@@ -63,35 +132,7 @@ class DevicesTableViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? connectedDevices.count : scannerModel.items.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! DeviceTableViewCell
-        if indexPath.section == 0 {
-            cell.vm.device = connectedDevices[indexPath.row]
-        } else {
-            cell.vm.model = scannerModel.items[indexPath.row]
-        }
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Connected Devices" : "Devices"
-    }
-    
-    // MARK: - Table view delegate
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-        let device = indexPath.section == 0 ? connectedDevices[indexPath.row] : scannerModel.items[indexPath.row].device
-        performSegue(withIdentifier: "DeviceDetails", sender: device)
-    }
+
     
     // MARK: - Navigation
 
@@ -99,20 +140,5 @@ class DevicesTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destination = segue.destination as! DeviceDetailViewController
         destination.device = (sender as! MetaWear)
-    }
-}
-
-extension DevicesTableViewController: ScannerModelDelegate {
-    func scannerModel(_ scannerModel: ScannerModel, didAddItemAt idx: Int) {
-        let indexPath = IndexPath(row: idx, section: 1)
-        tableView.insertRows(at: [indexPath], with: .automatic)
-    }
-    
-    func scannerModel(_ scannerModel: ScannerModel, confirmBlinkingItem item: ScannerModelItem, callback: @escaping (Bool) -> Void) {
-        
-    }
-    
-    func scannerModel(_ scannerModel: ScannerModel, errorDidOccur error: Error) {
-        
     }
 }

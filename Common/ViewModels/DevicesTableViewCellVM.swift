@@ -9,28 +9,11 @@
 import Foundation
 import MetaWear
 
-public class DeviceTableViewCellVM {
+public class DevicesTableViewCellVM: DeviceCellVM {
 
-    weak var cell: DeviceCellDelegate? = nil
-
-    var model: ScannerModelItem! {
-        didSet {
-            model.stateDidChange = { [weak self] in
-                DispatchQueue.main.async { [weak self] in
-                    self?.update(from: self!.model.device)
-                }
-            }
-        }
-    }
-    var device: MetaWear? {
-        didSet {
-            if let device = device {
-                DispatchQueue.main.async { [weak self] in
-                    self?.update(from: device)
-                }
-            }
-        }
-    }
+    public weak var cell: DeviceCell? = nil
+    private weak var model: ScannerModelItem?
+    private weak var device: MetaWear?
 
     public private(set) var uuid:         String     = uuidDefaultString
     public private(set) var rssi:         String     = "—"
@@ -40,12 +23,47 @@ public class DeviceTableViewCellVM {
 
     private static let uuidDefaultString: String     = "Connect for MAC"
 
-    public func update(from device: MetaWear) {
+}
+
+public extension DevicesTableViewCellVM {
+
+    func configure(_ cell: DeviceCell, for device: MetaWear?) {
+        self.cell = cell
+        self.device = device
+        self.update(from: device)
+    }
+
+    func configure(_ cell: DeviceCell, for scannerItem: ScannerModelItem?) {
+        self.cell = cell
+        if let scannerItem = scannerItem {
+            model = scannerItem
+            model!.stateDidChange = { [weak self] in
+                self?.update(from: self?.model?.device)
+            }
+        }
+    }
+
+    func cancelSubscriptions() {
+        model?.stateDidChange = nil
+        model = nil
+        device = nil
+    }
+}
+
+private extension DevicesTableViewCellVM {
+
+    private func update(from device: MetaWear?) {
+        guard let device = device else { return }
+
         setSignalImage(for: device.averageRSSI())
         rssi = String(device.rssi)
         name = device.name
         uuid = device.mac ?? Self.uuidDefaultString
         isConnected = device.peripheral.state == .connected
+
+        DispatchQueue.main.async { [weak self] in
+            self?.cell?.updateView()
+        }
     }
 
     private func setSignalImage(for averageRSSI: Double?) {
@@ -64,30 +82,4 @@ public class DeviceTableViewCellVM {
             default:       asset = .fiveBars
         }
     }
-}
-
-public enum Images {
-    case noBars
-    case oneBar
-    case twoBars
-    case threeBars
-    case fourBars
-    case fiveBars
-    case noSignal
-
-    public var catalogName: String {
-        switch self {
-            case .noBars:    return "wifi_d1"
-            case .oneBar:    return "wifi_d2"
-            case .twoBars:   return "wifi_d3"
-            case .threeBars: return "wifi_d4"
-            case .fourBars:  return "wifi_d5"
-            case .fiveBars:  return "wifi_d6"
-            case .noSignal:  return "wifi_not_connected"
-        }
-    }
-}
-
-protocol DeviceCellDelegate: AnyObject {
-    func updateView()
 }

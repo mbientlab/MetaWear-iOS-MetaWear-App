@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		15EEEFEC5020F1A40C2A78FE /* Pods_MetaWearApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868BDE849ECD8FB83384791B /* Pods_MetaWearApp.framework */; };
-		94CD3AA726B3ED1400854FBA /* DeviceTableViewCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AA626B3ED1400854FBA /* DeviceTableViewCellVM.swift */; };
+		9438D94E26B453F30014FC91 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94D26B453F30014FC91 /* Images.swift */; };
+		9438D95026B45B770014FC91 /* DeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94F26B45B770014FC91 /* DeviceCellVM.swift */; };
+		94CD3AA726B3ED1400854FBA /* DevicesTableViewCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AA626B3ED1400854FBA /* DevicesTableViewCellVM.swift */; };
 		AB19083425B9060100249906 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB19083325B9060100249906 /* StartViewController.swift */; };
 		AB5D5F3C25B7D47300D2591C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F3B25B7D47300D2591C /* AppDelegate.swift */; };
 		AB5D5F4325B7D47300D2591C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB5D5F4125B7D47300D2591C /* Main.storyboard */; };
@@ -28,7 +30,9 @@
 /* Begin PBXFileReference section */
 		77B06B10ACA7CA5E4B050C51 /* Pods-MetaWearApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearApp.debug.xcconfig"; path = "Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp.debug.xcconfig"; sourceTree = "<group>"; };
 		868BDE849ECD8FB83384791B /* Pods_MetaWearApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MetaWearApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		94CD3AA626B3ED1400854FBA /* DeviceTableViewCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCellVM.swift; sourceTree = "<group>"; };
+		9438D94D26B453F30014FC91 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		9438D94F26B45B770014FC91 /* DeviceCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCellVM.swift; sourceTree = "<group>"; };
+		94CD3AA626B3ED1400854FBA /* DevicesTableViewCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesTableViewCellVM.swift; sourceTree = "<group>"; };
 		AB19083325B9060100249906 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		AB5D5F3825B7D47300D2591C /* MetaWearApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetaWearApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB5D5F3B25B7D47300D2591C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,10 +70,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9438D95126B45DD30014FC91 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				9438D94F26B45B770014FC91 /* DeviceCellVM.swift */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		9438D95426B45E130014FC91 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				9438D94D26B453F30014FC91 /* Images.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		9438D95526B45E1D0014FC91 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				94CD3AA626B3ED1400854FBA /* DevicesTableViewCellVM.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		94CD3AA526B3ECF200854FBA /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				94CD3AA626B3ED1400854FBA /* DeviceTableViewCellVM.swift */,
+				9438D95426B45E130014FC91 /* Constants */,
+				9438D95126B45DD30014FC91 /* Interfaces */,
+				9438D95526B45E1D0014FC91 /* ViewModels */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -263,9 +293,11 @@
 				AB19083425B9060100249906 /* StartViewController.swift in Sources */,
 				AB5D5F8725B8A5CF00D2591C /* APLGraphView.m in Sources */,
 				AB5D5F9225B8A7B400D2591C /* DevicesTableViewController.swift in Sources */,
-				94CD3AA726B3ED1400854FBA /* DeviceTableViewCellVM.swift in Sources */,
+				9438D94E26B453F30014FC91 /* Images.swift in Sources */,
+				94CD3AA726B3ED1400854FBA /* DevicesTableViewCellVM.swift in Sources */,
 				AB5D5F9025B8A7B400D2591C /* DeviceDetailViewController.swift in Sources */,
 				AB5D5F9125B8A7B400D2591C /* DeviceTableViewCell.swift in Sources */,
+				9438D95026B45B770014FC91 /* DeviceCellVM.swift in Sources */,
 				AB5D5F9925B8AA4A00D2591C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
