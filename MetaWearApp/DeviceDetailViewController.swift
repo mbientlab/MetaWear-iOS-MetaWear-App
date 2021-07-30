@@ -15,12 +15,6 @@ import BoltsSwift
 import MBProgressHUD
 import iOSDFULibrary
 
-extension String {
-    var drop0xPrefix: String {
-        return hasPrefix("0x") ? String(dropFirst(2)) : self
-    }
-}
-
 class DeviceDetailViewController: StaticDataTableViewController, UITextFieldDelegate {
     var device: MetaWear!
     var bmi270: Bool = false
