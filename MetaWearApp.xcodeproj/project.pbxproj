@@ -13,6 +13,7 @@
 		9438D95726B467FC0014FC91 /* DevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */; };
 		9438D95926B4692C0014FC91 /* DevicesTableScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95826B4692C0014FC91 /* DevicesTableScanningVM.swift */; };
 		9438D95C26B47C990014FC91 /* String+Drop0xPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */; };
+		9453FD3926B4EFE600239FDD /* MWIdentityVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453FD3826B4EFE600239FDD /* MWIdentityVM.swift */; };
 		94CD3AA726B3ED1400854FBA /* DevicesTableViewCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AA626B3ED1400854FBA /* DevicesTableViewCellVM.swift */; };
 		AB19083425B9060100249906 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB19083325B9060100249906 /* StartViewController.swift */; };
 		AB5D5F3C25B7D47300D2591C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F3B25B7D47300D2591C /* AppDelegate.swift */; };
@@ -38,6 +39,7 @@
 		9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesScanningVM.swift; sourceTree = "<group>"; };
 		9438D95826B4692C0014FC91 /* DevicesTableScanningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesTableScanningVM.swift; sourceTree = "<group>"; };
 		9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Drop0xPrefix.swift"; sourceTree = "<group>"; };
+		9453FD3826B4EFE600239FDD /* MWIdentityVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWIdentityVM.swift; sourceTree = "<group>"; };
 		94CD3AA626B3ED1400854FBA /* DevicesTableViewCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesTableViewCellVM.swift; sourceTree = "<group>"; };
 		AB19083325B9060100249906 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		AB5D5F3825B7D47300D2591C /* MetaWearApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetaWearApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +83,7 @@
 			children = (
 				9438D94F26B45B770014FC91 /* DeviceCellVM.swift */,
 				9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */,
+				9453FD3826B4EFE600239FDD /* MWIdentityVM.swift */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 			files = (
 				AB5D5F3C25B7D47300D2591C /* AppDelegate.swift in Sources */,
 				9438D95726B467FC0014FC91 /* DevicesScanningVM.swift in Sources */,
+				9453FD3926B4EFE600239FDD /* MWIdentityVM.swift in Sources */,
 				AB19083425B9060100249906 /* StartViewController.swift in Sources */,
 				AB5D5F8725B8A5CF00D2591C /* APLGraphView.m in Sources */,
 				AB5D5F9225B8A7B400D2591C /* DevicesTableViewController.swift in Sources */,
