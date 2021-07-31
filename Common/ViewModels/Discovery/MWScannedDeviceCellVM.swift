@@ -1,6 +1,6 @@
 //
-//  DeviceTableViewCellVM.swift
-//  DeviceTableViewCellVM
+//  MWScannedDeviceCellVM.swift
+//  MWScannedDeviceCellVM
 //
 //  Created by Ryan Ferrell on 7/30/21.
 //  Copyright © 2021 MbientLab. All rights reserved.
@@ -9,9 +9,9 @@
 import Foundation
 import MetaWear
 
-public class DevicesTableViewCellVM: DeviceCellVM {
+public class MWScannedDeviceCellVM: ScannedDeviceCellVM {
 
-    public weak var cell: DeviceCell? = nil
+    public weak var cell: ScannedDeviceCell? = nil
     private weak var model: ScannerModelItem?
     private weak var device: MetaWear?
 
@@ -25,15 +25,15 @@ public class DevicesTableViewCellVM: DeviceCellVM {
 
 }
 
-public extension DevicesTableViewCellVM {
+public extension MWScannedDeviceCellVM {
 
-    func configure(_ cell: DeviceCell, for device: MetaWear?) {
+    func configure(_ cell: ScannedDeviceCell, for device: MetaWear?) {
         self.cell = cell
         self.device = device
         self.update(from: device)
     }
 
-    func configure(_ cell: DeviceCell, for scannerItem: ScannerModelItem?) {
+    func configure(_ cell: ScannedDeviceCell, for scannerItem: ScannerModelItem?) {
         self.cell = cell
         if let scannerItem = scannerItem {
             model = scannerItem
@@ -43,6 +43,7 @@ public extension DevicesTableViewCellVM {
         }
     }
 
+    /// Prepare cell for reuse
     func cancelSubscriptions() {
         model?.stateDidChange = nil
         model = nil
@@ -50,7 +51,7 @@ public extension DevicesTableViewCellVM {
     }
 }
 
-private extension DevicesTableViewCellVM {
+private extension MWScannedDeviceCellVM {
 
     private func update(from device: MetaWear?) {
         guard let device = device else { return }
@@ -62,7 +63,7 @@ private extension DevicesTableViewCellVM {
         isConnected = device.peripheral.state == .connected
 
         DispatchQueue.main.async { [weak self] in
-            self?.cell?.updateView()
+            self?.cell?.refreshView()
         }
     }
 

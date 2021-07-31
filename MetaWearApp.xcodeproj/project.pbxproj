@@ -9,12 +9,20 @@
 /* Begin PBXBuildFile section */
 		15EEEFEC5020F1A40C2A78FE /* Pods_MetaWearApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868BDE849ECD8FB83384791B /* Pods_MetaWearApp.framework */; };
 		9438D94E26B453F30014FC91 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94D26B453F30014FC91 /* Images.swift */; };
-		9438D95026B45B770014FC91 /* DeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94F26B45B770014FC91 /* DeviceCellVM.swift */; };
+		9438D95026B45B770014FC91 /* ScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94F26B45B770014FC91 /* ScannedDeviceCellVM.swift */; };
 		9438D95726B467FC0014FC91 /* DevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */; };
-		9438D95926B4692C0014FC91 /* DevicesTableScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95826B4692C0014FC91 /* DevicesTableScanningVM.swift */; };
+		9438D95926B4692C0014FC91 /* MWDevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95826B4692C0014FC91 /* MWDevicesScanningVM.swift */; };
 		9438D95C26B47C990014FC91 /* String+Drop0xPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */; };
-		9453FD3926B4EFE600239FDD /* MWIdentityVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453FD3826B4EFE600239FDD /* MWIdentityVM.swift */; };
-		94CD3AA726B3ED1400854FBA /* DevicesTableViewCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AA626B3ED1400854FBA /* DevicesTableViewCellVM.swift */; };
+		9453FD3926B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */; };
+		9482DC4D26B501CF00DD19EB /* _DeviceDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482DC4C26B501CF00DD19EB /* _DeviceDetailVC.swift */; };
+		9482DC4F26B5078A00DD19EB /* DetailHeaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482DC4E26B5078A00DD19EB /* DetailHeaderVM.swift */; };
+		94CD3AA726B3ED1400854FBA /* MWScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */; };
+		94F3316726B518D30015EE88 /* MWDetailHeaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316626B518D30015EE88 /* MWDetailHeaderVC.swift */; };
+		94F3316D26B52FD90015EE88 /* DetailConfiguring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316C26B52FD90015EE88 /* DetailConfiguring.swift */; };
+		94F3316F26B530500015EE88 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316E26B530500015EE88 /* UserDefaults.swift */; };
+		94F3317126B5308B0015EE88 /* PresentAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317026B5308B0015EE88 /* PresentAlert.swift */; };
+		94F3317326B530FF0015EE88 /* MWDetailHeaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317226B530FF0015EE88 /* MWDetailHeaderVM.swift */; };
+		94F3317526B531C50015EE88 /* DeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317426B531C50015EE88 /* DeviceDetailsCoordinator.swift */; };
 		AB19083425B9060100249906 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB19083325B9060100249906 /* StartViewController.swift */; };
 		AB5D5F3C25B7D47300D2591C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F3B25B7D47300D2591C /* AppDelegate.swift */; };
 		AB5D5F4325B7D47300D2591C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB5D5F4125B7D47300D2591C /* Main.storyboard */; };
@@ -35,12 +43,20 @@
 		77B06B10ACA7CA5E4B050C51 /* Pods-MetaWearApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearApp.debug.xcconfig"; path = "Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp.debug.xcconfig"; sourceTree = "<group>"; };
 		868BDE849ECD8FB83384791B /* Pods_MetaWearApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MetaWearApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9438D94D26B453F30014FC91 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
-		9438D94F26B45B770014FC91 /* DeviceCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCellVM.swift; sourceTree = "<group>"; };
+		9438D94F26B45B770014FC91 /* ScannedDeviceCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedDeviceCellVM.swift; sourceTree = "<group>"; };
 		9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesScanningVM.swift; sourceTree = "<group>"; };
-		9438D95826B4692C0014FC91 /* DevicesTableScanningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesTableScanningVM.swift; sourceTree = "<group>"; };
+		9438D95826B4692C0014FC91 /* MWDevicesScanningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDevicesScanningVM.swift; sourceTree = "<group>"; };
 		9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Drop0xPrefix.swift"; sourceTree = "<group>"; };
-		9453FD3826B4EFE600239FDD /* MWIdentityVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWIdentityVM.swift; sourceTree = "<group>"; };
-		94CD3AA626B3ED1400854FBA /* DevicesTableViewCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesTableViewCellVM.swift; sourceTree = "<group>"; };
+		9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDeviceDetailsCoordinator.swift; sourceTree = "<group>"; };
+		9482DC4C26B501CF00DD19EB /* _DeviceDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _DeviceDetailVC.swift; sourceTree = "<group>"; };
+		9482DC4E26B5078A00DD19EB /* DetailHeaderVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderVM.swift; sourceTree = "<group>"; };
+		94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScannedDeviceCellVM.swift; sourceTree = "<group>"; };
+		94F3316626B518D30015EE88 /* MWDetailHeaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDetailHeaderVC.swift; sourceTree = "<group>"; };
+		94F3316C26B52FD90015EE88 /* DetailConfiguring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailConfiguring.swift; sourceTree = "<group>"; };
+		94F3316E26B530500015EE88 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		94F3317026B5308B0015EE88 /* PresentAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentAlert.swift; sourceTree = "<group>"; };
+		94F3317226B530FF0015EE88 /* MWDetailHeaderVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDetailHeaderVM.swift; sourceTree = "<group>"; };
+		94F3317426B531C50015EE88 /* DeviceDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsCoordinator.swift; sourceTree = "<group>"; };
 		AB19083325B9060100249906 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		AB5D5F3825B7D47300D2591C /* MetaWearApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetaWearApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB5D5F3B25B7D47300D2591C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,9 +97,8 @@
 		9438D95126B45DD30014FC91 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
-				9438D94F26B45B770014FC91 /* DeviceCellVM.swift */,
-				9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */,
-				9453FD3826B4EFE600239FDD /* MWIdentityVM.swift */,
+				94F3316B26B52FBA0015EE88 /* Detail */,
+				94F3316A26B52FA70015EE88 /* Discovery */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -92,23 +107,25 @@
 			isa = PBXGroup;
 			children = (
 				9438D94D26B453F30014FC91 /* Images.swift */,
+				94F3316E26B530500015EE88 /* UserDefaults.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
 		};
-		9438D95526B45E1D0014FC91 /* ControllersViewModels */ = {
+		9438D95526B45E1D0014FC91 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				94CD3AA626B3ED1400854FBA /* DevicesTableViewCellVM.swift */,
-				9438D95826B4692C0014FC91 /* DevicesTableScanningVM.swift */,
+				94F3316526B518C60015EE88 /* Detail */,
+				94F3316826B52F180015EE88 /* Discovery */,
 			);
-			path = ControllersViewModels;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		9438D95A26B47C820014FC91 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */,
+				94F3317026B5308B0015EE88 /* PresentAlert.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -118,10 +135,57 @@
 			children = (
 				9438D95A26B47C820014FC91 /* Helpers */,
 				9438D95426B45E130014FC91 /* Constants */,
+				94F3316926B52F890015EE88 /* _UIViewControllers */,
 				9438D95126B45DD30014FC91 /* Interfaces */,
-				9438D95526B45E1D0014FC91 /* ControllersViewModels */,
+				9438D95526B45E1D0014FC91 /* ViewModels */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		94F3316526B518C60015EE88 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */,
+				94F3317226B530FF0015EE88 /* MWDetailHeaderVM.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		94F3316826B52F180015EE88 /* Discovery */ = {
+			isa = PBXGroup;
+			children = (
+				94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */,
+				9438D95826B4692C0014FC91 /* MWDevicesScanningVM.swift */,
+			);
+			path = Discovery;
+			sourceTree = "<group>";
+		};
+		94F3316926B52F890015EE88 /* _UIViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				9482DC4C26B501CF00DD19EB /* _DeviceDetailVC.swift */,
+				94F3316626B518D30015EE88 /* MWDetailHeaderVC.swift */,
+			);
+			path = _UIViewControllers;
+			sourceTree = "<group>";
+		};
+		94F3316A26B52FA70015EE88 /* Discovery */ = {
+			isa = PBXGroup;
+			children = (
+				9438D94F26B45B770014FC91 /* ScannedDeviceCellVM.swift */,
+				9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */,
+			);
+			path = Discovery;
+			sourceTree = "<group>";
+		};
+		94F3316B26B52FBA0015EE88 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				9482DC4E26B5078A00DD19EB /* DetailHeaderVM.swift */,
+				94F3316C26B52FD90015EE88 /* DetailConfiguring.swift */,
+				94F3317426B531C50015EE88 /* DeviceDetailsCoordinator.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		AB5D5F2F25B7D47300D2591C = {
@@ -310,19 +374,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB5D5F3C25B7D47300D2591C /* AppDelegate.swift in Sources */,
+				9482DC4F26B5078A00DD19EB /* DetailHeaderVM.swift in Sources */,
+				94F3317526B531C50015EE88 /* DeviceDetailsCoordinator.swift in Sources */,
 				9438D95726B467FC0014FC91 /* DevicesScanningVM.swift in Sources */,
-				9453FD3926B4EFE600239FDD /* MWIdentityVM.swift in Sources */,
+				9453FD3926B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift in Sources */,
+				9482DC4D26B501CF00DD19EB /* _DeviceDetailVC.swift in Sources */,
 				AB19083425B9060100249906 /* StartViewController.swift in Sources */,
 				AB5D5F8725B8A5CF00D2591C /* APLGraphView.m in Sources */,
 				AB5D5F9225B8A7B400D2591C /* DevicesTableViewController.swift in Sources */,
 				9438D94E26B453F30014FC91 /* Images.swift in Sources */,
-				94CD3AA726B3ED1400854FBA /* DevicesTableViewCellVM.swift in Sources */,
+				94CD3AA726B3ED1400854FBA /* MWScannedDeviceCellVM.swift in Sources */,
 				AB5D5F9025B8A7B400D2591C /* DeviceDetailViewController.swift in Sources */,
 				9438D95C26B47C990014FC91 /* String+Drop0xPrefix.swift in Sources */,
+				94F3316D26B52FD90015EE88 /* DetailConfiguring.swift in Sources */,
+				94F3316F26B530500015EE88 /* UserDefaults.swift in Sources */,
+				94F3317126B5308B0015EE88 /* PresentAlert.swift in Sources */,
+				94F3316726B518D30015EE88 /* MWDetailHeaderVC.swift in Sources */,
 				AB5D5F9125B8A7B400D2591C /* DeviceTableViewCell.swift in Sources */,
-				9438D95026B45B770014FC91 /* DeviceCellVM.swift in Sources */,
+				9438D95026B45B770014FC91 /* ScannedDeviceCellVM.swift in Sources */,
 				AB5D5F9925B8AA4A00D2591C /* SceneDelegate.swift in Sources */,
-				9438D95926B4692C0014FC91 /* DevicesTableScanningVM.swift in Sources */,
+				9438D95926B4692C0014FC91 /* MWDevicesScanningVM.swift in Sources */,
+				94F3317326B530FF0015EE88 /* MWDetailHeaderVM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

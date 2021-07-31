@@ -13,7 +13,7 @@ class DeviceTableViewCell: UITableViewCell {
 
     static let identifier = "DeviceTableViewCell"
 
-    var vm: DeviceCellVM? = nil
+    var vm: ScannedDeviceCellVM? = nil
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -21,9 +21,9 @@ class DeviceTableViewCell: UITableViewCell {
     }
 }
 
-extension DeviceTableViewCell: DeviceCell {
+extension DeviceTableViewCell: ScannedDeviceCell {
 
-    func updateView() {
+    func refreshView() {
         guard let vm = vm else { return }
         (viewWithTag(1) as! UILabel).text = vm.uuid
         (viewWithTag(2) as! UILabel).text = vm.rssi

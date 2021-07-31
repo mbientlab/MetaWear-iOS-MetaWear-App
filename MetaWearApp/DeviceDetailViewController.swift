@@ -19,12 +19,12 @@ class DeviceDetailViewController: StaticDataTableViewController {
     var device: MetaWear!
     var bmi270: Bool = false
     
-    @IBOutlet weak var connectionSwitch: UISwitch!
-    @IBOutlet weak var connectionStateLabel: UILabel!
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var setNameButton: UIButton!
+    @IBOutlet weak var connectionSwitch: UISwitch! // TRANSFERRED
+    @IBOutlet weak var connectionStateLabel: UILabel!                    //#BLOCKED
+    @IBOutlet weak var nameTextField: UITextField! // TRANSFERRED
+    @IBOutlet weak var setNameButton: UIButton! // TRANSFERRED
     
-    @IBOutlet var allCells: [UITableViewCell]!
+    @IBOutlet var allCells: [UITableViewCell]!  // TRANSFERRED
     
     @IBOutlet var infoAndStateCells: [UITableViewCell]!
     @IBOutlet weak var mfgNameLabel: UILabel!
@@ -172,7 +172,7 @@ class DeviceDetailViewController: StaticDataTableViewController {
                 }
             }
         }
-    }
+    } // TRANSFERRED
     var hud: MBProgressHUD!
     
     var controller: UIDocumentInteractionController!
@@ -182,9 +182,10 @@ class DeviceDetailViewController: StaticDataTableViewController {
 }
 
 // MARK: - Lifecycle
-
+/// TRANSFERRED
 extension DeviceDetailViewController {
-    
+
+    /// TRANSFERRED
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -203,6 +204,7 @@ extension DeviceDetailViewController {
         connectDevice(true)
     }
 
+    /// TRANSFERRED
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
@@ -224,6 +226,7 @@ extension DeviceDetailViewController {
         return vissibleRows != 0
     }
 
+    #warning("HOW TO TRANSFER MWDeviceHeaderVM or MWDeviceHeaderVC?")
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         OperationQueue.main.addOperation {
             self.connectionStateLabel.text! = self.nameForState()
@@ -238,7 +241,8 @@ extension DeviceDetailViewController {
 // MARK: - Presentation
 
 extension DeviceDetailViewController {
-    
+
+    /// TRANSFERRED
     func nameForState() -> String {
         switch device.peripheral.state {
         case .connected:
@@ -253,7 +257,8 @@ extension DeviceDetailViewController {
         @unknown default: return "Unknown API Value"
         }
     }
-    
+
+    /// TRANSFERRED
     func logCleanup(_ handler: @escaping (Error?) -> Void) {
         // In order for the device to actaully erase the flash memory we can't be in a connection
         // so temporally disconnect to allow flash to erase.
@@ -268,19 +273,15 @@ extension DeviceDetailViewController {
             handler(t.error)
         }
     }
-    
-    func showAlertTitle(_ title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
+
+    //// TRANSFERRED MWDeviceDetailsController
     func deviceDisconnected() {
         connectionSwitch.setOn(false, animated: true)
         cells(self.allCells, setHidden: true)
         reloadData(animated: true)
     }
-    
+
+    /// Transferred to MWDeviceDetailsController
     func deviceConnectedReadAnonymousLoggers() {
         let task = device.createAnonymousDatasignals()
         task.continueWith(.mainThread) { t in
@@ -495,6 +496,7 @@ extension DeviceDetailViewController {
         hud = MBProgressHUD.showAdded(to: UIApplication.shared.windows.first(where: \.isKeyWindow)!, animated: true)
     }
 
+    /// Transferred
     func connectDevice(_ on: Bool) {
         if on {
             let hud = MBProgressHUD.showAdded(to: UIApplication.shared.windows.first(where: \.isKeyWindow)!, animated: true)
@@ -515,7 +517,11 @@ extension DeviceDetailViewController {
 //                }
                 hud.mode = .text
                 if t.error != nil {
-                    self.showAlertTitle("Error", message: t.error!.localizedDescription)
+                    presentAlert(
+                        in: self,
+                        title: "Error",
+                        message: t.error!.localizedDescription
+                    )
                     hud.hide(animated: false)
                 } else {
                     self.deviceConnectedReadAnonymousLoggers()
@@ -554,10 +560,18 @@ extension DeviceDetailViewController {
             // Popup the default share screen
             self.controller = UIDocumentInteractionController(url: fileURL)
             if !self.controller.presentOptionsMenu(from: view.bounds, in: view, animated: true) {
-                self.showAlertTitle("Error", message: "No programs installed that could save the file")
+                presentAlert(
+                    in: self,
+                    title: "Error",
+                    message: "No programs installed that could save the file"
+                )
             }
         } catch let error {
-            self.showAlertTitle("Error", message: error.localizedDescription)
+            presentAlert(
+                in: self,
+                title: "Error",
+                message: error.localizedDescription
+            )
         }
     }
 
@@ -635,9 +649,9 @@ extension DeviceDetailViewController {
 }
 
 // MARK: - Intents
-
+/// TRANSFERRED (VC)
 extension DeviceDetailViewController: UITextFieldDelegate {
-
+    /// TRANSFERRED (VC)
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // return NO to not change text
         self.setNameButton.isEnabled = true
@@ -653,7 +667,7 @@ extension DeviceDetailViewController: UITextFieldDelegate {
         // Make sure we only use ASCII characters
         return string.data(using: String.Encoding.ascii) != nil
     }
-
+    /// TRANSFERRED (VC)
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // called when 'return' key pressed. return NO to ignore.
         textField.resignFirstResponder()
@@ -663,16 +677,22 @@ extension DeviceDetailViewController: UITextFieldDelegate {
 }
 
 extension DeviceDetailViewController {
-    
+
+    /// TRANSFERRED Header VC
     @IBAction func connectionSwitchPressed(_ sender: Any) {
         connectDevice(connectionSwitch.isOn)
     }
-    
+
+    /// TRANSFERRED (VM)
     @IBAction func setNamePressed(_ sender: Any) {
         if UserDefaults.standard.object(forKey: "ihaveseennamemessage") == nil {
             UserDefaults.standard.set(1, forKey: "ihaveseennamemessage")
             UserDefaults.standard.synchronize()
-            showAlertTitle("Notice", message: "Because of how iOS caches names, you have to disconnect and re-connect a few times or force close and re-launch the app before you see the new name!")
+            presentAlert(
+                in: self,
+                title: "Notice",
+                message: "Because of how iOS caches names, you have to disconnect and re-connect a few times or force close and re-launch the app before you see the new name!"
+            )
         }
         nameTextField.resignFirstResponder()
         let name = nameTextField.text!
@@ -683,7 +703,11 @@ extension DeviceDetailViewController {
     @IBAction func readBatteryPressed(_ sender: Any) {
         mbl_mw_settings_get_battery_state_data_signal(device.board).read().continueWith(.mainThread) {
             if let error = $0.error {
-                self.showAlertTitle("Error", message: error.localizedDescription)
+                presentAlert(
+                    in: self,
+                    title: "Error",
+                    message: error.localizedDescription
+                )
             } else {
                 let battery: MblMwBatteryState = $0.result!.valueAs()
                 self.batteryLevelLabel.text = String(battery.charge)
@@ -705,7 +729,11 @@ extension DeviceDetailViewController {
     @IBAction func checkForFirmwareUpdatesPressed(_ sender: Any) {
         device.checkForFirmwareUpdate().continueWith(.mainThread) {
             if let error = $0.error {
-                self.showAlertTitle("Error", message: error.localizedDescription)
+                presentAlert(
+                    in: self,
+                    title: "Error",
+                    message: error.localizedDescription
+                )
             } else {
                 self.firmwareUpdateLabel.text = $0.result! != nil ? "\($0.result!!.firmwareRev) AVAILABLE!" : "Up To Date"
             }

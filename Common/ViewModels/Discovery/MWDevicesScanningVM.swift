@@ -1,6 +1,6 @@
 //
-//  DevicesTableScanningController.swift
-//  DevicesTableScanningController
+//  MWDevicesScanningVM.swift
+//  MWDevicesScanningVM
 //
 //  Created by Ryan Ferrell on 7/30/21.
 //  Copyright © 2021 MbientLab. All rights reserved.
@@ -11,24 +11,24 @@ import MetaWear
 
 fileprivate let metawearScanner = MetaWearScanner()
 
-class DevicesTableScanningVM {
+class MWDevicesScanningVM {
 
     public weak var delegate: DevicesScanningCoordinatorDelegate? = nil
 
     public private(set) var isScanning = false
-    { didSet { DispatchQueue.main.async { self.delegate?.updateScanningStatus() } } }
+    { didSet { DispatchQueue.main.async { self.delegate?.refreshScanningStatus() } } }
 
     public private(set) var useMetaBootMode = false
-    { didSet { DispatchQueue.main.async { self.delegate?.updateMetaBootStatus() } } }
+    { didSet { DispatchQueue.main.async { self.delegate?.refreshMetaBootStatus() } } }
 
     public private(set) var connectedDevices: [MetaWear] = []
     public var discoveredDevices: [ScannerModelItem] { bluetoothScanner.items }
     private lazy var bluetoothScanner: ScannerModel = makeScannerModel()
 }
 
-extension DevicesTableScanningVM: DevicesScanningVM {
+extension MWDevicesScanningVM: DevicesScanningVM {
 
-    func setScanningState(to newState: Bool) {
+    func userChangedScanningState(to newState: Bool) {
         switch newState {
             case true: startScanning()
             case false: stopScanning()
@@ -46,13 +46,13 @@ extension DevicesTableScanningVM: DevicesScanningVM {
         isScanning = bluetoothScanner.isScanning
     }
 
-    func setUseMetaBoot(to useMetaBoot: Bool) {
+    func userChangedUseMetaBootMode(to useMetaBoot: Bool) {
         useMetaBootMode = useMetaBoot
         fetchConnectedDevices()
     }
 }
 
-private extension DevicesTableScanningVM {
+private extension MWDevicesScanningVM {
 
     func makeScannerModel() -> ScannerModel {
         ScannerModel(delegate: self, scanner: metawearScanner, adTimeout: 5) { [weak self] device -> Bool in
@@ -66,14 +66,14 @@ private extension DevicesTableScanningVM {
             .map(\.value)
 
         DispatchQueue.main.async { [weak self] in
-            self?.delegate?.reloadConnectedDevices()
+            self?.delegate?.refreshConnectedDevices()
         }
     }
 
 }
 
 
-extension DevicesTableScanningVM: ScannerModelDelegate {
+extension MWDevicesScanningVM: ScannerModelDelegate {
 
     func scannerModel(_ scannerModel: ScannerModel, didAddItemAt idx: Int) {
         delegate?.didAddDiscoveredDevice(at: idx)

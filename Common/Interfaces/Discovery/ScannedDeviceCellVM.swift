@@ -1,6 +1,6 @@
 //
-//  DeviceCellVM.swift
-//  DeviceCellVM
+//  ScannedDeviceCellVM.swift
+//  ScannedDeviceCellVM
 //
 //  Created by Ryan Ferrell on 7/30/21.
 //  Copyright © 2021 MbientLab. All rights reserved.
@@ -9,13 +9,9 @@
 import Foundation
 import MetaWear
 
-public protocol DeviceCell: AnyObject {
-    func updateView()
-}
+public protocol ScannedDeviceCellVM: AnyObject {
 
-public protocol DeviceCellVM: AnyObject {
-
-    var cell:         DeviceCell?   { get set }
+    var cell:         ScannedDeviceCell?   { get set }
 
     var uuid:         String        { get }
     var rssi:         String        { get }
@@ -23,7 +19,11 @@ public protocol DeviceCellVM: AnyObject {
     var name:         String        { get }
     var signalImage:  String        { get }
 
-    func configure(_ cell: DeviceCell, for device: MetaWear?)
-    func configure(_ cell: DeviceCell, for scannerItem: ScannerModelItem?)
+    func configure(_ cell: ScannedDeviceCell, for device: MetaWear?)
+    func configure(_ cell: ScannedDeviceCell, for scannerItem: ScannerModelItem?)
     func cancelSubscriptions()
+}
+
+public protocol ScannedDeviceCell: AnyObject {
+    func refreshView()
 }

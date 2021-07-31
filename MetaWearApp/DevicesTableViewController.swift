@@ -29,7 +29,7 @@ extension DevicesTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        vm = DevicesTableScanningVM()
+        vm = MWDevicesScanningVM()
         vm.delegate = self
     }
 
@@ -55,7 +55,7 @@ extension DevicesTableViewController: DevicesScanningCoordinatorDelegate {
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
 
-    func updateScanningStatus() {
+    func refreshScanningStatus() {
         scanningSwitch.isOn = vm.isScanning
 
         if vm.isScanning {
@@ -65,11 +65,11 @@ extension DevicesTableViewController: DevicesScanningCoordinatorDelegate {
         }
     }
 
-    func updateMetaBootStatus() {
+    func refreshMetaBootStatus() {
         metaBootSwitch.isOn = vm.useMetaBootMode
     }
 
-    func reloadConnectedDevices() {
+    func refreshConnectedDevices() {
         tableView.reloadData()
     }
 
@@ -95,7 +95,7 @@ extension DevicesTableViewController {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: DeviceTableViewCell.identifier, for: indexPath) as! DeviceTableViewCell
 
-        cell.vm = DevicesTableViewCellVM()
+        cell.vm = MWScannedDeviceCellVM()
 
         let setDevice = indexPath.section == 0
         if setDevice {
@@ -122,11 +122,11 @@ extension DevicesTableViewController {
 
 
     @IBAction func scanningSwitchPressed(_ sender: UISwitch) {
-        vm.setScanningState(to: sender.isOn)
+        vm.userChangedScanningState(to: sender.isOn)
     }
     
     @IBAction func metaBootSwitchPressed(_ sender: UISwitch) {
-        vm.setUseMetaBoot(to: sender.isOn)
+        vm.userChangedUseMetaBootMode(to: sender.isOn)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
