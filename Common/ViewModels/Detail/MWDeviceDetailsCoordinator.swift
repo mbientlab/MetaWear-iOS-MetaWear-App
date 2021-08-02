@@ -16,10 +16,17 @@ import iOSDFULibrary
 import MBProgressHUD
 #endif
 
+public class DetailVMContainer {
+    public var header: DetailHeaderVM!
+
+    var configurables: [DetailConfiguring] { [header] }
+}
+
 public class MWDeviceDetailsCoordinator: NSObject {
     
     public weak var delegate: DeviceDetailsCoordinatorDelegate? = nil
-    private var deviceHeaderVM: DetailHeaderVM!
+
+    private var vms: DetailVMContainer = .init()
     
     private var device: MetaWear!
     private var initiator: DFUServiceInitiator?
@@ -54,7 +61,7 @@ extension MWDeviceDetailsCoordinator: DeviceDetailsCoordinator {
     public func start() {
         resetStreamingEvents()
         configureVMs()
-        deviceHeaderVM.start()
+        vms.header.start()
         isObserving = true
         connectDevice(true)
     }
@@ -71,7 +78,7 @@ extension MWDeviceDetailsCoordinator: DeviceDetailsCoordinator {
             device.cancelConnection()
             return
         }
-        startShowingConnectionProgressInHUDAndReadAnonymousLoggersWhenConnected()
+        attemptConnectionWithHUD()
     }
     
 }
@@ -80,7 +87,7 @@ extension MWDeviceDetailsCoordinator: DeviceDetailsCoordinator {
 private extension MWDeviceDetailsCoordinator {
     
     func configureVMs() {
-        [deviceHeaderVM].forEach {
+        vms.configurables.forEach {
             $0.configure(parent: self, device: device)
         }
     }
@@ -91,12 +98,18 @@ private extension MWDeviceDetailsCoordinator {
     }
     
     func deviceDisconnected() {
-        deviceHeaderVM.refreshConnectionState()
+        vms.header.refreshConnectionState()
         delegate?.hideAndReloadAllCells()
     }
-    
-    func deviceConnected() {
-        deviceHeaderVM.refreshConnectionState()
+
+    /// Formerly called deviceConnected() and called by
+    /// - deviceConnectedReadAnonymousLoggers (called only by connectDevice(:Bool) after a no-error HUD execution
+    /// - accelerometerBMI160StopLogPressed after logCleanup
+    /// - gyroBMI160StopLogPressed after logCleanup
+    /// - magnetometerBMM150StopLogPressed after logCleanup
+    /// - sensorFusionStopLogPressed after log cleanup
+    func reactivateDeviceCapabilitiesAfterLoggingEvent() {
+        vms.header.refreshConnectionState()
         /// lots of things
         delegate?.reloadAllCells()
     }
@@ -112,21 +125,7 @@ private extension MWDeviceDetailsCoordinator {
             }
         }
     }
-    
-    func deviceConnectedReadAnonymousLoggers() {
-        let task = device.createAnonymousDatasignals()
-        task.continueWith(.mainThread) { t in
-            //print(self.loggers)
-            if let signals = t.result {
-                for signal in signals {
-                    let cString = mbl_mw_anonymous_datasignal_get_identifier(signal)!
-                    let identifier = String(cString: cString)
-                    self.loggers[identifier] = signal
-                }
-            }
-            self.deviceConnected()
-        }
-    }
+
 }
 
 // MARK: - DeviceDetailsController Utility Functions
@@ -156,14 +155,15 @@ public extension MWDeviceDetailsCoordinator {
 
 private extension MWDeviceDetailsCoordinator {
 
-    func startShowingConnectionProgressInHUDAndReadAnonymousLoggersWhenConnected() {
+    /// First step in connecting the currently focused device. If no errors occur during connection, the HUD will disappear and deviceDidConnect() will be called.
+    func attemptConnectionWithHUD() {
 #if os(iOS)
         let window = UIApplication.shared.windows.first(where: \.isKeyWindow)!
 
         let hud = MBProgressHUD.showAdded(to: window, animated: true)
         hud.label.text = "Connecting..."
 
-        device.connectAndSetup().continueWith(.mainThread) { task in
+        device.connectAndSetup().continueWith(.mainThread) { [weak self] task in
             hud.mode = .text
 
             guard task.error == nil else {
@@ -176,12 +176,48 @@ private extension MWDeviceDetailsCoordinator {
                 return
             }
 
-            self.deviceConnectedReadAnonymousLoggers()
+            self?.deviceDidConnect()
             hud.label.text! = "Connected!"
             hud.hide(animated: true, afterDelay: 0.5)
 
         }
 #endif
     }
-}
 
+    /// Second step in connecting the currently focused device. Reads anonymous loggers. Previously called deviceConnectedReadAnonymousLoggers(). Calls the third step activateConnectedDeviceCapabilities() upon completion.
+    func deviceDidConnect() {
+        let task = device.createAnonymousDatasignals()
+        task.continueWith(.mainThread) { t in
+            //print(self.loggers)
+            if let signals = t.result {
+                for signal in signals {
+                    let cString = mbl_mw_anonymous_datasignal_get_identifier(signal)!
+                    let identifier = String(cString: cString)
+                    self.loggers[identifier] = signal
+                }
+            }
+            self.activateConnectedDeviceCapabilities()
+        }
+    }
+
+
+    /// Third step in connecting the currently focused device. Parses the device's capabilities and instructs relevant view models to display UI.
+    func activateConnectedDeviceCapabilities() {
+        vms.header.refreshConnectionState() // ## Previously manually forced switch on
+        #if DEBUG
+        print("ID: \(self.device.peripheral.identifier.uuidString) MAC: \(self.device.mac ?? "N/A")")
+        #endif
+        
+
+    }
+
+    /// Sugar for determining device captabilities
+    func featureExists(for module: MblMwModule, in board: OpaquePointer?) -> Bool {
+        mbl_mw_metawearboard_lookup_module(board, module) != MBL_MW_MODULE_TYPE_NA
+    }
+
+    /// Sugar for determining device captabilities
+    func featureIs(_ constant: Int32, for module: MblMwModule, in board: OpaquePointer?) -> Bool {
+        mbl_mw_metawearboard_lookup_module(board, module) == constant
+    }
+}

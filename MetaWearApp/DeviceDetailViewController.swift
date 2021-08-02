@@ -296,11 +296,19 @@ extension DeviceDetailViewController {
             self.deviceConnected()
         }
     }
-    
+
+    /// Transferred t oactivateConnectedDeviceCapabilities()
     func deviceConnected() {
+
+        // MARK: - DeviceHeader.refresh()
+
         connectionSwitch.setOn(true, animated: true)
         // Perform all device specific setup
         print("ID: \(self.device.peripheral.identifier.uuidString) MAC: \(self.device.mac ?? "N/A")")
+
+// MARK: - Detail...VM.start()
+// MARK: - IdentifiersVM
+
         // We always have the info and state features
         cells(self.infoAndStateCells, setHidden: false)
         mfgNameLabel.text = device.info?.manufacturer ?? "N/A"
@@ -308,12 +316,21 @@ extension DeviceDetailViewController {
         hwRevLabel.text = device.info?.hardwareRevision ?? "N/A"
         fwRevLabel.text = device.info?.firmwareRevision ?? "N/A"
         modelNumberLabel.text = "\(device.info?.modelNumber ?? "N/A") (\(String(cString: mbl_mw_metawearboard_get_model_name(device.board))))"
+
+        // MARK: - BatteryVM
+
         // Automaticaly send off some reads
         mbl_mw_settings_get_battery_state_data_signal(device.board).read().continueOnSuccessWith(.mainThread) {
             let battery: MblMwBatteryState = $0.valueAs()
             self.batteryLevelLabel.text = String(battery.charge)
         }
+
+        // MARK: - SignalStrengthVM
+
         self.rssiLevelLabel.text = String(device.rssi)
+
+        // MARK: - FirmwareAndResetVM
+
         device.checkForFirmwareUpdate().continueWith(.mainThread) {
             if let result = $0.result {
                 self.firmwareUpdateLabel.text = result != nil ? "\(result!.firmwareRev) AVAILABLE!" : "Up To Date"
@@ -321,14 +338,24 @@ extension DeviceDetailViewController {
                 self.firmwareUpdateLabel.text = "Unknown"
             }
         }
+
         let board = device.board
+
+        // MARK: - LEDVM
+
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_LED) != MBL_MW_MODULE_TYPE_NA {
             cell(ledCell, setHidden: false)
         }
+
+        // MARK: - MechanicalSwitchVM
+
         // Go through each module and enable the correct cell for the modules on this particular MetaWear
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_SWITCH) != MBL_MW_MODULE_TYPE_NA {
             cell(mechanicalSwitchCell, setHidden: false)
         }
+
+        // MARK: - TemperatureVM
+
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_TEMPERATURE) != MBL_MW_MODULE_TYPE_NA {
             cell(tempCell, setHidden: false)
             // The number of channels is variable
@@ -340,6 +367,8 @@ extension DeviceDetailViewController {
             tempChannelSelector.selectedSegmentIndex = 0
             tempChannelSelectorPressed(tempChannelSelector!)
         }
+
+        // MARK: - AccelerometerVM
         
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_ACCELEROMETER) == MetaWearCpp.MBL_MW_MODULE_ACC_TYPE_BMI160 {
             cell(accelerometerBMI160Cell, setHidden: false)
@@ -370,7 +399,9 @@ extension DeviceDetailViewController {
                 accelerometerBMI160StopStream.isEnabled = false
             }
         }
-        
+
+// MARK: - GyroVM
+
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_GYRO) != MBL_MW_MODULE_TYPE_NA {
             cell(gyroBMI160Cell, setHidden: false)
             if loggers["angular-velocity"] != nil {
@@ -385,6 +416,8 @@ extension DeviceDetailViewController {
                 gyroBMI160StopStream.isEnabled = false
             }
         }
+
+        // MARK: - MagenetometerVM
         
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_MAGNETOMETER) != MBL_MW_MODULE_TYPE_NA {
             cell(magnetometerBMM150Cell, setHidden: false)
@@ -400,6 +433,8 @@ extension DeviceDetailViewController {
                 magnetometerBMM150StopStream.isEnabled = false
             }
         }
+
+        // MARK: - GPIOVM
         
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_GPIO) != MBL_MW_MODULE_TYPE_NA {
             cell(gpioCell, setHidden: false)
@@ -411,33 +446,47 @@ extension DeviceDetailViewController {
             }
             gpioPinSelector.selectedSegmentIndex = 0
         }
+
+        // MARK: - HapticVM
         
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_HAPTIC) != MBL_MW_MODULE_TYPE_NA {
             cell(hapticCell, setHidden: false)
         }
+
+        // MARK: - iBeaconVM
         
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_IBEACON) != MBL_MW_MODULE_TYPE_NA {
             cell(iBeaconCell, setHidden: false)
         }
+
+        // MARK: - BarometerVM
         
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_BAROMETER) == MetaWearCpp.MBL_MW_MODULE_BARO_TYPE_BMP280 {
             cell(barometerBMP280Cell, setHidden: false)
         } else if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_BAROMETER) == MetaWearCpp.MBL_MW_MODULE_BARO_TYPE_BME280 {
             cell(barometerBME280Cell, setHidden: false)
         }
-        
+
+        // MARK: - AmbientLightVM
+
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_AMBIENT_LIGHT) != MBL_MW_MODULE_TYPE_NA {
             cell(ambientLightLTR329Cell, setHidden: false)
         }
+
+        // MARK: - HumidityVM
         
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_HUMIDITY) != MBL_MW_MODULE_TYPE_NA {
             cell(hygrometerBME280Cell, setHidden: false)
         }
+
+        // MARK: - I2CVM
         
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_I2C) != MBL_MW_MODULE_TYPE_NA {
             cell(i2cCell, setHidden: false)
         }
-        
+
+        // MARK: - SensorFusionVM
+
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_SENSOR_FUSION) != MBL_MW_MODULE_TYPE_NA {
             cell(sensorFusionCell, setHidden: false)
             var isLogging = true
