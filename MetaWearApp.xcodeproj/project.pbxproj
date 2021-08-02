@@ -26,6 +26,8 @@
 		94A514BA26B89A90008707ED /* MWMechanicalSwitchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B926B89A90008707ED /* MWMechanicalSwitchVC.swift */; };
 		94A514BC26B89B0C008707ED /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514BB26B89B0C008707ED /* Template.swift */; };
 		94A514BE26B8A4D5008707ED /* MWLEDVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514BD26B8A4D5008707ED /* MWLEDVC.swift */; };
+		94A514C026B8AA5A008707ED /* MWDetailIdentifierVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514BF26B8AA5A008707ED /* MWDetailIdentifierVC.swift */; };
+		94A514C226B8AD04008707ED /* MWDetailBatteryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C126B8AD04008707ED /* MWDetailBatteryVC.swift */; };
 		94AFED3526B875C6004326C8 /* MWDetaildentifiersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AFED3426B875C6004326C8 /* MWDetaildentifiersVM.swift */; };
 		94C5539226B7DF5A00E7B2DC /* DetailIdentifiersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539126B7DF5A00E7B2DC /* DetailIdentifiersVM.swift */; };
 		94C553A426B7E0F700E7B2DC /* DetailSignalStrengthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539326B7E0F600E7B2DC /* DetailSignalStrengthVM.swift */; };
@@ -89,6 +91,8 @@
 		94A514B926B89A90008707ED /* MWMechanicalSwitchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMechanicalSwitchVC.swift; sourceTree = "<group>"; };
 		94A514BB26B89B0C008707ED /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		94A514BD26B8A4D5008707ED /* MWLEDVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWLEDVC.swift; sourceTree = "<group>"; };
+		94A514BF26B8AA5A008707ED /* MWDetailIdentifierVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDetailIdentifierVC.swift; sourceTree = "<group>"; };
+		94A514C126B8AD04008707ED /* MWDetailBatteryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDetailBatteryVC.swift; sourceTree = "<group>"; };
 		94AFED3426B875C6004326C8 /* MWDetaildentifiersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDetaildentifiersVM.swift; sourceTree = "<group>"; };
 		94C5539126B7DF5A00E7B2DC /* DetailIdentifiersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailIdentifiersVM.swift; sourceTree = "<group>"; };
 		94C5539326B7E0F600E7B2DC /* DetailSignalStrengthVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailSignalStrengthVM.swift; sourceTree = "<group>"; };
@@ -235,6 +239,8 @@
 				94A514B926B89A90008707ED /* MWMechanicalSwitchVC.swift */,
 				94A514BB26B89B0C008707ED /* Template.swift */,
 				94A514BD26B8A4D5008707ED /* MWLEDVC.swift */,
+				94A514BF26B8AA5A008707ED /* MWDetailIdentifierVC.swift */,
+				94A514C126B8AD04008707ED /* MWDetailBatteryVC.swift */,
 			);
 			path = _UIViewControllers;
 			sourceTree = "<group>";
@@ -484,6 +490,7 @@
 				94C553AA26B7E0F700E7B2DC /* DetailBarometerVM.swift in Sources */,
 				AB5D5F9225B8A7B400D2591C /* DevicesTableViewController.swift in Sources */,
 				9438D94E26B453F30014FC91 /* Images.swift in Sources */,
+				94A514C026B8AA5A008707ED /* MWDetailIdentifierVC.swift in Sources */,
 				94C553B126B7E0F700E7B2DC /* DetailMagenetometerVM.swift in Sources */,
 				94C553B026B7E0F700E7B2DC /* DetailTemperatureVM.swift in Sources */,
 				94CD3AA726B3ED1400854FBA /* MWScannedDeviceCellVM.swift in Sources */,
@@ -506,6 +513,7 @@
 				AB5D5F9125B8A7B400D2591C /* DeviceTableViewCell.swift in Sources */,
 				94A514AC26B87BFB008707ED /* MWDetailBatteryVM.swift in Sources */,
 				9438D95026B45B770014FC91 /* ScannedDeviceCellVM.swift in Sources */,
+				94A514C226B8AD04008707ED /* MWDetailBatteryVC.swift in Sources */,
 				AB5D5F9925B8AA4A00D2591C /* SceneDelegate.swift in Sources */,
 				9438D95926B4692C0014FC91 /* MWDevicesScanningVM.swift in Sources */,
 				94A514B426B883D7008707ED /* MWDetailMechanicalSwitchVM.swift in Sources */,

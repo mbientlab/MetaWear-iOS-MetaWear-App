@@ -12,10 +12,15 @@ public protocol DetailBatteryVM: AnyObject, DetailConfiguring {
 
     var delegate: DetailBatteryVMDelegate? { get set }
     var batteryLevel: String { get }
+    var batteryLevelPercentage: Int { get }
 
     func start()
+
+    // Intents
+    func userRequestedBatteryLevel()
 }
 
 public protocol DetailBatteryVMDelegate: AnyObject {
     func refreshView()
+    func presentAlert(title: String, message: String)
 }

@@ -9,6 +9,7 @@ import MetaWearCpp
 public class MWDetailBatteryVM: DetailBatteryVM {
 
     public var batteryLevel = ""
+    public var batteryLevelPercentage = 0
 
     public var delegate: DetailBatteryVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
@@ -28,17 +29,27 @@ extension MWDetailBatteryVM: DetailConfiguring {
 extension MWDetailBatteryVM {
 
     public func start() {
-        updateState()
+        userRequestedBatteryLevel()
     }
+}
 
-    private func updateState() {
+// MARK: - Intents
+
+extension MWDetailBatteryVM {
+
+    public func userRequestedBatteryLevel() {
         guard let device = device else { return }
 
-        mbl_mw_settings_get_battery_state_data_signal(device.board).read().continueOnSuccessWith(.mainThread) {
-            let battery: MblMwBatteryState = $0.valueAs()
-            batteryLevel = String(battery.charge)
-        }
+        mbl_mw_settings_get_battery_state_data_signal(device.board).read().continueWith(.mainThread) {
+            if let error = $0.error {
+                self.delegate?.presentAlert(title: "Battery Error", message: error.localizedDescription)
+            } else {
+                let battery: MblMwBatteryState = $0.result!.valueAs()
+                self.batteryLevel = String(battery.charge)
+                self.batteryLevelPercentage = Int(battery.charge)
+            }
 
-        delegate?.refreshView()
+            self.delegate?.refreshView()
+        }
     }
 }

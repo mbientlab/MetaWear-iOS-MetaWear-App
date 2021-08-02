@@ -27,12 +27,12 @@ class DeviceDetailViewController: StaticDataTableViewController {
     @IBOutlet var allCells: [UITableViewCell]!  // TRANSFERRED
     
     @IBOutlet var infoAndStateCells: [UITableViewCell]!
-    @IBOutlet weak var mfgNameLabel: UILabel!
-    @IBOutlet weak var serialNumLabel: UILabel!
-    @IBOutlet weak var hwRevLabel: UILabel!
-    @IBOutlet weak var fwRevLabel: UILabel!
-    @IBOutlet weak var modelNumberLabel: UILabel!
-    @IBOutlet weak var batteryLevelLabel: UILabel!
+    @IBOutlet weak var mfgNameLabel: UILabel! // Transferred
+    @IBOutlet weak var serialNumLabel: UILabel! // Transferred
+    @IBOutlet weak var hwRevLabel: UILabel! // Transferred
+    @IBOutlet weak var fwRevLabel: UILabel! // Transferred
+    @IBOutlet weak var modelNumberLabel: UILabel! // Transferred
+    @IBOutlet weak var batteryLevelLabel: UILabel! // Transferred
     @IBOutlet weak var rssiLevelLabel: UILabel!
     @IBOutlet weak var txPowerSelector: UISegmentedControl!
     @IBOutlet weak var firmwareUpdateLabel: UILabel!
@@ -749,7 +749,8 @@ extension DeviceDetailViewController {
         mbl_mw_settings_set_device_name(device.board, name, UInt8(name.count))
         setNameButton.isEnabled = false
     }
-    
+
+    /// Transferred
     @IBAction func readBatteryPressed(_ sender: Any) {
         mbl_mw_settings_get_battery_state_data_signal(device.board).read().continueWith(.mainThread) {
             if let error = $0.error {
