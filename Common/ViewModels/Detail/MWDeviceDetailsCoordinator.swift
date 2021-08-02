@@ -221,6 +221,7 @@ private extension MWDeviceDetailsCoordinator {
         }
 
         if featureExists(for: MBL_MW_MODULE_SWITCH, in: board) {
+            vms.mechanical.start()
             delegate?.changeVisibility(of: .mechanicalSwitch, shouldShow: true)
         }
 

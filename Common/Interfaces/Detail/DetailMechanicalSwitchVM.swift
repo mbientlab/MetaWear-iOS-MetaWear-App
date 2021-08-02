@@ -3,6 +3,13 @@
 
 import Foundation
 
-protocol DetailMechanicalSwitchVM: AnyObject, DetailConfiguring {
+public protocol DetailMechanicalSwitchVM: AnyObject, DetailConfiguring {
+
+    var delegate: DetailMechanicalSwitchVMDelegate? { get set }
+
     func start()
+}
+
+public protocol DetailMechanicalSwitchVMDelegate: AnyObject {
+    func refreshView()
 }
