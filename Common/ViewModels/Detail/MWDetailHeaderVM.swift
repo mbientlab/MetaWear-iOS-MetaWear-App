@@ -10,7 +10,7 @@ import Foundation
 import MetaWear
 import MetaWearCpp
 
-public class MWDetailHeaderVM {
+public class MWDetailHeaderVM: DetailHeaderVM {
 
     public weak var delegate: DetailHeaderVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
@@ -30,7 +30,7 @@ extension MWDetailHeaderVM: DetailConfiguring {
     }
 }
 
-extension MWDetailHeaderVM: DetailHeaderVM {
+extension MWDetailHeaderVM {
 
     public func start() {
         refreshName()
