@@ -32,8 +32,23 @@ public protocol DeviceDetailsCoordinatorDelegate: AnyObject {
     /// When the device is changed, remove all displayed data and redisplay available cells.
     func hideAndReloadAllCells()
 
-    /// After a new device connects, show identifying information
-    func showAndUpdateInfoAndStateCells()
-
     func reloadAllCells()
+
+    func changeVisibility(of group: DetailGroup, shouldShow: Bool)
+}
+
+
+public enum DetailGroup {
+
+    // Minimum (reflecting existing iOS storyboard)
+    case headerInfoAndState
+    case identifiers
+    case battery
+    case signal
+    case firmware
+
+    // Features
+    case LED
+    case mechanicalSwitch
+    case temperature
 }

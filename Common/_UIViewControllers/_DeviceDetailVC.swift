@@ -58,14 +58,17 @@ extension MWDeviceDetailTableVC: DeviceDetailsCoordinatorDelegate {
         reloadData(animated: false)
     }
 
-    func showAndUpdateInfoAndStateCells() {
-        cells(self.infoAndStateCells, setHidden: false)
-    }
-
     func reloadAllCells() {
         reloadData(animated: true)
     }
 
+    func changeVisibility(of group: DetailGroup, shouldShow: Bool) {
+        switch group {
+            case .identifiers: fallthrough
+            case .headerInfoAndState: cells(self.infoAndStateCells, setHidden: false)
+            default: print("COMPLETE ENUM")
+        }
+    }
 }
 
 // MARK: - Intents

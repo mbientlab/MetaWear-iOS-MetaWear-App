@@ -18,32 +18,38 @@ import MBProgressHUD
 
 public class DetailVMContainer {
     public var header: DetailHeaderVM!
+    public var identifiers: DetailIdentifiersVM!
+    public var battery: DetailBatteryVM!
+    public var signal: DetailSignalStrengthVM!
+    public var firmware: DetailFirmwareAndResetVM!
+    public var led: DetailLEDVM!
+    public var mechanical: DetailMechanicalSwitchVM!
+    public var temperature: DetailTemperatureVM!
+
 
     var configurables: [DetailConfiguring] { [header] }
 }
 
-public class MWDeviceDetailsCoordinator: NSObject {
+public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
     
     public weak var delegate: DeviceDetailsCoordinatorDelegate? = nil
-
     private var vms: DetailVMContainer = .init()
     
     private var device: MetaWear!
     private var initiator: DFUServiceInitiator?
     private var dfuController: DFUServiceController?
-    
-    private var bmi270: Bool = false
-    
+
     /// Tracks all streaming events (even for other devices).
     private var streamingEvents: Set<OpaquePointer> = []
     private var streamingCleanup: [OpaquePointer: () -> Void] = [:]
     private var loggers: [String: OpaquePointer] = [:]
-    
+
     private var disconnectTask: Task<MetaWear>?
     private var isObserving = false {
         didSet { didSetIsObserving(oldValue) }
     }
-    
+
+    private var bmi270: Bool = false
     private var accelerometerBMI160StepCount = 0
     private var accelerometerBMI160Data: [(Int64, MblMwCartesianFloat)] = []
     private var gyroBMI160Data: [(Int64, MblMwCartesianFloat)] = []
@@ -56,7 +62,7 @@ public class MWDeviceDetailsCoordinator: NSObject {
 
 // MARK: - Coordinate ViewModels and Update Feed
 
-extension MWDeviceDetailsCoordinator: DeviceDetailsCoordinator {
+extension MWDeviceDetailsCoordinator {
     
     public func start() {
         resetStreamingEvents()
@@ -204,11 +210,37 @@ private extension MWDeviceDetailsCoordinator {
     /// Third step in connecting the currently focused device. Parses the device's capabilities and instructs relevant view models to display UI.
     func activateConnectedDeviceCapabilities() {
         vms.header.refreshConnectionState() // ## Previously manually forced switch on
-        #if DEBUG
-        print("ID: \(self.device.peripheral.identifier.uuidString) MAC: \(self.device.mac ?? "N/A")")
-        #endif
-        
+        logPeripheralIdentifier()
+        showDefaultMinimumDeviceDetail()
 
+        let board = device.board
+
+        if featureExists(for: MBL_MW_MODULE_LED, in: board) {
+            delegate?.changeVisibility(of: .LED, shouldShow: true)
+        }
+
+        if featureExists(for: MBL_MW_MODULE_SWITCH, in: board) {
+            delegate?.changeVisibility(of: .mechanicalSwitch, shouldShow: true)
+        }
+
+        if featureExists(for: MBL_MW_MODULE_TEMPERATURE, in: board) {
+            delegate?.changeVisibility(of: .temperature, shouldShow: true)
+        }
+
+        #warning("STOPPED AT LINE 358")
+    }
+
+    func showDefaultMinimumDeviceDetail() {
+        delegate?.changeVisibility(of: .headerInfoAndState, shouldShow: true)
+        delegate?.changeVisibility(of: .identifiers, shouldShow: true)
+        delegate?.changeVisibility(of: .battery, shouldShow: true)
+        delegate?.changeVisibility(of: .signal, shouldShow: true)
+        delegate?.changeVisibility(of: .firmware, shouldShow: true)
+
+        vms.identifiers.start()
+        vms.battery.start()
+        vms.signal.start()
+        vms.firmware.start()
     }
 
     /// Sugar for determining device captabilities
@@ -219,5 +251,11 @@ private extension MWDeviceDetailsCoordinator {
     /// Sugar for determining device captabilities
     func featureIs(_ constant: Int32, for module: MblMwModule, in board: OpaquePointer?) -> Bool {
         mbl_mw_metawearboard_lookup_module(board, module) == constant
+    }
+
+    func logPeripheralIdentifier() {
+#if DEBUG
+        print("ID: \(self.device.peripheral.identifier.uuidString) MAC: \(self.device.mac ?? "N/A")")
+#endif
     }
 }
