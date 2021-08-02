@@ -1465,9 +1465,11 @@ extension DeviceDetailViewController {
     @IBAction func readAnalogAbsolutePressed(_ sender: Any) {
         let pin = UInt8(gpioPinSelector.selectedSegmentIndex)
         let signal = mbl_mw_gpio_get_analog_input_data_signal(device.board, pin, MBL_MW_GPIO_ANALOG_READ_MODE_ABS_REF)!
-        signal.read().continueOnSuccessWith { data in
+        signal.read().continueOnSuccessWith { [weak self] data in
             let value: UInt32 = data.valueAs() // Units in mili volts
-            self.gpioAnalogAbsoluteValue.text = String(format: "%.3fV", Double(value) / 1000.0)
+            DispatchQueue.main.async { [weak self] in
+                self?.gpioAnalogAbsoluteValue.text = String(format: "%.3fV", Double(value) / 1000.0)
+            }
         }
     }
 
