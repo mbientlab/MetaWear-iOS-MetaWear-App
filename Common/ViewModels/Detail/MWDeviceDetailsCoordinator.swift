@@ -17,26 +17,26 @@ import MBProgressHUD
 #endif
 
 public class MWDeviceDetailsCoordinator: NSObject {
-
+    
     public weak var delegate: DeviceDetailsCoordinatorDelegate? = nil
     private var deviceHeaderVM: DetailHeaderVM!
-
+    
     private var device: MetaWear!
     private var initiator: DFUServiceInitiator?
     private var dfuController: DFUServiceController?
-
+    
     private var bmi270: Bool = false
-
+    
     /// Tracks all streaming events (even for other devices).
     private var streamingEvents: Set<OpaquePointer> = []
     private var streamingCleanup: [OpaquePointer: () -> Void] = [:]
     private var loggers: [String: OpaquePointer] = [:]
-
+    
     private var disconnectTask: Task<MetaWear>?
     private var isObserving = false {
         didSet { didSetIsObserving(oldValue) }
     }
-
+    
     private var accelerometerBMI160StepCount = 0
     private var accelerometerBMI160Data: [(Int64, MblMwCartesianFloat)] = []
     private var gyroBMI160Data: [(Int64, MblMwCartesianFloat)] = []
@@ -44,13 +44,13 @@ public class MWDeviceDetailsCoordinator: NSObject {
     private var gpioPinChangeCount = 0
     private var hygrometerBME280Event: OpaquePointer?
     private var sensorFusionData = Data()
-
+    
 }
 
 // MARK: - Coordinate ViewModels and Update Feed
 
 extension MWDeviceDetailsCoordinator: DeviceDetailsCoordinator {
-
+    
     public func start() {
         resetStreamingEvents()
         configureVMs()
@@ -58,50 +58,49 @@ extension MWDeviceDetailsCoordinator: DeviceDetailsCoordinator {
         isObserving = true
         connectDevice(true)
     }
-
+    
     public func end() {
         isObserving = false
         streamingCleanup.forEach { $0.value() }
         streamingCleanup.removeAll()
     }
-
-    /// Coordinates device connection HUD and presenting the relevant data feeds (either on appear/disappear or for a user intent).
+    
+    /// Coordinates device connection HUD and eventually presenting the relevant data feeds (either on appear/disappear or for a user intent).
     public func connectDevice(_ newState: Bool) {
         guard newState else {
             device.cancelConnection()
             return
         }
-        #warning("FINISH")
-        startShowingProgress()
+        startShowingConnectionProgressInHUDAndReadAnonymousLoggersWhenConnected()
     }
-
+    
 }
 
 /// Helpers
 private extension MWDeviceDetailsCoordinator {
-
+    
     func configureVMs() {
         [deviceHeaderVM].forEach {
             $0.configure(parent: self, device: device)
         }
     }
-
+    
     func resetStreamingEvents() {
         streamingEvents = []
         delegate?.hideAndReloadAllCells()
     }
-
+    
     func deviceDisconnected() {
         deviceHeaderVM.refreshConnectionState()
         delegate?.hideAndReloadAllCells()
     }
-
+    
     func deviceConnected() {
         deviceHeaderVM.refreshConnectionState()
         /// lots of things
         delegate?.reloadAllCells()
     }
-
+    
     func didSetIsObserving(_ oldValue: Bool) {
         if self.isObserving {
             if !oldValue {
@@ -113,7 +112,7 @@ private extension MWDeviceDetailsCoordinator {
             }
         }
     }
-
+    
     func deviceConnectedReadAnonymousLoggers() {
         let task = device.createAnonymousDatasignals()
         task.continueWith(.mainThread) { t in
@@ -133,7 +132,7 @@ private extension MWDeviceDetailsCoordinator {
 // MARK: - DeviceDetailsController Utility Functions
 
 public extension MWDeviceDetailsCoordinator {
-
+    
     /// After a user requests logging to stop, clean up device.
     func logCleanup(_ handler: @escaping (Error?) -> Void) {
         // In order for the device to actaully erase the flash memory we can't be in a connection
@@ -149,35 +148,40 @@ public extension MWDeviceDetailsCoordinator {
             handler(t.error)
         }
     }
-
+    
 }
+
 
 // MARK: - Device Connection HUD Display
 
 private extension MWDeviceDetailsCoordinator {
 
-    func startShowingProgress() {
-        #if os(iOS)
+    func startShowingConnectionProgressInHUDAndReadAnonymousLoggersWhenConnected() {
+#if os(iOS)
         let window = UIApplication.shared.windows.first(where: \.isKeyWindow)!
 
         let hud = MBProgressHUD.showAdded(to: window, animated: true)
         hud.label.text = "Connecting..."
-        device.connectAndSetup().continueWith(.mainThread) { t in
-        hud.mode = .text
-        if t.error != nil {
-            presentAlert(
-                in: window.rootViewController!,
-                title: "Error",
-                message: t.error!.localizedDescription
-            )
-            hud.hide(animated: false)
-        } else {
+
+        device.connectAndSetup().continueWith(.mainThread) { task in
+            hud.mode = .text
+
+            guard task.error == nil else {
+                presentAlert(
+                    in: window.rootViewController!,
+                    title: "Error",
+                    message: task.error!.localizedDescription
+                )
+                hud.hide(animated: false)
+                return
+            }
+
             self.deviceConnectedReadAnonymousLoggers()
             hud.label.text! = "Connected!"
             hud.hide(animated: true, afterDelay: 0.5)
-        }
-    }
-        #endif
-    }
 
+        }
+#endif
+    }
 }
+
