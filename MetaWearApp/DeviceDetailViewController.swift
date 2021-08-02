@@ -45,13 +45,13 @@ class DeviceDetailViewController: StaticDataTableViewController {
     @IBOutlet weak var ledCell: UITableViewCell!
     
     @IBOutlet weak var tempCell: UITableViewCell!
-    @IBOutlet weak var tempChannelSelector: UISegmentedControl!
-    @IBOutlet weak var channelTypeLabel: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var readPinLabel: UILabel!
-    @IBOutlet weak var readPinTextField: UITextField!
-    @IBOutlet weak var enablePinLabel: UILabel!
-    @IBOutlet weak var enablePinTextField: UITextField!
+    @IBOutlet weak var tempChannelSelector: UISegmentedControl! // Transferred
+    @IBOutlet weak var channelTypeLabel: UILabel! // Transferred
+    @IBOutlet weak var temperatureLabel: UILabel! // Transferred
+    @IBOutlet weak var readPinLabel: UILabel! // Transferred
+    @IBOutlet weak var readPinTextField: UITextField! // Transferred
+    @IBOutlet weak var enablePinLabel: UILabel! // Transferred
+    @IBOutlet weak var enablePinTextField: UITextField! // Transferred
     
     @IBOutlet weak var accelerometerBMI160Cell: UITableViewCell!
     @IBOutlet weak var accelerometerBMI160Scale: UISegmentedControl!
@@ -358,6 +358,7 @@ extension DeviceDetailViewController {
 
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_TEMPERATURE) != MBL_MW_MODULE_TYPE_NA {
             cell(tempCell, setHidden: false)
+            
             // The number of channels is variable
             tempChannelSelector.removeAllSegments()
             let channedCount = mbl_mw_multi_chnl_temp_get_num_channels(device.board)
@@ -887,7 +888,8 @@ extension DeviceDetailViewController {
     @IBAction func turnOffLEDPressed(_ sender: Any) {
         mbl_mw_led_stop_and_clear(device.board)
     }
-    
+
+    /// TRANSFERRED TO TEMPERATUREVC AND VM
     @IBAction func tempChannelSelectorPressed(_ sender: Any) {
         let source = mbl_mw_multi_chnl_temp_get_source(device.board, UInt8(tempChannelSelector.selectedSegmentIndex))
         switch source {
@@ -914,7 +916,8 @@ extension DeviceDetailViewController {
             self.enablePinTextField.isHidden = true
         }
     }
-    
+
+    /// TRANSFERRED TO TEMPERATUREVC AND VM
     @IBAction func readTemperaturePressed(_ sender: Any) {
         if channelTypeLabel.text == "BMP280" {
             mbl_mw_baro_bosch_start(device.board)
