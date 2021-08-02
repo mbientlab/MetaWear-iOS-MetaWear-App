@@ -226,6 +226,7 @@ private extension MWDeviceDetailsCoordinator {
         }
 
         if featureExists(for: MBL_MW_MODULE_TEMPERATURE, in: board) {
+            vms.temperature.start()
             delegate?.changeVisibility(of: .temperature, shouldShow: true)
         }
 
