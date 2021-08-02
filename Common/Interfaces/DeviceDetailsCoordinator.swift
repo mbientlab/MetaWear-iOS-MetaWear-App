@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import MetaWear
+import MetaWearCpp
+import BoltsSwift
 
 public protocol DeviceDetailsCoordinator: AnyObject {
 
@@ -24,6 +27,10 @@ public protocol DeviceDetailsCoordinator: AnyObject {
 
     /// Handle disconnecting and reconnecting the device for log reset.
     func logCleanup(_ handler: @escaping (Error?) -> Void)
+
+    func storeStream(_ signal: OpaquePointer)
+
+    func removeStream(_ signal: OpaquePointer)
 }
 
 
@@ -35,6 +42,8 @@ public protocol DeviceDetailsCoordinatorDelegate: AnyObject {
     func reloadAllCells()
 
     func changeVisibility(of group: DetailGroup, shouldShow: Bool)
+
+
 }
 
 

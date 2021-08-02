@@ -38,9 +38,9 @@ class DeviceDetailViewController: StaticDataTableViewController {
     @IBOutlet weak var firmwareUpdateLabel: UILabel!
     
     @IBOutlet weak var mechanicalSwitchCell: UITableViewCell!
-    @IBOutlet weak var mechanicalSwitchLabel: UILabel!
-    @IBOutlet weak var startSwitch: UIButton!
-    @IBOutlet weak var stopSwitch: UIButton!
+    @IBOutlet weak var mechanicalSwitchLabel: UILabel! /// Transferred
+    @IBOutlet weak var startSwitch: UIButton! /// Transferred
+    @IBOutlet weak var stopSwitch: UIButton! /// Transferred
     
     @IBOutlet weak var ledCell: UITableViewCell!
     
@@ -358,7 +358,7 @@ extension DeviceDetailViewController {
 
         if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_TEMPERATURE) != MBL_MW_MODULE_TYPE_NA {
             cell(tempCell, setHidden: false)
-            
+
             // The number of channels is variable
             tempChannelSelector.removeAllSegments()
             let channedCount = mbl_mw_multi_chnl_temp_get_num_channels(device.board)
@@ -837,7 +837,8 @@ extension DeviceDetailViewController {
         // Preform the soft reset
         mbl_mw_debug_reset(device.board)
     }
-    
+
+    /// Transferred
     @IBAction func startSwitchNotifyPressed(_ sender: Any) {
         startSwitch.isEnabled = false
         stopSwitch.isEnabled = true
@@ -853,7 +854,8 @@ extension DeviceDetailViewController {
             mbl_mw_datasignal_unsubscribe(signal)
         }
     }
-    
+
+    /// Transferred
     @IBAction func stopSwitchNotifyPressed(_ sender: Any) {
         startSwitch.isEnabled = true
         stopSwitch.isEnabled = false
