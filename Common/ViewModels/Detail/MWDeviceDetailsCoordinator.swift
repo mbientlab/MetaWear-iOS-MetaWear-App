@@ -216,6 +216,7 @@ private extension MWDeviceDetailsCoordinator {
         let board = device.board
 
         if featureExists(for: MBL_MW_MODULE_LED, in: board) {
+            vms.led.start()
             delegate?.changeVisibility(of: .LED, shouldShow: true)
         }
 

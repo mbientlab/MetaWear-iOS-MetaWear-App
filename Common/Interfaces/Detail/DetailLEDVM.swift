@@ -3,6 +3,13 @@
 
 import Foundation
 
-protocol DetailLEDVM: AnyObject, DetailConfiguring {
+public protocol DetailLEDVM: AnyObject, DetailConfiguring {
+
+    var delegate: DetailLEDVM? { get set }
+
     func start()
+}
+
+public protocol DetailLEDVMDelegate: AnyObject {
+    func refreshView()
 }
