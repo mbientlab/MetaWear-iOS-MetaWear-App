@@ -863,30 +863,44 @@ extension DeviceDetailViewController {
         streamingCleanup.removeValue(forKey: signal)?()
     }
 
+
+    /// Transferred
     @IBAction func turn(onGreenLEDPressed sender: Any) {
         setLedColor(MBL_MW_LED_COLOR_GREEN)
     }
-    
+
+
+    /// Transferred
     @IBAction func flashGreenLEDPressed(_ sender: Any) {
         device.flashLED(color: .green, intensity: 1.0)
     }
-    
+
+
+    /// Transferred
     @IBAction func turn(onRedLEDPressed sender: Any) {
         setLedColor(MBL_MW_LED_COLOR_RED)
     }
-    
+
+
+    /// Transferred
     @IBAction func flashRedLEDPressed(_ sender: Any) {
         device.flashLED(color: .red, intensity: 1.0)
     }
-    
+
+
+    /// Transferred
     @IBAction func turn(onBlueLEDPressed sender: Any) {
         setLedColor(MBL_MW_LED_COLOR_BLUE)
     }
-    
+
+
+    /// Transferred
     @IBAction func flashBlueLEDPressed(_ sender: Any) {
         device.flashLED(color: .blue, intensity: 1.0)
     }
-    
+
+
+    /// Transferred
     @IBAction func turnOffLEDPressed(_ sender: Any) {
         mbl_mw_led_stop_and_clear(device.board)
     }
