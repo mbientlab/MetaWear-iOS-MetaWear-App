@@ -86,6 +86,14 @@ extension MWDeviceDetailsCoordinator {
         }
         attemptConnectionWithHUD()
     }
+
+    public func storeStream(_ signal: OpaquePointer) {
+        streamingCleanup[signal] = { mbl_mw_datasignal_unsubscribe(signal) }
+    }
+
+    public func removeStream(_ signal: OpaquePointer) {
+        streamingCleanup.removeValue(forKey: signal)?()
+    }
     
 }
 
