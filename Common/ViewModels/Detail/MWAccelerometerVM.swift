@@ -169,7 +169,7 @@ extension MWDetailAccelerometerVM {
             mbl_mw_logging_flush_page(board)
         }
 
-        parent?.presentProgressHUD(label: "Downloading...")
+        parent?.hud.presentProgressHUD(label: "Downloading...", in: nil)
 
         accelerometerBMI160Data.removeAll()
         mbl_mw_logger_subscribe(logger, bridge(obj: self)) { (context, obj) in
@@ -188,18 +188,18 @@ extension MWDetailAccelerometerVM {
             let _self: MWDetailAccelerometerVM = bridge(ptr: context!)
             let progress = Double(totalEntries - remainingEntries) / Double(totalEntries)
             DispatchQueue.main.async {
-                _self.parent?.updateProgressHUD(percentage: Float(progress))
+                _self.parent?.hud.updateProgressHUD(percentage: Float(progress))
             }
             if remainingEntries == 0 {
                 DispatchQueue.main.async {
-                    _self.hud.mode = .indeterminate
-                    _self.hud.label.text = "Clearing Log..."
+                    _self.parent?.hud.updateHUD(mode: .indeterminate, newText: "Clearing log...")
                 }
-                _self.logCleanup { error in
+
+                _self.parent?.logCleanup { error in
                     DispatchQueue.main.async {
-                        _self.hud.hide(animated: true)
+                        _self.parent?.hud.closeHUD(finalMessage: nil, delay: 0)
                         if error != nil {
-                            _self.deviceConnected()
+                            _self.parent?.connectDevice(true)
                         }
                     }
                 }

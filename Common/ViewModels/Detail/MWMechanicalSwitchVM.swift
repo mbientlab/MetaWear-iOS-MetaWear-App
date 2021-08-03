@@ -55,7 +55,7 @@ extension MWDetailMechanicalSwitchVM {
             }
         }
 
-        parent?.storeStream(signal)
+        parent?.storeStream(signal, cleanup: nil)
 
         delegate?.refreshView()
     }

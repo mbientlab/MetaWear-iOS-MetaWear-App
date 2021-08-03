@@ -21,7 +21,7 @@ public class MWDetailFirmwareVM: DetailFirmwareVM {
 extension MWDetailFirmwareVM: DFUProgressDelegate {
 
     public func dfuProgressDidChange(for part: Int, outOf totalParts: Int, to progress: Int, currentSpeedBytesPerSecond: Double, avgSpeedBytesPerSecond: Double) {
-        parent?.updateProgressHUD(percentage: Float(progress) / 100)
+        parent?.hud.updateProgressHUD(percentage: Float(progress) / 100)
     }
 
 }
@@ -68,7 +68,7 @@ extension MWDetailFirmwareVM {
         guard let device = device else { return }
 
         // Pause the screen while update is going on
-        parent?.presentProgressHUD(label: "Updating...")
+        parent?.hud.presentProgressHUD(label: "Updating...", in: nil)
 
         device.updateFirmware(delegate: self).continueWith { t in
             if let error = t.error {
@@ -78,11 +78,11 @@ extension MWDetailFirmwareVM {
                         message: "Please re-connect and try again, if you can't connect, try MetaBoot Mode to recover.\nError: \(error.localizedDescription)"
                     )
 
-                    self.parent?.updateAndCloseHUD(finalMessage: "", delay: 0)
+                    self.parent?.hud.closeHUD(finalMessage: "", delay: 0)
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.parent?.updateAndCloseHUD(finalMessage: "Success", delay: nil)
+                    self.parent?.hud.closeHUD(finalMessage: "Success")
                 }
             }
         }

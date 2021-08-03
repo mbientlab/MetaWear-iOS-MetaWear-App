@@ -13,31 +13,13 @@ import BoltsSwift
 import MBProgressHUD
 import iOSDFULibrary
 
-#if os(iOS)
-import MBProgressHUD
-#endif
-
-public class DetailVMContainer {
-    public var header: DetailHeaderVM!
-    public var identifiers: DetailIdentifiersVM!
-    public var battery: DetailBatteryVM!
-    public var signal: DetailSignalStrengthVM!
-    public var firmware: DetailFirmwareVM!
-    public var led: DetailLEDVM!
-    public var mechanical: DetailMechanicalSwitchVM!
-    public var temperature: DetailTemperatureVM!
-    public var reset: DetailResetVM!
-    public var accelerometer: DetailAccelerometerVM!
-
-    var configurables: [DetailConfiguring] { [header] }
-}
-
 public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
     
     public weak var delegate: DeviceDetailsCoordinatorDelegate? = nil
     private var vms: DetailVMContainer = .init()
     
     private var device: MetaWear!
+    public private(set) var hud: HUDVM = iOSHUDVM()
 
     /// Tracks all streaming events (even for other devices).
     private var streamingEvents: Set<OpaquePointer> = []
@@ -49,16 +31,11 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
         didSet { didSetIsObserving(oldValue) }
     }
 
-    private var bmi270: Bool = false
-    private var accelerometerBMI160StepCount = 0
-    private var accelerometerBMI160Data: [(Int64, MblMwCartesianFloat)] = []
     private var gyroBMI160Data: [(Int64, MblMwCartesianFloat)] = []
     private var magnetometerBMM150Data: [(Int64, MblMwCartesianFloat)] = []
     private var gpioPinChangeCount = 0
     private var hygrometerBME280Event: OpaquePointer?
     private var sensorFusionData = Data()
-
-    private var hud: MBProgressHUD!
     
 }
 
@@ -109,23 +86,6 @@ extension MWDeviceDetailsCoordinator {
         deviceDisconnected()
     }
 
-    public func presentProgressHUD(label: String) {
-        guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
-        let hud = MBProgressHUD.showAdded(to: window, animated: true)
-        hud.mode = .determinateHorizontalBar
-        hud.label.text = "Updating..."
-    }
-
-    public func updateProgressHUD(percentage: Float) {
-        hud?.progress = percentage
-    }
-
-    public func updateAndCloseHUD(finalMessage: String, delay: Double?) {
-        guard let hud = hud else { return }
-        hud.mode = .text
-        hud.label.text = finalMessage
-        hud.hide(animated: true, afterDelay: delay ?? 2.0)
-    }
 }
 
 /// Helpers
@@ -177,7 +137,7 @@ private extension MWDeviceDetailsCoordinator {
 
 public extension MWDeviceDetailsCoordinator {
     
-    /// After a user requests logging to stop, clean up device.
+    /// After a user requests logging to stop, clean up device, then reconnect.
     func logCleanup(_ handler: @escaping (Error?) -> Void) {
         // In order for the device to actaully erase the flash memory we can't be in a connection
         // so temporally disconnect to allow flash to erase.
@@ -229,28 +189,23 @@ private extension MWDeviceDetailsCoordinator {
     /// First step in connecting the currently focused device. If no errors occur during connection, the HUD will disappear and deviceDidConnect() will be called.
     func attemptConnectionWithHUD() {
 #if os(iOS)
-        let window = UIApplication.shared.windows.first(where: \.isKeyWindow)!
-
-        self.hud = MBProgressHUD.showAdded(to: window, animated: true)
-        hud.label.text = "Connecting..."
+        hud.presentHUD(mode: .indeterminate, text: "Connecting...", in: nil)
 
         device.connectAndSetup().continueWith(.mainThread) { [weak self] task in
-            self?.hud.mode = .text
+            self?.hud.updateHUD(mode: .text, newText: nil)
 
             guard task.error == nil else {
                 presentAlert(
-                    in: window.rootViewController!,
+                    in: UIApplication.firstKeyWindow()!.rootViewController!,
                     title: "Error",
                     message: task.error!.localizedDescription
                 )
-                self?.hud.hide(animated: false)
+                self?.hud.closeHUD(finalMessage: nil, delay: 0)
                 return
             }
 
             self?.deviceDidConnect()
-            self?.hud.label.text! = "Connected!"
-            self?.hud.hide(animated: true, afterDelay: 0.5)
-
+            self?.hud.closeHUD(finalMessage: "Connected!", delay: 0.5)
         }
 #endif
     }

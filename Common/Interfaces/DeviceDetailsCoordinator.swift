@@ -16,6 +16,9 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     /// Presents relevant cells for data feeds made available
     var delegate: DeviceDetailsCoordinatorDelegate? { get set }
 
+    /// Present progress dialogs
+    var hud: HUDVM { get }
+
     var loggers: [String: OpaquePointer] { get }
 
     /// Establish device connection and display relevant data.
@@ -37,13 +40,6 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     func removeStream(_ signal: OpaquePointer)
 
     func userIntentDidCauseDeviceDisconnect()
-
-    func presentProgressHUD(label: String)
-
-    func updateProgressHUD(percentage: Float)
-
-    /// Specify nil for default 2 second delay
-    func updateAndCloseHUD(finalMessage: String, delay: Double?)
 
     func export(_ data: Data, titled: String)
 }
