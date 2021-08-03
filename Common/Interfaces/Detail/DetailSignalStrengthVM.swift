@@ -13,8 +13,14 @@ public protocol DetailSignalStrengthVM: AnyObject, DetailConfiguring {
 
     var delegate: DetailSignalStrengthVMDelegate? { get set }
     var rssiLevel: String { get }
+    var transmissionPowerLevels: [Int] { get }
+    var chosenPowerLevelIndex: Int { get }
 
     func start()
+
+    // Intents
+    func userRequestsRSSI()
+    func userChangedTransmissionPower(toIndex: Int)
 }
 
 public protocol DetailSignalStrengthVMDelegate: AnyObject {
