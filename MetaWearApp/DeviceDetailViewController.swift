@@ -33,9 +33,9 @@ class DeviceDetailViewController: StaticDataTableViewController {
     @IBOutlet weak var fwRevLabel: UILabel! // Transferred
     @IBOutlet weak var modelNumberLabel: UILabel! // Transferred
     @IBOutlet weak var batteryLevelLabel: UILabel! // Transferred
-    @IBOutlet weak var rssiLevelLabel: UILabel!
-    @IBOutlet weak var txPowerSelector: UISegmentedControl!
-    @IBOutlet weak var firmwareUpdateLabel: UILabel!
+    @IBOutlet weak var rssiLevelLabel: UILabel! // Transferred
+    @IBOutlet weak var txPowerSelector: UISegmentedControl! // Transferred
+    @IBOutlet weak var firmwareUpdateLabel: UILabel! // Transferred
     
     @IBOutlet weak var mechanicalSwitchCell: UITableViewCell!
     @IBOutlet weak var mechanicalSwitchLabel: UILabel! /// Transferred
@@ -173,7 +173,7 @@ class DeviceDetailViewController: StaticDataTableViewController {
             }
         }
     } // TRANSFERRED
-    var hud: MBProgressHUD!
+    var hud: MBProgressHUD! // transferred
     
     var controller: UIDocumentInteractionController!
     var initiator: DFUServiceInitiator?
@@ -546,58 +546,6 @@ extension DeviceDetailViewController {
         hud = MBProgressHUD.showAdded(to: UIApplication.shared.windows.first(where: \.isKeyWindow)!, animated: true)
     }
 
-    /// Transferred
-    func connectDevice(_ on: Bool) {
-        if on {
-            let hud = MBProgressHUD.showAdded(to: UIApplication.shared.windows.first(where: \.isKeyWindow)!, animated: true)
-            hud.label.text = "Connecting..."
-            device.connectAndSetup().continueWith(.mainThread) { t in
-//                t.result?.continueWith(.mainThread) { t in
-//                    self.hud.hide(animated: false)
-//                    let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
-//                    self.deviceDisconnected()
-//                    hud.mode = .text
-//                    if t.error != nil {
-//                        self.showAlertTitle("Error", message: t.error!.localizedDescription)
-//                        hud.hide(animated: false)
-//                    } else {
-//                        hud.label.text = "Disconnected!"
-//                        hud.hide(animated: true, afterDelay: 0.5)
-//                    }
-//                }
-                hud.mode = .text
-                if t.error != nil {
-                    presentAlert(
-                        in: self,
-                        title: "Error",
-                        message: t.error!.localizedDescription
-                    )
-                    hud.hide(animated: false)
-                } else {
-                    self.deviceConnectedReadAnonymousLoggers()
-                    hud.label.text! = "Connected!"
-                    hud.hide(animated: true, afterDelay: 0.5)
-                }
-            }
-        } else {
-            device.cancelConnection()
-        }
-    }
-
-    func setLedColor(_ color: MblMwLedColor) {
-        var pattern = MblMwLedPattern(high_intensity: 31,
-                                      low_intensity: 31,
-                                      rise_time_ms: 0,
-                                      high_time_ms: 2000,
-                                      fall_time_ms: 0,
-                                      pulse_duration_ms: 2000,
-                                      delay_time_ms: 0,
-                                      repeat_count: 0xFF)
-        mbl_mw_led_stop_and_clear(device.board)
-        mbl_mw_led_write_pattern(device.board, &pattern, color)
-        mbl_mw_led_play(device.board)
-    }
-
     func send(_ data: Data, title: String) {
         // Get current Time/Date
         let dateFormatter = DateFormatter()
@@ -728,6 +676,60 @@ extension DeviceDetailViewController: UITextFieldDelegate {
 
 extension DeviceDetailViewController {
 
+
+    /// Transferred
+    func connectDevice(_ on: Bool) {
+        if on {
+            let hud = MBProgressHUD.showAdded(to: UIApplication.shared.windows.first(where: \.isKeyWindow)!, animated: true)
+            hud.label.text = "Connecting..."
+            device.connectAndSetup().continueWith(.mainThread) { t in
+//                t.result?.continueWith(.mainThread) { t in
+//                    self.hud.hide(animated: false)
+//                    let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+//                    self.deviceDisconnected()
+//                    hud.mode = .text
+//                    if t.error != nil {
+//                        self.showAlertTitle("Error", message: t.error!.localizedDescription)
+//                        hud.hide(animated: false)
+//                    } else {
+//                        hud.label.text = "Disconnected!"
+//                        hud.hide(animated: true, afterDelay: 0.5)
+//                    }
+//                }
+                hud.mode = .text
+                if t.error != nil {
+                    presentAlert(
+                        in: self,
+                        title: "Error",
+                        message: t.error!.localizedDescription
+                    )
+                    hud.hide(animated: false)
+                } else {
+                    self.deviceConnectedReadAnonymousLoggers()
+                    hud.label.text! = "Connected!"
+                    hud.hide(animated: true, afterDelay: 0.5)
+                }
+            }
+        } else {
+            device.cancelConnection()
+        }
+    }
+
+    /// TRANSFERRED
+    func setLedColor(_ color: MblMwLedColor) {
+        var pattern = MblMwLedPattern(high_intensity: 31,
+                                      low_intensity: 31,
+                                      rise_time_ms: 0,
+                                      high_time_ms: 2000,
+                                      fall_time_ms: 0,
+                                      pulse_duration_ms: 2000,
+                                      delay_time_ms: 0,
+                                      repeat_count: 0xFF)
+        mbl_mw_led_stop_and_clear(device.board)
+        mbl_mw_led_write_pattern(device.board, &pattern, color)
+        mbl_mw_led_play(device.board)
+    }
+
     /// TRANSFERRED Header VC
     @IBAction func connectionSwitchPressed(_ sender: Any) {
         connectDevice(connectionSwitch.isOn)
@@ -765,18 +767,21 @@ extension DeviceDetailViewController {
             }
         }
     }
-    
+
+    /// Transferred
     @IBAction func readRSSIPressed(_ sender: Any) {
         device.readRSSI().continueOnSuccessWith(.mainThread) { rssi in
             self.rssiLevelLabel.text = String(rssi)
         }
     }
-    
+
+    /// Transferred
     @IBAction func txPowerChanged(_ sender: Any) {
         let txpower = Int8(txPowerSelector.titleForSegment(at: txPowerSelector.selectedSegmentIndex)!)!
         mbl_mw_settings_set_tx_power(device.board, txpower)
     }
-    
+
+    /// Transferred
     @IBAction func checkForFirmwareUpdatesPressed(_ sender: Any) {
         device.checkForFirmwareUpdate().continueWith(.mainThread) {
             if let error = $0.error {
@@ -790,7 +795,8 @@ extension DeviceDetailViewController {
             }
         }
     }
-    
+
+    /// Transferred
     @IBAction func updateFirmware(_ sender: Any) {
         // Pause the screen while update is going on
         updateMBProgressHUDToShowAdded()
@@ -815,21 +821,24 @@ extension DeviceDetailViewController {
             }
         }
     }
-    
+
+    /// Transferred
     @IBAction func resetDevicePressed(_ sender: Any) {
         // Resetting causes a disconnection
         deviceDisconnected()
         // Preform the soft reset
         mbl_mw_debug_reset(device.board)
     }
-    
+
+    /// Transferred
     @IBAction func factoryDefaultsPressed(_ sender: Any) {
         // Resetting causes a disconnection
         deviceDisconnected()
         // TODO: In case any pairing information is on the device mark it for removal too
         device.clearAndReset()
     }
-    
+
+    /// Transferred
     @IBAction func putToSleepPressed(_ sender: Any) {
         // Sleep causes a disconnection
         deviceDisconnected()
@@ -947,6 +956,9 @@ extension DeviceDetailViewController {
             mbl_mw_baro_bosch_stop(device.board)
         }
     }
+}
+
+extension DeviceDetailViewController {
 
     @IBAction func accelerometerBMI160StartStreamPressed(_ sender: Any) {
         accelerometerBMI160StartStream.isEnabled = false

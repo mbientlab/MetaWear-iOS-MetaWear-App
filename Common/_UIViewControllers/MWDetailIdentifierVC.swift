@@ -2,6 +2,7 @@
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
+import UIKit
 
 class MWDetailIdentifierVC: UIViewController {
 
@@ -10,7 +11,6 @@ class MWDetailIdentifierVC: UIViewController {
     @IBOutlet weak var mfgNameLabel: UILabel!
     @IBOutlet weak var serialNumLabel: UILabel!
     @IBOutlet weak var hwRevLabel: UILabel!
-    @IBOutlet weak var fwRevLabel: UILabel!
     @IBOutlet weak var modelNumberLabel: UILabel!
 
 }
@@ -29,7 +29,6 @@ extension MWDetailIdentifierVC: DetailIdentifiersVMDelegate {
         mfgNameLabel.text = vm.manufacturer
         serialNumLabel.text = vm.serialNumber
         hwRevLabel.text = vm.harwareRevision
-        fwRevLabel.text = vm.firmwareRevision
         modelNumberLabel.text = vm.modelNumber
     }
 }
@@ -38,5 +37,5 @@ extension MWDetailIdentifierVC: DetailIdentifiersVMDelegate {
 
 extension MWDetailIdentifierVC {
 
-        // Note
+        // None
 }

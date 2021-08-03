@@ -15,10 +15,10 @@ public protocol DetailIdentifiersVM: AnyObject, DetailConfiguring {
     var modelNumber: String { get }
     var serialNumber: String { get }
     var harwareRevision: String { get }
-    var firmwareRevision: String { get }
 
     /// Show relevant information
     func start()
+
 }
 
 public protocol DetailIdentifiersVMDelegate: AnyObject {
