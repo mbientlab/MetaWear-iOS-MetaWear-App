@@ -16,6 +16,7 @@
 		9453FD3926B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */; };
 		9482DC4D26B501CF00DD19EB /* _DeviceDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482DC4C26B501CF00DD19EB /* _DeviceDetailVC.swift */; };
 		9482DC4F26B5078A00DD19EB /* HeaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482DC4E26B5078A00DD19EB /* HeaderVM.swift */; };
+		9488E56F26B8EE1F006A6262 /* APLGraphView.h in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F8625B8A5CF00D2591C /* APLGraphView.h */; };
 		94A514AC26B87BFB008707ED /* MWBatteryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514AB26B87BFB008707ED /* MWBatteryVM.swift */; };
 		94A514AE26B87F17008707ED /* MWSignalStrengthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514AD26B87F17008707ED /* MWSignalStrengthVM.swift */; };
 		94A514B026B88184008707ED /* MWFirmwareVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514AF26B88184008707ED /* MWFirmwareVM.swift */; };
@@ -481,6 +482,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9488E56F26B8EE1F006A6262 /* APLGraphView.h in Sources */,
 				AB5D5F3C25B7D47300D2591C /* AppDelegate.swift in Sources */,
 				94C553AC26B7E0F700E7B2DC /* BatteryVM.swift in Sources */,
 				9482DC4F26B5078A00DD19EB /* HeaderVM.swift in Sources */,
