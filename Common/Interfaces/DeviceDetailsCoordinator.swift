@@ -40,6 +40,8 @@ public protocol DeviceDetailsCoordinator: AnyObject {
 
     /// Specify nil for default 2 second delay
     func updateAndCloseHUD(finalMessage: String, delay: Double?)
+
+    func export(_ data: Data, titled: String)
 }
 
 
@@ -51,6 +53,8 @@ public protocol DeviceDetailsCoordinatorDelegate: AnyObject {
     func reloadAllCells()
 
     func changeVisibility(of group: DetailGroup, shouldShow: Bool)
+
+    func presentFileExportDialog(fileURL: URL, saveErrorTitle: String, saveErrorMessage: String)
 
 }
 

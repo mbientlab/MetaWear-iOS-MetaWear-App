@@ -184,7 +184,33 @@ public extension MWDeviceDetailsCoordinator {
             handler(t.error)
         }
     }
-    
+
+    func export(_ data: Data, titled: String) {
+        // Get current Time/Date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM_dd_yyyy-HH_mm_ss"
+        let dateString = dateFormatter.string(from: Date())
+        let name = "\(titled)_\(dateString).csv"
+        let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(name)
+
+
+        do {
+            try data.write(to: fileURL, options: .atomic)
+#if os(iOS)
+            delegate?.presentFileExportDialog(fileURL: fileURL, saveErrorTitle: "Save Error", saveErrorMessage: "No programs installed that could save the file")
+#endif
+
+        } catch let error {
+            presentErrorAlert(title: "Save Error", message: error.localizedDescription)
+        }
+    }
+
+    private func presentErrorAlert(title: String, message: String) {
+#if os(iOS)
+        guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
+        presentAlert(in: window.rootViewController!, title: title, message: message)
+#endif
+    }
 }
 
 
@@ -261,7 +287,7 @@ private extension MWDeviceDetailsCoordinator {
             delegate?.changeVisibility(of: .temperature, shouldShow: true)
         }
 
-        #warning("STOPPED AT LINE 358")
+#warning("STOPPED AT LINE 358")
     }
 
     func showDefaultMinimumDeviceDetail() {

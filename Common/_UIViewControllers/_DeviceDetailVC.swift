@@ -13,6 +13,7 @@ import StaticDataTableViewController
 class MWDeviceDetailTableVC: StaticDataTableViewController {
 
     private let vc: DeviceDetailsCoordinator = MWDeviceDetailsCoordinator()
+    private var exportController: UIDocumentInteractionController!
 
     @IBOutlet var allCells: [UITableViewCell]!
     @IBOutlet var infoAndStateCells: [UITableViewCell]!
@@ -52,6 +53,14 @@ extension MWDeviceDetailTableVC {
 // MARK: - Update for Model Changes
 
 extension MWDeviceDetailTableVC: DeviceDetailsCoordinatorDelegate {
+
+    func presentFileExportDialog(fileURL: URL, saveErrorTitle: String, saveErrorMessage: String) {
+        self.exportController = UIDocumentInteractionController(url: fileURL)
+        if !self.exportController.presentOptionsMenu(from: view.bounds, in: view, animated: true) {
+            presentAlert(in: self, title: saveErrorTitle, message: saveErrorMessage)
+        }
+    }
+
 
     func hideAndReloadAllCells() {
         cells(allCells, setHidden: true)
