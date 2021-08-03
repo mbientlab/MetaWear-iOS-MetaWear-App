@@ -274,7 +274,7 @@ extension DeviceDetailViewController {
         }
     }
 
-    //// TRANSFERRED MWDeviceDetailsController
+    /// TRANSFERRED MWDeviceDetailsController
     func deviceDisconnected() {
         connectionSwitch.setOn(false, animated: true)
         cells(self.allCells, setHidden: true)
@@ -547,6 +547,7 @@ extension DeviceDetailViewController {
         hud = MBProgressHUD.showAdded(to: UIApplication.shared.windows.first(where: \.isKeyWindow)!, animated: true)
     }
 
+    /// Transferred
     func send(_ data: Data, title: String) {
         // Get current Time/Date
         let dateFormatter = DateFormatter()
@@ -574,6 +575,7 @@ extension DeviceDetailViewController {
         }
     }
 
+    // Transferred
     func updateAccelerometerBMI160Settings() {
         switch self.accelerometerBMI160Scale.selectedSegmentIndex {
         case 0:
@@ -960,7 +962,7 @@ extension DeviceDetailViewController {
 }
 
 extension DeviceDetailViewController {
-
+// Transferred
     @IBAction func accelerometerBMI160StartStreamPressed(_ sender: Any) {
         accelerometerBMI160StartStream.isEnabled = false
         accelerometerBMI160StopStream.isEnabled = true
@@ -987,7 +989,7 @@ extension DeviceDetailViewController {
             mbl_mw_datasignal_unsubscribe(signal)
         }
     }
-
+// Transferred
     @IBAction func accelerometerBMI160StopStreamPressed(_ sender: Any) {
         accelerometerBMI160StartStream.isEnabled = true
         accelerometerBMI160StopStream.isEnabled = false
@@ -995,7 +997,7 @@ extension DeviceDetailViewController {
         let signal = mbl_mw_acc_bosch_get_acceleration_data_signal(device.board)!
         streamingCleanup.removeValue(forKey: signal)?()
     }
-
+// Transferred
     @IBAction func accelerometerBMI160StartLogPressed(_ sender: Any) {
         accelerometerBMI160StartLog.isEnabled = false
         accelerometerBMI160StopLog.isEnabled = true
@@ -1013,7 +1015,7 @@ extension DeviceDetailViewController {
         mbl_mw_acc_enable_acceleration_sampling(device.board)
         mbl_mw_acc_start(device.board)
     }
-
+// Transferred
     @IBAction func accelerometerBMI160StopLogPressed(_ sender: Any) {
         accelerometerBMI160StartLog.isEnabled = true
         accelerometerBMI160StopLog.isEnabled = false
@@ -1072,7 +1074,7 @@ extension DeviceDetailViewController {
         }
         mbl_mw_logging_download(device.board, 100, &handlers)
     }
-
+// Transferred
     @IBAction func accelerometerBMI160EmailDataPressed(_ sender: Any) {
         var accelerometerData = Data()
         for dataElement in accelerometerBMI160Data {
@@ -1080,7 +1082,7 @@ extension DeviceDetailViewController {
         }
         send(accelerometerData, title: "AccData")
     }
-    
+    // Transferred
     @IBAction func accelerometerBMI160StartOrientPressed(_ sender: Any) {
         if !bmi270 {
             accelerometerBMI160StartOrient.isEnabled = false
@@ -1123,7 +1125,7 @@ extension DeviceDetailViewController {
             }
         }
     }
-
+// Transferred
     @IBAction func accelerometerBMI160StopOrientPressed(_ sender: Any) {
         if !bmi270 {
             accelerometerBMI160StartOrient.isEnabled = true
@@ -1133,7 +1135,7 @@ extension DeviceDetailViewController {
             accelerometerBMI160OrientLabel.text = "XXXXXXXXXXXXXX"
         }
     }
-
+// Transferred
     @IBAction func accelerometerBMI160StartStepPressed(_ sender: Any) {
         if !bmi270 {
             accelerometerBMI160StartStep.isEnabled = false
@@ -1157,7 +1159,7 @@ extension DeviceDetailViewController {
             }
         }
     }
-
+// Transferred
     @IBAction func accelerometerBMI160StopStepPressed(_ sender: Any) {
         if !bmi270 {
             accelerometerBMI160StartStep.isEnabled = true
