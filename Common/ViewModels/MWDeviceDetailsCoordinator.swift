@@ -42,7 +42,7 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
     /// Tracks all streaming events (even for other devices).
     private var streamingEvents: Set<OpaquePointer> = []
     private var streamingCleanup: [OpaquePointer: () -> Void] = [:]
-    private var loggers: [String: OpaquePointer] = [:]
+    public var loggers: [String: OpaquePointer] = [:]
 
     private var disconnectTask: Task<MetaWear>?
     private var isObserving = false {
@@ -89,12 +89,20 @@ extension MWDeviceDetailsCoordinator {
         attemptConnectionWithHUD()
     }
 
-    public func storeStream(_ signal: OpaquePointer) {
-        streamingCleanup[signal] = { mbl_mw_datasignal_unsubscribe(signal) }
+    public func storeStream(_ signal: OpaquePointer, cleanup: (() -> Void)? ) {
+        streamingCleanup[signal] = cleanup ?? { mbl_mw_datasignal_unsubscribe(signal) }
     }
 
     public func removeStream(_ signal: OpaquePointer) {
         streamingCleanup.removeValue(forKey: signal)?()
+    }
+
+    public func addLog(_ log: String, _ pointer: OpaquePointer) {
+        loggers[log] = pointer
+    }
+
+    @discardableResult public func removeLog(_ log: String) -> OpaquePointer? {
+        loggers.removeValue(forKey: log)
     }
 
     public func userIntentDidCauseDeviceDisconnect() {
@@ -288,6 +296,13 @@ private extension MWDeviceDetailsCoordinator {
         }
 
 #warning("STOPPED AT LINE 358")
+
+        let accelerometer = mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_ACCELEROMETER)
+        if AccelerometerModel.allCases.map(\.int32Value).contains(accelerometer) {
+            vms.accelerometer.start()
+            delegate?.changeVisibility(of: .accelerometer, shouldShow: true)
+        }
+
     }
 
     func showDefaultMinimumDeviceDetail() {
@@ -321,3 +336,4 @@ private extension MWDeviceDetailsCoordinator {
 #endif
     }
 }
+

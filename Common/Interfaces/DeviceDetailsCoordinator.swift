@@ -16,6 +16,8 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     /// Presents relevant cells for data feeds made available
     var delegate: DeviceDetailsCoordinatorDelegate? { get set }
 
+    var loggers: [String: OpaquePointer] { get }
+
     /// Establish device connection and display relevant data.
     func start()
 
@@ -27,8 +29,10 @@ public protocol DeviceDetailsCoordinator: AnyObject {
 
     /// Handle disconnecting and reconnecting the device for log reset.
     func logCleanup(_ handler: @escaping (Error?) -> Void)
+    func addLog(_ log: String, _ pointer: OpaquePointer)
+    @discardableResult func removeLog(_ log: String) -> OpaquePointer?
 
-    func storeStream(_ signal: OpaquePointer)
+    func storeStream(_ signal: OpaquePointer, cleanup: (() -> Void)? )
 
     func removeStream(_ signal: OpaquePointer)
 
