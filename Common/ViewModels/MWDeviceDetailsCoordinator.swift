@@ -38,8 +38,6 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
     private var vms: DetailVMContainer = .init()
     
     private var device: MetaWear!
-    private var initiator: DFUServiceInitiator?
-    private var dfuController: DFUServiceController?
 
     /// Tracks all streaming events (even for other devices).
     private var streamingEvents: Set<OpaquePointer> = []

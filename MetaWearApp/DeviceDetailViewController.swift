@@ -176,8 +176,8 @@ class DeviceDetailViewController: StaticDataTableViewController {
     var hud: MBProgressHUD! // transferred
     
     var controller: UIDocumentInteractionController!
-    var initiator: DFUServiceInitiator?
-    var dfuController: DFUServiceController?
+    var initiator: DFUServiceInitiator? // Unused
+    var dfuController: DFUServiceController? // Unused
 
 }
 
@@ -528,6 +528,7 @@ extension DeviceDetailViewController {
 
 extension DeviceDetailViewController: DFUProgressDelegate {
 
+    /// Transferred
     func dfuProgressDidChange(for part: Int,
                               outOf totalParts: Int,
                               to progress: Int,
