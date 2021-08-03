@@ -8,9 +8,27 @@ import MetaWearCpp
 
 public class MWDetailAccelerometerVM: DetailAccelerometerVM {
 
+    public private(set) var isLogging = false
+    public private(set) var isStreaming = false
+    public private(set) var allowsNewLogging = false
+    public private(set) var allowsNewStreaming = false
+    private var loggingKey = "acceleration"
+
+    public private(set) var isStepping = false
+    public private(set) var stepCount = 0
+    public private(set) var stepCountString = ""
+
+    public private(set) var orientation = ""
+    public private(set) var isOrienting = false
+
+    public private(set) var graphScales = AccelerometerGraphScale.allCases
+    public private(set) var graphScaleSelected = AccelerometerGraphScale.two
+    public private(set) var samplingFrequencies = AccelerometerSampleFrequency.allCases
+    public private(set) var samplingFrequencySelected = AccelerometerSampleFrequency.hz800
 
 
-    private var accelerometerBMI160StepCount = 0
+    lazy private var model: AccelerometerModel? = getAccelerometerModel()
+
     private var accelerometerBMI160Data: [(Int64, MblMwCartesianFloat)] = []
 
     public var delegate: DetailAccelerometerVMDelegate? = nil
@@ -30,57 +48,27 @@ extension MWDetailAccelerometerVM: DetailConfiguring {
 
 extension MWDetailAccelerometerVM {
 
-    public func start() {
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_ACCELEROMETER) == MetaWearCpp.MBL_MW_MODULE_ACC_TYPE_BMI160 {
-            cell(accelerometerBMI160Cell, setHidden: false)
-            bmi270 = false
-            if loggers["acceleration"] != nil {
-                accelerometerBMI160StartLog.isEnabled = false
-                accelerometerBMI160StopLog.isEnabled = true
-                accelerometerBMI160StartStream.isEnabled = false
-                accelerometerBMI160StopStream.isEnabled = false
-            } else {
-                accelerometerBMI160StartLog.isEnabled = true
-                accelerometerBMI160StopLog.isEnabled = false
-                accelerometerBMI160StartStream.isEnabled = true
-                accelerometerBMI160StopStream.isEnabled = false
-            }
-        } else if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_ACCELEROMETER) == MetaWearCpp.MBL_MW_MODULE_ACC_TYPE_BMI270 {
-            cell(accelerometerBMI160Cell, setHidden: false)
-            bmi270 = true
-            if loggers["acceleration"] != nil {
-                accelerometerBMI160StartLog.isEnabled = false
-                accelerometerBMI160StopLog.isEnabled = true
-                accelerometerBMI160StartStream.isEnabled = false
-                accelerometerBMI160StopStream.isEnabled = false
-            } else {
-                accelerometerBMI160StartLog.isEnabled = true
-                accelerometerBMI160StopLog.isEnabled = false
-                accelerometerBMI160StartStream.isEnabled = true
-                accelerometerBMI160StopStream.isEnabled = false
-            }
-        }
+    private func getAccelerometerModel() -> AccelerometerModel? {
+        guard let board = device?.board else { return nil }
+        return .init(board: board)
     }
 
+    public func start() {
+        guard device?.board != nil else { return }
+        guard model == .bmi160 || model == .bmi270 else { return }
+        isStreaming = false
+        isLogging = parent?.loggers["acceleration"] != nil
+        allowsNewStreaming = !isStreaming && !isLogging
+        allowsNewLogging = !isLogging
+    }
+
+    /// Send user preferences to device before starting a new stream
     func updateAccelerometerBMI160Settings() {
-        switch self.accelerometerBMI160Scale.selectedSegmentIndex {
-        case 0:
-            mbl_mw_acc_bosch_set_range(device.board, MBL_MW_ACC_BOSCH_RANGE_2G)
-            self.accelerometerBMI160Graph.fullScale = 2
-        case 1:
-            mbl_mw_acc_bosch_set_range(device.board, MBL_MW_ACC_BOSCH_RANGE_4G)
-            self.accelerometerBMI160Graph.fullScale = 4
-        case 2:
-            mbl_mw_acc_bosch_set_range(device.board, MBL_MW_ACC_BOSCH_RANGE_8G)
-            self.accelerometerBMI160Graph.fullScale = 8
-        case 3:
-            mbl_mw_acc_bosch_set_range(device.board, MBL_MW_ACC_BOSCH_RANGE_16G)
-            self.accelerometerBMI160Graph.fullScale = 16
-        default:
-            fatalError("Unexpected accelerometerBMI160Scale value")
-        }
-        mbl_mw_acc_set_odr(device.board, Float(accelerometerBMI160Frequency.titleForSegment(at: accelerometerBMI160Frequency.selectedSegmentIndex)!)!)
-        mbl_mw_acc_bosch_write_acceleration_config(device.board)
+        guard let board = device?.board else { return }
+
+        mbl_mw_acc_bosch_set_range(board, graphScaleSelected.cppEnumValue)
+        mbl_mw_acc_set_odr(board, samplingFrequencySelected.frequency)
+        mbl_mw_acc_bosch_write_acceleration_config(board)
     }
 }
 
@@ -88,13 +76,15 @@ extension MWDetailAccelerometerVM {
 
 extension MWDetailAccelerometerVM {
 
-    public func x() {
-        guard let device = device else { return }
-
-
+    public func userDidSelectSamplingFrequency(_ frequency: AccelerometerSampleFrequency) {
+        <#code#>
     }
 
-    func userRequestedRequestedToEmailData() {
+    public func userDidSelectGraphScale(_ scale: AccelerometerGraphScale) {
+        <#code#>
+    }
+
+    public func userRequestedDatExport() {
         var accelerometerData = Data()
         for dataElement in accelerometerBMI160Data {
             accelerometerData.append("\(dataElement.0),\(dataElement.1.x),\(dataElement.1.y),\(dataElement.1.z)\n".data(using: String.Encoding.utf8)!)
@@ -102,80 +92,89 @@ extension MWDetailAccelerometerVM {
         parent?.export(accelerometerData, titled: "AccData")
     }
 
-    @IBAction func accelerometerBMI160StartStreamPressed(_ sender: Any) {
-        accelerometerBMI160StartStream.isEnabled = false
-        accelerometerBMI160StopStream.isEnabled = true
-        accelerometerBMI160StartLog.isEnabled = false
-        accelerometerBMI160StopLog.isEnabled = false
+    public func userRequestedStartStreaming() {
+        isStreaming = true
+        allowsNewStreaming = false
+        isLogging = false
+        allowsNewLogging = false
+
+        guard let board = device?.board else { return }
+
         updateAccelerometerBMI160Settings()
         accelerometerBMI160Data.removeAll()
-        let signal = mbl_mw_acc_bosch_get_acceleration_data_signal(device.board)!
+        let signal = mbl_mw_acc_bosch_get_acceleration_data_signal(board)!
         mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
             let acceleration: MblMwCartesianFloat = obj!.pointee.valueAs()
-            let _self: DeviceDetailViewController = bridge(ptr: context!)
+            let _self: MWDetailAccelerometerVM = bridge(ptr: context!)
             DispatchQueue.main.async {
                 _self.accelerometerBMI160Graph.addX(Double(acceleration.x), y: Double(acceleration.y), z: Double(acceleration.z))
             }
             // Add data to data array for saving
             _self.accelerometerBMI160Data.append((obj!.pointee.epoch, acceleration))
         }
-        mbl_mw_acc_enable_acceleration_sampling(device.board)
-        mbl_mw_acc_start(device.board)
+        mbl_mw_acc_enable_acceleration_sampling(board)
+        mbl_mw_acc_start(board)
 
-        streamingCleanup[signal] = {
-            mbl_mw_acc_stop(self.device.board)
-            mbl_mw_acc_disable_acceleration_sampling(self.device.board)
+        let cleanup = {
+            mbl_mw_acc_stop(board)
+            mbl_mw_acc_disable_acceleration_sampling(board)
             mbl_mw_datasignal_unsubscribe(signal)
         }
+        parent?.storeStream(signal, cleanup: cleanup)
     }
 
+    public func userRequestedStopStreaming() {
+        isStreaming = false
+        isLogging = false
+        allowsNewStreaming = true
+        allowsNewLogging = true
 
-    @IBAction func accelerometerBMI160StopStreamPressed(_ sender: Any) {
-        accelerometerBMI160StartStream.isEnabled = true
-        accelerometerBMI160StopStream.isEnabled = false
-        accelerometerBMI160StartLog.isEnabled = true
-        let signal = mbl_mw_acc_bosch_get_acceleration_data_signal(device.board)!
-        streamingCleanup.removeValue(forKey: signal)?()
+        guard let board = device?.board else { return }
+        let signal = mbl_mw_acc_bosch_get_acceleration_data_signal(board)!
+        parent?.removeStream(signal)
     }
 
-    @IBAction func accelerometerBMI160StartLogPressed(_ sender: Any) {
-        accelerometerBMI160StartLog.isEnabled = false
-        accelerometerBMI160StopLog.isEnabled = true
-        accelerometerBMI160StartStream.isEnabled = false
-        accelerometerBMI160StopStream.isEnabled = false
+    public func userRequestedStartLogging() {
+        isStreaming = false
+        isLogging = true
+        allowsNewStreaming = false
+        allowsNewLogging = false
+
         updateAccelerometerBMI160Settings()
-        let signal = mbl_mw_acc_bosch_get_acceleration_data_signal(device.board)!
+        guard let board = device?.board else { return }
+
+        let signal = mbl_mw_acc_bosch_get_acceleration_data_signal(board)!
         mbl_mw_datasignal_log(signal, bridge(obj: self)) { (context, logger) in
-            let _self: DeviceDetailViewController = bridge(ptr: context!)
+            let _self: MWDetailAccelerometerVM = bridge(ptr: context!)
             let cString = mbl_mw_logger_generate_identifier(logger)!
             let identifier = String(cString: cString)
-            _self.loggers[identifier] = logger!
+            _self.loggingKey = identifier
+            _self.parent?.addLog(identifier, logger!)
         }
-        mbl_mw_logging_start(device.board, 0)
-        mbl_mw_acc_enable_acceleration_sampling(device.board)
-        mbl_mw_acc_start(device.board)
+        mbl_mw_logging_start(board, 0)
+        mbl_mw_acc_enable_acceleration_sampling(board)
+        mbl_mw_acc_start(board)
     }
 
-    @IBAction func accelerometerBMI160StopLogPressed(_ sender: Any) {
-        accelerometerBMI160StartLog.isEnabled = true
-        accelerometerBMI160StopLog.isEnabled = false
-        accelerometerBMI160StartStream.isEnabled = true
-        guard let logger = loggers.removeValue(forKey: "acceleration") else {
-            return
-        }
-        mbl_mw_acc_stop(device.board)
-        mbl_mw_acc_disable_acceleration_sampling(device.board)
-        if bmi270 {
-            mbl_mw_logging_flush_page(device.board)
+    public func userRequestedStopAndDownloadLog() {
+        isStreaming = false
+        isLogging = false
+        allowsNewStreaming = true
+        allowsNewLogging = true
+        guard let board = device?.board else { return }
+        guard let logger = parent?.removeLog(loggingKey) else { return }
+        mbl_mw_acc_stop(board)
+        mbl_mw_acc_disable_acceleration_sampling(board)
+        if model == .bmi270 {
+            mbl_mw_logging_flush_page(board)
         }
 
-        updateMBProgressHUDToShowAdded()
-        hud.mode = .determinateHorizontalBar
-        hud.label.text = "Downloading..."
+        parent?.presentProgressHUD(label: "Downloading...")
+
         accelerometerBMI160Data.removeAll()
         mbl_mw_logger_subscribe(logger, bridge(obj: self)) { (context, obj) in
             let acceleration: MblMwCartesianFloat = obj!.pointee.valueAs()
-            let _self: DeviceDetailViewController = bridge(ptr: context!)
+            let _self: MWDetailAccelerometerVM = bridge(ptr: context!)
             DispatchQueue.main.async {
                 _self.accelerometerBMI160Graph.addX(Double(acceleration.x), y: Double(acceleration.y), z: Double(acceleration.z))
             }
@@ -186,10 +185,10 @@ extension MWDetailAccelerometerVM {
         var handlers = MblMwLogDownloadHandler()
         handlers.context = bridgeRetained(obj: self)
         handlers.received_progress_update = { (context, remainingEntries, totalEntries) in
-            let _self: DeviceDetailViewController = bridge(ptr: context!)
+            let _self: MWDetailAccelerometerVM = bridge(ptr: context!)
             let progress = Double(totalEntries - remainingEntries) / Double(totalEntries)
             DispatchQueue.main.async {
-                _self.hud.progress = Float(progress)
+                _self.parent?.updateProgressHUD(percentage: Float(progress))
             }
             if remainingEntries == 0 {
                 DispatchQueue.main.async {
@@ -212,96 +211,102 @@ extension MWDetailAccelerometerVM {
         handlers.received_unhandled_entry = { (context, data) in
             print("received_unhandled_entry")
         }
-        mbl_mw_logging_download(device.board, 100, &handlers)
+        mbl_mw_logging_download(board, 100, &handlers)
     }
 
+    public func userRequestedStartOrienting() {
+        guard model != .bmi270 else { return }
+        guard let board = device?.board else { return }
 
+        isOrienting = true
+        updateAccelerometerBMI160Settings()
 
-    @IBAction func accelerometerBMI160StartOrientPressed(_ sender: Any) {
-        if !bmi270 {
-            accelerometerBMI160StartOrient.isEnabled = false
-            accelerometerBMI160StopOrient.isEnabled = true
-            updateAccelerometerBMI160Settings()
-            let signal = mbl_mw_acc_bosch_get_orientation_detection_data_signal(device.board)!
-            mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
-                let orientation: MblMwSensorOrientation = obj!.pointee.valueAs()
-                let _self: DeviceDetailViewController = bridge(ptr: context!)
-                DispatchQueue.main.async {
-                    switch orientation {
+        let signal = mbl_mw_acc_bosch_get_orientation_detection_data_signal(board)!
+        mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
+            let orientation: MblMwSensorOrientation = obj!.pointee.valueAs()
+            let _self: MWDetailAccelerometerVM = bridge(ptr: context!)
+            DispatchQueue.main.async {
+                switch orientation {
                     case MBL_MW_SENSOR_ORIENTATION_FACE_UP_PORTRAIT_UPRIGHT:
-                        _self.accelerometerBMI160OrientLabel.text = "Portrait Face Up"
+                        _self.orientation = "Portrait Face Up"
                     case MBL_MW_SENSOR_ORIENTATION_FACE_UP_PORTRAIT_UPSIDE_DOWN:
-                        _self.accelerometerBMI160OrientLabel.text = "Portrait Upside Down Face Up"
+                        _self.orientation = "Portrait Upside Down Face Up"
                     case MBL_MW_SENSOR_ORIENTATION_FACE_UP_LANDSCAPE_LEFT:
-                        _self.accelerometerBMI160OrientLabel.text = "Landscape Left Face Up"
+                        _self.orientation = "Landscape Left Face Up"
                     case MBL_MW_SENSOR_ORIENTATION_FACE_UP_LANDSCAPE_RIGHT:
-                        _self.accelerometerBMI160OrientLabel.text = "Landscape Right Face Up"
+                        _self.orientation = "Landscape Right Face Up"
                     case MBL_MW_SENSOR_ORIENTATION_FACE_DOWN_PORTRAIT_UPRIGHT:
-                        _self.accelerometerBMI160OrientLabel.text = "Portrait Face Down"
+                        _self.orientation = "Portrait Face Down"
                     case MBL_MW_SENSOR_ORIENTATION_FACE_DOWN_PORTRAIT_UPSIDE_DOWN:
-                        _self.accelerometerBMI160OrientLabel.text = "Portrait Upside Down Face Down"
+                        _self.orientation = "Portrait Upside Down Face Down"
                     case MBL_MW_SENSOR_ORIENTATION_FACE_DOWN_LANDSCAPE_LEFT:
-                        _self.accelerometerBMI160OrientLabel.text = "Landscape Left Face Down"
+                        _self.orientation = "Landscape Left Face Down"
                     case MBL_MW_SENSOR_ORIENTATION_FACE_DOWN_LANDSCAPE_RIGHT:
-                        _self.accelerometerBMI160OrientLabel.text = "Landscape Right Face Down"
+                        _self.orientation = "Landscape Right Face Down"
                     default:
-                        _self.accelerometerBMI160OrientLabel.text = "N/A"
-                    }
+                        _self.orientation = "N/A"
                 }
             }
-            mbl_mw_acc_bosch_enable_orientation_detection(device.board)
-            mbl_mw_acc_start(device.board)
-
-            streamingCleanup[signal] = {
-                mbl_mw_acc_stop(self.device.board)
-                mbl_mw_acc_bosch_disable_orientation_detection(self.device.board)
-                mbl_mw_datasignal_unsubscribe(signal)
-            }
         }
+        mbl_mw_acc_bosch_enable_orientation_detection(board)
+        mbl_mw_acc_start(board)
+
+
+        let cleanup = {
+            mbl_mw_acc_stop(board)
+            mbl_mw_acc_bosch_disable_orientation_detection(board)
+            mbl_mw_datasignal_unsubscribe(signal)
+        }
+        parent?.storeStream(signal, cleanup: cleanup)
     }
 
-    @IBAction func accelerometerBMI160StopOrientPressed(_ sender: Any) {
-        if !bmi270 {
-            accelerometerBMI160StartOrient.isEnabled = true
-            accelerometerBMI160StopOrient.isEnabled = false
-            let signal = mbl_mw_acc_bosch_get_orientation_detection_data_signal(device.board)!
-            streamingCleanup.removeValue(forKey: signal)?()
-            accelerometerBMI160OrientLabel.text = "XXXXXXXXXXXXXX"
-        }
+    public func userRequestedStopOrienting() {
+        guard model != .bmi270 else { return }
+        guard let board = device?.board else { return }
+
+        isOrienting = false
+        orientation = "XXXXXXXXXXXXXX"
+
+        let signal = mbl_mw_acc_bosch_get_orientation_detection_data_signal(board)!
+        parent?.removeStream(signal)
     }
 
-    @IBAction func accelerometerBMI160StartStepPressed(_ sender: Any) {
-        if !bmi270 {
-            accelerometerBMI160StartStep.isEnabled = false
-            accelerometerBMI160StopStep.isEnabled = true
-            updateAccelerometerBMI160Settings()
-            let signal = mbl_mw_acc_bmi160_get_step_detector_data_signal(device.board)!
-            mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
-                let _self: DeviceDetailViewController = bridge(ptr: context!)
-                _self.accelerometerBMI160StepCount += 1
-                DispatchQueue.main.async {
-                    _self.accelerometerBMI160StepLabel.text = "Step Count: \(_self.accelerometerBMI160StepCount)"
-                }
-            }
-            mbl_mw_acc_bmi160_enable_step_detector(device.board)
-            mbl_mw_acc_start(device.board)
+    public func userRequestedStartStepping() {
+        guard model != .bmi270 else { return }
+        guard let board = device?.board else { return }
 
-            streamingCleanup[signal] = {
-                mbl_mw_acc_stop(self.device.board)
-                mbl_mw_acc_bmi160_disable_step_detector(self.device.board)
-                mbl_mw_datasignal_unsubscribe(signal)
+        isStepping = true
+        updateAccelerometerBMI160Settings()
+
+        let signal = mbl_mw_acc_bmi160_get_step_detector_data_signal(board)!
+        mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
+            let _self: MWDetailAccelerometerVM = bridge(ptr: context!)
+            _self.accelerometerBMI160StepCount += 1
+            DispatchQueue.main.async {
+                _self.accelerometerBMI160StepLabel.text = "Step Count: \(_self.accelerometerBMI160StepCount)"
             }
         }
+        mbl_mw_acc_bmi160_enable_step_detector(board)
+        mbl_mw_acc_start(board)
+
+
+        let cleanup = {
+            mbl_mw_acc_stop(board)
+            mbl_mw_acc_bmi160_disable_step_detector(board)
+            mbl_mw_datasignal_unsubscribe(signal)
+        }
+        parent?.storeStream(signal, cleanup: cleanup)
     }
 
-    @IBAction func accelerometerBMI160StopStepPressed(_ sender: Any) {
-        if !bmi270 {
-            accelerometerBMI160StartStep.isEnabled = true
-            accelerometerBMI160StopStep.isEnabled = false
-            let signal = mbl_mw_acc_bmi160_get_step_detector_data_signal(device.board)!
-            streamingCleanup.removeValue(forKey: signal)?()
-            accelerometerBMI160StepCount = 0
-            accelerometerBMI160StepLabel.text = "Step Count: 0"
-        }
+    public func userRequestedStopStepping() {
+        guard model != .bmi270 else { return }
+        guard let board = device?.board else { return }
+
+        isStepping = false
+        stepCount = 0
+        stepCountString = "Step Count: 0"
+
+        let signal = mbl_mw_acc_bmi160_get_step_detector_data_signal(board)!
+        parent?.removeStream(signal)
     }
 }

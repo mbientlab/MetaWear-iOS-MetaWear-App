@@ -14,6 +14,8 @@
 		9438D95926B4692C0014FC91 /* MWDevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95826B4692C0014FC91 /* MWDevicesScanningVM.swift */; };
 		9438D95C26B47C990014FC91 /* String+Drop0xPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */; };
 		9453FD3926B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */; };
+		9473587926B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */; };
+		9473587B26B92D610032EE87 /* AccelerometerSampleFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */; };
 		9482DC4D26B501CF00DD19EB /* _DeviceDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482DC4C26B501CF00DD19EB /* _DeviceDetailVC.swift */; };
 		9482DC4F26B5078A00DD19EB /* HeaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482DC4E26B5078A00DD19EB /* HeaderVM.swift */; };
 		9488E56F26B8EE1F006A6262 /* APLGraphView.h in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F8625B8A5CF00D2591C /* APLGraphView.h */; };
@@ -87,6 +89,8 @@
 		9438D95826B4692C0014FC91 /* MWDevicesScanningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDevicesScanningVM.swift; sourceTree = "<group>"; };
 		9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Drop0xPrefix.swift"; sourceTree = "<group>"; };
 		9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDeviceDetailsCoordinator.swift; sourceTree = "<group>"; };
+		9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWearEnumsSwiftBridges.swift; sourceTree = "<group>"; };
+		9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerometerSampleFrequency.swift; sourceTree = "<group>"; };
 		9482DC4C26B501CF00DD19EB /* _DeviceDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _DeviceDetailVC.swift; sourceTree = "<group>"; };
 		9482DC4E26B5078A00DD19EB /* HeaderVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderVM.swift; sourceTree = "<group>"; };
 		9488E57026B8EF5B006A6262 /* MWAccelerometerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccelerometerVC.swift; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 			children = (
 				9438D94D26B453F30014FC91 /* Images.swift */,
 				94F3316E26B530500015EE88 /* UserDefaults.swift */,
+				9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */,
+				9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -524,9 +530,11 @@
 				AB5D5F9025B8A7B400D2591C /* DeviceDetailViewController.swift in Sources */,
 				94C553AD26B7E0F700E7B2DC /* SensorFusionVM.swift in Sources */,
 				9488E57326B8F018006A6262 /* MWAccelerometerVM.swift in Sources */,
+				9473587B26B92D610032EE87 /* AccelerometerSampleFrequency.swift in Sources */,
 				9438D95C26B47C990014FC91 /* String+Drop0xPrefix.swift in Sources */,
 				94C553A826B7E0F700E7B2DC /* HumidityVM.swift in Sources */,
 				94F3316D26B52FD90015EE88 /* DetailConfiguring.swift in Sources */,
+				9473587926B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift in Sources */,
 				94A514CA26B8CD6F008707ED /* MWResetVC.swift in Sources */,
 				94C553A926B7E0F700E7B2DC /* BeaconVM.swift in Sources */,
 				94A514BE26B8A4D5008707ED /* MWLEDVC.swift in Sources */,

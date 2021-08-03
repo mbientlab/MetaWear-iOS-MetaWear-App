@@ -27,7 +27,7 @@ public class DetailVMContainer {
     public var mechanical: DetailMechanicalSwitchVM!
     public var temperature: DetailTemperatureVM!
     public var reset: DetailResetVM!
-
+    public var accelerometer: DetailAccelerometerVM!
 
     var configurables: [DetailConfiguring] { [header] }
 }

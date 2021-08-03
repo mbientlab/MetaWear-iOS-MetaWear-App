@@ -60,11 +60,11 @@ extension MWAccelerometerVC {
     }
 
     @IBAction func accelerometerBMI160StopLogPressed(_ sender: Any) {
-        vm.userRequestedStopLogging()
+        vm.userRequestedStopAndDownloadLog()
     }
 
     @IBAction func accelerometerBMI160EmailDataPressed(_ sender: Any) {
-        vm.userRequestedRequestedToEmailData()
+        vm.userRequestedDatExport()
     }
 
     @IBAction func accelerometerBMI160StartOrientPressed(_ sender: Any) {

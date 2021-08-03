@@ -77,4 +77,5 @@ public enum DetailGroup {
     case LED
     case mechanicalSwitch
     case temperature
+    case accelerometer
 }
