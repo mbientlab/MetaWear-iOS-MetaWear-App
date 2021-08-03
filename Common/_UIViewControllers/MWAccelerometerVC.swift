@@ -33,6 +33,18 @@ extension MWAccelerometerVC {
 
 extension MWAccelerometerVC: DetailAccelerometerVMDelegate {
 
+    func willStartNewGraphStream() {
+
+    }
+    
+    func addGraphPoint(x: Double, y: Double, z: Double) {
+
+    }
+
+    func refreshGraphScale() {
+
+    }
+
     func refreshView() {
 
     }
@@ -64,7 +76,7 @@ extension MWAccelerometerVC {
     }
 
     @IBAction func accelerometerBMI160EmailDataPressed(_ sender: Any) {
-        vm.userRequestedDatExport()
+        vm.userRequestedDataExport()
     }
 
     @IBAction func accelerometerBMI160StartOrientPressed(_ sender: Any) {

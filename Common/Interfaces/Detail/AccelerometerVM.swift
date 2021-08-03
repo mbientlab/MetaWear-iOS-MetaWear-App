@@ -1,5 +1,6 @@
-//  © 2021 Ryan Ferrell. github.com/importRyan
-
+//  Created by Ryan Ferrell on 7/30/21.
+//  Copyright © 2021 MbientLab. All rights reserved.
+//
 
 import Foundation
 
@@ -31,7 +32,7 @@ public protocol DetailAccelerometerVM: AnyObject, DetailConfiguring {
     func userRequestedStopStreaming()
     func userRequestedStartLogging()
     func userRequestedStopAndDownloadLog()
-    func userRequestedDatExport()
+    func userRequestedDataExport()
     func userRequestedStartOrienting()
     func userRequestedStopOrienting()
     func userRequestedStartStepping()
@@ -44,4 +45,12 @@ public protocol DetailAccelerometerVM: AnyObject, DetailConfiguring {
 public protocol DetailAccelerometerVMDelegate: AnyObject {
     func refreshView()
     func refreshGraphScale()
+    func addGraphPoint(x: Double, y: Double, z: Double)
+    func willStartNewGraphStream()
+}
+
+extension DetailAccelerometerVMDelegate {
+    func drawNewGraphPoint(x: Float, y: Float, z: Float) {
+        addGraphPoint(x: Double(x), y: Double(y), z: Double(z))
+    }
 }
