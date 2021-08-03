@@ -31,6 +31,12 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     func storeStream(_ signal: OpaquePointer)
 
     func removeStream(_ signal: OpaquePointer)
+
+    func userIntentDidCauseDeviceDisconnect()
+
+    func presentProgressHUD(label: String)
+    
+    func updateAndCloseHUD(finalMessage: String)
 }
 
 
@@ -43,7 +49,6 @@ public protocol DeviceDetailsCoordinatorDelegate: AnyObject {
 
     func changeVisibility(of group: DetailGroup, shouldShow: Bool)
 
-
 }
 
 
@@ -55,6 +60,7 @@ public enum DetailGroup {
     case battery
     case signal
     case firmware
+    case reset
 
     // Features
     case LED

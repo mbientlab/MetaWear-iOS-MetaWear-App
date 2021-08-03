@@ -10,6 +10,7 @@ import Foundation
 import MetaWear
 import MetaWearCpp
 import BoltsSwift
+import MBProgressHUD
 import iOSDFULibrary
 
 #if os(iOS)
@@ -21,10 +22,11 @@ public class DetailVMContainer {
     public var identifiers: DetailIdentifiersVM!
     public var battery: DetailBatteryVM!
     public var signal: DetailSignalStrengthVM!
-    public var firmware: DetailFirmwareAndResetVM!
+    public var firmware: DetailFirmwareVM!
     public var led: DetailLEDVM!
     public var mechanical: DetailMechanicalSwitchVM!
     public var temperature: DetailTemperatureVM!
+    public var reset: DetailResetVM!
 
 
     var configurables: [DetailConfiguring] { [header] }
@@ -57,6 +59,8 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
     private var gpioPinChangeCount = 0
     private var hygrometerBME280Event: OpaquePointer?
     private var sensorFusionData = Data()
+
+    private var hud: MBPProgressHUD!
     
 }
 
@@ -94,7 +98,24 @@ extension MWDeviceDetailsCoordinator {
     public func removeStream(_ signal: OpaquePointer) {
         streamingCleanup.removeValue(forKey: signal)?()
     }
-    
+
+    public func userIntentDidCauseDeviceDisconnect() {
+        deviceDisconnected()
+    }
+
+    public func presentProgressHUD(label: String) {
+        guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
+        let hud = MBProgressHUD.showAdded(to: window, animated: true)
+        hud.mode = .determinateHorizontalBar
+        hud.label.text = "Updating..."
+    }
+
+    public func updateAndCloseHUD(finalMessage: String, delay: Double = 2.0) {
+        guard let hud = hud else { return }
+        self.hud.mode = .text
+        self.hud.label.text = finalMessage
+        self.hud.hide(animated: true, afterDelay: delay)
+    }
 }
 
 /// Helpers
@@ -174,11 +195,11 @@ private extension MWDeviceDetailsCoordinator {
 #if os(iOS)
         let window = UIApplication.shared.windows.first(where: \.isKeyWindow)!
 
-        let hud = MBProgressHUD.showAdded(to: window, animated: true)
+        self.hud = MBProgressHUD.showAdded(to: window, animated: true)
         hud.label.text = "Connecting..."
 
         device.connectAndSetup().continueWith(.mainThread) { [weak self] task in
-            hud.mode = .text
+            self?.hud.mode = .text
 
             guard task.error == nil else {
                 presentAlert(
@@ -186,13 +207,13 @@ private extension MWDeviceDetailsCoordinator {
                     title: "Error",
                     message: task.error!.localizedDescription
                 )
-                hud.hide(animated: false)
+                self?.hud.hide(animated: false)
                 return
             }
 
             self?.deviceDidConnect()
-            hud.label.text! = "Connected!"
-            hud.hide(animated: true, afterDelay: 0.5)
+            self?.hud.label.text! = "Connected!"
+            self?.hud.hide(animated: true, afterDelay: 0.5)
 
         }
 #endif
@@ -247,11 +268,13 @@ private extension MWDeviceDetailsCoordinator {
         delegate?.changeVisibility(of: .battery, shouldShow: true)
         delegate?.changeVisibility(of: .signal, shouldShow: true)
         delegate?.changeVisibility(of: .firmware, shouldShow: true)
+        delegate?.changeVisibility(of: .reset, shouldShow: true)
 
         vms.identifiers.start()
         vms.battery.start()
         vms.signal.start()
         vms.firmware.start()
+        vms.reset.start()
     }
 
     /// Sugar for determining device captabilities
