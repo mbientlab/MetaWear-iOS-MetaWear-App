@@ -210,10 +210,8 @@
 		9438D95526B45E1D0014FC91 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				947979AD26B98E4500AEB5EA /* iOSHUDVM.swift */,
-				9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */,
-				94F3316526B518C60015EE88 /* Detail */,
-				94F3316826B52F180015EE88 /* Discovery */,
+				9438D95126B45DD30014FC91 /* Interfaces */,
+				947979B526B9976B00AEB5EA /* Implementations */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -228,14 +226,48 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		94CD3AA526B3ECF200854FBA /* Common */ = {
+		947979B526B9976B00AEB5EA /* Implementations */ = {
+			isa = PBXGroup;
+			children = (
+				947979AD26B98E4500AEB5EA /* iOSHUDVM.swift */,
+				9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */,
+				94F3316526B518C60015EE88 /* Detail */,
+				94F3316826B52F180015EE88 /* Discovery */,
+			);
+			path = Implementations;
+			sourceTree = "<group>";
+		};
+		947979B626B9979900AEB5EA /* DeviceDetail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DeviceDetail;
+			sourceTree = "<group>";
+		};
+		947979B726B997B400AEB5EA /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
 				9438D95A26B47C820014FC91 /* Helpers */,
+				947979B826B997C300AEB5EA /* Screens */,
+				9438D95526B45E1D0014FC91 /* ViewModels */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		947979B826B997C300AEB5EA /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				947979B626B9979900AEB5EA /* DeviceDetail */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		94CD3AA526B3ECF200854FBA /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				947979B726B997B400AEB5EA /* Presentation */,
 				9438D95426B45E130014FC91 /* Constants */,
 				94F3316926B52F890015EE88 /* _UIViewControllers */,
-				9438D95126B45DD30014FC91 /* Interfaces */,
-				9438D95526B45E1D0014FC91 /* ViewModels */,
 			);
 			path = Common;
 			sourceTree = "<group>";
