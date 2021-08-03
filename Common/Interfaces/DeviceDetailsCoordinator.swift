@@ -35,8 +35,11 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     func userIntentDidCauseDeviceDisconnect()
 
     func presentProgressHUD(label: String)
-    
-    func updateAndCloseHUD(finalMessage: String)
+
+    func updateProgressHUD(percentage: Float)
+
+    /// Specify nil for default 2 second delay
+    func updateAndCloseHUD(finalMessage: String, delay: Double?)
 }
 
 

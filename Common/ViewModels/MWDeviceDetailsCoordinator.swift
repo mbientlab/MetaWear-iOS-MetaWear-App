@@ -60,7 +60,7 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
     private var hygrometerBME280Event: OpaquePointer?
     private var sensorFusionData = Data()
 
-    private var hud: MBPProgressHUD!
+    private var hud: MBProgressHUD!
     
 }
 
@@ -110,11 +110,15 @@ extension MWDeviceDetailsCoordinator {
         hud.label.text = "Updating..."
     }
 
-    public func updateAndCloseHUD(finalMessage: String, delay: Double = 2.0) {
+    public func updateProgressHUD(percentage: Float) {
+        hud?.progress = percentage
+    }
+
+    public func updateAndCloseHUD(finalMessage: String, delay: Double?) {
         guard let hud = hud else { return }
-        self.hud.mode = .text
-        self.hud.label.text = finalMessage
-        self.hud.hide(animated: true, afterDelay: delay)
+        hud.mode = .text
+        hud.label.text = finalMessage
+        hud.hide(animated: true, afterDelay: delay ?? 2.0)
     }
 }
 
