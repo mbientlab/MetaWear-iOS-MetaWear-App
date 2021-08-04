@@ -9,10 +9,11 @@ import iOSDFULibrary
 
 public class MWDetailFirmwareVM: DetailFirmwareVM {
 
-    public var firmwareUpdateStatus = ""
-    public var firmwareRevision = ""
+    public private(set) var firmwareUpdateStatus = ""
+    public private(set) var firmwareRevision = ""
+    public private(set) var offerUpdate = false
 
-    public var delegate: DetailFirmwareAndResetVMDelegate? = nil
+    public var delegate: DetailFirmwareVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
     private weak var device: MetaWear? = nil
 
@@ -56,9 +57,13 @@ extension MWDetailFirmwareVM {
         guard let device = device else { return }
         device.checkForFirmwareUpdate().continueWith(.mainThread) {
             if let error = $0.error {
-                self.delegate?.presentAlert(title: "Firmware Error", message: error.localizedDescription)
+                self.parent?.alerts.presentAlert(title: "Firmware Error", message: error.localizedDescription)
             } else {
-                self.firmwareUpdateStatus = $0.result! != nil ? "\($0.result!!.firmwareRev) AVAILABLE!" : "Up To Date"
+                let updateAvailable = $0.result! != nil
+                self.offerUpdate = updateAvailable
+                self.firmwareUpdateStatus = updateAvailable
+                ? $0.result!!.firmwareRev
+                : "Up To Date"
             }
             self.delegate?.refreshView()
         }
@@ -73,7 +78,7 @@ extension MWDetailFirmwareVM {
         device.updateFirmware(delegate: self).continueWith { t in
             if let error = t.error {
                 DispatchQueue.main.async {
-                    self.delegate?.presentAlert(
+                    self.parent?.alerts.presentAlert(
                         title: "Firmware Update Error",
                         message: "Please re-connect and try again, if you can't connect, try MetaBoot Mode to recover.\nError: \(error.localizedDescription)"
                     )

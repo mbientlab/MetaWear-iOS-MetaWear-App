@@ -49,8 +49,7 @@ extension MWDetailResetVM {
         guard let device = device else { return }
         // Resetting causes a disconnection
         parent?.userIntentDidCauseDeviceDisconnect()
-        #warning("Original implementation indicates a feature was not implemented")
-        // TODO: In case any pairing information is on the device mark it for removal too
+        #warning("Original App — Had TODO: In case any pairing information is on the device mark it for removal too")
         device.clearAndReset()
     }
 

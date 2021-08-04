@@ -2,42 +2,16 @@
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-class MWDetailFirmwareVC: UIViewController {
+class MWFirmwareSVC: MWDetailFirmwareVM, ObservableObject, DetailFirmwareVMDelegate {
 
-    private let vm: DetailFirmwareVM = MWDetailFirmwareVM()
-
-    @IBOutlet weak var fwRevLabel: UILabel!
-    @IBOutlet weak var firmwareUpdateLabel: UILabel!
-}
-
-extension MWDetailFirmwareVC {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        vm.delegate = self
+    override init() {
+        super.init()
+        self.delegate = self
     }
-}
-
-extension MWDetailFirmwareVC: DetailFirmwareAndResetVMDelegate {
 
     func refreshView() {
-        fwRevLabel.text = vm.firmwareRevision
-        firmwareUpdateLabel.text = vm.firmwareUpdateStatus
-    }
-
-    func presentAlert(title: String, message: String) {
-        MetaWearApp.presentAlert(in: self, title: title, message: message)
-    }
-
-}
-
-// MARK: - Intents
-
-extension MWDetailFirmwareVC {
-
-    @IBAction func checkForFirmwareUpdatesPressed(_ sender: Any) {
-        vm.userRequestedCheckForFirmwareUpdates()
+        self.objectWillChange.send()
     }
 }

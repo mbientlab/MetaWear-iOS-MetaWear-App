@@ -13,33 +13,36 @@ import BoltsSwift
 import MBProgressHUD
 import iOSDFULibrary
 
+let na = MBL_MW_MODULE_TYPE_NA
+
 public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
     
     public weak var delegate: DeviceDetailsCoordinatorDelegate? = nil
-    private var vms: DetailVMContainer = .init()
+    public private(set) var vms: DetailVMContainer = .init()
     
     private var device: MetaWear!
     public private(set) var hud: HUDVM = iOSHUDVM()
+    public private(set) var alerts: AlertPresenter = CrossPlatformAlertPresenter()
 
     /// Tracks all streaming events (even for other devices).
     private var streamingEvents: Set<OpaquePointer> = []
     private var streamingCleanup: [OpaquePointer: () -> Void] = [:]
     public var loggers: [String: OpaquePointer] = [:]
 
-    private var disconnectTask: Task<MetaWear>?
+//    private var disconnectTask: Task<MetaWear>?
     private var isObserving = false {
         didSet { didSetIsObserving(oldValue) }
     }
 
-    private var gyroBMI160Data: [(Int64, MblMwCartesianFloat)] = []
-    private var magnetometerBMM150Data: [(Int64, MblMwCartesianFloat)] = []
-    private var gpioPinChangeCount = 0
-    private var hygrometerBME280Event: OpaquePointer?
-    private var sensorFusionData = Data()
+//    private var gyroBMI160Data: [(Int64, MblMwCartesianFloat)] = []
+//    private var magnetometerBMM150Data: [(Int64, MblMwCartesianFloat)] = []
+//    private var gpioPinChangeCount = 0
+//    private var hygrometerBME280Event: OpaquePointer?
+//    private var sensorFusionData = Data()
     
 }
 
-// MARK: - Coordinate ViewModels and Update Feed
+// MARK: - Coordinate Connection State
 
 extension MWDeviceDetailsCoordinator {
     
@@ -66,6 +69,21 @@ extension MWDeviceDetailsCoordinator {
         attemptConnectionWithHUD()
     }
 
+    public func userIntentDidCauseDeviceDisconnect() {
+        deviceDisconnected()
+    }
+
+    private func deviceDisconnected() {
+        vms.header.refreshConnectionState()
+        delegate?.hideAndReloadAllCells()
+    }
+
+}
+
+// MARK: - Handle Stream/Logging Memory
+
+extension MWDeviceDetailsCoordinator {
+
     public func storeStream(_ signal: OpaquePointer, cleanup: (() -> Void)? ) {
         streamingCleanup[signal] = cleanup ?? { mbl_mw_datasignal_unsubscribe(signal) }
     }
@@ -82,63 +100,9 @@ extension MWDeviceDetailsCoordinator {
         loggers.removeValue(forKey: log)
     }
 
-    public func userIntentDidCauseDeviceDisconnect() {
-        deviceDisconnected()
-    }
 
-}
-
-/// Helpers
-private extension MWDeviceDetailsCoordinator {
-    
-    func configureVMs() {
-        vms.configurables.forEach {
-            $0.configure(parent: self, device: device)
-        }
-    }
-    
-    func resetStreamingEvents() {
-        streamingEvents = []
-        delegate?.hideAndReloadAllCells()
-    }
-    
-    func deviceDisconnected() {
-        vms.header.refreshConnectionState()
-        delegate?.hideAndReloadAllCells()
-    }
-
-    /// Formerly called deviceConnected() and called by
-    /// - deviceConnectedReadAnonymousLoggers (called only by connectDevice(:Bool) after a no-error HUD execution
-    /// - accelerometerBMI160StopLogPressed after logCleanup
-    /// - gyroBMI160StopLogPressed after logCleanup
-    /// - magnetometerBMM150StopLogPressed after logCleanup
-    /// - sensorFusionStopLogPressed after log cleanup
-    func reactivateDeviceCapabilitiesAfterLoggingEvent() {
-        vms.header.refreshConnectionState()
-        /// lots of things
-        delegate?.reloadAllCells()
-    }
-    
-    func didSetIsObserving(_ oldValue: Bool) {
-        if self.isObserving {
-            if !oldValue {
-                self.device.peripheral.addObserver(self, forKeyPath: "state", options: .new, context: nil)
-            }
-        } else {
-            if oldValue {
-                self.device.peripheral.removeObserver(self, forKeyPath: "state")
-            }
-        }
-    }
-
-}
-
-// MARK: - DeviceDetailsController Utility Functions
-
-public extension MWDeviceDetailsCoordinator {
-    
     /// After a user requests logging to stop, clean up device, then reconnect.
-    func logCleanup(_ handler: @escaping (Error?) -> Void) {
+    public func logCleanup(_ handler: @escaping (Error?) -> Void) {
         // In order for the device to actaully erase the flash memory we can't be in a connection
         // so temporally disconnect to allow flash to erase.
         isObserving = false
@@ -153,7 +117,7 @@ public extension MWDeviceDetailsCoordinator {
         }
     }
 
-    func export(_ data: Data, titled: String) {
+    public func export(_ data: Data, titled: String) {
         // Get current Time/Date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM_dd_yyyy-HH_mm_ss"
@@ -169,18 +133,70 @@ public extension MWDeviceDetailsCoordinator {
 #endif
 
         } catch let error {
-            presentErrorAlert(title: "Save Error", message: error.localizedDescription)
+            self.alerts.presentAlert(
+                title: "Save Error",
+                message: error.localizedDescription
+            )
         }
-    }
-
-    private func presentErrorAlert(title: String, message: String) {
-#if os(iOS)
-        guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
-        presentAlert(in: window.rootViewController!, title: title, message: message)
-#endif
     }
 }
 
+/// Helpers
+private extension MWDeviceDetailsCoordinator {
+    
+    func configureVMs() {
+        vms.configurables.forEach {
+            $0.configure(parent: self, device: device)
+        }
+    }
+    
+    func resetStreamingEvents() {
+        streamingEvents = []
+        delegate?.hideAndReloadAllCells()
+    }
+
+    /// Formerly called deviceConnected() and called by
+    /// - deviceConnectedReadAnonymousLoggers (called only by connectDevice(:Bool) after a no-error HUD execution
+    /// - accelerometerBMI160StopLogPressed after logCleanup
+    /// - gyroBMI160StopLogPressed after logCleanup
+    /// - magnetometerBMM150StopLogPressed after logCleanup
+    /// - sensorFusionStopLogPressed after log cleanup
+    func reactivateDeviceCapabilitiesAfterLoggingEvent() {
+        vms.header.refreshConnectionState()
+        delegate?.reloadAllCells()
+    }
+}
+
+// KVO Peripheral Connection Status
+extension MWDeviceDetailsCoordinator {
+
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        OperationQueue.main.addOperation {
+            self.vms.header.refreshConnectionState()
+            if self.device.peripheral.state == .disconnected {
+                self.deviceDisconnected()
+            }
+        }
+    }
+
+    public func viewWillDisappear() {
+        isObserving = false
+        streamingEvents.forEach(removeStream(_:))
+        loggers = [:]
+    }
+
+    private func didSetIsObserving(_ oldValue: Bool) {
+        if self.isObserving {
+            if !oldValue {
+                self.device.peripheral.addObserver(self, forKeyPath: "state", options: .new, context: nil)
+            }
+        } else {
+            if oldValue {
+                self.device.peripheral.removeObserver(self, forKeyPath: "state")
+            }
+        }
+    }
+}
 
 // MARK: - Device Connection HUD Display
 
@@ -195,9 +211,8 @@ private extension MWDeviceDetailsCoordinator {
             self?.hud.updateHUD(mode: .text, newText: nil)
 
             guard task.error == nil else {
-                presentAlert(
-                    in: UIApplication.firstKeyWindow()!.rootViewController!,
-                    title: "Error",
+                self?.alerts.presentAlert(
+                    title: "Connection Error",
                     message: task.error!.localizedDescription
                 )
                 self?.hud.closeHUD(finalMessage: nil, delay: 0)
@@ -214,7 +229,6 @@ private extension MWDeviceDetailsCoordinator {
     func deviceDidConnect() {
         let task = device.createAnonymousDatasignals()
         task.continueWith(.mainThread) { t in
-            //print(self.loggers)
             if let signals = t.result {
                 for signal in signals {
                     let cString = mbl_mw_anonymous_datasignal_get_identifier(signal)!
@@ -232,6 +246,7 @@ private extension MWDeviceDetailsCoordinator {
         vms.header.refreshConnectionState() // ## Previously manually forced switch on
         logPeripheralIdentifier()
         showDefaultMinimumDeviceDetail()
+        defer { delegate?.reloadAllCells() }
 
         let board = device.board
 
@@ -250,14 +265,11 @@ private extension MWDeviceDetailsCoordinator {
             delegate?.changeVisibility(of: .temperature, shouldShow: true)
         }
 
-#warning("STOPPED AT LINE 358")
-
         let accelerometer = mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_ACCELEROMETER)
         if AccelerometerModel.allCases.map(\.int32Value).contains(accelerometer) {
             vms.accelerometer.start()
             delegate?.changeVisibility(of: .accelerometer, shouldShow: true)
         }
-
     }
 
     func showDefaultMinimumDeviceDetail() {
@@ -273,11 +285,15 @@ private extension MWDeviceDetailsCoordinator {
         vms.signal.start()
         vms.firmware.start()
         vms.reset.start()
+        delegate?.reloadAllCells()
     }
+}
+
+private extension MWDeviceDetailsCoordinator {
 
     /// Sugar for determining device captabilities
     func featureExists(for module: MblMwModule, in board: OpaquePointer?) -> Bool {
-        mbl_mw_metawearboard_lookup_module(board, module) != MBL_MW_MODULE_TYPE_NA
+        mbl_mw_metawearboard_lookup_module(board, module) != na
     }
 
     /// Sugar for determining device captabilities
@@ -291,4 +307,3 @@ private extension MWDeviceDetailsCoordinator {
 #endif
     }
 }
-

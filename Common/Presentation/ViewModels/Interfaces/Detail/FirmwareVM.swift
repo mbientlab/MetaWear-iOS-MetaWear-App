@@ -6,9 +6,10 @@ import Foundation
 
 public protocol DetailFirmwareVM: AnyObject, DetailConfiguring {
 
-    var delegate: DetailFirmwareAndResetVMDelegate? { get set }
+    var delegate: DetailFirmwareVMDelegate? { get set }
     var firmwareUpdateStatus: String { get }
     var firmwareRevision: String { get }
+    var offerUpdate: Bool { get }
 
     func start()
 
@@ -17,7 +18,6 @@ public protocol DetailFirmwareVM: AnyObject, DetailConfiguring {
     func userRequestedUpdateFirmware()
 }
 
-public protocol DetailFirmwareAndResetVMDelegate: AnyObject {
+public protocol DetailFirmwareVMDelegate: AnyObject {
     func refreshView()
-    func presentAlert(title: String, message: String)
 }

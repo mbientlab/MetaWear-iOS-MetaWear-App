@@ -19,6 +19,9 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     /// Present progress dialogs
     var hud: HUDVM { get }
 
+    /// Present alerts
+    var alerts: AlertPresenter { get }
+
     var loggers: [String: OpaquePointer] { get }
 
     /// Establish device connection and display relevant data.
@@ -42,6 +45,9 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     func userIntentDidCauseDeviceDisconnect()
 
     func export(_ data: Data, titled: String)
+
+    /// Call to cleanup KVO or other items
+    func viewWillDisappear()
 }
 
 

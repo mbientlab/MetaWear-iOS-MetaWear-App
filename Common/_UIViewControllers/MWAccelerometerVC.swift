@@ -2,97 +2,38 @@
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-class MWAccelerometerVC: UIViewController {
+class MWAccelerometerSVC: MWDetailAccelerometerVM, DetailAccelerometerVMDelegate, ObservableObject, GraphDelegate {
 
-    private let vm: DetailAccelerometerVM = MWDetailAccelerometerVM()
-
-    @IBOutlet weak var accelerometerBMI160Scale: UISegmentedControl!
-    @IBOutlet weak var accelerometerBMI160Frequency: UISegmentedControl!
-    @IBOutlet weak var accelerometerBMI160StartStream: UIButton!
-    @IBOutlet weak var accelerometerBMI160StopStream: UIButton!
-    @IBOutlet weak var accelerometerBMI160StartLog: UIButton!
-    @IBOutlet weak var accelerometerBMI160StopLog: UIButton!
-    @IBOutlet weak var accelerometerBMI160Graph: APLGraphView!
-    @IBOutlet weak var accelerometerBMI160StartOrient: UIButton!
-    @IBOutlet weak var accelerometerBMI160StopOrient: UIButton!
-    @IBOutlet weak var accelerometerBMI160OrientLabel: UILabel!
-    @IBOutlet weak var accelerometerBMI160StartStep: UIButton!
-    @IBOutlet weak var accelerometerBMI160StopStep: UIButton!
-    @IBOutlet weak var accelerometerBMI160StepLabel: UILabel!
-}
-
-extension MWAccelerometerVC {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        vm.delegate = self
-    }
-}
-
-extension MWAccelerometerVC: DetailAccelerometerVMDelegate {
-
-    func willStartNewGraphStream() {
-
-    }
-    
-    func addGraphPoint(x: Double, y: Double, z: Double) {
-
+    override init() {
+        super.init()
+        self.delegate = self
     }
 
-    func refreshGraphScale() {
+    weak var graph: APLGraphView? = nil
 
+    var canExportData: Bool {
+        !accelerometerBMI160Data.isEmpty
+    }
+
+    func graphScaleLabel(_ scale: AccelerometerGraphScale) -> String {
+        "± \(scale.fullScale)"
     }
 
     func refreshView() {
-
+        self.objectWillChange.send()
     }
 
-    func presentAlert(title: String, message: String) {
-        MetaWearApp.presentAlert(in: self, title: title, message: message)
+    func refreshGraphScale() {
+        graph?.fullScale = Float(graphScaleSelected.fullScale)
     }
 
-}
-
-// MARK: - Intents
-
-extension MWAccelerometerVC {
-
-    @IBAction func accelerometerBMI160StartStreamPressed(_ sender: Any) {
-        vm.userRequestedStartStreaming()
+    func addGraphPoint(x: Double, y: Double, z: Double) {
+        graph?.addX(x, y: y, z: z)
     }
 
-    @IBAction func accelerometerBMI160StopStreamPressed(_ sender: Any) {
-        vm.userRequestedStopStreaming()
-    }
-
-    @IBAction func accelerometerBMI160StartLogPressed(_ sender: Any) {
-        vm.userRequestedStartLogging()
-    }
-
-    @IBAction func accelerometerBMI160StopLogPressed(_ sender: Any) {
-        vm.userRequestedStopAndDownloadLog()
-    }
-
-    @IBAction func accelerometerBMI160EmailDataPressed(_ sender: Any) {
-        vm.userRequestedDataExport()
-    }
-
-    @IBAction func accelerometerBMI160StartOrientPressed(_ sender: Any) {
-        vm.userRequestedStartOrienting()
-    }
-
-    @IBAction func accelerometerBMI160StopOrientPressed(_ sender: Any) {
-        vm.userRequestedStopOrienting()
-    }
-
-    @IBAction func accelerometerBMI160StartStepPressed(_ sender: Any) {
-        vm.userRequestedStartStepping()
-    }
-
-    @IBAction func accelerometerBMI160StopStepPressed(_ sender: Any) {
-        vm.userRequestedStopStepping()
+    func willStartNewGraphStream() {
+        // Do nothing
     }
 }
-

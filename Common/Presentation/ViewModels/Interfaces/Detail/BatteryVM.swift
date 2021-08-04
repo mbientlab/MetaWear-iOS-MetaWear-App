@@ -22,5 +22,4 @@ public protocol DetailBatteryVM: AnyObject, DetailConfiguring {
 
 public protocol DetailBatteryVMDelegate: AnyObject {
     func refreshView()
-    func presentAlert(title: String, message: String)
 }

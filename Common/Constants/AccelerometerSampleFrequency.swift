@@ -3,7 +3,7 @@
 
 import Foundation
 
-public enum AccelerometerSampleFrequency: Int, CaseIterable {
+public enum AccelerometerSampleFrequency: Int, CaseIterable, Identifiable {
     case hz800
     case hz400
     case hz200
@@ -11,7 +11,7 @@ public enum AccelerometerSampleFrequency: Int, CaseIterable {
     case hz50
     case hz12_5
 
-    var frequency: Float {
+    public var frequency: Float {
         switch self {
             case .hz800: return 800
             case .hz400: return 400
@@ -22,5 +22,7 @@ public enum AccelerometerSampleFrequency: Int, CaseIterable {
         }
     }
 
-    var frequencyLabel: String { String(self.frequency) }
+    public var frequencyLabel: String { String(self.frequency) }
+
+    public var id: Int { rawValue }
 }

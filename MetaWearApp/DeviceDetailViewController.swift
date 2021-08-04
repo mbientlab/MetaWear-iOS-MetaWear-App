@@ -226,7 +226,6 @@ extension DeviceDetailViewController {
         return vissibleRows != 0
     }
 
-    #warning("HOW TO TRANSFER MWDeviceHeaderVM or MWDeviceHeaderVC?")
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         OperationQueue.main.addOperation {
             self.connectionStateLabel.text! = self.nameForState()
@@ -343,20 +342,20 @@ extension DeviceDetailViewController {
 
         // MARK: - LEDVM
 
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_LED) != MBL_MW_MODULE_TYPE_NA {
+        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_LED) != na {
             cell(ledCell, setHidden: false)
         }
 
         // MARK: - MechanicalSwitchVM
 
         // Go through each module and enable the correct cell for the modules on this particular MetaWear
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_SWITCH) != MBL_MW_MODULE_TYPE_NA {
+        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_SWITCH) != na {
             cell(mechanicalSwitchCell, setHidden: false)
         }
 
         // MARK: - TemperatureVM
 
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_TEMPERATURE) != MBL_MW_MODULE_TYPE_NA {
+        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_TEMPERATURE) != na {
             cell(tempCell, setHidden: false)
 
             // The number of channels is variable
@@ -401,9 +400,11 @@ extension DeviceDetailViewController {
             }
         }
 
+        #warning("Stopped Transfer Here")
+
 // MARK: - GyroVM
 
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_GYRO) != MBL_MW_MODULE_TYPE_NA {
+        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_GYRO) != na {
             cell(gyroBMI160Cell, setHidden: false)
             if loggers["angular-velocity"] != nil {
                 gyroBMI160StartLog.isEnabled = false
@@ -420,7 +421,7 @@ extension DeviceDetailViewController {
 
         // MARK: - MagenetometerVM
         
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_MAGNETOMETER) != MBL_MW_MODULE_TYPE_NA {
+        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_MAGNETOMETER) != na {
             cell(magnetometerBMM150Cell, setHidden: false)
             if loggers["magnetic-field"] != nil {
                 magnetometerBMM150StartLog.isEnabled = false
@@ -437,7 +438,7 @@ extension DeviceDetailViewController {
 
         // MARK: - GPIOVM
         
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_GPIO) != MBL_MW_MODULE_TYPE_NA {
+        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_GPIO) != na {
             cell(gpioCell, setHidden: false)
             // The number of pins is variable
             gpioPinSelector.removeAllSegments()
@@ -450,13 +451,13 @@ extension DeviceDetailViewController {
 
         // MARK: - HapticVM
         
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_HAPTIC) != MBL_MW_MODULE_TYPE_NA {
+        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_HAPTIC) != na {
             cell(hapticCell, setHidden: false)
         }
 
         // MARK: - iBeaconVM
         
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_IBEACON) != MBL_MW_MODULE_TYPE_NA {
+        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_IBEACON) != na {
             cell(iBeaconCell, setHidden: false)
         }
 
@@ -470,25 +471,25 @@ extension DeviceDetailViewController {
 
         // MARK: - AmbientLightVM
 
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_AMBIENT_LIGHT) != MBL_MW_MODULE_TYPE_NA {
+        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_AMBIENT_LIGHT) != na {
             cell(ambientLightLTR329Cell, setHidden: false)
         }
 
         // MARK: - HumidityVM
         
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_HUMIDITY) != MBL_MW_MODULE_TYPE_NA {
+        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_HUMIDITY) != na {
             cell(hygrometerBME280Cell, setHidden: false)
         }
 
         // MARK: - I2CVM
         
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_I2C) != MBL_MW_MODULE_TYPE_NA {
+        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_I2C) != na {
             cell(i2cCell, setHidden: false)
         }
 
         // MARK: - SensorFusionVM
 
-        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_SENSOR_FUSION) != MBL_MW_MODULE_TYPE_NA {
+        if mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_SENSOR_FUSION) != na {
             cell(sensorFusionCell, setHidden: false)
             var isLogging = true
             if loggers["euler-angles"] != nil {
@@ -560,18 +561,20 @@ extension DeviceDetailViewController {
             // Popup the default share screen
             self.controller = UIDocumentInteractionController(url: fileURL)
             if !self.controller.presentOptionsMenu(from: view.bounds, in: view, animated: true) {
-                presentAlert(
-                    in: self,
-                    title: "Error",
-                    message: "No programs installed that could save the file"
-                )
+
+
+//                presentAlert(
+//                    in: self,
+//                    title: "Error",
+//                    message: "No programs installed that could save the file"
+//                )
             }
-        } catch let error {
-            presentAlert(
-                in: self,
-                title: "Error",
-                message: error.localizedDescription
-            )
+        } catch {
+//            presentAlert(
+//                in: self,
+//                title: "Error",
+//                message: error.localizedDescription
+//            )
         }
     }
 
@@ -701,11 +704,11 @@ extension DeviceDetailViewController {
 //                }
                 hud.mode = .text
                 if t.error != nil {
-                    presentAlert(
-                        in: self,
-                        title: "Error",
-                        message: t.error!.localizedDescription
-                    )
+//                    presentAlert(
+//                        in: self,
+//                        title: "Error",
+//                        message: t.error!.localizedDescription
+//                    )
                     hud.hide(animated: false)
                 } else {
                     self.deviceConnectedReadAnonymousLoggers()
@@ -743,11 +746,11 @@ extension DeviceDetailViewController {
         if UserDefaults.standard.object(forKey: "ihaveseennamemessage") == nil {
             UserDefaults.standard.set(1, forKey: "ihaveseennamemessage")
             UserDefaults.standard.synchronize()
-            presentAlert(
-                in: self,
-                title: "Notice",
-                message: "Because of how iOS caches names, you have to disconnect and re-connect a few times or force close and re-launch the app before you see the new name!"
-            )
+//            presentAlert(
+//                in: self,
+//                title: "Notice",
+//                message: "Because of how iOS caches names, you have to disconnect and re-connect a few times or force close and re-launch the app before you see the new name!"
+//            )
         }
         nameTextField.resignFirstResponder()
         let name = nameTextField.text!
@@ -759,11 +762,12 @@ extension DeviceDetailViewController {
     @IBAction func readBatteryPressed(_ sender: Any) {
         mbl_mw_settings_get_battery_state_data_signal(device.board).read().continueWith(.mainThread) {
             if let error = $0.error {
-                presentAlert(
-                    in: self,
-                    title: "Error",
-                    message: error.localizedDescription
-                )
+                print(error)
+//                presentAlert(
+//                    in: self,
+//                    title: "Error",
+//                    message: error.localizedDescription
+//                )
             } else {
                 let battery: MblMwBatteryState = $0.result!.valueAs()
                 self.batteryLevelLabel.text = String(battery.charge)
@@ -788,11 +792,12 @@ extension DeviceDetailViewController {
     @IBAction func checkForFirmwareUpdatesPressed(_ sender: Any) {
         device.checkForFirmwareUpdate().continueWith(.mainThread) {
             if let error = $0.error {
-                presentAlert(
-                    in: self,
-                    title: "Error",
-                    message: error.localizedDescription
-                )
+                print(error)
+//                presentAlert(
+//                    in: self,
+//                    title: "Error",
+//                    message: error.localizedDescription
+//                )
             } else {
                 self.firmwareUpdateLabel.text = $0.result! != nil ? "\($0.result!!.firmwareRev) AVAILABLE!" : "Up To Date"
             }

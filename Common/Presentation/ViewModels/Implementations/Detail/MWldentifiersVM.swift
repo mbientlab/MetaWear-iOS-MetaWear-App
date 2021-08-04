@@ -17,8 +17,7 @@ public class MWDetailIdentifiersVM: DetailIdentifiersVM {
     public var serialNumber = ""
     public var harwareRevision = ""
 
-
-    public var delegate: DetailIdentifiersVMDelegate? = nil
+    public weak var delegate: DetailIdentifiersVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
     private weak var device: MetaWear? = nil
 }

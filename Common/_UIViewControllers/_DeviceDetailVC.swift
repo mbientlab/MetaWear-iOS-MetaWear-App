@@ -47,7 +47,6 @@ extension MWDeviceDetailTableVC {
         return vissibleRows != 0
     }
 
-    #warning("BLOCKED ON observeValue(forKeyPath:")
 }
 
 // MARK: - Update for Model Changes
@@ -57,7 +56,7 @@ extension MWDeviceDetailTableVC: DeviceDetailsCoordinatorDelegate {
     func presentFileExportDialog(fileURL: URL, saveErrorTitle: String, saveErrorMessage: String) {
         self.exportController = UIDocumentInteractionController(url: fileURL)
         if !self.exportController.presentOptionsMenu(from: view.bounds, in: view, animated: true) {
-            presentAlert(in: self, title: saveErrorTitle, message: saveErrorMessage)
+//            presentAlert(in: self, title: saveErrorTitle, message: saveErrorMessage)
         }
     }
 

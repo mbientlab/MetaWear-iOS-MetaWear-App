@@ -28,7 +28,7 @@ public class MWDetailAccelerometerVM: DetailAccelerometerVM {
 
     lazy private var model: AccelerometerModel? = getAccelerometerModel()
     private var loggingKey = "acceleration"
-    private var accelerometerBMI160Data: [(Int64, MblMwCartesianFloat)] = []
+    private(set) var accelerometerBMI160Data: [(Int64, MblMwCartesianFloat)] = []
 
     public var delegate: DetailAccelerometerVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil

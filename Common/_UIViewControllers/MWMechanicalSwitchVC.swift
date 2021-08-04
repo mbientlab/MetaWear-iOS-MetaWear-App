@@ -2,44 +2,16 @@
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-class MWMechanicalSwitchVC: UIViewController {
+class MWMechanicalSwitchSVC: MWDetailMechanicalSwitchVM, DetailMechanicalSwitchVMDelegate, ObservableObject {
 
-    private let vm: DetailMechanicalSwitchVM = MWDetailMechanicalSwitchVM()
-
-    @IBOutlet weak var mechanicalSwitchLabel: UILabel!
-    @IBOutlet weak var startSwitch: UIButton!
-    @IBOutlet weak var stopSwitch: UIButton!
-
-}
-
-extension MWMechanicalSwitchVC {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        vm.delegate = self
+    override init() {
+        super.init()
+        self.delegate = self
     }
-}
-
-extension MWMechanicalSwitchVC: DetailMechanicalSwitchVMDelegate {
 
     func refreshView() {
-        mechanicalSwitchLabel.text = vm.switchState
-        startSwitch.isEnabled = !vm.isMonitoring
-        stopSwitch.isEnabled = vm.isMonitoring
-    }
-}
-
-// MARK: - Intents
-
-extension MWMechanicalSwitchVC {
-
-    @IBAction func startSwitchNotifyPressed(_ sender: Any) {
-        vm.userStoppedMonitoringSwitch()
-    }
-
-    @IBAction func stopSwitchNotifyPressed(_ sender: Any) {
-        vm.userStoppedMonitoringSwitch()
+        self.objectWillChange.send()
     }
 }

@@ -2,70 +2,24 @@
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-class MWTemperatureVC: UIViewController {
+class MWTemperatureSVC: MWDetailTemperatureVM, DetailTemperatureVMDelegate, ObservableObject {
 
-    private let vm: DetailTemperatureVM = MWDetailTemperatureVM()
-
-    @IBOutlet weak var tempChannelSelector: UISegmentedControl!
-    @IBOutlet weak var channelTypeLabel: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel!
-
-    @IBOutlet weak var readPinLabel: UILabel!
-    @IBOutlet weak var readPinTextField: UITextField!
-    @IBOutlet weak var enablePinLabel: UILabel!
-    @IBOutlet weak var enablePinTextField: UITextField!
-
-}
-
-extension MWTemperatureVC {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        vm.delegate = self
+    override init() {
+        super.init()
+        self.delegate = self
     }
-}
 
-extension MWTemperatureVC: DetailTemperatureVMDelegate {
-
-    func resetView() {
-        tempChannelSelector.removeAllSegments()
-        zip(vm.channels, vm.channels.indices).forEach { (segment, index) in
-            tempChannelSelector.insertSegment(withTitle: segment, at: index, animated: false)
-        }
-
-        refreshView()
+    var channelsIndexed: [(index: Int, label: String)] {
+        self.channels.enumerated().map { ($0.offset, $0.element)  }
     }
 
     func refreshView() {
-        tempChannelSelector.selectedSegmentIndex = vm.selectedChannelIndex
-
-        if vm.showPinDetail {
-            self.readPinLabel.isHidden = false
-            self.readPinTextField.isHidden = false
-            self.enablePinLabel.isHidden = false
-            self.enablePinTextField.isHidden = false
-        } else {
-            self.readPinLabel.isHidden = true
-            self.readPinTextField.isHidden = true
-            self.enablePinLabel.isHidden = true
-            self.enablePinTextField.isHidden = true
-        }
-
-        temperatureLabel.text = vm.temperature
-    }
-}
-
-// MARK: - Intents
-
-extension MWTemperatureVC {
-
-    @IBAction func tempChannelSelectorPressed(_ sender: Any) {
-        vm.selectChannel(at: tempChannelSelector.selectedSegmentIndex)
+        self.objectWillChange.send()
     }
 
-    @IBAction func readTemperaturePressed(_ sender: Any) {
-        vm.readTemperature()
+    func resetView() {
+        self.objectWillChange.send()
     }
 }

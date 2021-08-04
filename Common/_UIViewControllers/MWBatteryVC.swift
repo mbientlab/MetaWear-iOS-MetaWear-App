@@ -2,40 +2,17 @@
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-class MWDetailBatteryVC: UIViewController {
+class MWDetailBatterySVC: MWDetailBatteryVM, ObservableObject, DetailBatteryVMDelegate {
 
-    private let vm: DetailBatteryVM = MWDetailBatteryVM()
-
-    @IBOutlet weak var batteryLevelLabel: UILabel!
-
-}
-
-extension MWDetailBatteryVC {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        vm.delegate = self
+    override init() {
+        super.init()
+        self.delegate = self
     }
-}
-
-extension MWDetailBatteryVC: DetailBatteryVMDelegate {
 
     func refreshView() {
-        self.batteryLevelLabel.text = vm.batteryLevel
-    }
-
-    func presentAlert(title: String, message: String) {
-        MetaWearApp.presentAlert(in: self, title: title, message: message)
+        self.objectWillChange.send()
     }
 }
 
-// MARK: - Intents
-
-extension MWDetailBatteryVC {
-
-    @IBAction func readBatteryPressed(_ sender: Any) {
-        vm.userRequestedBatteryLevel()
-    }
-}

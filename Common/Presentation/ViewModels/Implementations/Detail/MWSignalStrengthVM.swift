@@ -54,7 +54,6 @@ extension MWDetailSignalStrengthVM {
         }
     }
 
-    #warning("Original implementation did not set txPowerLevel at load")
     public func userChangedTransmissionPower(toIndex: Int) {
         guard transmissionPowerLevels.indices.contains(toIndex),
               let device = device

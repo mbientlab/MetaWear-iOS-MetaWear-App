@@ -99,10 +99,10 @@ extension MWDetailTemperatureVM {
     }
 
     public func setReadPin(_ newValue: String) {
-#warning("Not implemented in original app, but present in UI")
+#warning("Original App — Not implemented, but present in UI")
     }
 
     public func setEnablePin(_ newValue: String) {
-#warning("Not implemented in original app, but present in UI")
+        // SAME AS ABOVE
     }
 }

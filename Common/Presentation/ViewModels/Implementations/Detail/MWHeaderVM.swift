@@ -49,11 +49,11 @@ extension MWDetailHeaderVM {
         connectionIsOn = device.peripheral.state == .connected
 
         switch device.peripheral.state {
-            case .connected:        deviceName = "Connected"
-            case .connecting:       deviceName = "Connecting"
-            case .disconnected:     deviceName = "Disconnected"
-            case .disconnecting:    deviceName = "Disconnecting"
-            @unknown default:       deviceName = "Unknown API Value"
+            case .connected:        connectionState = "Connected"
+            case .connecting:       connectionState = "Connecting"
+            case .disconnected:     connectionState = "Disconnected"
+            case .disconnecting:    connectionState = "Disconnecting"
+            @unknown default:       connectionState = "Unknown API Value"
         }
     }
 }
@@ -72,8 +72,7 @@ extension MWDetailHeaderVM {
         if ud.object(forKey: key) == nil {
             ud.set(1, forKey: key)
             ud.synchronize()
-            presentAlert(
-                in: UIApplication.shared.windows.first(where: \.isKeyWindow)!.rootViewController!,
+            parent?.alerts.presentAlert(
                 title: "iOS Caches Names",
                 message: "To see the new name, you may need to disconnect, re-connect several times or force close the app."
             )

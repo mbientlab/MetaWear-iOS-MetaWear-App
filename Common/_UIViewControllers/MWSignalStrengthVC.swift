@@ -2,43 +2,21 @@
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-class MWDetailSignalStrengthVC: UIViewController {
+class MWSignalSVC: MWDetailSignalStrengthVM, ObservableObject, DetailSignalStrengthVMDelegate {
 
-    private let vm: DetailSignalStrengthVM = MWDetailSignalStrengthVM()
-
-    @IBOutlet weak var rssiLevelLabel: UILabel!
-    @IBOutlet weak var txPowerSelector: UISegmentedControl!
-
-}
-
-extension MWDetailSignalStrengthVC {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        vm.delegate = self
+    override init() {
+        super.init()
+        self.delegate = self
     }
-}
 
-extension MWDetailSignalStrengthVC: DetailSignalStrengthVMDelegate {
+    var indexedTransmissionLevels: [(index: Int, value: Int)] {
+        self.transmissionPowerLevels.enumerated().map { ($0.offset, $0.element)
+        }
+    }
 
     func refreshView() {
-        self.rssiLevelLabel.text = vm.rssiLevel
-        self.txPowerSelector.selectedSegmentIndex = vm.chosenPowerLevelIndex
+        self.objectWillChange.send()
     }
-}
-
-// MARK: - Intents
-
-extension MWDetailSignalStrengthVC {
-
-    @IBAction func readRSSIPressed(_ sender: Any) {
-        vm.userRequestsRSSI()
-    }
-
-    @IBAction func txPowerChanged(_ sender: Any) {
-        vm.userChangedTransmissionPower(toIndex: txPowerSelector.selectedSegmentIndex)
-    }
-
 }

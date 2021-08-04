@@ -42,7 +42,9 @@ extension MWDetailBatteryVM {
 
         mbl_mw_settings_get_battery_state_data_signal(device.board).read().continueWith(.mainThread) {
             if let error = $0.error {
-                self.delegate?.presentAlert(title: "Battery Error", message: error.localizedDescription)
+                self.parent?.alerts.presentAlert(
+                    title: "Battery Error",
+                    message: error.localizedDescription)
             } else {
                 let battery: MblMwBatteryState = $0.result!.valueAs()
                 self.batteryLevel = String(battery.charge)

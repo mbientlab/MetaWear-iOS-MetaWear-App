@@ -6,7 +6,7 @@ import Foundation
 import MetaWearCpp
 import MetaWear
 
-public enum AccelerometerGraphScale: Int, CaseIterable {
+public enum AccelerometerGraphScale: Int, CaseIterable, Identifiable {
     case two
     case four
     case eight
@@ -22,7 +22,7 @@ public enum AccelerometerGraphScale: Int, CaseIterable {
     }
 
     /// Raw Cpp constant
-    var cppEnumValue: MblMwAccBoschRange {
+    public var cppEnumValue: MblMwAccBoschRange {
         switch self {
             case .two: return MBL_MW_ACC_BOSCH_RANGE_2G
             case .four: return MBL_MW_ACC_BOSCH_RANGE_4G
@@ -30,6 +30,8 @@ public enum AccelerometerGraphScale: Int, CaseIterable {
             case .sixteen: return MBL_MW_ACC_BOSCH_RANGE_16G
         }
     }
+
+    public var id: Int { fullScale }
 }
 
 public enum AccelerometerModel: CaseIterable {
