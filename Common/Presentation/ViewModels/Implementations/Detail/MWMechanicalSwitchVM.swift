@@ -39,9 +39,9 @@ extension MWDetailMechanicalSwitchVM {
 extension MWDetailMechanicalSwitchVM {
 
     public func userStartedMonitoringSwitch() {
-
         guard !isMonitoring, let device = device else { return }
         isMonitoring = true
+        delegate?.refreshView()
 
         let signal = mbl_mw_switch_get_state_data_signal(device.board)!
 
@@ -50,24 +50,29 @@ extension MWDetailMechanicalSwitchVM {
             let _self: MWDetailMechanicalSwitchVM = bridge(ptr: context!)
             
             DispatchQueue.main.async {
-                _self.switchState = (switchVal != 0) ? "Down" : "Up (0)"
+                _self.setSwitchState(switchVal)
                 _self.delegate?.refreshView()
             }
         }
 
         parent?.storeStream(signal, cleanup: nil)
 
-        delegate?.refreshView()
+    }
+
+    private func setSwitchState(_ value: UInt32) {
+        switchState = (value != 0) ? "Down" : "Up (0)"
     }
 
     public func userStoppedMonitoringSwitch() {
         isMonitoring = false
-        guard let device = device else { return }
+        delegate?.refreshView()
+        stopReadingSignal()
+    }
 
+    private func stopReadingSignal() {
+        guard let device = device else { return }
         let signal = mbl_mw_switch_get_state_data_signal(device.board)!
         parent?.removeStream(signal)
-
-        delegate?.refreshView()
     }
 
 }

@@ -143,7 +143,7 @@ extension DevicesTableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! DeviceDetailViewController
-        destination.device = (sender as! MetaWear)
+        let destination = segue.destination as! DeviceDetailScreenUIKitContainer
+        destination.setDevice(device: sender as! MetaWear)
     }
 }

@@ -3,6 +3,24 @@
 import Foundation
 
 public class DetailVMContainer {
+
+    init(flag: VMContainerFlag = .swiftUI) {
+        switch flag {
+            case .swiftUI:
+                self.header = MWDetailHeaderSVC()
+                self.identifiers = MWDetailIdentifiersSVC()
+                self.battery = MWDetailBatterySVC()
+                self.signal = MWSignalSVC()
+                self.firmware = MWFirmwareSVC()
+                self.led = MWLEDSVC()
+                self.mechanical = MWMechanicalSwitchSVC()
+                self.temperature = MWTemperatureSVC()
+                self.reset = MWResetSVC()
+                self.accelerometer = MWAccelerometerSVC()
+
+        }
+    }
+
     public var header: DetailHeaderVM!
     public var identifiers: DetailIdentifiersVM!
     public var battery: DetailBatteryVM!
@@ -14,5 +32,11 @@ public class DetailVMContainer {
     public var reset: DetailResetVM!
     public var accelerometer: DetailAccelerometerVM!
 
-    var configurables: [DetailConfiguring] { [header] }
+    var configurables: [DetailConfiguring] { [
+        header, identifiers, battery, signal, firmware, led, mechanical, temperature, reset, accelerometer
+    ] }
+}
+
+enum VMContainerFlag {
+    case swiftUI
 }

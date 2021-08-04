@@ -7,7 +7,7 @@ import SwiftUI
 struct I2CBlock: View {
 
     var body: some View {
-        VStack {
+        VStack(spacing: .cardVSpacing) {
 
         }
     }

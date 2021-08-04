@@ -3,31 +3,63 @@
 //
 
 import SwiftUI
+import MetaWear
 
 #if canImport(UIKit)
 class DeviceDetailScreenUIKitContainer: UIHostingController<DeviceDetailScreen> {
+
+    private let vc = MWDeviceDetailScreenSVC()
+
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder, rootView: DeviceDetailScreen())
+        super.init(coder: aDecoder,
+                   rootView: DeviceDetailScreen(vc: vc)
+        )
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        vc.start()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        vc.end()
+    }
+
+    /// Pass selected device from storyboard segue
+    func setDevice(device: MetaWear) {
+        vc.setDevice(device)
+    }
+
+
 }
 #endif
 
 struct DeviceDetailScreen: View {
 
-    @StateObject var vc: MWDeviceDetailScreenSVC = .init()
+    @ObservedObject var vc: MWDeviceDetailScreenSVC = .init()
+    @Environment(\.colorScheme) var scheme
 
     var body: some View {
-        ScrollViewReader { scroll in
-            ScrollView {
-                LazyVStack {
-                    HeaderBlock()
-                    blocksA
-                    blocksB
+        VStack(spacing: 0) {
+            ToastServer(vm: vc.toast as! ToastServerType)
+                .background(Color(.systemGroupedBackground).opacity(scheme == .light ? 0.8 : 1))
+
+            ScrollViewReader { scroll in
+                ScrollView {
+                    VStack(spacing: 24) {
+                        TitlelessDetailsBlockCard(content: HeaderBlock(vm: vc.vms.header as! MWDetailHeaderSVC))
+                            .padding(.top, 10)
+                        blocksA
+                        blocksB
+                    }
                 }
+                .background(Color(.systemGroupedBackground).opacity(scheme == .light ? 0.8 : 1))
             }
+            .pickerStyle(.segmented)
+            .environment(\.allowBluetoothRequests, (vc.toast as! ToastServerType).allowBluetoothRequests)
+            .animation(.easeOut)
+            .animation(.easeOut, value: (vc.toast as! ToastServerType).showToast)
         }
-        .overlay(ToastServer())
-        .pickerStyle(.segmented)
     }
 
     @ViewBuilder var blocksA: some View {
@@ -57,7 +89,7 @@ struct DeviceDetailScreen: View {
         )
 
         DetailsBlockCard(
-            title: "Reset",
+            title: "Cycle",
             symbol: .reset,
             content: ResetBlock(vm: vc.vms.reset as! MWResetSVC)
         )

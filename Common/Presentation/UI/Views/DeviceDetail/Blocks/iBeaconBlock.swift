@@ -7,7 +7,7 @@ import SwiftUI
 struct iBeaconBlock: View {
 
     var body: some View {
-        VStack {
+        VStack(spacing: .cardVSpacing) {
 
         }
     }

@@ -9,14 +9,14 @@ struct SignalBlock: View {
     @ObservedObject var vm: MWSignalSVC
 
     var body: some View {
-        VStack {
+        VStack(spacing: .cardVSpacing) {
             LabeledItem(
                 label: "RSSI",
                 content: rssi
             )
 
             LabeledItem(
-                label: "Tx Power (dBm)",
+                label: "Tx Power",
                 content: tx
             )
         }
@@ -25,6 +25,11 @@ struct SignalBlock: View {
     var rssi: some View {
         HStack {
             Text(vm.rssiLevel)
+                .fixedSize(horizontal: false, vertical: true)
+                .multilineTextAlignment(.leading)
+                .lineLimit(nil)
+
+            Spacer()
 
             UpdateButton(
                 didTap: vm.userRequestsRSSI,
@@ -41,11 +46,13 @@ struct SignalBlock: View {
 
     var tx: some View {
         HStack {
-            Picker("Tx Power", selection: txChoice) {
+            Picker("\(vm.transmissionPowerLevels[vm.chosenPowerLevelIndex]) dBm", selection: txChoice) {
                 ForEach(vm.indexedTransmissionLevels, id: \.index) {
                     Text(String($0.value)).tag($0.index)
                 }
             }
+            .pickerStyle(.menu)
+            .fixedSize()
         }
     }
 }

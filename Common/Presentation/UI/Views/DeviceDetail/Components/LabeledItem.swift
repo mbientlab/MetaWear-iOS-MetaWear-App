@@ -11,12 +11,17 @@ struct LabeledItem<Content: View>: View {
     var maxWidth: CGFloat = UIScreen.main.bounds.width
 
     var body: some View {
-        HStack {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
             Text(label)
-                .frame(width: maxWidth * .blockLabelColumnScreenWidth())
+                .fontWeight(.medium)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+
+                .multilineTextAlignment(.leading)
+                .frame(width: maxWidth * .blockLabelColumnScreenWidth(), alignment: .leading)
 
             content
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }

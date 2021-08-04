@@ -7,7 +7,7 @@ import SwiftUI
 struct GPIOBlock: View {
 
     var body: some View {
-        VStack {
+        VStack(spacing: .cardVSpacing) {
 
         }
     }

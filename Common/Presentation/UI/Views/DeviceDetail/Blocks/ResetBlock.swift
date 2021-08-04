@@ -9,23 +9,19 @@ struct ResetBlock: View {
     @ObservedObject var vm: MWResetSVC
 
     var body: some View {
-        VStack {
-            LabeledItem(
-                label: "Settings",
-                content: reset
-            )
-
-            LabeledItem(
-                label: "Power",
-                content: sleep
-            )
+        HStack {
+            Spacer()
+            reset
+            Spacer()
+            sleep
+            Spacer()
         }
     }
 
     var reset: some View {
-        HStack {
-            Button("Soft Rest") { vm.userRequestedSoftReset() }
-            Button("Restore Factory Defaults") { vm.userRequestedFactoryReset() }
+        Menu("Reset") {
+            Button("Soft") { vm.userRequestedSoftReset() }
+            Button("Factory") { vm.userRequestedFactoryReset() }
         }
     }
 

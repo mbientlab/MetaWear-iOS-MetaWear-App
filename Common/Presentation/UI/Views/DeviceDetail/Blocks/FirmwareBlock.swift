@@ -9,12 +9,7 @@ struct FirmwareBlock: View {
     @ObservedObject var vm: MWFirmwareSVC
 
     var body: some View {
-        VStack {
-            LabeledItem(
-                label: "Firmware Rev",
-                content: firmware
-            )
-
+        VStack(spacing: .cardVSpacing) {
             LabeledItem(
                 label: vm.offerUpdate ? "New Firmware" : "Status",
                 content: status
@@ -23,6 +18,11 @@ struct FirmwareBlock: View {
             if vm.offerUpdate {
                 Button("Update Firmware") { vm.userRequestedUpdateFirmware() }
             }
+
+            LabeledItem(
+                label: "Revision",
+                content: firmware
+            )
         }
     }
 

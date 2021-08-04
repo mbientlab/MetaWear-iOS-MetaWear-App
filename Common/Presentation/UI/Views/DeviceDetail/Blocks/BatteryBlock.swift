@@ -9,16 +9,27 @@ struct BatteryBlock: View {
     @ObservedObject var vm: MWDetailBatterySVC
 
     var body: some View {
-        VStack {
-            ProgressView("Charge",
-                         value: Float(vm.batteryLevelPercentage),
-                         total: Float(100))
-                .progressViewStyle(.circular)
-                .foregroundColor(vm.batteryLevelPercentage > 40 ? Color(.systemGreen) : Color(.systemPink))
+        HStack(spacing: .cardVSpacing) {
+            Text("\(vm.batteryLevelPercentage)%")
+                .foregroundColor(color)
+                .fontWeight(.medium)
+                .font(.subheadline)
+                .padding(.trailing, 8)
 
+            ProgressView("", value: Float(vm.batteryLevelPercentage), total: Float(100))
+                .progressViewStyle(.linear)
+                .accessibilityValue(String("\(vm.batteryLevelPercentage)%"))
+                .accentColor(color)
+                .foregroundColor(color)
+                .offset(y: -8)
+            
             Spacer()
 
-            Button("Update") { vm.userRequestedBatteryLevel() }
+            UpdateButton(didTap: vm.userRequestedBatteryLevel, helpAccessibilityLabel: "Check Battery")
         }
+    }
+
+    var color: Color {
+        vm.batteryLevelPercentage > 40 ? Color.primary : Color(.systemPink)
     }
 }

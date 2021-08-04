@@ -10,6 +10,7 @@ public protocol DetailAccelerometerVM: AnyObject, DetailConfiguring {
     var isStreaming: Bool { get }
     var allowsNewLogging: Bool { get }
     var allowsNewStreaming: Bool { get }
+    var canExportData: Bool { get }
 
     var isStepping: Bool { get }
     var stepCount: Int { get }

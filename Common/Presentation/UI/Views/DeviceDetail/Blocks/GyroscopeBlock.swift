@@ -7,7 +7,7 @@ import SwiftUI
 struct GyroscopeBlock: View {
 
     var body: some View {
-        VStack {
+        VStack(spacing: .cardVSpacing) {
             
         }
     }

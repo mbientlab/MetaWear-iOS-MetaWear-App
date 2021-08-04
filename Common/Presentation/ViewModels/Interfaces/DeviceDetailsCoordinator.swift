@@ -17,7 +17,7 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     var delegate: DeviceDetailsCoordinatorDelegate? { get set }
 
     /// Present progress dialogs
-    var hud: HUDVM { get }
+    var toast: ToastVM { get }
 
     /// Present alerts
     var alerts: AlertPresenter { get }

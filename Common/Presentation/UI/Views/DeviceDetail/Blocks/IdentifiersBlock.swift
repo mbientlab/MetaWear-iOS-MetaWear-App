@@ -9,24 +9,24 @@ struct IdentifiersBlock: View {
     @ObservedObject var vm: MWDetailIdentifiersSVC
 
     var body: some View {
-        VStack {
+        VStack(spacing: .cardVSpacing) {
             LabeledItem(
-                label: "Manufacturer",
+                label: "OEM",
                 content: manufacturer
             )
 
             LabeledItem(
-                label: "Model #",
+                label: "Model",
                 content: model
             )
 
             LabeledItem(
-                label: "Serial #",
+                label: "Serial",
                 content: serial
             )
 
             LabeledItem(
-                label: "Hardware Rev",
+                label: "Hardware",
                 content: hardware
             )
         }
@@ -37,14 +37,14 @@ struct IdentifiersBlock: View {
     }
 
     var model: some View {
-        Text(vm.manufacturer)
+        Text(vm.modelNumber)
     }
 
     var serial: some View {
-        Text(vm.manufacturer)
+        Text(vm.serialNumber)
     }
 
     var hardware: some View {
-        Text(vm.manufacturer)
+        Text(vm.harwareRevision)
     }
 }

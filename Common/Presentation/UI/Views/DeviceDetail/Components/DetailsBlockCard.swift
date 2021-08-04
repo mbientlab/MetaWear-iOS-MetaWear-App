@@ -6,6 +6,8 @@ import SwiftUI
 
 struct DetailsBlockCard<Content: View>: View {
 
+    @Environment(\.colorScheme) var scheme
+
     init(title: String,
          image: Image,
          iconDescription: String,
@@ -29,11 +31,13 @@ struct DetailsBlockCard<Content: View>: View {
     var iconDescription: String
 
     var body: some View {
-        VStack {
+        VStack(spacing: 1) {
             cardTitle
+
             content
+                .frame(maxWidth: .infinity)
+                .blockify()
         }
-        .blockify()
     }
 
     private var cardTitle: some View {
@@ -45,9 +49,32 @@ struct DetailsBlockCard<Content: View>: View {
                 .accessibilityLabel(iconDescription)
 
             Text(title)
+                .fontWeight(scheme == .light ? .medium : .regular)
+                .font(.subheadline)
+                .fixedSize(horizontal: true, vertical: false)
+
+            Spacer()
         }
+        .frame(maxWidth: .infinity)
+        .foregroundColor(Color.secondary)
+        .padding(.horizontal, .detailBlockContentPadding + 5)
         .flipsForRightToLeftLayoutDirection(true)
         .accessibilityLabel(title)
         .accessibilityAddTraits(.isHeader)
+    }
+}
+
+struct TitlelessDetailsBlockCard<Content: View>: View {
+
+    var content: Content
+
+    var body: some View {
+        VStack(spacing: 4) {
+            content
+                .frame(maxWidth: .infinity)
+                .blockify()
+        }
+        .frame(maxWidth: .infinity)
+
     }
 }

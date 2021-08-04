@@ -9,15 +9,10 @@ struct TemperatureBlock: View {
     @ObservedObject var vm: MWTemperatureSVC
 
     var body: some View {
-        VStack {
+        VStack(spacing: .cardVSpacing) {
             LabeledItem(
-                label: "Scale",
+                label: "Reported",
                 content: temp
-            )
-
-            LabeledItem(
-                label: "Channel",
-                content: channel
             )
 
             LabeledItem(
@@ -25,6 +20,10 @@ struct TemperatureBlock: View {
                 content: channelType
             )
 
+            LabeledItem(
+                label: "Channel",
+                content: channel
+            )
         }
     }
 
@@ -44,6 +43,12 @@ struct TemperatureBlock: View {
     var temp: some View {
         HStack {
             Text(vm.temperature)
+                .fixedSize(horizontal: true, vertical: false)
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+
+            Spacer()
+
             UpdateButton(didTap: vm.readTemperature,
                          helpAccessibilityLabel: "Read Temperature")
         }

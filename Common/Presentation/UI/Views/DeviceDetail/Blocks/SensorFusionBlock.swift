@@ -7,7 +7,7 @@ import SwiftUI
 struct SensorFusionBlock: View {
 
     var body: some View {
-        VStack {
+        VStack(spacing: .cardVSpacing) {
 
         }
     }

@@ -7,7 +7,7 @@ import SwiftUI
 struct AmbientLightBlock: View {
 
     var body: some View {
-        VStack {
+        VStack(spacing: .cardVSpacing) {
 
         }
     }

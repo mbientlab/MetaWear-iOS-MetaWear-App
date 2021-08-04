@@ -22,7 +22,7 @@ public enum AccelerometerSampleFrequency: Int, CaseIterable, Identifiable {
         }
     }
 
-    public var frequencyLabel: String { String(self.frequency) }
+    public var frequencyLabel: String { String(format: "%1.1f", frequency) }
 
     public var id: Int { rawValue }
 }

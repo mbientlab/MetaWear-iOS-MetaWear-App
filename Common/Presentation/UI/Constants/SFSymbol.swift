@@ -9,7 +9,7 @@ enum SFSymbol: String {
     case signal = "antenna.radiowaves.left.and.right"
     case firmware = "internaldrive"
     case reset = "restart.circle"
-    case mechanicalSwitch = "circle"
+    case mechanicalSwitch = "togglepower"
     case led = "light.max"
     case temperature = "thermometer"
     case accelerometer = "hand.draw"
@@ -29,7 +29,10 @@ enum SFSymbol: String {
     case solidCircle = "circle.fill"
     case flash = "bolt.circle.fill"
     case orientation = "move.3d"
-    case send = "paperplane"
+    case send = "square.and.arrow.up"
+
+    case connected = "bolt.horizontal.fill"
+    case disconnected = "bolt.horizontal"
 }
 
 extension SFSymbol {
@@ -65,6 +68,9 @@ extension SFSymbol {
             case .flash: return "Lightning Flash"
             case .orientation: return "3D Orientation"
             case .send: return "Export"
+
+            case .connected: return "Device Connected Bolt"
+            case .disconnected: return "Device Connected Empty Bolt"
         }
     }
 }

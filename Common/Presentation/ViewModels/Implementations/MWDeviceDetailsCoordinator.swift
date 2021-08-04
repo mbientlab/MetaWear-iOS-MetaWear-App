@@ -14,6 +14,7 @@ import MBProgressHUD
 import iOSDFULibrary
 
 let na = MBL_MW_MODULE_TYPE_NA
+typealias ToastServerType = ToastVMSwiftUI
 
 public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
     
@@ -21,7 +22,7 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
     public private(set) var vms: DetailVMContainer = .init()
     
     private var device: MetaWear!
-    public private(set) var hud: HUDVM = iOSHUDVM()
+    public private(set) var toast: ToastVM = ToastServerType()
     public private(set) var alerts: AlertPresenter = CrossPlatformAlertPresenter()
 
     /// Tracks all streaming events (even for other devices).
@@ -34,35 +35,41 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
         didSet { didSetIsObserving(oldValue) }
     }
 
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM_dd_yyyy-HH_mm_ss"
+        return formatter
+    }()
 //    private var gyroBMI160Data: [(Int64, MblMwCartesianFloat)] = []
 //    private var magnetometerBMM150Data: [(Int64, MblMwCartesianFloat)] = []
 //    private var gpioPinChangeCount = 0
 //    private var hygrometerBME280Event: OpaquePointer?
 //    private var sensorFusionData = Data()
-    
+
+    var initiator: DFUServiceInitiator?
+    var dfuController: DFUServiceController?
+
+    func setDevice(_ newDevice: MetaWear) {
+        self.device = newDevice
+    }
 }
 
 // MARK: - Coordinate Connection State
 
 extension MWDeviceDetailsCoordinator {
-    
+
+    /// Called before view appears
     public func start() {
         resetStreamingEvents()
         configureVMs()
         vms.header.start()
         isObserving = true
-        connectDevice(true)
-    }
-    
-    public func end() {
-        isObserving = false
-        streamingCleanup.forEach { $0.value() }
-        streamingCleanup.removeAll()
+        attemptConnectionWithHUD()
     }
     
     /// Coordinates device connection HUD and eventually presenting the relevant data feeds (either on appear/disappear or for a user intent).
-    public func connectDevice(_ newState: Bool) {
-        guard newState else {
+    public func connectDevice(_ shouldConnect: Bool) {
+        guard shouldConnect else {
             device.cancelConnection()
             return
         }
@@ -78,6 +85,11 @@ extension MWDeviceDetailsCoordinator {
         delegate?.hideAndReloadAllCells()
     }
 
+    public func end() {
+        isObserving = false
+        streamingCleanup.forEach { $0.value() }
+        streamingCleanup.removeAll()
+    }
 }
 
 // MARK: - Handle Stream/Logging Memory
@@ -118,20 +130,16 @@ extension MWDeviceDetailsCoordinator {
     }
 
     public func export(_ data: Data, titled: String) {
-        // Get current Time/Date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM_dd_yyyy-HH_mm_ss"
-        let dateString = dateFormatter.string(from: Date())
-        let name = "\(titled)_\(dateString).csv"
-        let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(name)
-
+        let fileName = getFilenameByDate(and: titled)
+        let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
 
         do {
             try data.write(to: fileURL, options: .atomic)
-#if os(iOS)
-            delegate?.presentFileExportDialog(fileURL: fileURL, saveErrorTitle: "Save Error", saveErrorMessage: "No programs installed that could save the file")
-#endif
-
+            delegate?.presentFileExportDialog(
+                fileURL: fileURL,
+                saveErrorTitle: "Save Error",
+                saveErrorMessage: "No programs installed that could save the file"
+            )
         } catch let error {
             self.alerts.presentAlert(
                 title: "Save Error",
@@ -139,17 +147,24 @@ extension MWDeviceDetailsCoordinator {
             )
         }
     }
+
+    private func getFilenameByDate(and name: String) -> String {
+        let dateString = dateFormatter.string(from: Date())
+        return "\(name)_\(dateString).csv"
+    }
 }
 
 /// Helpers
 private extension MWDeviceDetailsCoordinator {
-    
+
+    /// Set this parent instance and the target device as weak references in VMs
     func configureVMs() {
         vms.configurables.forEach {
             $0.configure(parent: self, device: device)
         }
     }
-    
+
+    /// Clear any existing references
     func resetStreamingEvents() {
         streamingEvents = []
         delegate?.hideAndReloadAllCells()
@@ -173,8 +188,11 @@ extension MWDeviceDetailsCoordinator {
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         OperationQueue.main.addOperation {
             self.vms.header.refreshConnectionState()
-            if self.device.peripheral.state == .disconnected {
-                self.deviceDisconnected()
+
+            switch self.device.peripheral.state {
+                case .disconnected:
+                   self.deviceDisconnected()
+                default: return
             }
         }
     }
@@ -204,28 +222,29 @@ private extension MWDeviceDetailsCoordinator {
 
     /// First step in connecting the currently focused device. If no errors occur during connection, the HUD will disappear and deviceDidConnect() will be called.
     func attemptConnectionWithHUD() {
-#if os(iOS)
-        hud.presentHUD(mode: .indeterminate, text: "Connecting...", in: nil)
+        toast.present(.foreverSpinner, "Connecting", disablesInteraction: true) { [weak self] in
+            self?.connectDevice(false)
+            self?.vms.header.refreshConnectionState()
+        }
 
-        device.connectAndSetup().continueWith(.mainThread) { [weak self] task in
-            self?.hud.updateHUD(mode: .text, newText: nil)
+        device.connectAndSetup().continueWith(.mainThread) { task in
+            self.toast.update(mode: .textOnly, text: nil, disablesInteraction: nil, onDismiss: nil)
 
             guard task.error == nil else {
-                self?.alerts.presentAlert(
+                self.alerts.presentAlert(
                     title: "Connection Error",
                     message: task.error!.localizedDescription
                 )
-                self?.hud.closeHUD(finalMessage: nil, delay: 0)
+                self.toast.dismiss(delay: 0)
                 return
             }
 
-            self?.deviceDidConnect()
-            self?.hud.closeHUD(finalMessage: "Connected!", delay: 0.5)
+            self.deviceDidConnect()
+            self.toast.dismiss(updatingText: "Connected!", disablesInteraction: false, delay: .defaultToastDismissalDelay)
         }
-#endif
     }
 
-    /// Second step in connecting the currently focused device. Reads anonymous loggers. Previously called deviceConnectedReadAnonymousLoggers(). Calls the third step activateConnectedDeviceCapabilities() upon completion.
+    /// Second step in connecting the currently focused device. Store pointers for anonymous logging signals.
     func deviceDidConnect() {
         let task = device.createAnonymousDatasignals()
         task.continueWith(.mainThread) { t in
@@ -236,16 +255,18 @@ private extension MWDeviceDetailsCoordinator {
                     self.loggers[identifier] = signal
                 }
             }
-            self.activateConnectedDeviceCapabilities()
+            self.readAndDisplayDeviceCapabilities()
         }
     }
 
 
     /// Third step in connecting the currently focused device. Parses the device's capabilities and instructs relevant view models to display UI.
-    func activateConnectedDeviceCapabilities() {
+    func readAndDisplayDeviceCapabilities() {
+
         vms.header.refreshConnectionState() // ## Previously manually forced switch on
         logPeripheralIdentifier()
         showDefaultMinimumDeviceDetail()
+
         defer { delegate?.reloadAllCells() }
 
         let board = device.board

@@ -6,13 +6,15 @@ import SwiftUI
 
 struct ExportDataButton: View {
 
-    var label: String = "Export Data"
+    var label: String = "Export"
     var isEnabled: Bool
     var action: () -> Void
 
     var body: some View {
         Button { action() } label: {
             Label(label, systemImage: SFSymbol.send.rawValue)
+                .fixedSize(horizontal: true, vertical: false)
+                .lineLimit(1)
         }
         .opacity(isEnabled ? 1 : 0.5)
         .accessibilityLabel(label)

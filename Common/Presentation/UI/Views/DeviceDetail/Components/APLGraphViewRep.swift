@@ -15,23 +15,25 @@ struct APLGraphViewWrapper: View {
 }
 
 struct APLGraphViewRep: UIViewRepresentable {
-
+    typealias View = UIView
     var vm: GraphDelegate
 
-    func makeUIView(context: Context) -> APLGraphView {
-        let view = APLGraphView()
-        vm.graph = view
-        return view
+    func makeUIView(context: Context) -> View {
+//        let view = APLGraphView()
+
+//        vm.graph = view
+        return UIView()
     }
 
-    func updateUIView(_ uiView: APLGraphView, context: Context) {
+    func updateUIView(_ uiView: View, context: Context) {
         vm.graph = uiView
     }
 
 }
 
 public protocol GraphDelegate: AnyObject {
-    var graph: APLGraphView? { get set }
+//    var graph: APLGraphView? { get set }
+    var graph: UIView? { get set }
 
     func refreshGraphScale()
     func addGraphPoint(x: Double, y: Double, z: Double)

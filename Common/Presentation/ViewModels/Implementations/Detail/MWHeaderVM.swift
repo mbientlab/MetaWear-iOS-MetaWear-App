@@ -33,20 +33,23 @@ extension MWDetailHeaderVM: DetailConfiguring {
 extension MWDetailHeaderVM {
 
     public func start() {
-        refreshName()
         refreshConnectionState()
+        refreshName()
+        print("header", deviceName, connectionState)
         delegate?.refreshView()
     }
 
     public func refreshName() {
         guard let device = device else { return }
         deviceName = device.name
+        delegate?.refreshView()
     }
 
     public func refreshConnectionState() {
         guard let device = device else { return }
 
         connectionIsOn = device.peripheral.state == .connected
+        print(connectionIsOn, "connectionIsOn")
 
         switch device.peripheral.state {
             case .connected:        connectionState = "Connected"
@@ -55,6 +58,8 @@ extension MWDetailHeaderVM {
             case .disconnecting:    connectionState = "Disconnecting"
             @unknown default:       connectionState = "Unknown API Value"
         }
+
+        delegate?.refreshView()
     }
 }
 
@@ -86,6 +91,11 @@ extension MWDetailHeaderVM {
 
 extension MWDetailHeaderVM {
 
+    public func didUserTypeValidDevice(name: String) -> Bool {
+        guard name.count <= 8 else { return false }
+        return name.data(using: String.Encoding.ascii) != nil
+    }
+
     public func didUserTypeValidDeviceName(_ newString: String, range: NSRange, fullString: String) -> Bool {
         let fullStringCount = fullString.count
 
@@ -101,4 +111,3 @@ extension MWDetailHeaderVM {
     }
 
 }
-

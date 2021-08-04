@@ -7,7 +7,7 @@ import SwiftUI
 struct BarometerBlock: View {
 
     var body: some View {
-        VStack {
+        VStack(spacing: .cardVSpacing) {
 
         }
     }

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		15EEEFEC5020F1A40C2A78FE /* Pods_MetaWearApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868BDE849ECD8FB83384791B /* Pods_MetaWearApp.framework */; };
+		916D60474F5A7EF7540EFC01 /* Pods_MetaWearApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB2CE4DF87BA663ECF7BF /* Pods_MetaWearApp.framework */; };
 		9438D94E26B453F30014FC91 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94D26B453F30014FC91 /* Images.swift */; };
 		9438D95026B45B770014FC91 /* ScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94F26B45B770014FC91 /* ScannedDeviceCellVM.swift */; };
 		9438D95726B467FC0014FC91 /* DevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */; };
@@ -16,8 +16,8 @@
 		9453FD3926B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */; };
 		9473587926B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */; };
 		9473587B26B92D610032EE87 /* AccelerometerSampleFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */; };
-		947979AE26B98E4500AEB5EA /* iOSHUDVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979AD26B98E4500AEB5EA /* iOSHUDVM.swift */; };
-		947979B026B98E5800AEB5EA /* HUDVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979AF26B98E5800AEB5EA /* HUDVM.swift */; };
+		947979AE26B98E4500AEB5EA /* ToastVMSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979AD26B98E4500AEB5EA /* ToastVMSwiftUI.swift */; };
+		947979B026B98E5800AEB5EA /* ToastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979AF26B98E5800AEB5EA /* ToastVM.swift */; };
 		947979B226B98EC800AEB5EA /* UIKit+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B126B98EC800AEB5EA /* UIKit+KeyWindow.swift */; };
 		947979B426B98F0400AEB5EA /* DetailVMContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B326B98F0400AEB5EA /* DetailVMContainer.swift */; };
 		947979BA26B9985700AEB5EA /* DeviceDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B926B9985700AEB5EA /* DeviceDetailScreen.swift */; };
@@ -48,7 +48,6 @@
 		947979F026B9C3AA00AEB5EA /* MWDetailIdentifiersSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979EF26B9C3AA00AEB5EA /* MWDetailIdentifiersSVC.swift */; };
 		9482DC4D26B501CF00DD19EB /* _DeviceDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482DC4C26B501CF00DD19EB /* _DeviceDetailVC.swift */; };
 		9482DC4F26B5078A00DD19EB /* HeaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482DC4E26B5078A00DD19EB /* HeaderVM.swift */; };
-		9488E56F26B8EE1F006A6262 /* APLGraphView.h in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F8625B8A5CF00D2591C /* APLGraphView.h */; };
 		9488E57126B8EF5B006A6262 /* MWAccelerometerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E57026B8EF5B006A6262 /* MWAccelerometerVC.swift */; };
 		9488E57326B8F018006A6262 /* MWAccelerometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E57226B8F018006A6262 /* MWAccelerometerVM.swift */; };
 		94A514AC26B87BFB008707ED /* MWBatteryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514AB26B87BFB008707ED /* MWBatteryVM.swift */; };
@@ -74,6 +73,7 @@
 		94ACC9E326B9F61000264F6E /* APLGraphViewRep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9E226B9F61000264F6E /* APLGraphViewRep.swift */; };
 		94ACC9E726B9FD2C00264F6E /* MWDeviceDetailScreenSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9E626B9FD2C00264F6E /* MWDeviceDetailScreenSVC.swift */; };
 		94AFED3526B875C6004326C8 /* MWldentifiersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AFED3426B875C6004326C8 /* MWldentifiersVM.swift */; };
+		94C07E8726BB2F35008D875B /* DividerPadded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C07E8626BB2F35008D875B /* DividerPadded.swift */; };
 		94C5539226B7DF5A00E7B2DC /* IdentifiersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539126B7DF5A00E7B2DC /* IdentifiersVM.swift */; };
 		94C553A426B7E0F700E7B2DC /* SignalStrengthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539326B7E0F600E7B2DC /* SignalStrengthVM.swift */; };
 		94C553A526B7E0F700E7B2DC /* AmbientLightVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539426B7E0F600E7B2DC /* AmbientLightVM.swift */; };
@@ -108,7 +108,6 @@
 		AB5D5F5425B8A0B400D2591C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5D5F5325B8A0B400D2591C /* CoreGraphics.framework */; };
 		AB5D5F5625B8A0B900D2591C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5D5F5525B8A0B900D2591C /* Foundation.framework */; };
 		AB5D5F5A25B8A1AF00D2591C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5D5F5925B8A1AF00D2591C /* UIKit.framework */; };
-		AB5D5F8725B8A5CF00D2591C /* APLGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F8525B8A5CF00D2591C /* APLGraphView.m */; };
 		AB5D5F9025B8A7B400D2591C /* DeviceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F8D25B8A7B400D2591C /* DeviceDetailViewController.swift */; };
 		AB5D5F9125B8A7B400D2591C /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F8E25B8A7B400D2591C /* DeviceTableViewCell.swift */; };
 		AB5D5F9225B8A7B400D2591C /* DevicesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F8F25B8A7B400D2591C /* DevicesTableViewController.swift */; };
@@ -116,8 +115,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		77B06B10ACA7CA5E4B050C51 /* Pods-MetaWearApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearApp.debug.xcconfig"; path = "Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp.debug.xcconfig"; sourceTree = "<group>"; };
-		868BDE849ECD8FB83384791B /* Pods_MetaWearApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MetaWearApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DB2F6EBD41DBFC307375FEE /* Pods-MetaWearApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearApp.release.xcconfig"; path = "Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp.release.xcconfig"; sourceTree = "<group>"; };
 		9438D94D26B453F30014FC91 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		9438D94F26B45B770014FC91 /* ScannedDeviceCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedDeviceCellVM.swift; sourceTree = "<group>"; };
 		9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesScanningVM.swift; sourceTree = "<group>"; };
@@ -126,8 +124,8 @@
 		9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDeviceDetailsCoordinator.swift; sourceTree = "<group>"; };
 		9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWearEnumsSwiftBridges.swift; sourceTree = "<group>"; };
 		9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerometerSampleFrequency.swift; sourceTree = "<group>"; };
-		947979AD26B98E4500AEB5EA /* iOSHUDVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSHUDVM.swift; sourceTree = "<group>"; };
-		947979AF26B98E5800AEB5EA /* HUDVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDVM.swift; sourceTree = "<group>"; };
+		947979AD26B98E4500AEB5EA /* ToastVMSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastVMSwiftUI.swift; sourceTree = "<group>"; };
+		947979AF26B98E5800AEB5EA /* ToastVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastVM.swift; sourceTree = "<group>"; };
 		947979B126B98EC800AEB5EA /* UIKit+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+KeyWindow.swift"; sourceTree = "<group>"; };
 		947979B326B98F0400AEB5EA /* DetailVMContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVMContainer.swift; sourceTree = "<group>"; };
 		947979B926B9985700AEB5EA /* DeviceDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailScreen.swift; sourceTree = "<group>"; };
@@ -183,6 +181,7 @@
 		94ACC9E226B9F61000264F6E /* APLGraphViewRep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APLGraphViewRep.swift; sourceTree = "<group>"; };
 		94ACC9E626B9FD2C00264F6E /* MWDeviceDetailScreenSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDeviceDetailScreenSVC.swift; sourceTree = "<group>"; };
 		94AFED3426B875C6004326C8 /* MWldentifiersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWldentifiersVM.swift; sourceTree = "<group>"; };
+		94C07E8626BB2F35008D875B /* DividerPadded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerPadded.swift; sourceTree = "<group>"; };
 		94C5539126B7DF5A00E7B2DC /* IdentifiersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiersVM.swift; sourceTree = "<group>"; };
 		94C5539326B7E0F600E7B2DC /* SignalStrengthVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalStrengthVM.swift; sourceTree = "<group>"; };
 		94C5539426B7E0F600E7B2DC /* AmbientLightVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmbientLightVM.swift; sourceTree = "<group>"; };
@@ -208,6 +207,7 @@
 		94F3317026B5308B0015EE88 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		94F3317226B530FF0015EE88 /* MWHeaderVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWHeaderVM.swift; sourceTree = "<group>"; };
 		94F3317426B531C50015EE88 /* DeviceDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsCoordinator.swift; sourceTree = "<group>"; };
+		97CD400283237991C81511BD /* Pods-MetaWearApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearApp.debug.xcconfig"; path = "Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp.debug.xcconfig"; sourceTree = "<group>"; };
 		AB19083325B9060100249906 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		AB5D5F3825B7D47300D2591C /* MetaWearApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetaWearApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB5D5F3B25B7D47300D2591C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -219,14 +219,12 @@
 		AB5D5F5325B8A0B400D2591C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AB5D5F5525B8A0B900D2591C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AB5D5F5925B8A1AF00D2591C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		AB5D5F8525B8A5CF00D2591C /* APLGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLGraphView.m; sourceTree = "<group>"; };
-		AB5D5F8625B8A5CF00D2591C /* APLGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLGraphView.h; sourceTree = "<group>"; };
 		AB5D5F8925B8A5E100D2591C /* MetaWearApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MetaWearApp-Bridging-Header.h"; path = "MetaWearApp/MetaWearApp-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		AB5D5F8D25B8A7B400D2591C /* DeviceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDetailViewController.swift; sourceTree = "<group>"; };
 		AB5D5F8E25B8A7B400D2591C /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
 		AB5D5F8F25B8A7B400D2591C /* DevicesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicesTableViewController.swift; sourceTree = "<group>"; };
 		AB5D5F9825B8AA4A00D2591C /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FE7511B316982C11D08E3C7F /* Pods-MetaWearApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearApp.release.xcconfig"; path = "Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp.release.xcconfig"; sourceTree = "<group>"; };
+		F35BB2CE4DF87BA663ECF7BF /* Pods_MetaWearApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MetaWearApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,7 +236,7 @@
 				AB5D5F5A25B8A1AF00D2591C /* UIKit.framework in Frameworks */,
 				AB5D5F5625B8A0B900D2591C /* Foundation.framework in Frameworks */,
 				AB5D5F5225B8A09A00D2591C /* CoreData.framework in Frameworks */,
-				15EEEFEC5020F1A40C2A78FE /* Pods_MetaWearApp.framework in Frameworks */,
+				916D60474F5A7EF7540EFC01 /* Pods_MetaWearApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,7 +251,7 @@
 				947979B326B98F0400AEB5EA /* DetailVMContainer.swift */,
 				94F3316B26B52FBA0015EE88 /* Detail */,
 				94F3316A26B52FA70015EE88 /* Discovery */,
-				947979AF26B98E5800AEB5EA /* HUDVM.swift */,
+				947979AF26B98E5800AEB5EA /* ToastVM.swift */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -291,7 +289,7 @@
 		947979B526B9976B00AEB5EA /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
-				947979AD26B98E4500AEB5EA /* iOSHUDVM.swift */,
+				947979AD26B98E4500AEB5EA /* ToastVMSwiftUI.swift */,
 				9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */,
 				94F3316526B518C60015EE88 /* Detail */,
 				94F3316826B52F180015EE88 /* Discovery */,
@@ -390,6 +388,7 @@
 				94ACC9E026B9F5F700264F6E /* ExportDataButton.swift */,
 				94ACC9DC26B9C6D100264F6E /* LabeledItem.swift */,
 				94ACC9DE26B9D10100264F6E /* UpdateButton.swift */,
+				94C07E8626BB2F35008D875B /* DividerPadded.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -498,7 +497,6 @@
 			isa = PBXGroup;
 			children = (
 				94CD3AA526B3ECF200854FBA /* Common */,
-				AB5D5F8425B8A5CF00D2591C /* Accelerometer */,
 				AB5D5F3A25B7D47300D2591C /* MetaWearApp */,
 				AB5D5F3925B7D47300D2591C /* Products */,
 				AB5D5F5025B8A09900D2591C /* Frameworks */,
@@ -539,26 +537,16 @@
 				AB5D5F5525B8A0B900D2591C /* Foundation.framework */,
 				AB5D5F5325B8A0B400D2591C /* CoreGraphics.framework */,
 				AB5D5F5125B8A09A00D2591C /* CoreData.framework */,
-				868BDE849ECD8FB83384791B /* Pods_MetaWearApp.framework */,
+				F35BB2CE4DF87BA663ECF7BF /* Pods_MetaWearApp.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		AB5D5F8425B8A5CF00D2591C /* Accelerometer */ = {
-			isa = PBXGroup;
-			children = (
-				AB5D5F8525B8A5CF00D2591C /* APLGraphView.m */,
-				AB5D5F8625B8A5CF00D2591C /* APLGraphView.h */,
-			);
-			name = Accelerometer;
-			path = MetaWearApp/Accelerometer;
 			sourceTree = "<group>";
 		};
 		CED36B206EA1115A8F5D4917 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				77B06B10ACA7CA5E4B050C51 /* Pods-MetaWearApp.debug.xcconfig */,
-				FE7511B316982C11D08E3C7F /* Pods-MetaWearApp.release.xcconfig */,
+				97CD400283237991C81511BD /* Pods-MetaWearApp.debug.xcconfig */,
+				2DB2F6EBD41DBFC307375FEE /* Pods-MetaWearApp.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -570,11 +558,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB5D5F4C25B7D47300D2591C /* Build configuration list for PBXNativeTarget "MetaWearApp" */;
 			buildPhases = (
-				03EE9FA24050EC2C782F4B6A /* [CP] Check Pods Manifest.lock */,
+				5795065915F07ED24B84B587 /* [CP] Check Pods Manifest.lock */,
 				AB5D5F3425B7D47300D2591C /* Sources */,
 				AB5D5F3525B7D47300D2591C /* Frameworks */,
 				AB5D5F3625B7D47300D2591C /* Resources */,
-				7DD881A96C178287D5F0F58B /* [CP] Embed Pods Frameworks */,
+				188BA736D671C32D5E8D9A07 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -633,7 +621,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		03EE9FA24050EC2C782F4B6A /* [CP] Check Pods Manifest.lock */ = {
+		188BA736D671C32D5E8D9A07 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5795065915F07ED24B84B587 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -655,23 +660,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7DD881A96C178287D5F0F58B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -680,7 +668,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				947979DF26B9B4B500AEB5EA /* MagnetometerBlock.swift in Sources */,
-				9488E56F26B8EE1F006A6262 /* APLGraphView.h in Sources */,
 				AB5D5F3C25B7D47300D2591C /* AppDelegate.swift in Sources */,
 				947979C726B9A04200AEB5EA /* LEDBlock.swift in Sources */,
 				947979D126B9A06E00AEB5EA /* BatteryBlock.swift in Sources */,
@@ -697,7 +684,7 @@
 				94A514B226B882B6008707ED /* MWLEDVM.swift in Sources */,
 				947979DD26B9B49D00AEB5EA /* GyroscopeBlock.swift in Sources */,
 				947979C526B9A03700AEB5EA /* TemperatureBlock.swift in Sources */,
-				947979B026B98E5800AEB5EA /* HUDVM.swift in Sources */,
+				947979B026B98E5800AEB5EA /* ToastVM.swift in Sources */,
 				9453FD3926B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift in Sources */,
 				94C553B326B7E0F700E7B2DC /* FirmwareVM.swift in Sources */,
 				947979E526B9B4EB00AEB5EA /* BarometerBlock.swift in Sources */,
@@ -712,7 +699,6 @@
 				94A514BC26B89B0C008707ED /* Template.swift in Sources */,
 				94ACC9DD26B9C6D100264F6E /* LabeledItem.swift in Sources */,
 				947979E926B9B50500AEB5EA /* AmbientLightBlock.swift in Sources */,
-				AB5D5F8725B8A5CF00D2591C /* APLGraphView.m in Sources */,
 				94C553B226B7E0F700E7B2DC /* AccelerometerVM.swift in Sources */,
 				94C5539226B7DF5A00E7B2DC /* IdentifiersVM.swift in Sources */,
 				94C553AB26B7E0F700E7B2DC /* LEDVM.swift in Sources */,
@@ -740,6 +726,7 @@
 				947979C926B9A05000AEB5EA /* MechanicalSwitchBlock.swift in Sources */,
 				9473587B26B92D610032EE87 /* AccelerometerSampleFrequency.swift in Sources */,
 				9438D95C26B47C990014FC91 /* String+Drop0xPrefix.swift in Sources */,
+				94C07E8726BB2F35008D875B /* DividerPadded.swift in Sources */,
 				947979D526B9A07C00AEB5EA /* HeaderBlock.swift in Sources */,
 				94C553A826B7E0F700E7B2DC /* HumidityVM.swift in Sources */,
 				94F3316D26B52FD90015EE88 /* DetailConfiguring.swift in Sources */,
@@ -767,7 +754,7 @@
 				947979BD26B99EE600AEB5EA /* Blockify.swift in Sources */,
 				94A514AC26B87BFB008707ED /* MWBatteryVM.swift in Sources */,
 				947979BA26B9985700AEB5EA /* DeviceDetailScreen.swift in Sources */,
-				947979AE26B98E4500AEB5EA /* iOSHUDVM.swift in Sources */,
+				947979AE26B98E4500AEB5EA /* ToastVMSwiftUI.swift in Sources */,
 				9438D95026B45B770014FC91 /* ScannedDeviceCellVM.swift in Sources */,
 				94A514C226B8AD04008707ED /* MWBatteryVC.swift in Sources */,
 				AB5D5F9925B8AA4A00D2591C /* SceneDelegate.swift in Sources */,
@@ -922,7 +909,7 @@
 		};
 		AB5D5F4D25B7D47300D2591C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 77B06B10ACA7CA5E4B050C51 /* Pods-MetaWearApp.debug.xcconfig */;
+			baseConfigurationReference = 97CD400283237991C81511BD /* Pods-MetaWearApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -948,7 +935,7 @@
 		};
 		AB5D5F4E25B7D47300D2591C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FE7511B316982C11D08E3C7F /* Pods-MetaWearApp.release.xcconfig */;
+			baseConfigurationReference = 2DB2F6EBD41DBFC307375FEE /* Pods-MetaWearApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

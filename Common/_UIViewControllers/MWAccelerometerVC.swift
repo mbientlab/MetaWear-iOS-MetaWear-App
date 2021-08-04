@@ -11,14 +11,13 @@ class MWAccelerometerSVC: MWDetailAccelerometerVM, DetailAccelerometerVMDelegate
         self.delegate = self
     }
 
-    weak var graph: APLGraphView? = nil
+    weak var graph: UIView? = nil
+//    weak var graph: APLGraphView? = nil
 
-    var canExportData: Bool {
-        !accelerometerBMI160Data.isEmpty
-    }
+    var dataPoints: Int { max(0, self.accelerometerBMI160Data.endIndex - 1) }
 
     func graphScaleLabel(_ scale: AccelerometerGraphScale) -> String {
-        "± \(scale.fullScale)"
+        "\(scale.fullScale)"
     }
 
     func refreshView() {
@@ -26,11 +25,18 @@ class MWAccelerometerSVC: MWDetailAccelerometerVM, DetailAccelerometerVMDelegate
     }
 
     func refreshGraphScale() {
-        graph?.fullScale = Float(graphScaleSelected.fullScale)
+//        graph?.fullScale = Float(graphScaleSelected.fullScale)
     }
 
     func addGraphPoint(x: Double, y: Double, z: Double) {
-        graph?.addX(x, y: y, z: z)
+
+//        graph?.addX(x, y: y, z: z)
+
+        let wasEmpty = accelerometerBMI160Data.isEmpty
+
+        DispatchQueue.main.async { [weak self] in
+            if wasEmpty { self?.refreshView() } // So "canExportData" will refresh.
+        }
     }
 
     func willStartNewGraphStream() {

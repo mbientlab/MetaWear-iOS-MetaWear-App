@@ -5,6 +5,7 @@
 import Foundation
 import MetaWear
 import MetaWearCpp
+import Combine
 
 public class MWDetailBatteryVM: DetailBatteryVM {
 
@@ -14,7 +15,8 @@ public class MWDetailBatteryVM: DetailBatteryVM {
     public var delegate: DetailBatteryVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
     private weak var device: MetaWear? = nil
-
+    var lastAutoReconnect = Date()
+    var reconnection: AnyCancellable? = nil
 }
 
 extension MWDetailBatteryVM: DetailConfiguring {

@@ -14,6 +14,13 @@ class MWDeviceDetailScreenSVC: MWDeviceDetailsCoordinator, ObservableObject {
 #if os(iOS)
     private var exportController: UIDocumentInteractionController? = nil
 #endif
+
+    public let toastServer = ToastVMSwiftUI.self
+
+    override init() {
+        super.init()
+        self.delegate = self
+    }
 }
 
 extension MWDeviceDetailScreenSVC: DeviceDetailsCoordinatorDelegate {

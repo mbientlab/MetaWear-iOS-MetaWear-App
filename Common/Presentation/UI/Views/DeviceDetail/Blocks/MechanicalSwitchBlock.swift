@@ -9,7 +9,7 @@ struct MechanicalSwitchBlock: View {
     @ObservedObject var vm: MWMechanicalSwitchSVC
 
     var body: some View {
-        VStack {
+        VStack(spacing: .cardVSpacing) {
             LabeledItem(
                 label: "State",
                 content: button
@@ -19,14 +19,17 @@ struct MechanicalSwitchBlock: View {
 
     var button: some View {
         HStack {
-            Button(vm.isMonitoring ? "Stop" : "Monitor") {
-                if vm.isMonitoring { vm.userStoppedMonitoringSwitch() }
-                else { vm.userStartedMonitoringSwitch() }
-            }
+            Text(vm.switchState)
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
 
             Spacer()
 
-            Text(vm.switchState)
+            Button(vm.isMonitoring ? "Stop" : "Stream") {
+                if vm.isMonitoring { vm.userStoppedMonitoringSwitch() }
+                else { vm.userStartedMonitoringSwitch() }
+            }
         }
     }
 }

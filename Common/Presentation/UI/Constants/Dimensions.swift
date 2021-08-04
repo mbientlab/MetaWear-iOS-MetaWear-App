@@ -6,10 +6,12 @@ import SwiftUI
 
 extension CGFloat {
     static let detailBlockCorners: CGFloat = 10
-    static let detailBlockOuterPadding: CGFloat = 20
-    static let detailBlockContentPadding: CGFloat = 12
+    static let detailBlockOuterPadding: CGFloat = 8
+    static let detailBlockContentPadding: CGFloat = 17
 
-    static let detailsBlockHeaderIcon: CGFloat = 30
+    static let cardVSpacing: CGFloat = 13
+
+    static let detailsBlockHeaderIcon: CGFloat = 19
 
     static let detailsGraphHeight: CGFloat = 120
 
