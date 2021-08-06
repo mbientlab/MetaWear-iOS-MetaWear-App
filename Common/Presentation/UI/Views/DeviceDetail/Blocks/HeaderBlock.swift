@@ -13,12 +13,18 @@ struct HeaderBlock: View {
             title
             connection
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                toolbarConnectionButton
+            }
+        }
+        .navigationTitle(vm.deviceName)
     }
 
-    @State private var shake = 0
+    @State private var shake = false
     @State private var didEdit = false
     @State private var deviceTitle = ""
-    var title: some View {
+    private var title: some View {
         HStack {
             TextField(
                 "Device",
@@ -36,15 +42,13 @@ struct HeaderBlock: View {
         }
         .onAppear { deviceTitle = vm.deviceName }
         .onChange(of: vm.deviceName) { deviceTitle = $0 }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                toolbarConnectionButton
-            }
-        }
-        .navigationTitle(vm.deviceName)
+
+        .modifier(ShakeEffect(shakes: shake ? 2 : 0))
+        .animation(shake ? Animation.easeIn.speed(2) : .none, value: shake)
+        
     }
 
-    var toolbarConnectionButton: some View {
+    private var toolbarConnectionButton: some View {
         Button { if !vm.connectionIsOn { vm.userSetConnection(to: true) } } label: {
             Image(systemName: vm.connectionIsOn ? SFSymbol.connected.rawValue : SFSymbol.disconnected.rawValue)
                 .foregroundColor(vm.connectionIsOn ? Color(.systemBlue) : Color(.systemPink))
@@ -53,7 +57,7 @@ struct HeaderBlock: View {
         .accessibilityAddTraits(.isButton)
     }
 
-    func validateName() {
+    private func validateName() {
         self.didEdit = false
         guard vm.didUserTypeValidDevice(name: deviceTitle)
         else { shakeAnimation(); return }
@@ -61,16 +65,16 @@ struct HeaderBlock: View {
         UIApplication.firstKeyWindow()?.resignFirstResponder()
     }
 
-    func shakeAnimation() {
-        shake += 1
+    private func shakeAnimation() {
+        shake.toggle()
     }
 
-    var isConnected: Binding<Bool> {
+    private var isConnected: Binding<Bool> {
         Binding { vm.connectionIsOn }
         set: { vm.userSetConnection(to: $0) }
     }
 
-    var connection: some View {
+    private var connection: some View {
         HStack {
             Text(vm.connectionState)
                 .fixedSize(horizontal: false, vertical: true)
@@ -80,6 +84,7 @@ struct HeaderBlock: View {
 
             Toggle("", isOn: isConnected)
                 .fixedSize()
+                .toggleStyle(SwitchToggleStyle(tint: Color(.systemBlue)))
         }
 
     }

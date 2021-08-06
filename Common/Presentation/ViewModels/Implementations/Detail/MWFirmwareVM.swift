@@ -9,8 +9,8 @@ import iOSDFULibrary
 
 public class MWDetailFirmwareVM: DetailFirmwareVM {
 
-    public private(set) var firmwareUpdateStatus = ""
-    public private(set) var firmwareRevision = ""
+    public private(set) var firmwareUpdateStatus = " "
+    public private(set) var firmwareRevision = " "
     public private(set) var offerUpdate = false
 
     public var delegate: DetailFirmwareVMDelegate? = nil
@@ -51,9 +51,9 @@ extension MWDetailFirmwareVM {
 
 // MARK: - Intent
 
-extension MWDetailFirmwareVM {
+public extension MWDetailFirmwareVM {
 
-    public func userRequestedCheckForFirmwareUpdates() {
+    func userRequestedCheckForFirmwareUpdates() {
         guard let device = device else { return }
         device.checkForFirmwareUpdate().continueWith(.mainThread) {
             if let error = $0.error {
@@ -69,7 +69,7 @@ extension MWDetailFirmwareVM {
         }
     }
 
-    public func userRequestedUpdateFirmware() {
+    func userRequestedUpdateFirmware() {
         guard let device = device else { return }
 
         // Pause the screen while update is going on

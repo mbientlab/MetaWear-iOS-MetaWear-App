@@ -18,14 +18,14 @@ struct ResetBlock: View {
         }
     }
 
-    var reset: some View {
+    private var reset: some View {
         Menu("Reset") {
             Button("Soft") { vm.userRequestedSoftReset() }
             Button("Factory") { vm.userRequestedFactoryReset() }
         }
     }
 
-    var sleep: some View {
+    private var sleep: some View {
         Button("Sleep") { vm.userRequestedSleep() }
     }
 }

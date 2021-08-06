@@ -31,7 +31,7 @@ struct LEDBlock: View {
         }
     }
 
-    var steady: some View {
+    private var steady: some View {
         HStack {
             ColorButton(symbol: .solidCircle,
                         label: "Red",
@@ -57,7 +57,7 @@ struct LEDBlock: View {
         }
     }
 
-    var flash: some View {
+    private var flash: some View {
         HStack {
             ColorButton(symbol: .flash,
                         label: "Red",
@@ -83,7 +83,7 @@ struct LEDBlock: View {
         }
     }
 
-    var off: some View {
+    private var off: some View {
         HStack {
             Spacer()
             ColorButton(symbol: .solidCircle,

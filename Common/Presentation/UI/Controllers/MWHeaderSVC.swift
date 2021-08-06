@@ -15,7 +15,6 @@ class MWDetailHeaderSVC: MWDetailHeaderVM, ObservableObject {
 extension MWDetailHeaderSVC: DetailHeaderVMDelegate {
 
     func refreshView() {
-        print("header RefreshView")
         self.objectWillChange.send()
     }
 }

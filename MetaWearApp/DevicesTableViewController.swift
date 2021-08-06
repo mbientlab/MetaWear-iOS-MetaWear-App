@@ -9,7 +9,6 @@
 import UIKit
 import MetaWear
 import MetaWearCpp
-import MBProgressHUD
 import iOSDFULibrary
 
 fileprivate let scanner = MetaWearScanner()

@@ -25,10 +25,10 @@ struct DetailsBlockCard<Content: View>: View {
         self.content = content
     }
 
-    var title: String
-    var content: Content
-    var image: Image
-    var iconDescription: String
+    private var title: String
+    private var content: Content
+    private var image: Image
+    private var iconDescription: String
 
     var body: some View {
         VStack(spacing: 1) {

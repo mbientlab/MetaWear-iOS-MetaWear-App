@@ -16,8 +16,8 @@ public class MWDetailHeaderVM: DetailHeaderVM {
     private weak var parent: DeviceDetailsCoordinator? = nil
     private weak var device: MetaWear? = nil
 
-    public private(set) var deviceName: String = ""
-    public private(set) var connectionState: String = ""
+    public private(set) var deviceName: String = " "
+    public private(set) var connectionState: String = " "
     public private(set) var connectionIsOn: Bool = false
 
 }
@@ -30,26 +30,24 @@ extension MWDetailHeaderVM: DetailConfiguring {
     }
 }
 
-extension MWDetailHeaderVM {
+public extension MWDetailHeaderVM {
 
-    public func start() {
+    func start() {
         refreshConnectionState()
         refreshName()
-        print("header", deviceName, connectionState)
         delegate?.refreshView()
     }
 
-    public func refreshName() {
+    func refreshName() {
         guard let device = device else { return }
         deviceName = device.name
         delegate?.refreshView()
     }
 
-    public func refreshConnectionState() {
+    func refreshConnectionState() {
         guard let device = device else { return }
 
         connectionIsOn = device.peripheral.state == .connected
-        print(connectionIsOn, "connectionIsOn")
 
         switch device.peripheral.state {
             case .connected:        connectionState = "Connected"
@@ -63,13 +61,17 @@ extension MWDetailHeaderVM {
     }
 }
 
-extension MWDetailHeaderVM {
+public extension MWDetailHeaderVM {
 
-    public func userSetConnection(to newState: Bool) {
-        parent?.connectDevice(newState)
+    func userSetConnection(to newState: Bool) {
+        if newState {
+            parent?.connectDevice(newState)
+        } else {
+            parent?.userIntentDidCauseDeviceDisconnect()
+        }
     }
 
-    public func userUpdatedName(to newValue: String) {
+    func userUpdatedName(to newValue: String) {
         guard let device = device else { return }
         let ud = UserDefaults.standard
         let key = UserDefaults.deviceNameKey
@@ -89,14 +91,14 @@ extension MWDetailHeaderVM {
 
 // MARK: - Intents
 
-extension MWDetailHeaderVM {
+public extension MWDetailHeaderVM {
 
-    public func didUserTypeValidDevice(name: String) -> Bool {
+    func didUserTypeValidDevice(name: String) -> Bool {
         guard name.count <= 8 else { return false }
         return name.data(using: String.Encoding.ascii) != nil
     }
 
-    public func didUserTypeValidDeviceName(_ newString: String, range: NSRange, fullString: String) -> Bool {
+    func didUserTypeValidDeviceName(_ newString: String, range: NSRange, fullString: String) -> Bool {
         let fullStringCount = fullString.count
 
         // Prevent Undo crashing bug

@@ -17,7 +17,7 @@ struct MechanicalSwitchBlock: View {
         }
     }
 
-    var button: some View {
+    private var button: some View {
         HStack {
             Text(vm.switchState)
                 .lineLimit(nil)

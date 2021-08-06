@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-extension CGFloat {
+public extension CGFloat {
     static let detailBlockCorners: CGFloat = 10
     static let detailBlockOuterPadding: CGFloat = 8
     static let detailBlockContentPadding: CGFloat = 17
@@ -12,9 +12,8 @@ extension CGFloat {
     static let cardVSpacing: CGFloat = 13
 
     static let detailsBlockHeaderIcon: CGFloat = 19
-
-    static let detailsGraphHeight: CGFloat = 120
-
+    static let detailsGraphHeight: CGFloat = 200
+    
     static func blockLabelColumnScreenWidth() -> CGFloat {
 #if os(iOS)
         return UIDevice.current.userInterfaceIdiom == .pad ?

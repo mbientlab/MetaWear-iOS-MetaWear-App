@@ -14,13 +14,14 @@ struct ToastServer: View {
                 toast.transition(.move(edge: .top))
             }
         }
+        .frame(maxWidth: .infinity, alignment: .center)
         .animation(.easeOut(duration: vm.animationDuration), value: vm.showToast)
         .animation(.easeOut(duration: vm.animationDuration), value: vm.text)
         .animation(.easeOut(duration: vm.animationDuration), value: vm.percentComplete)
         .animation(.easeOut(duration: vm.animationDuration), value: vm.type)
     }
 
-    var toast: some View {
+    private var toast: some View {
         HStack(alignment: .center) {
             switch vm.type {
 
@@ -30,12 +31,13 @@ struct ToastServer: View {
                 case .horizontalProgress:
 
                     Text(String(vm.percentComplete))
-                        .font(.caption)
+                        .font(.caption.weight(.medium))
                         .fixedSize(horizontal: true, vertical: false)
 
                     ProgressView(value: Float(vm.percentComplete) / 100, total: 1)
                         .progressViewStyle(.linear)
                         .padding(.horizontal)
+                        .frame(width: 125)
 
                 case .foreverSpinner:
                     ProgressView()

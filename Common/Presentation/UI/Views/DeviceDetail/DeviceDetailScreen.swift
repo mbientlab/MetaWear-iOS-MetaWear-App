@@ -37,12 +37,12 @@ class DeviceDetailScreenUIKitContainer: UIHostingController<DeviceDetailScreen> 
 struct DeviceDetailScreen: View {
 
     @ObservedObject var vc: MWDeviceDetailScreenSVC = .init()
-    @Environment(\.colorScheme) var scheme
+    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         VStack(spacing: 0) {
             ToastServer(vm: vc.toast as! ToastServerType)
-                .background(Color(.systemGroupedBackground).opacity(scheme == .light ? 0.8 : 1))
+                .background(bg.ignoresSafeArea())
 
             ScrollViewReader { scroll in
                 ScrollView {
@@ -53,7 +53,7 @@ struct DeviceDetailScreen: View {
                         blocksB
                     }
                 }
-                .background(Color(.systemGroupedBackground).opacity(scheme == .light ? 0.8 : 1))
+                .background(bg.ignoresSafeArea())
             }
             .pickerStyle(.segmented)
             .environment(\.allowBluetoothRequests, (vc.toast as! ToastServerType).allowBluetoothRequests)
@@ -62,118 +62,158 @@ struct DeviceDetailScreen: View {
         }
     }
 
-    @ViewBuilder var blocksA: some View {
-
-        DetailsBlockCard(
-            title: "Identity",
-            symbol: .identity,
-            content: IdentifiersBlock(vm: vc.vms.identifiers as! MWDetailIdentifiersSVC)
-        )
-
-        DetailsBlockCard(
-            title: "Battery",
-            symbol: .battery,
-            content: BatteryBlock(vm: vc.vms.battery as! MWDetailBatterySVC)
-        )
-
-        DetailsBlockCard(
-            title: "Signal",
-            symbol: .signal,
-            content: SignalBlock(vm: vc.vms.signal as! MWSignalSVC)
-        )
-
-        DetailsBlockCard(
-            title: "Firmware",
-            symbol: .firmware,
-            content: FirmwareBlock(vm: vc.vms.firmware as! MWFirmwareSVC)
-        )
-
-        DetailsBlockCard(
-            title: "Cycle",
-            symbol: .reset,
-            content: ResetBlock(vm: vc.vms.reset as! MWResetSVC)
-        )
-
-        DetailsBlockCard(
-            title: "Mechanical Switch",
-            symbol: .mechanicalSwitch,
-            content: MechanicalSwitchBlock(vm: vc.vms.mechanical as! MWMechanicalSwitchSVC)
-        )
-
-        DetailsBlockCard(
-            title: "LED",
-            symbol: .led,
-            content: LEDBlock(vm: vc.vms.led as! MWLEDSVC)
-        )
-
-        DetailsBlockCard(
-            title: "Temperature",
-            symbol: .temperature,
-            content: TemperatureBlock(vm: vc.vms.temperature as! MWTemperatureSVC)
-        )
-
-        DetailsBlockCard(
-            title: "Accelerometer (BMI160/270)",
-            symbol: .accelerometer,
-            content: AccelerometerBlock(vm: vc.vms.accelerometer as! MWAccelerometerSVC)
-        )
+    private var bg: some View {
+        Color(.systemGroupedBackground).opacity(scheme == .light ? 0.8 : 1)
     }
 
-    @ViewBuilder var blocksB: some View {
+    @ViewBuilder private var blocksA: some View {
 
-        DetailsBlockCard(
-            title: "Sensor Fusion",
-            symbol: .sensorFusion,
-            content: SensorFusionBlock()
-        )
+        if vc.visibleGroupsDict[.identifiers] == true {
+            DetailsBlockCard(
+                title: "Identity",
+                symbol: .identity,
+                content: IdentifiersBlock(vm: vc.vms.identifiers as! MWDetailIdentifiersSVC)
+            )
+        }
 
-        DetailsBlockCard(
-            title: "Gyroscope",
-            symbol: .gyroscope,
-            content: GyroscopeBlock()
-        )
+        if vc.visibleGroupsDict[.battery] == true {
+            DetailsBlockCard(
+                title: "Battery",
+                symbol: .battery,
+                content: BatteryBlock(vm: vc.vms.battery as! MWDetailBatterySVC)
+            )
+        }
 
-        DetailsBlockCard(
-            title: "Magnetometer",
-            symbol: .magnetometer,
-            content: MagnetometerBlock()
-        )
+        if vc.visibleGroupsDict[.signal] == true {
+            DetailsBlockCard(
+                title: "Signal",
+                symbol: .signal,
+                content: SignalBlock(vm: vc.vms.signal as! MWSignalSVC)
+            )
+        }
 
-        DetailsBlockCard(
-            title: "GPIO",
-            symbol: .gpio,
-            content: GPIOBlock()
-        )
+        if vc.visibleGroupsDict[.firmware] == true {
+            DetailsBlockCard(
+                title: "Firmware",
+                symbol: .firmware,
+                content: FirmwareBlock(vm: vc.vms.firmware as! MWFirmwareSVC)
+            )
+        }
 
-        DetailsBlockCard(
-            title: "Haptic/Buzzer",
-            symbol: .haptic,
-            content: HapticBlock()
-        )
+        if vc.visibleGroupsDict[.reset] == true {
+            DetailsBlockCard(
+                title: "Cycle",
+                symbol: .reset,
+                content: ResetBlock(vm: vc.vms.reset as! MWResetSVC)
+            )
+        }
 
-        DetailsBlockCard(
-            title: "iBeacon",
-            symbol: .ibeacon,
-            content: iBeaconBlock()
-        )
+        if vc.visibleGroupsDict[.mechanicalSwitch] == true {
+            DetailsBlockCard(
+                title: "Mechanical Switch",
+                symbol: .mechanicalSwitch,
+                content: MechanicalSwitchBlock(vm: vc.vms.mechanical as! MWMechanicalSwitchSVC)
+            )
+        }
 
-        DetailsBlockCard(
-            title: "Barometer",
-            symbol: .barometer,
-            content: BarometerBlock()
-        )
+        if vc.visibleGroupsDict[.LED] == true {
+            DetailsBlockCard(
+                title: "LED",
+                symbol: .led,
+                content: LEDBlock(vm: vc.vms.led as! MWLEDSVC)
+            )
+        }
 
-        DetailsBlockCard(
-            title: "Ambient Light",
-            symbol: .ambientLight,
-            content: AmbientLightBlock()
-        )
+        if vc.visibleGroupsDict[.temperature] == true {
+            DetailsBlockCard(
+                title: "Temperature",
+                symbol: .temperature,
+                content: TemperatureBlock(vm: vc.vms.temperature as! MWTemperatureSVC)
+            )
+        }
 
-        DetailsBlockCard(
-            title: "I2C",
-            symbol: .i2c,
-            content: I2CBlock()
-        )
+        if vc.visibleGroupsDict[.accelerometer] == true {
+            DetailsBlockCard(
+                title: "Accelerometer (BMI160/270)",
+                symbol: .accelerometer,
+                content: AccelerometerBlock(vm: vc.vms.accelerometer as! MWAccelerometerSVC)
+            )
+        }
+    }
+
+    @ViewBuilder private var blocksB: some View {
+
+        if vc.visibleGroupsDict[.identifiers] == true {
+            DetailsBlockCard(
+                title: "Sensor Fusion",
+                symbol: .sensorFusion,
+                content: SensorFusionBlock()
+            )
+        }
+
+        if vc.visibleGroupsDict[.identifiers] == true {
+            DetailsBlockCard(
+                title: "Gyroscope",
+                symbol: .gyroscope,
+                content: GyroscopeBlock()
+            )
+        }
+
+        if vc.visibleGroupsDict[.identifiers] == true {
+            DetailsBlockCard(
+                title: "Magnetometer",
+                symbol: .magnetometer,
+                content: MagnetometerBlock()
+            )
+        }
+
+        if vc.visibleGroupsDict[.identifiers] == true {
+            DetailsBlockCard(
+                title: "GPIO",
+                symbol: .gpio,
+                content: GPIOBlock()
+            )
+        }
+
+        if vc.visibleGroupsDict[.identifiers] == true {
+            DetailsBlockCard(
+                title: "Haptic/Buzzer",
+                symbol: .haptic,
+                content: HapticBlock()
+            )
+        }
+
+        if vc.visibleGroupsDict[.identifiers] == true {
+            DetailsBlockCard(
+                title: "iBeacon",
+                symbol: .ibeacon,
+                content: iBeaconBlock()
+            )
+        }
+
+        if vc.visibleGroupsDict[.identifiers] == true {
+            DetailsBlockCard(
+                title: "Barometer",
+                symbol: .barometer,
+                content: BarometerBlock()
+            )
+        }
+
+        if vc.visibleGroupsDict[.identifiers] == true {
+            DetailsBlockCard(
+                title: "Ambient Light",
+                symbol: .ambientLight,
+                content: AmbientLightBlock()
+            )
+        }
+
+        if vc.visibleGroupsDict[.identifiers] == true {
+            DetailsBlockCard(
+                title: "I2C",
+                symbol: .i2c,
+                content: I2CBlock()
+            )
+        }
     }
 
 }

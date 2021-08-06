@@ -30,8 +30,14 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     /// Terminate device connection and clean up references.
     func end()
 
-    /// Called to kickoff a newly connected device or when a user toggles the connection on or off
+    /// Called to kickoff a newly connected device
     func connectDevice(_ newState: Bool)
+
+    /// When a user toggles the connection on or off, the visible cells will also be reloaded
+    func userRequestedDeviceDisconnect()
+
+    /// Side effect: An action such as a restart intent caused the device state to change
+    func userIntentDidCauseDeviceDisconnect()
 
     /// Handle disconnecting and reconnecting the device for log reset.
     func logCleanup(_ handler: @escaping (Error?) -> Void)
@@ -42,7 +48,7 @@ public protocol DeviceDetailsCoordinator: AnyObject {
 
     func removeStream(_ signal: OpaquePointer)
 
-    func userIntentDidCauseDeviceDisconnect()
+
 
     func export(_ data: Data, titled: String)
 

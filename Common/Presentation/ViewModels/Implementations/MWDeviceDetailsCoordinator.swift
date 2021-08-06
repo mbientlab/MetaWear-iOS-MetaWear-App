@@ -10,7 +10,6 @@ import Foundation
 import MetaWear
 import MetaWearCpp
 import BoltsSwift
-import MBProgressHUD
 import iOSDFULibrary
 
 let na = MBL_MW_MODULE_TYPE_NA
@@ -30,7 +29,7 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
     private var streamingCleanup: [OpaquePointer: () -> Void] = [:]
     public var loggers: [String: OpaquePointer] = [:]
 
-//    private var disconnectTask: Task<MetaWear>?
+
     private var isObserving = false {
         didSet { didSetIsObserving(oldValue) }
     }
@@ -40,11 +39,14 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
         formatter.dateFormat = "MM_dd_yyyy-HH_mm_ss"
         return formatter
     }()
+
+//    Temporary notes for refactoring: these are variables not yet transferred over
 //    private var gyroBMI160Data: [(Int64, MblMwCartesianFloat)] = []
 //    private var magnetometerBMM150Data: [(Int64, MblMwCartesianFloat)] = []
 //    private var gpioPinChangeCount = 0
 //    private var hygrometerBME280Event: OpaquePointer?
 //    private var sensorFusionData = Data()
+//    private var disconnectTask: Task<MetaWear>?
 
     var initiator: DFUServiceInitiator?
     var dfuController: DFUServiceController?
@@ -76,13 +78,14 @@ extension MWDeviceDetailsCoordinator {
         attemptConnectionWithHUD()
     }
 
-    public func userIntentDidCauseDeviceDisconnect() {
-        deviceDisconnected()
-    }
-
-    private func deviceDisconnected() {
+    public func userRequestedDeviceDisconnect() {
+        device.cancelConnection()
         vms.header.refreshConnectionState()
         delegate?.hideAndReloadAllCells()
+    }
+
+    public func userIntentDidCauseDeviceDisconnect() {
+        vms.header.refreshConnectionState()
     }
 
     public func end() {
@@ -188,12 +191,6 @@ extension MWDeviceDetailsCoordinator {
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         OperationQueue.main.addOperation {
             self.vms.header.refreshConnectionState()
-
-            switch self.device.peripheral.state {
-                case .disconnected:
-                   self.deviceDisconnected()
-                default: return
-            }
         }
     }
 
@@ -228,7 +225,7 @@ private extension MWDeviceDetailsCoordinator {
         }
 
         device.connectAndSetup().continueWith(.mainThread) { task in
-            self.toast.update(mode: .textOnly, text: nil, disablesInteraction: nil, onDismiss: nil)
+            self.toast.update(mode: .textOnly, text: nil, disablesBluetoothActions: nil, onDismiss: nil)
 
             guard task.error == nil else {
                 self.alerts.presentAlert(
@@ -324,7 +321,7 @@ private extension MWDeviceDetailsCoordinator {
 
     func logPeripheralIdentifier() {
 #if DEBUG
-        print("ID: \(self.device.peripheral.identifier.uuidString) MAC: \(self.device.mac ?? "N/A")")
+        NSLog("ID: \(self.device.peripheral.identifier.uuidString) MAC: \(self.device.mac ?? "N/A")")
 #endif
     }
 }

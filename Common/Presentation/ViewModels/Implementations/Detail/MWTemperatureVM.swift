@@ -10,8 +10,8 @@ public class MWDetailTemperatureVM: DetailTemperatureVM {
 
     public var channels: [String] = []
     public var selectedChannelIndex = 0
-    public var selectedChannelType = ""
-    public var temperature = ""
+    public var selectedChannelType = " "
+    public var temperature = " "
 
     public var showPinDetail = false
     public var readPin = ""
@@ -31,9 +31,9 @@ extension MWDetailTemperatureVM: DetailConfiguring {
     }
 }
 
-extension MWDetailTemperatureVM {
+public extension MWDetailTemperatureVM {
 
-    public func start() {
+    func start() {
         channels = []
         guard let device = device else { return }
 
@@ -52,9 +52,9 @@ extension MWDetailTemperatureVM {
 
 // MARK: - Intents
 
-extension MWDetailTemperatureVM {
+public extension MWDetailTemperatureVM {
 
-    public func selectChannel(at index: Int) {
+    func selectChannel(at index: Int) {
         guard let device = device else { return }
         selectedChannelIndex = index
         let source = mbl_mw_multi_chnl_temp_get_source(device.board, UInt8(selectedChannelIndex))
@@ -77,7 +77,7 @@ extension MWDetailTemperatureVM {
         delegate?.refreshView()
     }
 
-    public func readTemperature() {
+    func readTemperature() {
         guard let device = device else { return }
 
         let isBMP280 = selectedChannelType == "BMP280"
@@ -98,11 +98,11 @@ extension MWDetailTemperatureVM {
         delegate?.refreshView()
     }
 
-    public func setReadPin(_ newValue: String) {
+    func setReadPin(_ newValue: String) {
 #warning("Original App — Not implemented, but present in UI")
     }
 
-    public func setEnablePin(_ newValue: String) {
+    func setEnablePin(_ newValue: String) {
         // SAME AS ABOVE
     }
 }

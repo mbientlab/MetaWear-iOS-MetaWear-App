@@ -36,9 +36,9 @@ extension MWDetailMechanicalSwitchVM {
 // MARK: - Intents
 
 
-extension MWDetailMechanicalSwitchVM {
+public extension MWDetailMechanicalSwitchVM {
 
-    public func userStartedMonitoringSwitch() {
+    func userStartedMonitoringSwitch() {
         guard !isMonitoring, let device = device else { return }
         isMonitoring = true
         delegate?.refreshView()
@@ -59,14 +59,15 @@ extension MWDetailMechanicalSwitchVM {
 
     }
 
-    private func setSwitchState(_ value: UInt32) {
-        switchState = (value != 0) ? "Down" : "Up (0)"
-    }
 
-    public func userStoppedMonitoringSwitch() {
+    func userStoppedMonitoringSwitch() {
         isMonitoring = false
         delegate?.refreshView()
         stopReadingSignal()
+    }
+
+    private func setSwitchState(_ value: UInt32) {
+        switchState = (value != 0) ? "Down" : "Up (0)"
     }
 
     private func stopReadingSignal() {

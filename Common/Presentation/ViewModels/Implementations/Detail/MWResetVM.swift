@@ -22,9 +22,9 @@ extension MWDetailResetVM: DetailConfiguring {
     }
 }
 
-extension MWDetailResetVM {
+public extension MWDetailResetVM {
 
-    public func start() {
+    func start() {
         // No state to show
     }
 
@@ -32,9 +32,9 @@ extension MWDetailResetVM {
 
 // MARK: - Intents
 
-extension MWDetailResetVM {
+public extension MWDetailResetVM {
 
-    public func userRequestedSleep() {
+    func userRequestedSleep() {
         guard let device = device else { return }
 
         // Sleep causes a disconnection
@@ -45,7 +45,7 @@ extension MWDetailResetVM {
         mbl_mw_debug_reset(device.board)
     }
 
-    public func userRequestedFactoryReset() {
+    func userRequestedFactoryReset() {
         guard let device = device else { return }
         // Resetting causes a disconnection
         parent?.userIntentDidCauseDeviceDisconnect()
@@ -53,7 +53,7 @@ extension MWDetailResetVM {
         device.clearAndReset()
     }
 
-    public func userRequestedSoftReset() {
+    func userRequestedSoftReset() {
         guard let device = device else { return }
         // Resetting causes a disconnection
         parent?.userIntentDidCauseDeviceDisconnect()

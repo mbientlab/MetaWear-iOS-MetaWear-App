@@ -4,14 +4,14 @@
 
 import SwiftUI
 
-class MWMechanicalSwitchSVC: MWDetailMechanicalSwitchVM, DetailMechanicalSwitchVMDelegate, ObservableObject {
+class MWLEDSVC: MWDetailLEDVM, DetailLEDVMDelegate, ObservableObject {
+
+    func refreshView() {
+        self.objectWillChange.send()
+    }
 
     override init() {
         super.init()
         self.delegate = self
-    }
-
-    func refreshView() {
-        self.objectWillChange.send()
     }
 }

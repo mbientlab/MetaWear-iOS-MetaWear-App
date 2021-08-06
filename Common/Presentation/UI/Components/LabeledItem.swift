@@ -9,9 +9,10 @@ struct LabeledItem<Content: View>: View {
     var label: String
     var content: Content
     var maxWidth: CGFloat = UIScreen.main.bounds.width
+    var alignment: VerticalAlignment = .firstTextBaseline
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
+        HStack(alignment: alignment, spacing: 10) {
             Text(label)
                 .fontWeight(.medium)
                 .font(.subheadline)

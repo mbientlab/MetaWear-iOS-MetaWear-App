@@ -12,7 +12,7 @@ public protocol ToastVM: AnyObject {
     var percentComplete: Int { get }
 
     func present(_ mode: HUDMode, _ text: String, disablesInteraction: Bool, onDismiss: (() -> Void)?)
-    func update(mode: HUDMode?, text: String?, disablesInteraction: Bool?, onDismiss: (() -> Void)?)
+    func update(mode: HUDMode?, text: String?, disablesBluetoothActions: Bool?, onDismiss: (() -> Void)?)
     func updateProgress(percentage: Int)
     func dismiss(updatingText: String?, disablesInteraction: Bool?, delay: Double)
 

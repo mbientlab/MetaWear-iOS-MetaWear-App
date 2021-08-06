@@ -8,6 +8,9 @@ struct TemperatureBlock: View {
 
     @ObservedObject var vm: MWTemperatureSVC
 
+    @State private var read = ""
+    @State private var enable = ""
+
     var body: some View {
         VStack(spacing: .cardVSpacing) {
             LabeledItem(
@@ -24,15 +27,18 @@ struct TemperatureBlock: View {
                 label: "Channel",
                 content: channel
             )
+
+            if vm.showPinDetail { pins }
         }
     }
 
-    var channelBinding: Binding<Int> {
+    private var channelBinding: Binding<Int> {
         Binding { vm.selectedChannelIndex }
         set: { vm.selectChannel(at: $0) }
 
     }
-    var channel: some View {
+
+    private var channel: some View {
         Picker("", selection: channelBinding) {
             ForEach(vm.channelsIndexed, id: \.index) {
                 Text($0.label).tag($0.index)
@@ -40,7 +46,7 @@ struct TemperatureBlock: View {
         }
     }
 
-    var temp: some View {
+    private var temp: some View {
         HStack {
             Text(vm.temperature)
                 .fixedSize(horizontal: true, vertical: false)
@@ -54,13 +60,12 @@ struct TemperatureBlock: View {
         }
     }
 
-    var channelType: some View {
+    private var channelType: some View {
         Text(vm.selectedChannelType)
     }
 
-    @State private var read = ""
-    @State private var enable = ""
-    var pins: some View {
+
+    private var pins: some View {
         HStack {
             TextField("Read", text: $read) { _ in } onCommit: {
                 vm.setReadPin(read)

@@ -6,11 +6,6 @@ import SwiftUI
 
 class MWTemperatureSVC: MWDetailTemperatureVM, DetailTemperatureVMDelegate, ObservableObject {
 
-    override init() {
-        super.init()
-        self.delegate = self
-    }
-
     var channelsIndexed: [(index: Int, label: String)] {
         self.channels.enumerated().map { ($0.offset, $0.element)  }
     }
@@ -21,5 +16,10 @@ class MWTemperatureSVC: MWDetailTemperatureVM, DetailTemperatureVMDelegate, Obse
 
     func resetView() {
         self.objectWillChange.send()
+    }
+
+    override init() {
+        super.init()
+        self.delegate = self
     }
 }

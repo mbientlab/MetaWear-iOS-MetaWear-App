@@ -9,7 +9,7 @@ import Combine
 
 public class MWDetailBatteryVM: DetailBatteryVM {
 
-    public var batteryLevel = ""
+    public var batteryLevel = " "
     public var batteryLevelPercentage = 0
 
     public var delegate: DetailBatteryVMDelegate? = nil

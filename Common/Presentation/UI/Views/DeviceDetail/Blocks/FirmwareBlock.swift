@@ -26,11 +26,11 @@ struct FirmwareBlock: View {
         }
     }
 
-    var firmware: some View {
+    private var firmware: some View {
         Text(vm.firmwareRevision)
     }
 
-    var status: some View {
+    private var status: some View {
         HStack {
             Text(vm.firmwareUpdateStatus)
             Spacer()

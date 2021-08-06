@@ -1,17 +1,8 @@
-//  © 2021 Ryan Ferrell. github.com/importRyan
+//  Created by Ryan Ferrell on 7/31/21.
+//  Copyright © 2021 MbientLab. All rights reserved.
+//
 
 import SwiftUI
-
-extension EnvironmentValues {
-    var allowBluetoothRequests: Bool {
-        get { return self[AllowBluetoothRequestsKey.self] }
-        set { self[AllowBluetoothRequestsKey.self] = newValue }
-    }
-}
-
-private struct AllowBluetoothRequestsKey: EnvironmentKey {
-    static let defaultValue: Bool = true
-}
 
 public class ToastVMSwiftUI: ObservableObject {
 
@@ -80,7 +71,7 @@ extension ToastVMSwiftUI: ToastVM {
 
     public func update(mode: HUDMode?,
                 text: String?,
-                disablesInteraction: Bool?,
+                disablesBluetoothActions: Bool?,
                 onDismiss: (() -> Void)?) {
 
         if let updateMode = mode {
@@ -91,7 +82,7 @@ extension ToastVMSwiftUI: ToastVM {
             self.text = updateText
         }
 
-        if let updateInteraction = disablesInteraction {
+        if let updateInteraction = disablesBluetoothActions {
             self.allowBluetoothRequests = !updateInteraction
         }
 

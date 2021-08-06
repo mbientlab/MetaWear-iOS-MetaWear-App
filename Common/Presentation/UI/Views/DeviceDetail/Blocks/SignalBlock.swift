@@ -22,7 +22,7 @@ struct SignalBlock: View {
         }
     }
 
-    var rssi: some View {
+    private var rssi: some View {
         HStack {
             Text(vm.rssiLevel)
                 .fixedSize(horizontal: false, vertical: true)
@@ -38,13 +38,13 @@ struct SignalBlock: View {
         }
     }
 
-    var txChoice: Binding<Int> {
+    private var txChoice: Binding<Int> {
         Binding { vm.chosenPowerLevelIndex } set: {
             vm.userChangedTransmissionPower(toIndex: $0)
         }
     }
 
-    var tx: some View {
+    private var tx: some View {
         HStack {
             Picker("\(vm.transmissionPowerLevels[vm.chosenPowerLevelIndex]) dBm", selection: txChoice) {
                 ForEach(vm.indexedTransmissionLevels, id: \.index) {

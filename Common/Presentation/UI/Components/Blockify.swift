@@ -32,17 +32,17 @@ struct DetailsBlockPlatter: View {
         .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 0)
     }
 
-    var shape: RoundedRectangle {
+    private var shape: RoundedRectangle {
         RoundedRectangle(cornerRadius: .detailBlockCorners)
     }
 
-    var fill: Color {
+    private var fill: Color {
 #if os(iOS)
         return Color(.secondarySystemGroupedBackground)
 #endif
     }
 
-    var stroke: Color {
+    private var stroke: Color {
 #if os(iOS)
         return Color(.quaternaryLabel)
 #endif

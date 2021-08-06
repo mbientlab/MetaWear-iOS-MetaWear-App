@@ -21,6 +21,7 @@ struct BatteryBlock: View {
                 .accessibilityValue(String("\(vm.batteryLevelPercentage)%"))
                 .accentColor(color)
                 .foregroundColor(color)
+                .opacity(vm.batteryLevelPercentage > 40 ? 0.75 : 1)
                 .offset(y: -8)
             
             Spacer()
@@ -29,7 +30,7 @@ struct BatteryBlock: View {
         }
     }
 
-    var color: Color {
+    private var color: Color {
         vm.batteryLevelPercentage > 40 ? Color.primary : Color(.systemPink)
     }
 }

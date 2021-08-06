@@ -71,11 +71,11 @@ extension MWDeviceDetailTableVC: DeviceDetailsCoordinatorDelegate {
     }
 
     func changeVisibility(of group: DetailGroup, shouldShow: Bool) {
-        switch group {
-            case .identifiers: fallthrough
-            case .headerInfoAndState: cells(self.infoAndStateCells, setHidden: false)
-            default: print("COMPLETE ENUM")
-        }
+//        switch group {
+//            case .identifiers: fallthrough
+//            case .headerInfoAndState: cells(self.infoAndStateCells, setHidden: false)
+//
+//        }
     }
 }
 

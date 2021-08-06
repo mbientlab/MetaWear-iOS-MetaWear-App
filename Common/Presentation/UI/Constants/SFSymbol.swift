@@ -1,9 +1,11 @@
-//  © 2021 Ryan Ferrell. github.com/importRyan
+//  Created by Ryan Ferrell on 7/31/21.
+//  Copyright © 2021 MbientLab. All rights reserved.
+//
 
 
 import SwiftUI
 
-enum SFSymbol: String {
+public enum SFSymbol: String {
     case identity = "info.circle"
     case battery = "battery.25"
     case signal = "antenna.radiowaves.left.and.right"
@@ -30,12 +32,13 @@ enum SFSymbol: String {
     case flash = "bolt.circle.fill"
     case orientation = "move.3d"
     case send = "square.and.arrow.up"
+    case download = "arrow.down.circle"
 
     case connected = "bolt.horizontal.fill"
     case disconnected = "bolt.horizontal"
 }
 
-extension SFSymbol {
+public extension SFSymbol {
 
     func image() -> Image {
         Image(systemName: self.rawValue)
@@ -68,6 +71,7 @@ extension SFSymbol {
             case .flash: return "Lightning Flash"
             case .orientation: return "3D Orientation"
             case .send: return "Export"
+            case .download: return "Download"
 
             case .connected: return "Device Connected Bolt"
             case .disconnected: return "Device Connected Empty Bolt"

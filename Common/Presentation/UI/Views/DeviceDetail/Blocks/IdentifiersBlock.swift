@@ -30,21 +30,22 @@ struct IdentifiersBlock: View {
                 content: hardware
             )
         }
+        .animation(.none)
     }
 
-    var manufacturer: some View {
+    private var manufacturer: some View {
         Text(vm.manufacturer)
     }
 
-    var model: some View {
+    private var model: some View {
         Text(vm.modelNumber)
     }
 
-    var serial: some View {
+    private var serial: some View {
         Text(vm.serialNumber)
     }
 
-    var hardware: some View {
+    private var hardware: some View {
         Text(vm.harwareRevision)
     }
 }

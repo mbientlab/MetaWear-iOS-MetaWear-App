@@ -12,10 +12,10 @@ import MetaWearCpp
 
 public class MWDetailIdentifiersVM: DetailIdentifiersVM {
 
-    public var manufacturer = ""
-    public var modelNumber = ""
-    public var serialNumber = ""
-    public var harwareRevision = ""
+    public var manufacturer = " "
+    public var modelNumber = " "
+    public var serialNumber = " "
+    public var harwareRevision = " "
 
     public weak var delegate: DetailIdentifiersVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil

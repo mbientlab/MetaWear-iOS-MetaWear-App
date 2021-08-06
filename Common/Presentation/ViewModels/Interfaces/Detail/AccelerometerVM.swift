@@ -10,7 +10,8 @@ public protocol DetailAccelerometerVM: AnyObject, DetailConfiguring {
     var isStreaming: Bool { get }
     var allowsNewLogging: Bool { get }
     var allowsNewStreaming: Bool { get }
-    var canExportData: Bool { get }
+    var isDownloadingLog: Bool { get }
+    var canDownloadLog: Bool { get }
 
     var isStepping: Bool { get }
     var stepCount: Int { get }
@@ -31,11 +32,16 @@ public protocol DetailAccelerometerVM: AnyObject, DetailConfiguring {
     // Intents
     func userRequestedStartStreaming()
     func userRequestedStopStreaming()
+    func userRequestedStreamExport()
+
     func userRequestedStartLogging()
-    func userRequestedStopAndDownloadLog()
-    func userRequestedDataExport()
+    func userRequestedStopLogging()
+    func userRequestedDownloadLog()
+    func userRequestedLogExport()
+
     func userRequestedStartOrienting()
     func userRequestedStopOrienting()
+
     func userRequestedStartStepping()
     func userRequestedStopStepping()
 
@@ -46,12 +52,13 @@ public protocol DetailAccelerometerVM: AnyObject, DetailConfiguring {
 public protocol DetailAccelerometerVMDelegate: AnyObject {
     func refreshView()
     func refreshGraphScale()
-    func addGraphPoint(x: Double, y: Double, z: Double)
-    func willStartNewGraphStream()
-}
 
-extension DetailAccelerometerVMDelegate {
-    func drawNewGraphPoint(x: Float, y: Float, z: Float) {
-        addGraphPoint(x: Double(x), y: Double(y), z: Double(z))
-    }
+    func drawNewStreamGraphPoint(_ point: MWDataPoint)
+
+    func redrawStreamGraph()
+
+    /// Called off the main queue to allow for processing
+    func refreshStreamStats()
+    /// Called off the main queue to allow for processing
+    func refreshLoggerStats()
 }
