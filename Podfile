@@ -4,7 +4,7 @@ use_frameworks!
 
 target 'MetaWearApp' do
   pod 'MetaWear', :subspecs => ['UI', 'AsyncUtils', 'Mocks', 'DFU']
-  pod 'MBProgressHUD'
+  pod 'AAInfographics', :git => 'https://github.com/AAChartModel/AAChartKit-Swift.git'
   pod 'StaticDataTableViewController'
 end
 
