@@ -8,6 +8,7 @@
 
 import Foundation
 import MetaWear
+import MetaWearCpp
 
 fileprivate let metawearScanner = MetaWearScanner()
 

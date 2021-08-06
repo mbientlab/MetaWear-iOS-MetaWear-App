@@ -45,9 +45,16 @@ extension AccelerometerBlock {
 
                 StatsBlock(stats: vm.data.getStreamedStats(), count: vm.data.streamCount)
 
+<<<<<<< HEAD
                 AAGraphViewWrapper(initialConfig: vm.makeStreamDataConfig(),
                                    graph: vm.setStreamGraphReference)
 
+=======
+                #if os(ios)
+                AAGraphViewWrapper(initialConfig: vm.makeStreamDataConfig(),
+                                   graph: vm.setStreamGraphReference)
+                #endif
+>>>>>>> macOS
             }
         }
 
@@ -103,9 +110,16 @@ extension AccelerometerBlock {
 
                 StatsBlock(stats: vm.streamingStats, count: vm.data.loggedCount)
 
+<<<<<<< HEAD
                 AAGraphViewWrapper(initialConfig: vm.makeLoggedDataConfig(),
                                    graph: vm.setLoggerGraphReference)
 
+=======
+                #if os(iOS)
+                AAGraphViewWrapper(initialConfig: vm.makeLoggedDataConfig(),
+                                   graph: vm.setLoggerGraphReference)
+                #endif
+>>>>>>> macOS
             }
         }
 

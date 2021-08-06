@@ -7,9 +7,117 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01510B90062A4276CBFBDB65 /* Pods_MetaWearApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB2CE4DF87BA663ECF7BF /* Pods_MetaWearApp.framework */; };
+		561C9CE7F6D32CF0E249D443 /* Pods_MetaWearMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01215C527F3A24A0D151C0F5 /* Pods_MetaWearMac.framework */; };
 		916D60474F5A7EF7540EFC01 /* Pods_MetaWearApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB2CE4DF87BA663ECF7BF /* Pods_MetaWearApp.framework */; };
 		941EFB4E26BCD9660087F960 /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB4D26BCD9660087F960 /* ShakeEffect.swift */; };
 		941EFB5126BCDD620087F960 /* EnvironmentValues+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB5026BCDD620087F960 /* EnvironmentValues+.swift */; };
+		941EFB5926BCE16B0087F960 /* MetaWearMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB5826BCE16B0087F960 /* MetaWearMacApp.swift */; };
+		941EFB5B26BCE16B0087F960 /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB5A26BCE16B0087F960 /* MainWindow.swift */; };
+		941EFB5D26BCE16C0087F960 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 941EFB5C26BCE16C0087F960 /* Assets.xcassets */; };
+		941EFB6026BCE16C0087F960 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 941EFB5F26BCE16C0087F960 /* Preview Assets.xcassets */; };
+		941EFB6526BCE5980087F960 /* SignalDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB6426BCE5980087F960 /* SignalDots.swift */; };
+		941EFB6726BCE5BB0087F960 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB6626BCE5BB0087F960 /* Color.swift */; };
+		941EFB6D26BCE5F70087F960 /* DiscoveredDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB6C26BCE5F70087F960 /* DiscoveredDeviceCell.swift */; };
+		941EFB6F26BCE6640087F960 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB6E26BCE6640087F960 /* Sidebar.swift */; };
+		941EFB7226BCE6820087F960 /* DeviceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB7126BCE6820087F960 /* DeviceItem.swift */; };
+		941EFB7526BCE6B20087F960 /* MetaWearScanningSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB7426BCE6B20087F960 /* MetaWearScanningSVC.swift */; };
+		941EFB7626BCE7380087F960 /* AccelerometerSampleFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */; };
+		941EFB7726BCE7380087F960 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94D26B453F30014FC91 /* Images.swift */; };
+		941EFB7826BCE7380087F960 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316E26B530500015EE88 /* UserDefaults.swift */; };
+		941EFB7926BCE7380087F960 /* MetaWearEnumsSwiftBridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */; };
+		941EFB7A26BCE7440087F960 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317026B5308B0015EE88 /* AlertPresenter.swift */; };
+		941EFB7B26BCE7440087F960 /* String+Drop0xPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */; };
+		941EFB7C26BCE74C0087F960 /* EnvironmentValues+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB5026BCDD620087F960 /* EnvironmentValues+.swift */; };
+		941EFB7D26BCE7500087F960 /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB4D26BCD9660087F960 /* ShakeEffect.swift */; };
+		941EFB7E26BCE76E0087F960 /* DownloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF670426BCA15D009F7EB5 /* DownloadButton.swift */; };
+		941EFB7F26BCE76E0087F960 /* UpdateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9DE26B9D10100264F6E /* UpdateButton.swift */; };
+		941EFB8026BCE76E0087F960 /* ExportDataButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9E026B9F5F700264F6E /* ExportDataButton.swift */; };
+		941EFB8126BCE7710087F960 /* GraphInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF670026BC8470009F7EB5 /* GraphInterface.swift */; };
+		941EFB8226BCE7710087F960 /* AAGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9481A57826BC6728008CD909 /* AAGraph.swift */; };
+		941EFB8326BCE7710087F960 /* GraphConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF66FE26BC7AD6009F7EB5 /* GraphConfig.swift */; };
+		941EFB8426BCE7770087F960 /* LabeledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9DC26B9C6D100264F6E /* LabeledItem.swift */; };
+		941EFB8526BCE7770087F960 /* StatsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF670626BCA17F009F7EB5 /* StatsBlock.swift */; };
+		941EFB8626BCE7770087F960 /* DividerPadded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C07E8626BB2F35008D875B /* DividerPadded.swift */; };
+		941EFB8726BCE7770087F960 /* Blockify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979BC26B99EE600AEB5EA /* Blockify.swift */; };
+		941EFB8826BCE7770087F960 /* SignalDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB6426BCE5980087F960 /* SignalDots.swift */; };
+		941EFB8926BCE7770087F960 /* DetailsBlockCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979D626B9A3BA00AEB5EA /* DetailsBlockCard.swift */; };
+		941EFB8A26BCE77A0087F960 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB6626BCE5BB0087F960 /* Color.swift */; };
+		941EFB8B26BCE77A0087F960 /* Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979BF26B99F0F00AEB5EA /* Dimensions.swift */; };
+		941EFB8C26BCE77A0087F960 /* SFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979D826B9A41600AEB5EA /* SFSymbol.swift */; };
+		941EFB8D26BCE7890087F960 /* MWTemperatureSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B726B88864008707ED /* MWTemperatureSVC.swift */; };
+		941EFB8E26BCE7890087F960 /* MWResetSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C926B8CD6F008707ED /* MWResetSVC.swift */; };
+		941EFB8F26BCE7890087F960 /* MWHeaderSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316626B518D30015EE88 /* MWHeaderSVC.swift */; };
+		941EFB9026BCE7890087F960 /* MWIdentifiersSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979EF26B9C3AA00AEB5EA /* MWIdentifiersSVC.swift */; };
+		941EFB9126BCE7890087F960 /* MWBatterySVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C126B8AD04008707ED /* MWBatterySVC.swift */; };
+		941EFB9226BCE7890087F960 /* MWAccelerometerSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E57026B8EF5B006A6262 /* MWAccelerometerSVC.swift */; };
+		941EFB9326BCE7890087F960 /* MWDeviceDetailScreenSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9E626B9FD2C00264F6E /* MWDeviceDetailScreenSVC.swift */; };
+		941EFB9426BCE7890087F960 /* MWFirmwareSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C526B8C811008707ED /* MWFirmwareSVC.swift */; };
+		941EFB9526BCE7890087F960 /* MWLEDSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514BD26B8A4D5008707ED /* MWLEDSVC.swift */; };
+		941EFB9626BCE7890087F960 /* MWMechanicalSwitchSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B926B89A90008707ED /* MWMechanicalSwitchSVC.swift */; };
+		941EFB9726BCE7890087F960 /* MWSignalStrengthSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C326B8AFF6008707ED /* MWSignalStrengthSVC.swift */; };
+		941EFB9826BCE78E0087F960 /* ToastServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979EC26B9B5A200AEB5EA /* ToastServer.swift */; };
+		941EFB9926BCE78E0087F960 /* DeviceDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B926B9985700AEB5EA /* DeviceDetailScreen.swift */; };
+		941EFB9A26BCE7920087F960 /* I2CBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979EA26B9B51100AEB5EA /* I2CBlock.swift */; };
+		941EFB9B26BCE7920087F960 /* ResetBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979CA26B9A05600AEB5EA /* ResetBlock.swift */; };
+		941EFB9C26BCE7920087F960 /* AccelerometerBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979C226B9A02D00AEB5EA /* AccelerometerBlock.swift */; };
+		941EFB9D26BCE7920087F960 /* MagnetometerBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979DE26B9B4B500AEB5EA /* MagnetometerBlock.swift */; };
+		941EFB9E26BCE7920087F960 /* LEDBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979C626B9A04200AEB5EA /* LEDBlock.swift */; };
+		941EFB9F26BCE7920087F960 /* SensorFusionBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979DA26B9B49100AEB5EA /* SensorFusionBlock.swift */; };
+		941EFBA026BCE7920087F960 /* AmbientLightBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979E826B9B50500AEB5EA /* AmbientLightBlock.swift */; };
+		941EFBA126BCE7920087F960 /* BarometerBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979E426B9B4EB00AEB5EA /* BarometerBlock.swift */; };
+		941EFBA226BCE7920087F960 /* HeaderBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979D426B9A07C00AEB5EA /* HeaderBlock.swift */; };
+		941EFBA326BCE7920087F960 /* IdentifiersBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979D226B9A07500AEB5EA /* IdentifiersBlock.swift */; };
+		941EFBA426BCE7920087F960 /* GyroscopeBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979DC26B9B49D00AEB5EA /* GyroscopeBlock.swift */; };
+		941EFBA526BCE7920087F960 /* BatteryBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979D026B9A06E00AEB5EA /* BatteryBlock.swift */; };
+		941EFBA626BCE7920087F960 /* TemperatureBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979C426B9A03700AEB5EA /* TemperatureBlock.swift */; };
+		941EFBA726BCE7920087F960 /* MechanicalSwitchBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979C826B9A05000AEB5EA /* MechanicalSwitchBlock.swift */; };
+		941EFBA826BCE7920087F960 /* GPIOBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979E226B9B4D700AEB5EA /* GPIOBlock.swift */; };
+		941EFBA926BCE7920087F960 /* SignalBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979CE26B9A06800AEB5EA /* SignalBlock.swift */; };
+		941EFBAA26BCE7920087F960 /* iBeaconBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979E626B9B4F800AEB5EA /* iBeaconBlock.swift */; };
+		941EFBAB26BCE7920087F960 /* FirmwareBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979CC26B9A06100AEB5EA /* FirmwareBlock.swift */; };
+		941EFBAC26BCE7920087F960 /* HapticBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979E026B9B4C800AEB5EA /* HapticBlock.swift */; };
+		941EFBAD26BCE7990087F960 /* DeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317426B531C50015EE88 /* DeviceDetailsCoordinator.swift */; };
+		941EFBAE26BCE7990087F960 /* ToastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979AF26B98E5800AEB5EA /* ToastVM.swift */; };
+		941EFBAF26BCE7990087F960 /* DetailConfiguring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316C26B52FD90015EE88 /* DetailConfiguring.swift */; };
+		941EFBB026BCE7990087F960 /* DetailVMContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B326B98F0400AEB5EA /* DetailVMContainer.swift */; };
+		941EFBB126BCE79D0087F960 /* SensorFusionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539C26B7E0F600E7B2DC /* SensorFusionVM.swift */; };
+		941EFBB226BCE79D0087F960 /* LEDVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539A26B7E0F600E7B2DC /* LEDVM.swift */; };
+		941EFBB326BCE79D0087F960 /* IdentifiersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539126B7DF5A00E7B2DC /* IdentifiersVM.swift */; };
+		941EFBB426BCE79D0087F960 /* MagenetometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C553A026B7E0F700E7B2DC /* MagenetometerVM.swift */; };
+		941EFBB526BCE79D0087F960 /* GyroVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C553A326B7E0F700E7B2DC /* GyroVM.swift */; };
+		941EFBB626BCE79D0087F960 /* GPIOVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539E26B7E0F700E7B2DC /* GPIOVM.swift */; };
+		941EFBB726BCE79D0087F960 /* BatteryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539B26B7E0F600E7B2DC /* BatteryVM.swift */; };
+		941EFBB826BCE79D0087F960 /* BeaconVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539826B7E0F600E7B2DC /* BeaconVM.swift */; };
+		941EFBB926BCE79D0087F960 /* AccelerometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C553A126B7E0F700E7B2DC /* AccelerometerVM.swift */; };
+		941EFBBA26BCE79D0087F960 /* HeaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482DC4E26B5078A00DD19EB /* HeaderVM.swift */; };
+		941EFBBB26BCE79D0087F960 /* AmbientLightVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539426B7E0F600E7B2DC /* AmbientLightVM.swift */; };
+		941EFBBC26BCE79D0087F960 /* BarometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539926B7E0F600E7B2DC /* BarometerVM.swift */; };
+		941EFBBD26BCE79E0087F960 /* TemperatureVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539F26B7E0F700E7B2DC /* TemperatureVM.swift */; };
+		941EFBBE26BCE79E0087F960 /* ResetVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C726B8CCE6008707ED /* ResetVM.swift */; };
+		941EFBBF26BCE79E0087F960 /* HumidityVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539726B7E0F600E7B2DC /* HumidityVM.swift */; };
+		941EFBC026BCE79E0087F960 /* MechanicalSwitchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539626B7E0F600E7B2DC /* MechanicalSwitchVM.swift */; };
+		941EFBC126BCE79E0087F960 /* FirmwareVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C553A226B7E0F700E7B2DC /* FirmwareVM.swift */; };
+		941EFBC226BCE79E0087F960 /* I2CVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539D26B7E0F600E7B2DC /* I2CVM.swift */; };
+		941EFBC326BCE79E0087F960 /* SignalStrengthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539326B7E0F600E7B2DC /* SignalStrengthVM.swift */; };
+		941EFBC426BCE79E0087F960 /* HapticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539526B7E0F600E7B2DC /* HapticVM.swift */; };
+		941EFBC526BCE7A30087F960 /* ScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94F26B45B770014FC91 /* ScannedDeviceCellVM.swift */; };
+		941EFBC626BCE7A30087F960 /* DevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */; };
+		941EFBC726BCE7A80087F960 /* ToastVMSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979AD26B98E4500AEB5EA /* ToastVMSwiftUI.swift */; };
+		941EFBC826BCE7A80087F960 /* MWDeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */; };
+		941EFBC926BCE7A80087F960 /* MWSensorDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF670226BC8983009F7EB5 /* MWSensorDataStore.swift */; };
+		941EFBCA26BCE7AD0087F960 /* MWHeaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317226B530FF0015EE88 /* MWHeaderVM.swift */; };
+		941EFBCB26BCE7AD0087F960 /* MWSignalStrengthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514AD26B87F17008707ED /* MWSignalStrengthVM.swift */; };
+		941EFBCC26BCE7AD0087F960 /* MWTemperatureVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B526B884A3008707ED /* MWTemperatureVM.swift */; };
+		941EFBCD26BCE7AD0087F960 /* MWMechanicalSwitchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B326B883D7008707ED /* MWMechanicalSwitchVM.swift */; };
+		941EFBCE26BCE7AD0087F960 /* MWResetVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514CB26B8CDD7008707ED /* MWResetVM.swift */; };
+		941EFBCF26BCE7AD0087F960 /* MWLEDVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B126B882B6008707ED /* MWLEDVM.swift */; };
+		941EFBD026BCE7AD0087F960 /* MWAccelerometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E57226B8F018006A6262 /* MWAccelerometerVM.swift */; };
+		941EFBD126BCE7AD0087F960 /* MWldentifiersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AFED3426B875C6004326C8 /* MWldentifiersVM.swift */; };
+		941EFBD226BCE7AD0087F960 /* MWFirmwareVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514AF26B88184008707ED /* MWFirmwareVM.swift */; };
+		941EFBD326BCE7AD0087F960 /* MWBatteryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514AB26B87BFB008707ED /* MWBatteryVM.swift */; };
+		941EFBD426BCE7B30087F960 /* MWScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */; };
+		941EFBD526BCE7B30087F960 /* MWDevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95826B4692C0014FC91 /* MWDevicesScanningVM.swift */; };
 		9438D94E26B453F30014FC91 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94D26B453F30014FC91 /* Images.swift */; };
 		9438D95026B45B770014FC91 /* ScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94F26B45B770014FC91 /* ScannedDeviceCellVM.swift */; };
 		9438D95726B467FC0014FC91 /* DevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */; };
@@ -121,9 +229,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01215C527F3A24A0D151C0F5 /* Pods_MetaWearMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MetaWearMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		08565629A4901D7CAF20F3C6 /* Pods-MetaWearMac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearMac.debug.xcconfig"; path = "Target Support Files/Pods-MetaWearMac/Pods-MetaWearMac.debug.xcconfig"; sourceTree = "<group>"; };
 		2DB2F6EBD41DBFC307375FEE /* Pods-MetaWearApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearApp.release.xcconfig"; path = "Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp.release.xcconfig"; sourceTree = "<group>"; };
+		5651C5F9CEA034E398221BEF /* Pods-MetaWearMac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearMac.release.xcconfig"; path = "Target Support Files/Pods-MetaWearMac/Pods-MetaWearMac.release.xcconfig"; sourceTree = "<group>"; };
 		941EFB4D26BCD9660087F960 /* ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffect.swift; sourceTree = "<group>"; };
 		941EFB5026BCDD620087F960 /* EnvironmentValues+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+.swift"; sourceTree = "<group>"; };
+		941EFB5626BCE16B0087F960 /* MetaWearMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetaWearMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		941EFB5826BCE16B0087F960 /* MetaWearMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWearMacApp.swift; sourceTree = "<group>"; };
+		941EFB5A26BCE16B0087F960 /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
+		941EFB5C26BCE16C0087F960 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		941EFB5F26BCE16C0087F960 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		941EFB6426BCE5980087F960 /* SignalDots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalDots.swift; sourceTree = "<group>"; };
+		941EFB6626BCE5BB0087F960 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		941EFB6C26BCE5F70087F960 /* DiscoveredDeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredDeviceCell.swift; sourceTree = "<group>"; };
+		941EFB6E26BCE6640087F960 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
+		941EFB7126BCE6820087F960 /* DeviceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceItem.swift; sourceTree = "<group>"; };
+		941EFB7426BCE6B20087F960 /* MetaWearScanningSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWearScanningSVC.swift; sourceTree = "<group>"; };
+		941EFBD926BCE8730087F960 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		941EFBDA26BCE9150087F960 /* MetaWearMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MetaWearMac.entitlements; sourceTree = "<group>"; };
 		9438D94D26B453F30014FC91 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		9438D94F26B45B770014FC91 /* ScannedDeviceCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedDeviceCellVM.swift; sourceTree = "<group>"; };
 		9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesScanningVM.swift; sourceTree = "<group>"; };
@@ -240,6 +364,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		941EFB5326BCE16B0087F960 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				561C9CE7F6D32CF0E249D443 /* Pods_MetaWearMac.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AB5D5F3525B7D47300D2591C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -249,6 +381,7 @@
 				AB5D5F5625B8A0B900D2591C /* Foundation.framework in Frameworks */,
 				AB5D5F5225B8A09A00D2591C /* CoreData.framework in Frameworks */,
 				916D60474F5A7EF7540EFC01 /* Pods_MetaWearApp.framework in Frameworks */,
+				01510B90062A4276CBFBDB65 /* Pods_MetaWearApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +402,79 @@
 				941EFB5026BCDD620087F960 /* EnvironmentValues+.swift */,
 			);
 			path = Environment;
+			sourceTree = "<group>";
+		};
+		941EFB5726BCE16B0087F960 /* MetaWearMac */ = {
+			isa = PBXGroup;
+			children = (
+				941EFBDA26BCE9150087F960 /* MetaWearMac.entitlements */,
+				941EFBD926BCE8730087F960 /* Info.plist */,
+				941EFB7026BCE6780087F960 /* Model */,
+				941EFB6826BCE5D60087F960 /* Presentation */,
+				941EFB5826BCE16B0087F960 /* MetaWearMacApp.swift */,
+				941EFB5A26BCE16B0087F960 /* MainWindow.swift */,
+				941EFB5C26BCE16C0087F960 /* Assets.xcassets */,
+				941EFB5E26BCE16C0087F960 /* Preview Content */,
+			);
+			path = MetaWearMac;
+			sourceTree = "<group>";
+		};
+		941EFB5E26BCE16C0087F960 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				941EFB5F26BCE16C0087F960 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		941EFB6826BCE5D60087F960 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				941EFB6926BCE5DC0087F960 /* UI */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		941EFB6926BCE5DC0087F960 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				941EFB7326BCE6A30087F960 /* Controllers */,
+				941EFB6A26BCE5E30087F960 /* Views */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		941EFB6A26BCE5E30087F960 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				941EFB6B26BCE5E90087F960 /* Sidebar */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		941EFB6B26BCE5E90087F960 /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				941EFB6C26BCE5F70087F960 /* DiscoveredDeviceCell.swift */,
+				941EFB6E26BCE6640087F960 /* Sidebar.swift */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
+		941EFB7026BCE6780087F960 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				941EFB7126BCE6820087F960 /* DeviceItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		941EFB7326BCE6A30087F960 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				941EFB7426BCE6B20087F960 /* MetaWearScanningSVC.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		9438D95126B45DD30014FC91 /* Interfaces */ = {
@@ -363,6 +569,7 @@
 			children = (
 				947979BF26B99F0F00AEB5EA /* Dimensions.swift */,
 				947979D826B9A41600AEB5EA /* SFSymbol.swift */,
+				941EFB6626BCE5BB0087F960 /* Color.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -531,6 +738,7 @@
 				947979D626B9A3BA00AEB5EA /* DetailsBlockCard.swift */,
 				94ACC9DC26B9C6D100264F6E /* LabeledItem.swift */,
 				94FF670626BCA17F009F7EB5 /* StatsBlock.swift */,
+				941EFB6426BCE5980087F960 /* SignalDots.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -548,6 +756,7 @@
 			children = (
 				94CD3AA526B3ECF200854FBA /* Common */,
 				AB5D5F3A25B7D47300D2591C /* MetaWearApp */,
+				941EFB5726BCE16B0087F960 /* MetaWearMac */,
 				AB5D5F3925B7D47300D2591C /* Products */,
 				AB5D5F5025B8A09900D2591C /* Frameworks */,
 				CED36B206EA1115A8F5D4917 /* Pods */,
@@ -558,6 +767,7 @@
 			isa = PBXGroup;
 			children = (
 				AB5D5F3825B7D47300D2591C /* MetaWearApp.app */,
+				941EFB5626BCE16B0087F960 /* MetaWearMac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -588,6 +798,7 @@
 				AB5D5F5325B8A0B400D2591C /* CoreGraphics.framework */,
 				AB5D5F5125B8A09A00D2591C /* CoreData.framework */,
 				F35BB2CE4DF87BA663ECF7BF /* Pods_MetaWearApp.framework */,
+				01215C527F3A24A0D151C0F5 /* Pods_MetaWearMac.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -597,6 +808,8 @@
 			children = (
 				97CD400283237991C81511BD /* Pods-MetaWearApp.debug.xcconfig */,
 				2DB2F6EBD41DBFC307375FEE /* Pods-MetaWearApp.release.xcconfig */,
+				08565629A4901D7CAF20F3C6 /* Pods-MetaWearMac.debug.xcconfig */,
+				5651C5F9CEA034E398221BEF /* Pods-MetaWearMac.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -604,6 +817,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		941EFB5526BCE16B0087F960 /* MetaWearMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 941EFB6326BCE16C0087F960 /* Build configuration list for PBXNativeTarget "MetaWearMac" */;
+			buildPhases = (
+				CFD08128A5424C7426871520 /* [CP] Check Pods Manifest.lock */,
+				941EFB5226BCE16B0087F960 /* Sources */,
+				941EFB5326BCE16B0087F960 /* Frameworks */,
+				941EFB5426BCE16B0087F960 /* Resources */,
+				604A31235307C6014C9EBEB1 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MetaWearMac;
+			productName = MetaWearMac;
+			productReference = 941EFB5626BCE16B0087F960 /* MetaWearMac.app */;
+			productType = "com.apple.product-type.application";
+		};
 		AB5D5F3725B7D47300D2591C /* MetaWearApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB5D5F4C25B7D47300D2591C /* Build configuration list for PBXNativeTarget "MetaWearApp" */;
@@ -630,10 +862,13 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MBL;
-				LastSwiftUpdateCheck = 1230;
+				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = MbientLab;
 				TargetAttributes = {
+					941EFB5526BCE16B0087F960 = {
+						CreatedOnToolsVersion = 13.0;
+					};
 					AB5D5F3725B7D47300D2591C = {
 						CreatedOnToolsVersion = 12.3;
 					};
@@ -653,11 +888,21 @@
 			projectRoot = "";
 			targets = (
 				AB5D5F3725B7D47300D2591C /* MetaWearApp */,
+				941EFB5526BCE16B0087F960 /* MetaWearMac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		941EFB5426BCE16B0087F960 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				941EFB6026BCE16C0087F960 /* Preview Assets.xcassets in Resources */,
+				941EFB5D26BCE16C0087F960 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AB5D5F3625B7D47300D2591C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -710,9 +955,157 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		604A31235307C6014C9EBEB1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MetaWearMac/Pods-MetaWearMac-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MetaWearMac/Pods-MetaWearMac-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MetaWearMac/Pods-MetaWearMac-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CFD08128A5424C7426871520 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MetaWearMac-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		941EFB5226BCE16B0087F960 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				941EFBAF26BCE7990087F960 /* DetailConfiguring.swift in Sources */,
+				941EFB9526BCE7890087F960 /* MWLEDSVC.swift in Sources */,
+				941EFB7C26BCE74C0087F960 /* EnvironmentValues+.swift in Sources */,
+				941EFBB326BCE79D0087F960 /* IdentifiersVM.swift in Sources */,
+				941EFBD026BCE7AD0087F960 /* MWAccelerometerVM.swift in Sources */,
+				941EFBA326BCE7920087F960 /* IdentifiersBlock.swift in Sources */,
+				941EFBAA26BCE7920087F960 /* iBeaconBlock.swift in Sources */,
+				941EFB6D26BCE5F70087F960 /* DiscoveredDeviceCell.swift in Sources */,
+				941EFB9C26BCE7920087F960 /* AccelerometerBlock.swift in Sources */,
+				941EFBB726BCE79D0087F960 /* BatteryVM.swift in Sources */,
+				941EFBCC26BCE7AD0087F960 /* MWTemperatureVM.swift in Sources */,
+				941EFB8126BCE7710087F960 /* GraphInterface.swift in Sources */,
+				941EFB9226BCE7890087F960 /* MWAccelerometerSVC.swift in Sources */,
+				941EFBBF26BCE79E0087F960 /* HumidityVM.swift in Sources */,
+				941EFB7A26BCE7440087F960 /* AlertPresenter.swift in Sources */,
+				941EFBB426BCE79D0087F960 /* MagenetometerVM.swift in Sources */,
+				941EFB8826BCE7770087F960 /* SignalDots.swift in Sources */,
+				941EFBD226BCE7AD0087F960 /* MWFirmwareVM.swift in Sources */,
+				941EFBD326BCE7AD0087F960 /* MWBatteryVM.swift in Sources */,
+				941EFB8F26BCE7890087F960 /* MWHeaderSVC.swift in Sources */,
+				941EFBBD26BCE79E0087F960 /* TemperatureVM.swift in Sources */,
+				941EFB7D26BCE7500087F960 /* ShakeEffect.swift in Sources */,
+				941EFB9626BCE7890087F960 /* MWMechanicalSwitchSVC.swift in Sources */,
+				941EFBCB26BCE7AD0087F960 /* MWSignalStrengthVM.swift in Sources */,
+				941EFB9A26BCE7920087F960 /* I2CBlock.swift in Sources */,
+				941EFB7E26BCE76E0087F960 /* DownloadButton.swift in Sources */,
+				941EFBCD26BCE7AD0087F960 /* MWMechanicalSwitchVM.swift in Sources */,
+				941EFBC326BCE79E0087F960 /* SignalStrengthVM.swift in Sources */,
+				941EFB8C26BCE77A0087F960 /* SFSymbol.swift in Sources */,
+				941EFB9926BCE78E0087F960 /* DeviceDetailScreen.swift in Sources */,
+				941EFBC426BCE79E0087F960 /* HapticVM.swift in Sources */,
+				941EFB7926BCE7380087F960 /* MetaWearEnumsSwiftBridges.swift in Sources */,
+				941EFBC626BCE7A30087F960 /* DevicesScanningVM.swift in Sources */,
+				941EFBD526BCE7B30087F960 /* MWDevicesScanningVM.swift in Sources */,
+				941EFB7626BCE7380087F960 /* AccelerometerSampleFrequency.swift in Sources */,
+				941EFBC126BCE79E0087F960 /* FirmwareVM.swift in Sources */,
+				941EFBC826BCE7A80087F960 /* MWDeviceDetailsCoordinator.swift in Sources */,
+				941EFBB026BCE7990087F960 /* DetailVMContainer.swift in Sources */,
+				941EFBC926BCE7A80087F960 /* MWSensorDataStore.swift in Sources */,
+				941EFB8326BCE7710087F960 /* GraphConfig.swift in Sources */,
+				941EFBCF26BCE7AD0087F960 /* MWLEDVM.swift in Sources */,
+				941EFB9B26BCE7920087F960 /* ResetBlock.swift in Sources */,
+				941EFBB526BCE79D0087F960 /* GyroVM.swift in Sources */,
+				941EFB8626BCE7770087F960 /* DividerPadded.swift in Sources */,
+				941EFB8226BCE7710087F960 /* AAGraph.swift in Sources */,
+				941EFB8D26BCE7890087F960 /* MWTemperatureSVC.swift in Sources */,
+				941EFBA926BCE7920087F960 /* SignalBlock.swift in Sources */,
+				941EFB9426BCE7890087F960 /* MWFirmwareSVC.swift in Sources */,
+				941EFB8B26BCE77A0087F960 /* Dimensions.swift in Sources */,
+				941EFBAE26BCE7990087F960 /* ToastVM.swift in Sources */,
+				941EFB7526BCE6B20087F960 /* MetaWearScanningSVC.swift in Sources */,
+				941EFBA426BCE7920087F960 /* GyroscopeBlock.swift in Sources */,
+				941EFB8726BCE7770087F960 /* Blockify.swift in Sources */,
+				941EFB9126BCE7890087F960 /* MWBatterySVC.swift in Sources */,
+				941EFBB926BCE79D0087F960 /* AccelerometerVM.swift in Sources */,
+				941EFBB126BCE79D0087F960 /* SensorFusionVM.swift in Sources */,
+				941EFB9F26BCE7920087F960 /* SensorFusionBlock.swift in Sources */,
+				941EFBB826BCE79D0087F960 /* BeaconVM.swift in Sources */,
+				941EFB7B26BCE7440087F960 /* String+Drop0xPrefix.swift in Sources */,
+				941EFB9826BCE78E0087F960 /* ToastServer.swift in Sources */,
+				941EFB7226BCE6820087F960 /* DeviceItem.swift in Sources */,
+				941EFBA526BCE7920087F960 /* BatteryBlock.swift in Sources */,
+				941EFBCE26BCE7AD0087F960 /* MWResetVM.swift in Sources */,
+				941EFBBA26BCE79D0087F960 /* HeaderVM.swift in Sources */,
+				941EFB9726BCE7890087F960 /* MWSignalStrengthSVC.swift in Sources */,
+				941EFB9D26BCE7920087F960 /* MagnetometerBlock.swift in Sources */,
+				941EFBA126BCE7920087F960 /* BarometerBlock.swift in Sources */,
+				941EFBBE26BCE79E0087F960 /* ResetVM.swift in Sources */,
+				941EFBCA26BCE7AD0087F960 /* MWHeaderVM.swift in Sources */,
+				941EFBBC26BCE79D0087F960 /* BarometerVM.swift in Sources */,
+				941EFBA026BCE7920087F960 /* AmbientLightBlock.swift in Sources */,
+				941EFBC226BCE79E0087F960 /* I2CVM.swift in Sources */,
+				941EFB8526BCE7770087F960 /* StatsBlock.swift in Sources */,
+				941EFBC026BCE79E0087F960 /* MechanicalSwitchVM.swift in Sources */,
+				941EFB9326BCE7890087F960 /* MWDeviceDetailScreenSVC.swift in Sources */,
+				941EFBA726BCE7920087F960 /* MechanicalSwitchBlock.swift in Sources */,
+				941EFBD426BCE7B30087F960 /* MWScannedDeviceCellVM.swift in Sources */,
+				941EFBC726BCE7A80087F960 /* ToastVMSwiftUI.swift in Sources */,
+				941EFBC526BCE7A30087F960 /* ScannedDeviceCellVM.swift in Sources */,
+				941EFBA826BCE7920087F960 /* GPIOBlock.swift in Sources */,
+				941EFB9026BCE7890087F960 /* MWIdentifiersSVC.swift in Sources */,
+				941EFBB626BCE79D0087F960 /* GPIOVM.swift in Sources */,
+				941EFB8A26BCE77A0087F960 /* Color.swift in Sources */,
+				941EFBAB26BCE7920087F960 /* FirmwareBlock.swift in Sources */,
+				941EFB8426BCE7770087F960 /* LabeledItem.swift in Sources */,
+				941EFB5B26BCE16B0087F960 /* MainWindow.swift in Sources */,
+				941EFBD126BCE7AD0087F960 /* MWldentifiersVM.swift in Sources */,
+				941EFB7826BCE7380087F960 /* UserDefaults.swift in Sources */,
+				941EFBA226BCE7920087F960 /* HeaderBlock.swift in Sources */,
+				941EFB7F26BCE76E0087F960 /* UpdateButton.swift in Sources */,
+				941EFBAC26BCE7920087F960 /* HapticBlock.swift in Sources */,
+				941EFBA626BCE7920087F960 /* TemperatureBlock.swift in Sources */,
+				941EFBBB26BCE79D0087F960 /* AmbientLightVM.swift in Sources */,
+				941EFBB226BCE79D0087F960 /* LEDVM.swift in Sources */,
+				941EFB7726BCE7380087F960 /* Images.swift in Sources */,
+				941EFB9E26BCE7920087F960 /* LEDBlock.swift in Sources */,
+				941EFB6F26BCE6640087F960 /* Sidebar.swift in Sources */,
+				941EFB8E26BCE7890087F960 /* MWResetSVC.swift in Sources */,
+				941EFB5926BCE16B0087F960 /* MetaWearMacApp.swift in Sources */,
+				941EFB8926BCE7770087F960 /* DetailsBlockCard.swift in Sources */,
+				941EFB8026BCE76E0087F960 /* ExportDataButton.swift in Sources */,
+				941EFBAD26BCE7990087F960 /* DeviceDetailsCoordinator.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AB5D5F3425B7D47300D2591C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -740,6 +1133,7 @@
 				9453FD3926B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift in Sources */,
 				94C553B326B7E0F700E7B2DC /* FirmwareVM.swift in Sources */,
 				947979E526B9B4EB00AEB5EA /* BarometerBlock.swift in Sources */,
+				941EFB6726BCE5BB0087F960 /* Color.swift in Sources */,
 				94A514AE26B87F17008707ED /* MWSignalStrengthVM.swift in Sources */,
 				9482DC4D26B501CF00DD19EB /* _DeviceDetailVC.swift in Sources */,
 				94C553A626B7E0F700E7B2DC /* HapticVM.swift in Sources */,
@@ -784,6 +1178,7 @@
 				9438D95C26B47C990014FC91 /* String+Drop0xPrefix.swift in Sources */,
 				94C07E8726BB2F35008D875B /* DividerPadded.swift in Sources */,
 				947979D526B9A07C00AEB5EA /* HeaderBlock.swift in Sources */,
+				941EFB6526BCE5980087F960 /* SignalDots.swift in Sources */,
 				94C553A826B7E0F700E7B2DC /* HumidityVM.swift in Sources */,
 				94F3316D26B52FD90015EE88 /* DetailConfiguring.swift in Sources */,
 				9473587926B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift in Sources */,
@@ -845,6 +1240,74 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		941EFB6126BCE16C0087F960 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08565629A4901D7CAF20F3C6 /* Pods-MetaWearMac.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = MetaWearMac/MetaWearMac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MetaWearMac/Preview Content\"";
+				DEVELOPMENT_TEAM = FVC2SFVFYG;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MetaWearMac/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 MbientLab. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mbientlab.MetaWearMac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		941EFB6226BCE16C0087F960 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5651C5F9CEA034E398221BEF /* Pods-MetaWearMac.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = MetaWearMac/MetaWearMac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MetaWearMac/Preview Content\"";
+				DEVELOPMENT_TEAM = FVC2SFVFYG;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MetaWearMac/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 MbientLab. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mbientlab.MetaWearMac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		AB5D5F4A25B7D47300D2591C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1020,6 +1483,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		941EFB6326BCE16C0087F960 /* Build configuration list for PBXNativeTarget "MetaWearMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				941EFB6126BCE16C0087F960 /* Debug */,
+				941EFB6226BCE16C0087F960 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AB5D5F3325B7D47300D2591C /* Build configuration list for PBXProject "MetaWearApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

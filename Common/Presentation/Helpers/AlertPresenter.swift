@@ -59,6 +59,73 @@ public class CrossPlatformAlertPresenter: AlertPresenter, ObservableObject {
             .first(where: \.isKeyWindow)?
             .rootViewController
     }
+
+#elseif os(macOS)
+
+    public func presentAlert(title: String, message: String, in vc: AnyVC?) {
+        NSAlert.presentSuppressableAlert(
+            in: vc?.view.window,
+            title: title,
+            message: message,
+            primaryLabel: "OK",
+            secondaryLabel: nil,
+            showSupression: false) { primaryActionDidRequestSuppress in
+                // Feature not implemented
+            } secondaryShouldSuppress: { secondaryActionDidRequestSuppress in
+                // Feature not implemented
+            }
+    }
+
 #endif
 
 }
+
+#if os(macOS)
+
+extension NSAlert {
+    static func presentSuppressableAlert(
+        in window: NSWindow?,
+        title: String,
+        message: String?,
+        primaryIsDestructive: Bool = false,
+        primaryLabel: String,
+        secondaryLabel: String?,
+        secondaryIsDestructive: Bool = false,
+        showSupression: Bool,
+        primaryShouldSuppress: @escaping (Bool) -> Void,
+        secondaryShouldSuppress: @escaping (Bool) -> Void)
+    {
+        autoreleasepool {
+            let alert = NSAlert()
+            alert.showsSuppressionButton = showSupression
+            alert.messageText = title
+            if let info = message {
+                alert.informativeText = info
+            }
+
+            alert.addButton(withTitle: primaryLabel)
+
+            if primaryIsDestructive {
+                alert.buttons.first?.hasDestructiveAction = true
+            }
+
+            if let secondary = secondaryLabel {
+                alert.addButton(withTitle: secondary)
+                if secondaryIsDestructive {
+                    alert.buttons[1].hasDestructiveAction = true
+                }
+            }
+
+            guard let window = window ?? NSApplication.shared.keyWindow else { return }
+            alert.beginSheetModal(for: window) { [weak alert] userResponse in
+                switch userResponse {
+                    case .alertFirstButtonReturn: primaryShouldSuppress(alert?.suppressionButton?.state == .on)
+                    case .alertSecondButtonReturn: secondaryShouldSuppress(alert?.suppressionButton?.state == .on)
+                    default: primaryShouldSuppress(alert?.suppressionButton?.state == .on)
+                }
+            }
+        }
+    }
+}
+
+#endif

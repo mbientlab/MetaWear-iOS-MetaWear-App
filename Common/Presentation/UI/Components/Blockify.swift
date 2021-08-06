@@ -37,6 +37,7 @@ struct DetailsBlockPlatter: View {
     }
 
     private var fill: Color {
+<<<<<<< HEAD
 #if os(iOS)
         return Color(.secondarySystemGroupedBackground)
 #endif
@@ -46,5 +47,12 @@ struct DetailsBlockPlatter: View {
 #if os(iOS)
         return Color(.quaternaryLabel)
 #endif
+=======
+        .blockPlatterFill
+    }
+
+    private var stroke: Color {
+        .blockPlatterStroke
+>>>>>>> macOS
     }
 }

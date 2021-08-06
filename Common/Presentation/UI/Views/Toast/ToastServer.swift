@@ -55,7 +55,11 @@ struct ToastServer: View {
         }
         .padding(12)
         .background(
+<<<<<<< HEAD
             Capsule().fill(Color(.systemFill))
+=======
+            Capsule().fill(Color.toastPillBackground)
+>>>>>>> macOS
         )
         .padding(15)
     }

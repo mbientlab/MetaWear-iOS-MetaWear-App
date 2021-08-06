@@ -14,9 +14,23 @@ struct HeaderBlock: View {
             connection
         }
         .toolbar {
+<<<<<<< HEAD
             ToolbarItem(placement: .navigationBarTrailing) {
                 toolbarConnectionButton
             }
+=======
+#if os(iOS)
+            ToolbarItem(placement: .navigationBarTrailing) {
+                toolbarConnectionButton
+
+            }
+#else
+            ToolbarItem(placement: .status) {
+                toolbarConnectionButton
+
+            }
+#endif
+>>>>>>> macOS
         }
         .navigationTitle(vm.deviceName)
     }
@@ -62,7 +76,15 @@ struct HeaderBlock: View {
         guard vm.didUserTypeValidDevice(name: deviceTitle)
         else { shakeAnimation(); return }
         vm.userUpdatedName(to: deviceTitle)
+<<<<<<< HEAD
         UIApplication.firstKeyWindow()?.resignFirstResponder()
+=======
+        #if os(iOS)
+        UIApplication.firstKeyWindow()?.resignFirstResponder()
+        #else
+        NSApp.resignFirstResponder()
+        #endif
+>>>>>>> macOS
     }
 
     private func shakeAnimation() {

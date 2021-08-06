@@ -8,7 +8,11 @@ struct LabeledItem<Content: View>: View {
 
     var label: String
     var content: Content
+    #if os(iOS)
     var maxWidth: CGFloat = UIScreen.main.bounds.width
+    #else
+    var maxWidth: CGFloat = 125
+    #endif
     var alignment: VerticalAlignment = .firstTextBaseline
 
     var body: some View {

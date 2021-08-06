@@ -63,7 +63,11 @@ struct DeviceDetailScreen: View {
     }
 
     private var bg: some View {
+<<<<<<< HEAD
         Color(.systemGroupedBackground).opacity(scheme == .light ? 0.8 : 1)
+=======
+        Color.groupedListBackground.opacity(scheme == .light ? 0.8 : 1)
+>>>>>>> macOS
     }
 
     @ViewBuilder private var blocksA: some View {

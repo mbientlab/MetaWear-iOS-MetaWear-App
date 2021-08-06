@@ -88,7 +88,11 @@ struct LEDBlock: View {
             Spacer()
             ColorButton(symbol: .solidCircle,
                         label: "  Off  ",
+<<<<<<< HEAD
                         color: Color(.systemGray3),
+=======
+                        color: .ledOffPlatter,
+>>>>>>> macOS
                         fontColor: Color.primary,
                         onPress: vm.turnOffLEDs
             )
@@ -102,6 +106,7 @@ private struct ColorButton: View {
     var symbol: SFSymbol
     var label: String
     var color: Color
+<<<<<<< HEAD
     var fontColor: Color = Color(.systemBackground)
     var onPress: () -> Void
 
@@ -124,6 +129,20 @@ private struct ColorButton: View {
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
             .background(Capsule().foregroundColor(color))
+=======
+    var fontColor: Color = .reversedTextColor
+    var onPress: () -> Void
+
+    var body: some View {
+        Button { onPress() } label: {
+            Text(label)
+                .fontWeight(.semibold)
+                .font(.footnote)
+                .foregroundColor(fontColor)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(Capsule().foregroundColor(color))
+>>>>>>> macOS
         }
         .accessibilityLabel(label)
         .accessibilityAddTraits(.isButton)

@@ -1,10 +1,11 @@
-//  Created by Ryan on 8/5/21.
+//  Created by Ryan Ferrell on 8/5/21.
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
 import SwiftUI
-import UIKit
 import Combine
+#if os(iOS)
+import UIKit
 import AAInfographics
 
 // MARK: - AAInfographics Wrapper Controller
@@ -147,3 +148,4 @@ struct AAGraphViewRep: UIViewControllerRepresentable {
     func updateUIViewController(_ vc: AAGraph, context: Context) { }
 
 }
+#endif

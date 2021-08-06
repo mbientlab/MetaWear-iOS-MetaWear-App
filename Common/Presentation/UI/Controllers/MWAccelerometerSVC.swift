@@ -3,7 +3,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 public class MWAccelerometerSVC: MWDetailAccelerometerVM, ObservableObject {
 
