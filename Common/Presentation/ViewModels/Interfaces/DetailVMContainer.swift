@@ -2,43 +2,21 @@
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
-public class DetailVMContainer {
+public protocol DetailVMContainer: AnyObject {
+    var header: DetailHeaderVM { get }
+    var identifiers: DetailIdentifiersVM { get }
+    var battery: DetailBatteryVM { get }
+    var signal: DetailSignalStrengthVM { get }
+    var firmware: DetailFirmwareVM { get }
+    var led: DetailLEDVM { get }
+    var mechanical: DetailMechanicalSwitchVM { get }
+    var temperature: DetailTemperatureVM { get }
+    var reset: DetailResetVM { get }
+    var accelerometer: DetailAccelerometerVM { get }
 
-    init(flag: VMContainerFlag = .swiftUI) {
-        switch flag {
-            case .swiftUI:
-                self.header = MWDetailHeaderSVC()
-                self.identifiers = MWDetailIdentifiersSVC()
-                self.battery = MWDetailBatterySVC()
-                self.signal = MWSignalSVC()
-                self.firmware = MWFirmwareSVC()
-                self.led = MWLEDSVC()
-                self.mechanical = MWMechanicalSwitchSVC()
-                self.temperature = MWTemperatureSVC()
-                self.reset = MWResetSVC()
-                self.accelerometer = MWAccelerometerSVC()
-
-        }
-    }
-
-    public var header: DetailHeaderVM!
-    public var identifiers: DetailIdentifiersVM!
-    public var battery: DetailBatteryVM!
-    public var signal: DetailSignalStrengthVM!
-    public var firmware: DetailFirmwareVM!
-    public var led: DetailLEDVM!
-    public var mechanical: DetailMechanicalSwitchVM!
-    public var temperature: DetailTemperatureVM!
-    public var reset: DetailResetVM!
-    public var accelerometer: DetailAccelerometerVM!
-
-    var configurables: [DetailConfiguring] { [
-        header, identifiers, battery, signal, firmware, led, mechanical, temperature, reset, accelerometer
-    ] }
+    var configurables: [DetailConfiguring] { get }
 }
 
-enum VMContainerFlag {
-    case swiftUI
-}
+

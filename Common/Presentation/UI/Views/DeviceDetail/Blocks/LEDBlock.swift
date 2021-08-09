@@ -35,7 +35,7 @@ struct LEDBlock: View {
         HStack {
             ColorButton(symbol: .solidCircle,
                         label: "Red",
-                        color: Color(.systemRed),
+                        color: .ledRed,
                         onPress: vm.turnOnRed
             )
 
@@ -43,7 +43,7 @@ struct LEDBlock: View {
 
             ColorButton(symbol: .solidCircle,
                         label: "Green",
-                        color: Color(.systemGreen),
+                        color: .ledGreen,
                         onPress: vm.turnOnGreen
             )
 
@@ -51,7 +51,7 @@ struct LEDBlock: View {
 
             ColorButton(symbol: .solidCircle,
                         label: "Blue",
-                        color: Color(.systemBlue),
+                        color: .ledBlue,
                         onPress: vm.turnOnBlue
             )
         }
@@ -61,7 +61,7 @@ struct LEDBlock: View {
         HStack {
             ColorButton(symbol: .flash,
                         label: "Red",
-                        color: Color(.systemRed),
+                        color: .ledRed,
                         onPress: vm.flashRed
             )
 
@@ -69,7 +69,7 @@ struct LEDBlock: View {
 
             ColorButton(symbol: .flash,
                         label: "Green",
-                        color: Color(.systemGreen),
+                        color: .ledGreen,
                         onPress: vm.flashGreen
             )
 
@@ -77,7 +77,7 @@ struct LEDBlock: View {
 
             ColorButton(symbol: .flash,
                         label: "Blue",
-                        color: Color(.systemBlue),
+                        color: .ledBlue,
                         onPress: vm.flashBlue
             )
         }
@@ -88,11 +88,7 @@ struct LEDBlock: View {
             Spacer()
             ColorButton(symbol: .solidCircle,
                         label: "  Off  ",
-<<<<<<< HEAD
-                        color: Color(.systemGray3),
-=======
                         color: .ledOffPlatter,
->>>>>>> macOS
                         fontColor: Color.primary,
                         onPress: vm.turnOffLEDs
             )
@@ -106,43 +102,17 @@ private struct ColorButton: View {
     var symbol: SFSymbol
     var label: String
     var color: Color
-<<<<<<< HEAD
-    var fontColor: Color = Color(.systemBackground)
-    var onPress: () -> Void
-
-    var isConstrained: Bool { ![.mac, .pad].contains(UIDevice.current.userInterfaceIdiom) }
-
-    var body: some View {
-        Button { onPress() } label: {
-            ZStack {
-            if isConstrained {
-                Text(label)
-                    .fontWeight(.semibold)
-                    .font(.footnote)
-                    .foregroundColor(fontColor)
-            } else {
-                Label(label, systemImage: symbol.rawValue)
-                    .foregroundColor(fontColor)
-                    .font(.callout)
-            }
-            }
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(Capsule().foregroundColor(color))
-=======
     var fontColor: Color = .reversedTextColor
     var onPress: () -> Void
 
     var body: some View {
         Button { onPress() } label: {
             Text(label)
-                .fontWeight(.semibold)
-                .font(.footnote)
+                .fontSmall(weight: .semibold)
                 .foregroundColor(fontColor)
                 .padding(.horizontal, 8)
                 .padding(.vertical, 4)
                 .background(Capsule().foregroundColor(color))
->>>>>>> macOS
         }
         .accessibilityLabel(label)
         .accessibilityAddTraits(.isButton)

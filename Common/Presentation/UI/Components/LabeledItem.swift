@@ -8,22 +8,17 @@ struct LabeledItem<Content: View>: View {
 
     var label: String
     var content: Content
-    #if os(iOS)
-    var maxWidth: CGFloat = UIScreen.main.bounds.width
-    #else
-    var maxWidth: CGFloat = 125
-    #endif
+    var maxWidth: CGFloat = 100
     var alignment: VerticalAlignment = .firstTextBaseline
 
     var body: some View {
         HStack(alignment: alignment, spacing: 10) {
             Text(label)
-                .fontWeight(.medium)
-                .font(.subheadline)
+                .fontSmall(weight: .medium)
                 .foregroundColor(.secondary)
 
                 .multilineTextAlignment(.leading)
-                .frame(width: maxWidth * .blockLabelColumnScreenWidth(), alignment: .leading)
+                .frame(width: maxWidth, alignment: .leading)
 
             content
                 .frame(maxWidth: .infinity, alignment: .leading)

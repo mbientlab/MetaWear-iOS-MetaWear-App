@@ -6,7 +6,7 @@
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 #if os(iOS)
 import AAInfographics
 #endif
@@ -20,6 +20,8 @@ public struct GraphConfig {
     public var channelLabels: [String]
     /// Hex for series in graph. ["#fe117c","#ffc069","#06caf4"]
     public var channelColors: [String]
+    /// SwiftUI colors for graphs not using JS
+    public var channelColorsSwift: [Color] = [Color(.systemBlue), Color(.systemPink), Color(.systemPurple)]
     
     public var yAxisMin: Double
     public var yAxisMax: Double

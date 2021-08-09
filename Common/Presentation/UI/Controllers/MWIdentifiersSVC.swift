@@ -4,13 +4,13 @@
 
 import SwiftUI
 
-class MWDetailIdentifiersSVC: MWDetailIdentifiersVM, ObservableObject, DetailIdentifiersVMDelegate {
+public class MWDetailIdentifiersSVC: MWDetailIdentifiersVM, ObservableObject, DetailIdentifiersVMDelegate {
 
-    func refreshView() {
+    public func refreshView() {
         self.objectWillChange.send()
     }
 
-    override init() {
+    public override init() {
         super.init()
         self.delegate = self
     }

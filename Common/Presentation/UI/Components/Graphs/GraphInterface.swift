@@ -11,3 +11,13 @@ public protocol GraphObject: AnyObject {
     func clearData()
 
 }
+
+protocol LoggerGraphManager: AnyObject {
+    /// Use weak reference
+    var loggerGraph: GraphObject? { get set }
+}
+
+protocol StreamGraphManager: AnyObject {
+    /// Use  weak reference
+    var streamGraph: GraphObject? { get set }
+}

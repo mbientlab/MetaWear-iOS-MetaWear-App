@@ -10,9 +10,9 @@ import Foundation
 import MetaWear
 import MetaWearCpp
 
-fileprivate let metawearScanner = MetaWearScanner()
+fileprivate let metawearScanner = MetaWearScanner.sharedRestore
 
-class MWDevicesScanningVM {
+public class MWDevicesScanningVM {
 
     public weak var delegate: DevicesScanningCoordinatorDelegate? = nil
 
@@ -25,30 +25,53 @@ class MWDevicesScanningVM {
     public private(set) var connectedDevices: [MetaWear] = []
     public var discoveredDevices: [ScannerModelItem] { bluetoothScanner.items }
     private lazy var bluetoothScanner: ScannerModel = makeScannerModel()
+
+    public private(set) var scanCount = 0
 }
 
 extension MWDevicesScanningVM: DevicesScanningVM {
 
-    func userChangedScanningState(to newState: Bool) {
+    public func userChangedScanningState(to newState: Bool) {
         switch newState {
             case true: startScanning()
             case false: stopScanning()
         }
     }
 
-    func startScanning() {
+    public func startScanning() {
         bluetoothScanner.isScanning = true
+        bluetoothScanner.delegate = self
         isScanning = bluetoothScanner.isScanning
+        connectedDevices = []
+        delegate?.refreshScanningStatus()
         fetchConnectedDevices()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.fetchConnectedDevices()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            self.fetchConnectedDevices()
+        }
     }
 
-    func stopScanning() {
+    public func stopScanning() {
         bluetoothScanner.isScanning = false
         isScanning = bluetoothScanner.isScanning
     }
 
-    func userChangedUseMetaBootMode(to useMetaBoot: Bool) {
+    public func userChangedUseMetaBootMode(to useMetaBoot: Bool) {
         useMetaBootMode = useMetaBoot
+        fetchConnectedDevices()
+    }
+
+    public func connectTo(_ item: ScannerModelItem) {
+        item.toggleConnect()
+    }
+
+    public func disconnect(_ item: ScannerModelItem) {
+        item.toggleConnect()
+    }
+
+    public func childDeviceDidConnect() {
         fetchConnectedDevices()
     }
 }
@@ -56,8 +79,14 @@ extension MWDevicesScanningVM: DevicesScanningVM {
 private extension MWDevicesScanningVM {
 
     func makeScannerModel() -> ScannerModel {
-        ScannerModel(delegate: self, scanner: metawearScanner, adTimeout: 5) { [weak self] device -> Bool in
-            self?.useMetaBootMode == true ? device.isMetaBoot : !device.isMetaBoot
+        ScannerModel(delegate: self, scanner: metawearScanner, adTimeout: 5) { [weak self] discoveredDevice -> Bool in
+            // Callback that filters discovered devices
+            // Side effect: track scan counts to show activity
+            DispatchQueue.main.async { [weak self] in
+                self?.scanCount += 1
+            }
+            // Respect MetaBoot preference
+            return discoveredDevice.isMetaBoot == self?.useMetaBootMode
         }
     }
 
@@ -76,16 +105,19 @@ private extension MWDevicesScanningVM {
 
 extension MWDevicesScanningVM: ScannerModelDelegate {
 
-    func scannerModel(_ scannerModel: ScannerModel, didAddItemAt idx: Int) {
+    /// ScannerModel only adds devices (appends), not removes them
+    public func scannerModel(_ scannerModel: ScannerModel, didAddItemAt idx: Int) {
         delegate?.didAddDiscoveredDevice(at: idx)
     }
 
-    func scannerModel(_ scannerModel: ScannerModel, confirmBlinkingItem item: ScannerModelItem, callback: @escaping (Bool) -> Void) {
+    ///  Called when an item receives a user toggleConnect() intent and a confirmation the correct device was connected is needed
+    public func scannerModel(_ scannerModel: ScannerModel, confirmBlinkingItem item: ScannerModelItem, callback: @escaping (Bool) -> Void) {
         // Do nothing
     }
 
-    func scannerModel(_ scannerModel: ScannerModel, errorDidOccur error: Error) {
-        // Do nothing
+    ///  Called when an item receives a user toggleConnect() intent and a connection problem occurs
+    public func scannerModel(_ scannerModel: ScannerModel, errorDidOccur error: Error) {
+        NSLog(error.localizedDescription)
     }
 
 }

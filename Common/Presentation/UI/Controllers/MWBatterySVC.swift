@@ -4,13 +4,13 @@
 
 import SwiftUI
 
-class MWDetailBatterySVC: MWDetailBatteryVM, ObservableObject, DetailBatteryVMDelegate {
+public class MWDetailBatterySVC: MWDetailBatteryVM, ObservableObject, DetailBatteryVMDelegate {
 
-    func refreshView() {
+    public func refreshView() {
         self.objectWillChange.send()
     }
 
-    override init() {
+    public override init() {
         super.init()
         self.delegate = self
     }

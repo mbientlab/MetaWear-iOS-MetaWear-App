@@ -4,9 +4,11 @@
 
 import SwiftUI
 
-class MWDetailHeaderSVC: MWDetailHeaderVM, ObservableObject {
+public class MWDetailHeaderSVC: MWDetailHeaderVM, ObservableObject {
 
-    override init() {
+    @Published var didConnectOnce = false
+
+    public override init() {
         super.init()
         self.delegate = self
     }
@@ -14,7 +16,10 @@ class MWDetailHeaderSVC: MWDetailHeaderVM, ObservableObject {
 
 extension MWDetailHeaderSVC: DetailHeaderVMDelegate {
 
-    func refreshView() {
+    public func refreshView() {
         self.objectWillChange.send()
+        if connectionIsOn && didConnectOnce == false {
+            didConnectOnce = true
+        }
     }
 }

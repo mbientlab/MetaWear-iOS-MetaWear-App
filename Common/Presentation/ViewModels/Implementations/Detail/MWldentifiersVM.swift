@@ -16,6 +16,7 @@ public class MWDetailIdentifiersVM: DetailIdentifiersVM {
     public var modelNumber = " "
     public var serialNumber = " "
     public var harwareRevision = " "
+    public var model: MetaWearDeviceModel = .notFound
 
     public weak var delegate: DetailIdentifiersVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
@@ -44,7 +45,7 @@ extension MWDetailIdentifiersVM {
         serialNumber = device.info?.serialNumber ?? na
         harwareRevision = device.info?.hardwareRevision ?? na
         modelNumber = "\(device.info?.modelNumber ?? na) (\(String(cString: mbl_mw_metawearboard_get_model_name(device.board))))"
-
+        model = .init(device: device)
         delegate?.refreshView()
     }
 }

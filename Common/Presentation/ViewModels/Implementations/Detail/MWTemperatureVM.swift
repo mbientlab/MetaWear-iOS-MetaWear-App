@@ -87,8 +87,8 @@ public extension MWDetailTemperatureVM {
         }
 
         let selected = mbl_mw_multi_chnl_temp_get_temperature_data_signal(device.board, UInt8(selectedChannelIndex))!
-        selected.read().continueOnSuccessWith(.mainThread) { [self] obj in
-            self.temperature = String(format: "%.1f°C", (obj.valueAs() as Float))
+        selected.read().continueOnSuccessWith(.mainThread) { [weak self] obj in
+            self?.temperature = String(format: "%.1f°C", (obj.valueAs() as Float))
         }
 
         if isBMP280 {

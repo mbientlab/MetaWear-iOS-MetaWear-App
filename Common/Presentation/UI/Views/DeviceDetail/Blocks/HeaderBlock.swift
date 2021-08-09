@@ -10,104 +10,147 @@ struct HeaderBlock: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: .cardVSpacing) {
-            title
-            connection
+            DeviceTitleEditor(vm: vm)
+#if os(iOS)
+            ConnectionToggle(vm: vm)
+#endif
         }
         .toolbar {
-<<<<<<< HEAD
-            ToolbarItem(placement: .navigationBarTrailing) {
-                toolbarConnectionButton
-            }
-=======
 #if os(iOS)
             ToolbarItem(placement: .navigationBarTrailing) {
-                toolbarConnectionButton
-
+                ConnectionToolbarButton(vm: vm)
+                    .accentColor(.accentColor)
+                    .foregroundColor(.accentColor)
             }
 #else
-            ToolbarItem(placement: .status) {
-                toolbarConnectionButton
-
+            ToolbarItemGroup(placement: .status) {
+                ConnectionToolbarButton(vm: vm)
             }
 #endif
->>>>>>> macOS
         }
+        #if os(macOS)
         .navigationTitle(vm.deviceName)
-    }
-
-    @State private var shake = false
-    @State private var didEdit = false
-    @State private var deviceTitle = ""
-    private var title: some View {
-        HStack {
-            TextField(
-                "Device",
-                text: $deviceTitle) { didEdit in
-                    self.didEdit = true
-                } onCommit: {
-                    validateName()
-                }
-                .font(.largeTitle)
-
-            Button("Save") { validateName() }
-            .opacity(didEdit ? 1 : 0)
-            .allowsHitTesting(didEdit)
-            .disabled(!didEdit)
-        }
-        .onAppear { deviceTitle = vm.deviceName }
-        .onChange(of: vm.deviceName) { deviceTitle = $0 }
-
-        .modifier(ShakeEffect(shakes: shake ? 2 : 0))
-        .animation(shake ? Animation.easeIn.speed(2) : .none, value: shake)
-        
-    }
-
-    private var toolbarConnectionButton: some View {
-        Button { if !vm.connectionIsOn { vm.userSetConnection(to: true) } } label: {
-            Image(systemName: vm.connectionIsOn ? SFSymbol.connected.rawValue : SFSymbol.disconnected.rawValue)
-                .foregroundColor(vm.connectionIsOn ? Color(.systemBlue) : Color(.systemPink))
-        }
-        .accessibilityLabel(vm.connectionIsOn ? "Connected" : "Disconnected")
-        .accessibilityAddTraits(.isButton)
-    }
-
-    private func validateName() {
-        self.didEdit = false
-        guard vm.didUserTypeValidDevice(name: deviceTitle)
-        else { shakeAnimation(); return }
-        vm.userUpdatedName(to: deviceTitle)
-<<<<<<< HEAD
-        UIApplication.firstKeyWindow()?.resignFirstResponder()
-=======
-        #if os(iOS)
-        UIApplication.firstKeyWindow()?.resignFirstResponder()
         #else
-        NSApp.resignFirstResponder()
+        .navigationBarTitle(vm.deviceName, displayMode: .inline)
         #endif
->>>>>>> macOS
+    }
+}
+
+// MARK: - Connection
+struct ConnectionToggle: View {
+
+    @ObservedObject var vm: MWDetailHeaderSVC
+
+    var body: some View {
+        HStack {
+#if os(iOS)
+            stateLabel
+            toggle
+#else
+            toggle
+            stateLabel
+#endif
+        }
     }
 
-    private func shakeAnimation() {
-        shake.toggle()
+    private var stateLabel: some View {
+        Text(vm.connectionState)
+            .fixedSize(horizontal: false, vertical: true)
+            .lineLimit(nil)
+            .multilineTextAlignment(.leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+
+    private var toggle: some View {
+        Toggle("", isOn: isConnected)
+            .fixedSize()
+            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
     }
 
     private var isConnected: Binding<Bool> {
         Binding { vm.connectionIsOn }
         set: { vm.userSetConnection(to: $0) }
     }
+}
 
-    private var connection: some View {
+// MARK: - Title
+struct DeviceTitleEditor: View {
+
+    @ObservedObject var vm: MWDetailHeaderSVC
+    @Environment(\.fontFace) private var fontFace
+
+    @State private var shake = false
+    @State private var didEdit = false
+    @State private var deviceTitle = ""
+
+    var body: some View {
         HStack {
-            Text(vm.connectionState)
-                .fixedSize(horizontal: false, vertical: true)
-                .lineLimit(nil)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            Toggle("", isOn: isConnected)
-                .fixedSize()
-                .toggleStyle(SwitchToggleStyle(tint: Color(.systemBlue)))
+            #if os(macOS)
+            macTextField
+            #else
+            textField
+            #endif
+            save
         }
+        .onAppear { deviceTitle = vm.deviceName }
+        .onChange(of: vm.deviceName) { deviceTitle = $0 }
 
+        .modifier(ShakeEffect(shakes: shake ? 2 : 0))
+        .animation(shake ? Animation.easeIn.speed(2) : .none, value: shake)
+
+    }
+#if os(macOS)
+    private var macTextField: some View {
+        SingleLineTextField(initialText: vm.deviceName,
+                            config: .largeDeviceStyle(face: fontFace),
+                            onCommit: validateTextFieldCommit,
+                            onCancel: { }
+        )
+            .frame(width: .detailBlockWidth * 0.7,
+                   height: fontFace == .openDyslexic ? 30 : 25,
+                   alignment: .leading)
+    }
+
+    func validateTextFieldCommit(_ string: String) {
+        deviceTitle = string
+        validateName()
+    }
+#endif
+
+    private var textField: some View {
+        TextField("Device", text: $deviceTitle) { didEdit in
+            self.didEdit = true
+        } onCommit: {
+            validateName()
+        }
+        .font(.title2)
+    }
+
+    private var save: some View {
+        Button("Save") { validateName() }
+        .opacity(didEdit ? 1 : 0)
+        .allowsHitTesting(didEdit)
+        .disabled(!didEdit)
+        .accessibilityHidden(!didEdit)
+    }
+}
+
+private extension DeviceTitleEditor {
+
+    func shakeAnimation() {
+        shake.toggle()
+    }
+
+    func validateName() {
+        self.didEdit = false
+        guard vm.didUserTypeValidDevice(name: deviceTitle)
+        else { shakeAnimation(); return }
+        vm.userUpdatedName(to: deviceTitle)
+#if os(iOS)
+        UIApplication.firstKeyWindow()?.resignFirstResponder()
+#else
+        NSApp.resignFirstResponder()
+#endif
     }
 }

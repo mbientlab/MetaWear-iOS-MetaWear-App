@@ -4,13 +4,13 @@
 
 import SwiftUI
 
-class MWResetSVC: MWDetailResetVM, DetailResetVMDelegate, ObservableObject {
+public class MWResetSVC: MWDetailResetVM, DetailResetVMDelegate, ObservableObject {
 
-    func refreshView() {
+    public func refreshView() {
         self.objectWillChange.send()
     }
 
-    override init() {
+    public override init() {
         super.init()
         self.delegate = self
     }

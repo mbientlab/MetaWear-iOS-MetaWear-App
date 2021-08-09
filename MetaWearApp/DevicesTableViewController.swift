@@ -11,8 +11,6 @@ import MetaWear
 import MetaWearCpp
 import iOSDFULibrary
 
-fileprivate let scanner = MetaWearScanner()
-
 class DevicesTableViewController: UITableViewController {
 
     var vm: DevicesScanningVM!
@@ -35,6 +33,7 @@ extension DevicesTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.setHidesBackButton(true, animated: false)
+        navigationController?.navigationBar.tintColor = UIColor(.accentColor)
         vm.startScanning()
     }
 
@@ -48,6 +47,10 @@ extension DevicesTableViewController {
 // MARK: - Updates
 
 extension DevicesTableViewController: DevicesScanningCoordinatorDelegate {
+
+    func refreshScanCount() {
+        // Not shown for iOS
+    }
 
     func didAddDiscoveredDevice(at index: Int) {
         let indexPath = IndexPath(row: index, section: 1)
@@ -108,8 +111,8 @@ extension DevicesTableViewController {
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-            case 0: return "Connected Devices"
-            case 1: return "Devices"
+            case 0: return "Connected"
+            case 1: return "Discovered"
             default: return "Error"
         }
     }

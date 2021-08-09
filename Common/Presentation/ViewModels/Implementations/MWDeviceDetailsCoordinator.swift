@@ -11,17 +11,21 @@ import MetaWear
 import MetaWearCpp
 import BoltsSwift
 import iOSDFULibrary
+import SwiftUI
 
 let na = MBL_MW_MODULE_TYPE_NA
-typealias ToastServerType = ToastVMSwiftUI
 
 public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
-    
+
+    init(vms: DetailVMContainer) {
+        self.vms = vms
+    }
+
+    public private(set) var vms: DetailVMContainer
     public weak var delegate: DeviceDetailsCoordinatorDelegate? = nil
-    public private(set) var vms: DetailVMContainer = .init()
     
     private var device: MetaWear!
-    public private(set) var toast: ToastVM = ToastServerType()
+    public private(set) var toast: ToastServerVM = ToastServerVM()
     public private(set) var alerts: AlertPresenter = CrossPlatformAlertPresenter()
 
     /// Tracks all streaming events (even for other devices).
@@ -40,18 +44,7 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
         return formatter
     }()
 
-//    Temporary notes for refactoring: these are variables not yet transferred over
-//    private var gyroBMI160Data: [(Int64, MblMwCartesianFloat)] = []
-//    private var magnetometerBMM150Data: [(Int64, MblMwCartesianFloat)] = []
-//    private var gpioPinChangeCount = 0
-//    private var hygrometerBME280Event: OpaquePointer?
-//    private var sensorFusionData = Data()
-//    private var disconnectTask: Task<MetaWear>?
-
-    var initiator: DFUServiceInitiator?
-    var dfuController: DFUServiceController?
-
-    func setDevice(_ newDevice: MetaWear) {
+    public func setDevice(_ newDevice: MetaWear) {
         self.device = newDevice
     }
 }
@@ -89,6 +82,7 @@ extension MWDeviceDetailsCoordinator {
     }
 
     public func end() {
+        device.cancelConnection()
         isObserving = false
         streamingCleanup.forEach { $0.value() }
         streamingCleanup.removeAll()
@@ -114,7 +108,6 @@ extension MWDeviceDetailsCoordinator {
     @discardableResult public func removeLog(_ log: String) -> OpaquePointer? {
         loggers.removeValue(forKey: log)
     }
-
 
     /// After a user requests logging to stop, clean up device, then reconnect.
     public func logCleanup(_ handler: @escaping (Error?) -> Void) {
@@ -220,6 +213,7 @@ private extension MWDeviceDetailsCoordinator {
     /// First step in connecting the currently focused device. If no errors occur during connection, the HUD will disappear and deviceDidConnect() will be called.
     func attemptConnectionWithHUD() {
         toast.present(.foreverSpinner, "Connecting", disablesInteraction: true) { [weak self] in
+            // on dismiss callback
             self?.connectDevice(false)
             self?.vms.header.refreshConnectionState()
         }
@@ -237,22 +231,23 @@ private extension MWDeviceDetailsCoordinator {
             }
 
             self.deviceDidConnect()
-            self.toast.dismiss(updatingText: "Connected!", disablesInteraction: false, delay: .defaultToastDismissalDelay)
+            // Delay just enough to let initial data loading happen without being perceived as "lag"
+            self.toast.dismiss(updatingText: "Connected", disablesInteraction: false, delay: 0.3)
         }
     }
 
     /// Second step in connecting the currently focused device. Store pointers for anonymous logging signals.
     func deviceDidConnect() {
         let task = device.createAnonymousDatasignals()
-        task.continueWith(.mainThread) { t in
+        task.continueWith(.mainThread) { [weak self] t in
             if let signals = t.result {
                 for signal in signals {
                     let cString = mbl_mw_anonymous_datasignal_get_identifier(signal)!
                     let identifier = String(cString: cString)
-                    self.loggers[identifier] = signal
+                    self?.loggers[identifier] = signal
                 }
             }
-            self.readAndDisplayDeviceCapabilities()
+            self?.readAndDisplayDeviceCapabilities()
         }
     }
 
@@ -260,11 +255,12 @@ private extension MWDeviceDetailsCoordinator {
     /// Third step in connecting the currently focused device. Parses the device's capabilities and instructs relevant view models to display UI.
     func readAndDisplayDeviceCapabilities() {
 
+        defer { delegate?.reloadAllCells() }
+
+        signalConnectedToThisDevice()
         vms.header.refreshConnectionState() // ## Previously manually forced switch on
         logPeripheralIdentifier()
         showDefaultMinimumDeviceDetail()
-
-        defer { delegate?.reloadAllCells() }
 
         let board = device.board
 
@@ -287,6 +283,18 @@ private extension MWDeviceDetailsCoordinator {
         if AccelerometerModel.allCases.map(\.int32Value).contains(accelerometer) {
             vms.accelerometer.start()
             delegate?.changeVisibility(of: .accelerometer, shouldShow: true)
+        }
+    }
+
+    func signalConnectedToThisDevice() {
+        #if os(macOS)
+        device.flashLED(color: MBLColor(srgbRed: 0, green: 1, blue: 0, alpha: 1), intensity: 1)
+        #elseif os(iOS)
+        device.flashLED(color: MBLColor(red: 0, green: 1, blue: 0, alpha: 1), intensity: 1)
+        #endif
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) { [weak self] in
+            self?.device.turnOffLed()
         }
     }
 

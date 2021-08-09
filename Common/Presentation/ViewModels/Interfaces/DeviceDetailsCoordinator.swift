@@ -17,12 +17,15 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     var delegate: DeviceDetailsCoordinatorDelegate? { get set }
 
     /// Present progress dialogs
-    var toast: ToastVM { get }
+    var toast: ToastServerVM { get }
 
     /// Present alerts
     var alerts: AlertPresenter { get }
 
     var loggers: [String: OpaquePointer] { get }
+
+
+    func setDevice(_ device: MetaWear)
 
     /// Establish device connection and display relevant data.
     func start()
@@ -70,20 +73,3 @@ public protocol DeviceDetailsCoordinatorDelegate: AnyObject {
 
 }
 
-
-public enum DetailGroup {
-
-    // Minimum (reflecting existing iOS storyboard)
-    case headerInfoAndState
-    case identifiers
-    case battery
-    case signal
-    case firmware
-    case reset
-
-    // Features
-    case LED
-    case mechanicalSwitch
-    case temperature
-    case accelerometer
-}

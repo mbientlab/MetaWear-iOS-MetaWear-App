@@ -66,7 +66,7 @@ struct StatsBlock: View {
         var body: some View {
             HStack {
                 Text(label)
-                    .font(.caption2.lowercaseSmallCaps())
+                    .fontVerySmall(lowercaseSmallCaps: true)
                     .foregroundColor(.secondary)
                     .minimumScaleFactor(0.6)
                     .fixedSize(horizontal: false, vertical: true)
@@ -74,7 +74,7 @@ struct StatsBlock: View {
                     .multilineTextAlignment(.leading)
 
                 Text(String(format: "%1.1f", stat))
-                    .font(.caption.monospacedDigit())
+                    .fontSmall(monospacedDigit: true)
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(nil)
                     .multilineTextAlignment(.leading)

@@ -2,6 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ATSApplicationFontsPath</key>
+	<string>.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>OpenDyslexic3-Bold.ttf</string>
+		<string>OpenDyslexic3-Regular.ttf</string>
+		<string>OpenDyslexicMono-Regular.otf</string>
+	</array>
+	<key>CFBundleName</key>
+	<string>MetaWear</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>We use Bluetooth to receive sensor data from the MetaWear device.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>

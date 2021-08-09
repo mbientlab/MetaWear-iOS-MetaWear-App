@@ -7,7 +7,7 @@ import MetaWearCpp
 
 public typealias MWDataPoint = (id: Int64, value: MblMwCartesianFloat)
 
-class MWSensorDataStore {
+public class MWSensorDataStore {
 
     var logged: [MWDataPoint] = []
     var stream: [MWDataPoint] = []
@@ -16,7 +16,7 @@ class MWSensorDataStore {
     var streamCount: Int { stream.countedByEndIndex() }
 }
 
-extension MWSensorDataStore {
+public extension MWSensorDataStore {
 
     func getLoggedStats() -> MWDataStreamStats {
         logged.getMinMaxes()
@@ -55,17 +55,9 @@ extension MWSensorDataStore {
 
 // MARK: - Helpers
 
-extension Array {
-
-    func countedByEndIndex() -> Int {
-        if self.isEmpty { return 0 }
-        return endIndex > 1 ? endIndex : 1
-    }
-}
-
 extension Array where Element == MWDataPoint {
 
-    func getMinMaxes() -> MWDataStreamStats {
+    public func getMinMaxes() -> MWDataStreamStats {
         var stats = MWDataStreamStats.placeholder
         for (_, pt) in self {
             if pt.x > stats.xMax { stats.xMax = pt.x }
@@ -80,22 +72,22 @@ extension Array where Element == MWDataPoint {
         return stats
     }
 
-    func asFloats() -> [[Float]] {
+    public func asFloats() -> [[Float]] {
         map { id, point in
             [point.x, point.y, point.z]
         }
     }
 }
 
-struct MWDataStreamStats {
-    var xMin: Float
-    var xMax: Float
-    var yMin: Float
-    var yMax: Float
-    var zMin: Float
-    var zMax: Float
+public struct MWDataStreamStats {
+    public var xMin: Float
+    public var xMax: Float
+    public var yMin: Float
+    public var yMax: Float
+    public var zMin: Float
+    public var zMax: Float
 
-    static let placeholder: MWDataStreamStats = {
+    public static let placeholder: MWDataStreamStats = {
         let minPlaceholder = Float.greatestFiniteMagnitude
         let maxPlaceholder = -Float.greatestFiniteMagnitude
         return MWDataStreamStats(
@@ -108,7 +100,7 @@ struct MWDataStreamStats {
         )
     }()
 
-    static let zero: Self = MWDataStreamStats(
+    public static let zero: Self = MWDataStreamStats(
         xMin: 0,
         xMax: 0,
         yMin: 0,
@@ -116,4 +108,13 @@ struct MWDataStreamStats {
         zMin: 0,
         zMax: 0
     )
+
+    public init(xMin: Float, xMax: Float, yMin: Float, yMax: Float, zMin: Float, zMax: Float) {
+        self.xMin = xMin
+        self.xMax = xMax
+        self.yMin = yMin
+        self.yMax = yMax
+        self.zMin = zMin
+        self.zMax = zMax
+    }
 }

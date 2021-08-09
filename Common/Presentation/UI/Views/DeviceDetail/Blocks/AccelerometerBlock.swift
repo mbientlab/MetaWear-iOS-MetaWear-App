@@ -33,6 +33,7 @@ extension AccelerometerBlock {
     struct LiveInspectorSection: View {
 
         @EnvironmentObject private var vm: MWAccelerometerSVC
+        @Environment(\.scrollProxy) var scroller
 
         var body: some View {
 
@@ -45,17 +46,44 @@ extension AccelerometerBlock {
 
                 StatsBlock(stats: vm.data.getStreamedStats(), count: vm.data.streamCount)
 
-<<<<<<< HEAD
+#if os(iOS)
                 AAGraphViewWrapper(initialConfig: vm.makeStreamDataConfig(),
                                    graph: vm.setStreamGraphReference)
+                    .id("AccelerometerGraph")
+                    .onAppear { scrollToGraph() }
 
-=======
-                #if os(ios)
-                AAGraphViewWrapper(initialConfig: vm.makeStreamDataConfig(),
-                                   graph: vm.setStreamGraphReference)
-                #endif
->>>>>>> macOS
+#elseif os(macOS)
+                if #available(macOS 12.0, *) {
+                    CanvasGraph(controller: .init(stream: vm,
+                                                  config: vm.makeStreamDataConfig(),
+                                                  driver: ThrottledGraphDriver()),
+                                width: calculateGraphWidth())
+                        .id("AccelerometerGraph")
+                        .onAppear { scrollToGraph() }
+
+                } else {
+                    NaiveGraphFixedSize(controller: .init(stream: vm,
+                                                          config: vm.makeStreamDataConfig(),
+                                                          driver: ThrottledGraphDriver()),
+                                        width: calculateGraphWidth())
+                        .id("AccelerometerGraph")
+                        .onAppear { scrollToGraph() }
+                }
+#endif
             }
+        }
+
+        private func scrollToGraph() {
+            withAnimation {
+                scroller?.scrollTo("AccelerometerGraph", anchor: .top)
+            }
+        }
+
+        /// macOS only because on iOS graph width should be defined by the iOS device, not a constant
+        private func calculateGraphWidth() -> CGFloat {
+            let padding = CGFloat.detailBlockOuterPadding + .detailBlockContentPadding
+            let contentWidth = .detailBlockWidth - (padding * 2)
+            return contentWidth
         }
 
         private var buttons: some View {
@@ -83,8 +111,14 @@ extension AccelerometerBlock {
 
         @ViewBuilder private var connectionProgress: some View {
             if vm.showStreamingStartupSpinner {
-                ProgressView().progressViewStyle(.circular)
+                ProgressView()
+                    .progressViewStyle(.circular)
+#if os(iOS)
                     .transition(.scale)
+#elseif os(macOS)
+                    .transition(.opacity)
+                    .controlSize(.small)
+#endif
                     .offset(x: -35)
             }
         }
@@ -110,16 +144,10 @@ extension AccelerometerBlock {
 
                 StatsBlock(stats: vm.streamingStats, count: vm.data.loggedCount)
 
-<<<<<<< HEAD
+#if os(iOS)
                 AAGraphViewWrapper(initialConfig: vm.makeLoggedDataConfig(),
                                    graph: vm.setLoggerGraphReference)
-
-=======
-                #if os(iOS)
-                AAGraphViewWrapper(initialConfig: vm.makeLoggedDataConfig(),
-                                   graph: vm.setLoggerGraphReference)
-                #endif
->>>>>>> macOS
+#endif
             }
         }
 
@@ -216,15 +244,24 @@ extension AccelerometerBlock {
         }
 
         private var scale: some View {
-            Picker(vm.graphScaleLabel(vm.graphScaleSelected), selection: scaleBinding) {
+            Picker(selection: scaleBinding) {
                 ForEach(vm.graphScales) {
                     Text(vm.graphScaleLabel($0)).tag($0)
                 }
+            } label: {
+#if os(iOS)
+                Text(vm.graphScaleLabel(vm.graphScaleSelected))
+#endif
             }
             .contentShape(Rectangle())
+#if os(iOS)
             .pickerStyle(.menu)
+#else
+            .pickerStyle(.segmented)
+#endif
             .frame(maxWidth: .infinity, alignment: .trailing)
         }
+
     }
 
     struct SamplingRow: View {
@@ -232,24 +269,38 @@ extension AccelerometerBlock {
         @EnvironmentObject private var vm: MWAccelerometerSVC
 
         var body: some View {
-            LabeledItem(label: "Sample", content: frequency)
+            LabeledItem(label: samplingRowLabel, content: frequency)
         }
 
         private var frequencyBinding: Binding<AccelerometerSampleFrequency> {
             Binding { vm.samplingFrequencySelected }
             set: { vm.userDidSelectSamplingFrequency($0) }
+        }
 
+        private var samplingRowLabel: String {
+#if os(iOS)
+            "Sample"
+#else
+            "Sample Hz"
+#endif
         }
 
         private var frequency: some View {
-            Picker(vm.samplingFrequencySelected.frequencyLabel + " Hz", selection: frequencyBinding) {
+            Picker(selection: frequencyBinding) {
                 ForEach(vm.samplingFrequencies) {
                     Text($0.frequencyLabel).tag($0)
                 }
+            } label: {
+#if os(iOS)
+                Text(vm.samplingFrequencySelected.frequencyLabel + " Hz")
+#endif
             }
             .contentShape(Rectangle())
             .pickerStyle(.menu)
             .frame(maxWidth: .infinity, alignment: .trailing)
+#if os(macOS)
+            .accentColor(.gray) // Only override for macOS styling
+#endif
         }
     }
 }

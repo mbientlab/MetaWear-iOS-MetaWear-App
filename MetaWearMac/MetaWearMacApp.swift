@@ -11,9 +11,15 @@ import SwiftUI
 @main
 struct MetaWearMacApp: App {
 
+    @StateObject var store = AppStore()
+
     var body: some Scene {
         WindowGroup {
-            MainWindow(vc: MetaWearScanningSVC())
+            MainWindow(prefs: store.preferences,
+                       vc: store.ui.makeMetaWearScanningSVC())
+                .environmentObject(store)
         }
+        .windowToolbarStyle(.unified(showsTitle: true))
+        .commands { Menus(prefs: store.preferences) }
     }
 }

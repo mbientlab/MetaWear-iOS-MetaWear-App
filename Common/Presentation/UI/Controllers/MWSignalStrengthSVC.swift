@@ -4,18 +4,18 @@
 
 import SwiftUI
 
-class MWSignalSVC: MWDetailSignalStrengthVM, ObservableObject, DetailSignalStrengthVMDelegate {
+public class MWSignalSVC: MWDetailSignalStrengthVM, ObservableObject, DetailSignalStrengthVMDelegate {
 
-    var indexedTransmissionLevels: [(index: Int, value: Int)] {
+    public var indexedTransmissionLevels: [(index: Int, value: Int)] {
         self.transmissionPowerLevels.enumerated().map { ($0.offset, $0.element)
         }
     }
 
-    func refreshView() {
+    public func refreshView() {
         self.objectWillChange.send()
     }
 
-    override init() {
+    public override init() {
         super.init()
         self.delegate = self
     }

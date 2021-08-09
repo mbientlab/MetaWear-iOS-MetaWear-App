@@ -8,10 +8,22 @@
 
 import Foundation
 
-struct DeviceItem: Identifiable, Hashable, Equatable {
-    var id: UUID
-    var name: String
-    var signal: String
-    var signalLevel: Int
-    var mac: String
+public struct DeviceItem: Identifiable, Hashable, Equatable {
+
+    public init(name: String, signal: String, signalLevel: SignalLevel, mac: String? = nil, reservedID: UUID = UUID(), isDiscoveredList: Bool) {
+        self.name = name
+        self.signal = signal
+        self.signalLevel = signalLevel
+        self.mac = mac
+        self.reservedID = reservedID
+        self.isDiscoveredList = isDiscoveredList
+    }
+
+    public var id: String { (mac ?? reservedID.uuidString) + isDiscoveredList.description }
+    public var name: String
+    public var signal: String
+    public var signalLevel: SignalLevel
+    public var mac: String?
+    public var reservedID = UUID()
+    public var isDiscoveredList: Bool
 }

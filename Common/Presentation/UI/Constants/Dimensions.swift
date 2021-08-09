@@ -11,15 +11,28 @@ public extension CGFloat {
 
     static let cardVSpacing: CGFloat = 13
 
-    static let detailsBlockHeaderIcon: CGFloat = 19
+
     static let detailsGraphHeight: CGFloat = 200
-    
-    static func blockLabelColumnScreenWidth() -> CGFloat {
-#if os(iOS)
-        return UIDevice.current.userInterfaceIdiom == .pad ?
-        0.2 : 0.25
-#elseif os(macOS)
-        return 0.2
-#endif
-    }
+
+    #if os(iOS)
+    static let detailsBlockHeaderIcon: CGFloat = 19
+    #elseif os(macOS)
+    static let detailsBlockHeaderIcon: CGFloat = 16
+    #endif
+
+    static let standardVStackSpacing: CGFloat = 6
+    static let cardGridSpacing: CGFloat = 24
 }
+
+extension CGFloat {
+    static let windowMinHeight: CGFloat = 400
+    static let windowWidthMin: CGFloat = 200 + 40 + detailBlockWidth + 10 + detailBlockWidth + 40
+
+    #if os(iOS)
+    static let detailBlockWidth: CGFloat = 400
+    #elseif os(macOS)
+    static let detailBlockWidth: CGFloat = 370
+    #endif
+}
+
+

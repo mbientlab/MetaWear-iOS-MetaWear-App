@@ -9,7 +9,7 @@
 import Foundation
 import MetaWear
 
-protocol DevicesScanningVM: AnyObject {
+public protocol DevicesScanningVM: AnyObject {
 
     var delegate: DevicesScanningCoordinatorDelegate? { get set }
 
@@ -22,13 +22,18 @@ protocol DevicesScanningVM: AnyObject {
     func stopScanning()
     func userChangedScanningState(to newState: Bool)
     func userChangedUseMetaBootMode(to useMetaBoot: Bool)
+    func childDeviceDidConnect()
+
+    func connectTo(_ item: ScannerModelItem)
+    func disconnect(_ item: ScannerModelItem)
 }
 
-protocol DevicesScanningCoordinatorDelegate: AnyObject {
+public protocol DevicesScanningCoordinatorDelegate: AnyObject {
 
     func refreshScanningStatus()
     func refreshConnectedDevices()
     func refreshMetaBootStatus()
+    func refreshScanCount()
 
     func didAddDiscoveredDevice(at index: Int)
 }

@@ -23,9 +23,14 @@ struct ResetBlock: View {
             Button("Soft") { vm.userRequestedSoftReset() }
             Button("Factory") { vm.userRequestedFactoryReset() }
         }
+#if os(macOS)
+        .controlSize(.regular)
+#endif
+        .fixedSize()
     }
 
     private var sleep: some View {
         Button("Sleep") { vm.userRequestedSleep() }
+
     }
 }

@@ -13,7 +13,7 @@ struct BatteryBlock: View {
             Text("\(vm.batteryLevelPercentage)%")
                 .foregroundColor(color)
                 .fontWeight(.medium)
-                .font(.subheadline)
+                .fontSmall(weight: .medium)
                 .padding(.trailing, 8)
 
             ProgressView("", value: Float(vm.batteryLevelPercentage), total: Float(100))
@@ -23,10 +23,11 @@ struct BatteryBlock: View {
                 .foregroundColor(color)
                 .opacity(vm.batteryLevelPercentage > 40 ? 0.75 : 1)
                 .offset(y: -8)
+                .accessibilityHidden(true)
             
             Spacer()
 
-            UpdateButton(didTap: vm.userRequestedBatteryLevel, helpAccessibilityLabel: "Check Battery")
+            UpdateButton(didTap: vm.userRequestedBatteryLevel, helpAccessibilityLabel: "Refresh Battery Level")
         }
     }
 

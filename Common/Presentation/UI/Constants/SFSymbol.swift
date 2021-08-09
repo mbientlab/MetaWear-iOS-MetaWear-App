@@ -36,6 +36,9 @@ public enum SFSymbol: String {
 
     case connected = "bolt.horizontal.fill"
     case disconnected = "bolt.horizontal"
+    case useMetaboot = "cross.case"
+    case search = "magnifyingglass"
+    case shortcutMenu = "list.dash"
 }
 
 public extension SFSymbol {
@@ -75,6 +78,9 @@ public extension SFSymbol {
 
             case .connected: return "Device Connected Bolt"
             case .disconnected: return "Device Connected Empty Bolt"
+            case .useMetaboot: return "MetaBoot Rescue"
+            case .search: return "Search"
+            case .shortcutMenu: return "Table of Contents"
         }
     }
 }

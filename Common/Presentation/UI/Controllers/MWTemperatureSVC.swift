@@ -4,21 +4,21 @@
 
 import SwiftUI
 
-class MWTemperatureSVC: MWDetailTemperatureVM, DetailTemperatureVMDelegate, ObservableObject {
+public class MWTemperatureSVC: MWDetailTemperatureVM, DetailTemperatureVMDelegate, ObservableObject {
 
-    var channelsIndexed: [(index: Int, label: String)] {
+    public var channelsIndexed: [(index: Int, label: String)] {
         self.channels.enumerated().map { ($0.offset, $0.element)  }
     }
 
-    func refreshView() {
+    public func refreshView() {
         self.objectWillChange.send()
     }
 
-    func resetView() {
+    public func resetView() {
         self.objectWillChange.send()
     }
 
-    override init() {
+    public override init() {
         super.init()
         self.delegate = self
     }

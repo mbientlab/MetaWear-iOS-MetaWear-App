@@ -24,7 +24,12 @@ public enum AccelerometerSampleFrequency: Int, CaseIterable, Identifiable {
         }
     }
 
-    public var frequencyLabel: String { String(format: "%1.1f", frequency) }
+    public var frequencyLabel: String {
+        switch self {
+            case .hz12_5: return "12.5"
+            default: return String(format: "%1.0f", frequency)
+        }
+    }
 
     public var id: Int { rawValue }
 }

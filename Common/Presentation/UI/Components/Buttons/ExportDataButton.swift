@@ -17,6 +17,7 @@ struct ExportDataButton: View {
         }
         .offset(y: -7)
         .opacity(isEnabled ? 1 : 0.5)
+        .help("Export")
         .accessibilityLabel(label.isEmpty ? "Export" : label)
         .accessibilityAddTraits(.isButton)
         .disabled(!isEnabled)

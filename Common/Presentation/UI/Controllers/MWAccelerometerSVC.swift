@@ -4,21 +4,21 @@
 
 import SwiftUI
 
-public class MWAccelerometerSVC: MWDetailAccelerometerVM, ObservableObject {
+public class MWAccelerometerSVC: MWDetailAccelerometerVM, ObservableObject, StreamGraphManager, LoggerGraphManager {
 
-    private weak var loggerGraph: GraphObject? = nil
-    private weak var streamGraph: GraphObject? = nil
+    internal weak var loggerGraph: GraphObject? = nil
+    internal weak var streamGraph: GraphObject? = nil
 
     /// Refresh by manual call — as this is O(n)(m) over a long list
-    @Published private(set) var streamingStats: MWDataStreamStats = .zero
+    @Published public private(set) var streamingStats: MWDataStreamStats = .zero
     /// Refresh by manual call — as this is O(n)(m) over a long list
-    @Published private(set) var loggerStats: MWDataStreamStats = .zero
+    @Published public private(set) var loggerStats: MWDataStreamStats = .zero
 
-    var showStreamingStartupSpinner: Bool {
+    public var showStreamingStartupSpinner: Bool {
         isStreaming && data.stream.isEmpty
     }
 
-    override init() {
+    public override init() {
         super.init()
         self.delegate = self
     }

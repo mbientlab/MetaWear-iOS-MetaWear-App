@@ -6,7 +6,7 @@ import SwiftUI
 
 struct ToastServer: View {
 
-    @ObservedObject var vm: ToastServerType
+    @ObservedObject var vm: ToastServerVM
 
     var body: some View {
         VStack {
@@ -31,8 +31,9 @@ struct ToastServer: View {
                 case .horizontalProgress:
 
                     Text(String(vm.percentComplete))
-                        .font(.caption.weight(.medium))
+                        .fontSmall(weight: .medium, monospacedDigit: true)
                         .fixedSize(horizontal: true, vertical: false)
+                        .padding(.leading, 10)
 
                     ProgressView(value: Float(vm.percentComplete) / 100, total: 1)
                         .progressViewStyle(.linear)
@@ -44,10 +45,13 @@ struct ToastServer: View {
                         .progressViewStyle(.circular)
                         .padding(.leading, 6)
                         .padding(.trailing)
+                    #if os(macOS)
+                        .controlSize(.small)
+                    #endif
             }
 
             Text(vm.text)
-                .fontWeight(.medium)
+                .fontBody(weight: .medium)
                 .multilineTextAlignment(.leading)
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
@@ -55,11 +59,16 @@ struct ToastServer: View {
         }
         .padding(12)
         .background(
-<<<<<<< HEAD
-            Capsule().fill(Color(.systemFill))
-=======
-            Capsule().fill(Color.toastPillBackground)
->>>>>>> macOS
+            ZStack {
+                Capsule().fill(Color.toastPillBackground)
+                #if os(iOS)
+                Capsule().stroke(Color.secondary.opacity(0.45))
+                #elseif os(macOS)
+                Capsule().stroke(Color.secondary.opacity(0.3))
+                #endif
+            }
+                .compositingGroup()
+                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 10)
         )
         .padding(15)
     }

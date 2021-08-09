@@ -10,6 +10,7 @@ import Foundation
 import MetaWear
 import MetaWearCpp
 
+
 public class MWDetailHeaderVM: DetailHeaderVM {
 
     public weak var delegate: DetailHeaderVMDelegate? = nil
@@ -61,13 +62,15 @@ public extension MWDetailHeaderVM {
     }
 }
 
+// MARK: - Intents
+
 public extension MWDetailHeaderVM {
 
     func userSetConnection(to newState: Bool) {
         if newState {
             parent?.connectDevice(newState)
         } else {
-            parent?.userIntentDidCauseDeviceDisconnect()
+            parent?.userRequestedDeviceDisconnect()
         }
     }
 
@@ -80,7 +83,7 @@ public extension MWDetailHeaderVM {
             ud.set(1, forKey: key)
             ud.synchronize()
             parent?.alerts.presentAlert(
-                title: "iOS Caches Names",
+                title: "CoreBluetooth Caches Names",
                 message: "To see the new name, you may need to disconnect, re-connect several times or force close the app."
             )
         }
@@ -88,8 +91,6 @@ public extension MWDetailHeaderVM {
         mbl_mw_settings_set_device_name(device.board, newValue, UInt8(newValue.count))
     }
 }
-
-// MARK: - Intents
 
 public extension MWDetailHeaderVM {
 
