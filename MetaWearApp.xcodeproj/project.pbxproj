@@ -11,8 +11,6 @@
 		561C9CE7F6D32CF0E249D443 /* Pods_MetaWearMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01215C527F3A24A0D151C0F5 /* Pods_MetaWearMac.framework */; };
 		916D60474F5A7EF7540EFC01 /* Pods_MetaWearApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB2CE4DF87BA663ECF7BF /* Pods_MetaWearApp.framework */; };
 		9406193B26C03DF3007BE281 /* NaiveGraphFixedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9406193A26C03DF3007BE281 /* NaiveGraphFixedSize.swift */; };
-		9406193E26C0401B007BE281 /* NaiveGraphControllerDataDriven.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9406193D26C0401B007BE281 /* NaiveGraphControllerDataDriven.swift */; };
-		9406193F26C04195007BE281 /* NaiveGraphControllerDataDriven.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9406193D26C0401B007BE281 /* NaiveGraphControllerDataDriven.swift */; };
 		9406194026C04198007BE281 /* NaiveGraphController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E61D226BFA7C100A387E7 /* NaiveGraphController.swift */; };
 		9406194126C0419A007BE281 /* NaiveGraphFixedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9406193A26C03DF3007BE281 /* NaiveGraphFixedSize.swift */; };
 		9406194326C0421F007BE281 /* GraphDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9406194226C0421F007BE281 /* GraphDriver.swift */; };
@@ -334,7 +332,6 @@
 		2DB2F6EBD41DBFC307375FEE /* Pods-MetaWearApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearApp.release.xcconfig"; path = "Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp.release.xcconfig"; sourceTree = "<group>"; };
 		5651C5F9CEA034E398221BEF /* Pods-MetaWearMac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearMac.release.xcconfig"; path = "Target Support Files/Pods-MetaWearMac/Pods-MetaWearMac.release.xcconfig"; sourceTree = "<group>"; };
 		9406193A26C03DF3007BE281 /* NaiveGraphFixedSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveGraphFixedSize.swift; sourceTree = "<group>"; };
-		9406193D26C0401B007BE281 /* NaiveGraphControllerDataDriven.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveGraphControllerDataDriven.swift; sourceTree = "<group>"; };
 		9406194226C0421F007BE281 /* GraphDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDriver.swift; sourceTree = "<group>"; };
 		94092E0D26C0CDBE00997C45 /* DeviceNavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceNavigationLink.swift; sourceTree = "<group>"; };
 		94092E1026C0E38300997C45 /* PreferencesPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesPersistence.swift; sourceTree = "<group>"; };
@@ -545,7 +542,6 @@
 			children = (
 				9406193A26C03DF3007BE281 /* NaiveGraphFixedSize.swift */,
 				948E61D226BFA7C100A387E7 /* NaiveGraphController.swift */,
-				9406193D26C0401B007BE281 /* NaiveGraphControllerDataDriven.swift */,
 			);
 			path = NaiveGraph;
 			sourceTree = "<group>";
@@ -1388,7 +1384,6 @@
 				941EFBB526BCE79D0087F960 /* GyroVM.swift in Sources */,
 				94A271F626C1C2C600512626 /* MetaMotionPlaceholderScreen.swift in Sources */,
 				941EFB8626BCE7770087F960 /* DividerPadded.swift in Sources */,
-				9406193F26C04195007BE281 /* NaiveGraphControllerDataDriven.swift in Sources */,
 				941EFB8226BCE7710087F960 /* AAGraph.swift in Sources */,
 				941EFB8D26BCE7890087F960 /* MWTemperatureSVC.swift in Sources */,
 				941EFBA926BCE7920087F960 /* SignalBlock.swift in Sources */,
@@ -1506,7 +1501,6 @@
 				947979DD26B9B49D00AEB5EA /* GyroscopeBlock.swift in Sources */,
 				947979C526B9A03700AEB5EA /* TemperatureBlock.swift in Sources */,
 				941EFC1726BDC1240087F960 /* ConnectionToolbarButton.swift in Sources */,
-				9406193E26C0401B007BE281 /* NaiveGraphControllerDataDriven.swift in Sources */,
 				948E61C626BF3FB700A387E7 /* MWScannedDeviceCellSVC.swift in Sources */,
 				94FF670126BC8470009F7EB5 /* GraphInterface.swift in Sources */,
 				947979B026B98E5800AEB5EA /* ToastVM.swift in Sources */,
