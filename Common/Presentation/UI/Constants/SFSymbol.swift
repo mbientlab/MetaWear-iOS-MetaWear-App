@@ -24,6 +24,7 @@ public enum SFSymbol: String {
     case ibeacon = "mappin.and.ellipse"
     case barometer = "barometer"
     case ambientLight = "rays"
+    case hygrometer = "drop"
     case i2c = "fiberchannel"
 
     case steps = "figure.walk"
@@ -67,6 +68,7 @@ public extension SFSymbol {
             case .ibeacon: return "iBeacon"
             case .barometer: return "Barometer"
             case .ambientLight: return "Ambient Light"
+            case .hygrometer: return "Hygrometer Water Vapor"
             case .i2c: return "I2C"
 
             case .refresh: return "Refresh Arrow"

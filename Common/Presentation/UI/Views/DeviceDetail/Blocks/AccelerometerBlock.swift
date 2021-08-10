@@ -6,7 +6,7 @@ import SwiftUI
 
 struct AccelerometerBlock: View {
     
-    @ObservedObject var vm: MWAccelerometerSVC
+    @ObservedObject var vm: AccelerometerSUIVC
     
     var body: some View {
         VStack(spacing: .cardVSpacing) {
@@ -32,7 +32,7 @@ extension AccelerometerBlock {
 
     struct LiveInspectorSection: View {
 
-        @EnvironmentObject private var vm: MWAccelerometerSVC
+        @EnvironmentObject private var vm: AccelerometerSUIVC
         @Environment(\.scrollProxy) var scroller
 
         var body: some View {
@@ -132,7 +132,7 @@ extension AccelerometerBlock {
 
     struct LoggingSection: View {
 
-        @EnvironmentObject private var vm: MWAccelerometerSVC
+        @EnvironmentObject private var vm: AccelerometerSUIVC
 
         var body: some View {
             LabeledItem(
@@ -186,7 +186,7 @@ extension AccelerometerBlock {
 
     struct OrientationAndStepsRows: View {
 
-        @EnvironmentObject private var vm: MWAccelerometerSVC
+        @EnvironmentObject private var vm: AccelerometerSUIVC
 
         var body: some View {
             LabeledItem(
@@ -231,7 +231,7 @@ extension AccelerometerBlock {
 
     struct ScaleRow: View {
 
-        @EnvironmentObject private var vm: MWAccelerometerSVC
+        @EnvironmentObject private var vm: AccelerometerSUIVC
 
         var body: some View {
             LabeledItem(label: "Scale", content: scale)
@@ -266,7 +266,7 @@ extension AccelerometerBlock {
 
     struct SamplingRow: View {
 
-        @EnvironmentObject private var vm: MWAccelerometerSVC
+        @EnvironmentObject private var vm: AccelerometerSUIVC
 
         var body: some View {
             LabeledItem(label: samplingRowLabel, content: frequency)

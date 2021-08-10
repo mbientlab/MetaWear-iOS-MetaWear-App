@@ -6,6 +6,8 @@ import SwiftUI
 
 struct GyroscopeBlock: View {
 
+    @ObservedObject var vm: MWGyroVM
+
     var body: some View {
         VStack(spacing: .cardVSpacing) {
             

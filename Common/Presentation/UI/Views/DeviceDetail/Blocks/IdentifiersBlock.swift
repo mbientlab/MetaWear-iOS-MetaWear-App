@@ -6,7 +6,7 @@ import SwiftUI
 
 struct IdentifiersBlock: View {
 
-    @ObservedObject var vm: MWDetailIdentifiersSVC
+    @ObservedObject var vm: IdentifiersSUIVC
 
     var body: some View {
         VStack(spacing: .cardVSpacing) {

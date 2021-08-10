@@ -6,7 +6,7 @@ import SwiftUI
 
 struct ResetBlock: View {
 
-    @ObservedObject var vm: MWResetSVC
+    @ObservedObject var vm: ResetSUIVC
 
     var body: some View {
         HStack {

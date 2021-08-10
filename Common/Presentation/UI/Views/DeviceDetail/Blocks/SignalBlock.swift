@@ -6,7 +6,7 @@ import SwiftUI
 
 struct SignalBlock: View {
 
-    @ObservedObject var vm: MWSignalSVC
+    @ObservedObject var vm: SignalSUIVC
 
     var body: some View {
         VStack(spacing: .cardVSpacing) {

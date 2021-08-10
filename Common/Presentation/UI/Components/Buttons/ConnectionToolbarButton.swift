@@ -6,7 +6,7 @@ import SwiftUI
 
 struct ConnectionToolbarButton: View {
 
-    @ObservedObject var vm: MWDetailHeaderSVC
+    @ObservedObject var vm: DetailHeaderSUIVC
 
     var body: some View {
         Button { vm.userSetConnection(to: !vm.connectionIsOn) } label: {

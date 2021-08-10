@@ -6,7 +6,7 @@ import SwiftUI
 
 struct FirmwareBlock: View {
 
-    @ObservedObject var vm: MWFirmwareSVC
+    @ObservedObject var vm: FirmwareSUIVC
 
     var body: some View {
         VStack(spacing: .cardVSpacing) {

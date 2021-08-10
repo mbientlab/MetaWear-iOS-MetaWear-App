@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public enum SignalLevel: Int {
     case noBars
     case oneBar

@@ -23,8 +23,6 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
     case temperature
     case LED
     case accelerometer
-
-    // Not Yet Built
     case sensorFusion
     case gyroscope
     case magnetometer
@@ -33,6 +31,7 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
     case ibeacon
     case barometer
     case ambientLight
+    case hygrometer
     case i2c
 
     public var title: String {
@@ -55,6 +54,7 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
             case .ibeacon:              return "iBeacon"
             case .barometer:            return "Barometer"
             case .ambientLight:         return "Ambient Light"
+            case .hygrometer:           return "Hygrometer"
             case .i2c:                  return "I2C"
         }
     }
@@ -79,6 +79,7 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
             case .ibeacon:              return .ibeacon
             case .barometer:            return .barometer
             case .ambientLight:         return .ambientLight
+            case .hygrometer:           return .hygrometer
             case .i2c:                  return .i2c
         }
     }
@@ -103,6 +104,7 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
             case .ibeacon:              return false
             case .barometer:            return false
             case .ambientLight:         return false
+            case .hygrometer:           return false
             case .i2c:                  return false
         }
     }

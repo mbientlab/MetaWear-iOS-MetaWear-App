@@ -6,7 +6,7 @@ import SwiftUI
 
 struct HeaderBlock: View {
 
-    @ObservedObject var vm: MWDetailHeaderSVC
+    @ObservedObject var vm: DetailHeaderSUIVC
 
     var body: some View {
         VStack(alignment: .leading, spacing: .cardVSpacing) {
@@ -39,7 +39,7 @@ struct HeaderBlock: View {
 // MARK: - Connection
 struct ConnectionToggle: View {
 
-    @ObservedObject var vm: MWDetailHeaderSVC
+    @ObservedObject var vm: DetailHeaderSUIVC
 
     var body: some View {
         HStack {
@@ -77,12 +77,13 @@ struct ConnectionToggle: View {
 // MARK: - Title
 struct DeviceTitleEditor: View {
 
-    @ObservedObject var vm: MWDetailHeaderSVC
+    @ObservedObject var vm: DetailHeaderSUIVC
     @Environment(\.fontFace) private var fontFace
 
     @State private var shake = false
     @State private var didEdit = false
     @State private var deviceTitle = ""
+    @State private var showValidationNotice = false
 
     var body: some View {
         HStack {
@@ -98,6 +99,9 @@ struct DeviceTitleEditor: View {
 
         .modifier(ShakeEffect(shakes: shake ? 2 : 0))
         .animation(shake ? Animation.easeIn.speed(2) : .none, value: shake)
+
+        .background(validationNotice.offset(y: 20), alignment: .bottom)
+        .animation(.easeIn, value: showValidationNotice)
 
     }
 #if os(macOS)
@@ -134,6 +138,18 @@ struct DeviceTitleEditor: View {
         .disabled(!didEdit)
         .accessibilityHidden(!didEdit)
     }
+
+    @ViewBuilder
+    private var validationNotice: some View {
+        if showValidationNotice {
+            Text(vm.deviceNameRequirementsMessage)
+                .fontSmall()
+                .foregroundColor(.primary)
+                .padding()
+                .background(Capsule().fill(Color.toastPillBackground))
+                .transition(.move(edge: .top))
+        }
+    }
 }
 
 private extension DeviceTitleEditor {
@@ -142,11 +158,21 @@ private extension DeviceTitleEditor {
         shake.toggle()
     }
 
+    func flashValidationNotice() {
+        showValidationNotice = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.showValidationNotice = false
+        }
+    }
+
     func validateName() {
         self.didEdit = false
-        guard vm.didUserTypeValidDevice(name: deviceTitle)
-        else { shakeAnimation(); return }
-        vm.userUpdatedName(to: deviceTitle)
+        guard vm.didUserTypeValidDevice(name: deviceTitle) else {
+            shakeAnimation()
+            flashValidationNotice()
+            return
+        }
+        vm.userRenamedDevice(to: deviceTitle)
 #if os(iOS)
         UIApplication.firstKeyWindow()?.resignFirstResponder()
 #else

@@ -1,7 +1,3 @@
-//
-//  UIFactory.swift
-//  UIFactory
-//
 //  Created by Ryan Ferrell on 8/6/21.
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
@@ -9,12 +5,6 @@
 import SwiftUI
 import MetaWear
 
-public enum UIEnvironment {
-    /// Base for macOS 11 and iOS 14
-    case swiftUIMinimumV2
-}
-
-/// Suclass for your environment
 open class UIFactory {
 
     public init(environment: UIEnvironment) {
@@ -22,6 +12,8 @@ open class UIFactory {
     }
 
     public var environment: UIEnvironment
+
+    // MARK: - Methods
 
     public func makeMetaWearScanningSVC() -> MetaWearScanningSVC {
         .init()
@@ -42,14 +34,18 @@ open class UIFactory {
     public func makeDetailScreenVC(device: MetaWear?) -> DeviceDetailsCoordinator {
         switch environment {
             case .swiftUIMinimumV2:
-                return MWDeviceDetailScreenSVC(device: device, vms: _makeDetailVMContainer())
+                return DeviceDetailScreenSUIVC(device: device,
+                                               vms: _makeDetailVMContainer())
         }
     }
-    // Helper
 
+
+    // MARK: - Helpers
+    
     private func _makeDetailVMContainer() -> DetailVMContainer {
         switch environment {
-            case .swiftUIMinimumV2: return DetailVMContainerForSwiftUIStandard()
+            case .swiftUIMinimumV2: return DetailVMContainerA()
         }
     }
+
 }

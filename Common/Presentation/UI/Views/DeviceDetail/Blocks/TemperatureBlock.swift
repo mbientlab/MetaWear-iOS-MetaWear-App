@@ -6,7 +6,7 @@ import SwiftUI
 
 struct TemperatureBlock: View {
 
-    @ObservedObject var vm: MWTemperatureSVC
+    @ObservedObject var vm: TemperatureSUIVC
 
     @State private var read = ""
     @State private var enable = ""

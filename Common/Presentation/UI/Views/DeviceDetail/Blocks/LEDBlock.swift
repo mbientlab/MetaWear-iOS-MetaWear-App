@@ -6,7 +6,7 @@ import SwiftUI
 
 struct LEDBlock: View {
 
-    @ObservedObject var vm: MWLEDSVC
+    @ObservedObject var vm: LedSUIVC
 
     var body: some View {
         VStack(spacing: .cardVSpacing) {

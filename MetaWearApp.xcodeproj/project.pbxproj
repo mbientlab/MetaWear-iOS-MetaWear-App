@@ -10,6 +10,10 @@
 		01510B90062A4276CBFBDB65 /* Pods_MetaWearApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB2CE4DF87BA663ECF7BF /* Pods_MetaWearApp.framework */; };
 		561C9CE7F6D32CF0E249D443 /* Pods_MetaWearMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01215C527F3A24A0D151C0F5 /* Pods_MetaWearMac.framework */; };
 		916D60474F5A7EF7540EFC01 /* Pods_MetaWearApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB2CE4DF87BA663ECF7BF /* Pods_MetaWearApp.framework */; };
+		94006FBB26C4D4170048C5AD /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94006FBA26C4D4170048C5AD /* AlertPresenter.swift */; };
+		94006FBC26C4D4170048C5AD /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94006FBA26C4D4170048C5AD /* AlertPresenter.swift */; };
+		94006FBE26C4D4630048C5AD /* DownloadHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94006FBD26C4D4630048C5AD /* DownloadHandler.swift */; };
+		94006FBF26C4D4630048C5AD /* DownloadHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94006FBD26C4D4630048C5AD /* DownloadHandler.swift */; };
 		9406193B26C03DF3007BE281 /* NaiveGraphFixedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9406193A26C03DF3007BE281 /* NaiveGraphFixedSize.swift */; };
 		9406194026C04198007BE281 /* NaiveGraphController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E61D226BFA7C100A387E7 /* NaiveGraphController.swift */; };
 		9406194126C0419A007BE281 /* NaiveGraphFixedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9406193A26C03DF3007BE281 /* NaiveGraphFixedSize.swift */; };
@@ -30,13 +34,11 @@
 		941EFB6726BCE5BB0087F960 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB6626BCE5BB0087F960 /* Color.swift */; };
 		941EFB6D26BCE5F70087F960 /* ScannedDeviceCellSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB6C26BCE5F70087F960 /* ScannedDeviceCellSwiftUI.swift */; };
 		941EFB6F26BCE6640087F960 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB6E26BCE6640087F960 /* Sidebar.swift */; };
-		941EFB7226BCE6820087F960 /* DeviceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB7126BCE6820087F960 /* DeviceItem.swift */; };
 		941EFB7526BCE6B20087F960 /* MetaWearScanningSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB7426BCE6B20087F960 /* MetaWearScanningSVC.swift */; };
 		941EFB7626BCE7380087F960 /* AccelerometerSampleFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */; };
 		941EFB7726BCE7380087F960 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94D26B453F30014FC91 /* Images.swift */; };
-		941EFB7826BCE7380087F960 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316E26B530500015EE88 /* UserDefaults.swift */; };
 		941EFB7926BCE7380087F960 /* MetaWearEnumsSwiftBridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */; };
-		941EFB7A26BCE7440087F960 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317026B5308B0015EE88 /* AlertPresenter.swift */; };
+		941EFB7A26BCE7440087F960 /* CrossPlatformAlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317026B5308B0015EE88 /* CrossPlatformAlertPresenter.swift */; };
 		941EFB7B26BCE7440087F960 /* String+Drop0xPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */; };
 		941EFB7C26BCE74C0087F960 /* EnvironmentValues+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB5026BCDD620087F960 /* EnvironmentValues+.swift */; };
 		941EFB7D26BCE7500087F960 /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB4D26BCD9660087F960 /* ShakeEffect.swift */; };
@@ -55,17 +57,11 @@
 		941EFB8A26BCE77A0087F960 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB6626BCE5BB0087F960 /* Color.swift */; };
 		941EFB8B26BCE77A0087F960 /* Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979BF26B99F0F00AEB5EA /* Dimensions.swift */; };
 		941EFB8C26BCE77A0087F960 /* SFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979D826B9A41600AEB5EA /* SFSymbol.swift */; };
-		941EFB8D26BCE7890087F960 /* MWTemperatureSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B726B88864008707ED /* MWTemperatureSVC.swift */; };
-		941EFB8E26BCE7890087F960 /* MWResetSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C926B8CD6F008707ED /* MWResetSVC.swift */; };
-		941EFB8F26BCE7890087F960 /* MWHeaderSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316626B518D30015EE88 /* MWHeaderSVC.swift */; };
-		941EFB9026BCE7890087F960 /* MWIdentifiersSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979EF26B9C3AA00AEB5EA /* MWIdentifiersSVC.swift */; };
-		941EFB9126BCE7890087F960 /* MWBatterySVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C126B8AD04008707ED /* MWBatterySVC.swift */; };
-		941EFB9226BCE7890087F960 /* MWAccelerometerSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E57026B8EF5B006A6262 /* MWAccelerometerSVC.swift */; };
-		941EFB9326BCE7890087F960 /* MWDeviceDetailScreenSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9E626B9FD2C00264F6E /* MWDeviceDetailScreenSVC.swift */; };
-		941EFB9426BCE7890087F960 /* MWFirmwareSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C526B8C811008707ED /* MWFirmwareSVC.swift */; };
-		941EFB9526BCE7890087F960 /* MWLEDSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514BD26B8A4D5008707ED /* MWLEDSVC.swift */; };
-		941EFB9626BCE7890087F960 /* MWMechanicalSwitchSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B926B89A90008707ED /* MWMechanicalSwitchSVC.swift */; };
-		941EFB9726BCE7890087F960 /* MWSignalStrengthSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C326B8AFF6008707ED /* MWSignalStrengthSVC.swift */; };
+		941EFB8D26BCE7890087F960 /* TemperatureSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B726B88864008707ED /* TemperatureSUIVC.swift */; };
+		941EFB8F26BCE7890087F960 /* DetailHeaderSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316626B518D30015EE88 /* DetailHeaderSUIVC.swift */; };
+		941EFB9226BCE7890087F960 /* AccelerometerSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E57026B8EF5B006A6262 /* AccelerometerSUIVC.swift */; };
+		941EFB9326BCE7890087F960 /* DeviceDetailScreenSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9E626B9FD2C00264F6E /* DeviceDetailScreenSUIVC.swift */; };
+		941EFB9726BCE7890087F960 /* SignalSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C326B8AFF6008707ED /* SignalSUIVC.swift */; };
 		941EFB9826BCE78E0087F960 /* ToastServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979EC26B9B5A200AEB5EA /* ToastServer.swift */; };
 		941EFB9926BCE78E0087F960 /* DeviceDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B926B9985700AEB5EA /* DeviceDetailScreen.swift */; };
 		941EFB9A26BCE7920087F960 /* I2CBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979EA26B9B51100AEB5EA /* I2CBlock.swift */; };
@@ -88,7 +84,6 @@
 		941EFBAB26BCE7920087F960 /* FirmwareBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979CC26B9A06100AEB5EA /* FirmwareBlock.swift */; };
 		941EFBAC26BCE7920087F960 /* HapticBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979E026B9B4C800AEB5EA /* HapticBlock.swift */; };
 		941EFBAD26BCE7990087F960 /* DeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317426B531C50015EE88 /* DeviceDetailsCoordinator.swift */; };
-		941EFBAE26BCE7990087F960 /* ToastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979AF26B98E5800AEB5EA /* ToastVM.swift */; };
 		941EFBAF26BCE7990087F960 /* DetailConfiguring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316C26B52FD90015EE88 /* DetailConfiguring.swift */; };
 		941EFBB026BCE7990087F960 /* DetailVMContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B326B98F0400AEB5EA /* DetailVMContainer.swift */; };
 		941EFBB126BCE79D0087F960 /* SensorFusionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539C26B7E0F600E7B2DC /* SensorFusionVM.swift */; };
@@ -98,7 +93,7 @@
 		941EFBB526BCE79D0087F960 /* GyroVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C553A326B7E0F700E7B2DC /* GyroVM.swift */; };
 		941EFBB626BCE79D0087F960 /* GPIOVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539E26B7E0F700E7B2DC /* GPIOVM.swift */; };
 		941EFBB726BCE79D0087F960 /* BatteryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539B26B7E0F600E7B2DC /* BatteryVM.swift */; };
-		941EFBB826BCE79D0087F960 /* BeaconVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539826B7E0F600E7B2DC /* BeaconVM.swift */; };
+		941EFBB826BCE79D0087F960 /* IBeaconVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539826B7E0F600E7B2DC /* IBeaconVM.swift */; };
 		941EFBB926BCE79D0087F960 /* AccelerometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C553A126B7E0F700E7B2DC /* AccelerometerVM.swift */; };
 		941EFBBA26BCE79D0087F960 /* HeaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482DC4E26B5078A00DD19EB /* HeaderVM.swift */; };
 		941EFBBB26BCE79D0087F960 /* AmbientLightVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539426B7E0F600E7B2DC /* AmbientLightVM.swift */; };
@@ -109,11 +104,10 @@
 		941EFBC026BCE79E0087F960 /* MechanicalSwitchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539626B7E0F600E7B2DC /* MechanicalSwitchVM.swift */; };
 		941EFBC126BCE79E0087F960 /* FirmwareVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C553A226B7E0F700E7B2DC /* FirmwareVM.swift */; };
 		941EFBC226BCE79E0087F960 /* I2CVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539D26B7E0F600E7B2DC /* I2CVM.swift */; };
-		941EFBC326BCE79E0087F960 /* SignalStrengthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539326B7E0F600E7B2DC /* SignalStrengthVM.swift */; };
+		941EFBC326BCE79E0087F960 /* SignalVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539326B7E0F600E7B2DC /* SignalVM.swift */; };
 		941EFBC426BCE79E0087F960 /* HapticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539526B7E0F600E7B2DC /* HapticVM.swift */; };
 		941EFBC526BCE7A30087F960 /* ScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94F26B45B770014FC91 /* ScannedDeviceCellVM.swift */; };
 		941EFBC626BCE7A30087F960 /* DevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */; };
-		941EFBC726BCE7A80087F960 /* ToastServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979AD26B98E4500AEB5EA /* ToastServerVM.swift */; };
 		941EFBC826BCE7A80087F960 /* MWDeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */; };
 		941EFBC926BCE7A80087F960 /* MWSensorDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF670226BC8983009F7EB5 /* MWSensorDataStore.swift */; };
 		941EFBCA26BCE7AD0087F960 /* MWHeaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317226B530FF0015EE88 /* MWHeaderVM.swift */; };
@@ -137,12 +131,12 @@
 		941EFC0326BD973A0087F960 /* Sort+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0226BD973A0087F960 /* Sort+RawRepresentable.swift */; };
 		941EFC0526BDA7450087F960 /* DetailGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0426BDA7450087F960 /* DetailGroup.swift */; };
 		941EFC0726BDA87D0087F960 /* TableOfContentsMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0626BDA87D0087F960 /* TableOfContentsMenuButton.swift */; };
-		941EFC0A26BDB08E0087F960 /* SwiftUIStandardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0926BDB08E0087F960 /* SwiftUIStandardFactory.swift */; };
+		941EFC0A26BDB08E0087F960 /* DevelopmentUIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0926BDB08E0087F960 /* DevelopmentUIFactory.swift */; };
 		941EFC0C26BDB23C0087F960 /* UIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0B26BDB23C0087F960 /* UIFactory.swift */; };
 		941EFC0E26BDB46C0087F960 /* Array+CountedByIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0D26BDB46C0087F960 /* Array+CountedByIndex.swift */; };
 		941EFC1026BDB6390087F960 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0F26BDB6390087F960 /* AppStore.swift */; };
 		941EFC1126BDC0C00087F960 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0F26BDB6390087F960 /* AppStore.swift */; };
-		941EFC1226BDC0CB0087F960 /* SwiftUIStandardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0926BDB08E0087F960 /* SwiftUIStandardFactory.swift */; };
+		941EFC1226BDC0CB0087F960 /* DevelopmentUIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0926BDB08E0087F960 /* DevelopmentUIFactory.swift */; };
 		941EFC1326BDC0CB0087F960 /* UIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0B26BDB23C0087F960 /* UIFactory.swift */; };
 		941EFC1426BDC0DB0087F960 /* DetailGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0426BDA7450087F960 /* DetailGroup.swift */; };
 		941EFC1526BDC0EA0087F960 /* Array+CountedByIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0D26BDB46C0087F960 /* Array+CountedByIndex.swift */; };
@@ -174,11 +168,11 @@
 		9438D95726B467FC0014FC91 /* DevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */; };
 		9438D95926B4692C0014FC91 /* MWDevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95826B4692C0014FC91 /* MWDevicesScanningVM.swift */; };
 		9438D95C26B47C990014FC91 /* String+Drop0xPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */; };
+		944EACB026C2FBD300B73814 /* MWGyroVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EACAF26C2FBD300B73814 /* MWGyroVM.swift */; };
+		944EACB126C2FBD300B73814 /* MWGyroVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EACAF26C2FBD300B73814 /* MWGyroVM.swift */; };
 		9453FD3926B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */; };
 		9473587926B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */; };
 		9473587B26B92D610032EE87 /* AccelerometerSampleFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */; };
-		947979AE26B98E4500AEB5EA /* ToastServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979AD26B98E4500AEB5EA /* ToastServerVM.swift */; };
-		947979B026B98E5800AEB5EA /* ToastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979AF26B98E5800AEB5EA /* ToastVM.swift */; };
 		947979B226B98EC800AEB5EA /* UIKit+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B126B98EC800AEB5EA /* UIKit+KeyWindow.swift */; };
 		947979B426B98F0400AEB5EA /* DetailVMContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B326B98F0400AEB5EA /* DetailVMContainer.swift */; };
 		947979BA26B9985700AEB5EA /* DeviceDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B926B9985700AEB5EA /* DeviceDetailScreen.swift */; };
@@ -206,16 +200,20 @@
 		947979E926B9B50500AEB5EA /* AmbientLightBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979E826B9B50500AEB5EA /* AmbientLightBlock.swift */; };
 		947979EB26B9B51100AEB5EA /* I2CBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979EA26B9B51100AEB5EA /* I2CBlock.swift */; };
 		947979ED26B9B5A200AEB5EA /* ToastServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979EC26B9B5A200AEB5EA /* ToastServer.swift */; };
-		947979F026B9C3AA00AEB5EA /* MWIdentifiersSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979EF26B9C3AA00AEB5EA /* MWIdentifiersSVC.swift */; };
 		9481A57926BC6728008CD909 /* AAGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9481A57826BC6728008CD909 /* AAGraph.swift */; };
-		9482DC4D26B501CF00DD19EB /* _DeviceDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482DC4C26B501CF00DD19EB /* _DeviceDetailVC.swift */; };
 		9482DC4F26B5078A00DD19EB /* HeaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9482DC4E26B5078A00DD19EB /* HeaderVM.swift */; };
-		9488E57126B8EF5B006A6262 /* MWAccelerometerSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E57026B8EF5B006A6262 /* MWAccelerometerSVC.swift */; };
+		9487921A26C32C020066CD5E /* ToastPresentingLogDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487921926C32C020066CD5E /* ToastPresentingLogDownloader.swift */; };
+		9487921B26C32C020066CD5E /* ToastPresentingLogDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487921926C32C020066CD5E /* ToastPresentingLogDownloader.swift */; };
+		9487921D26C335600066CD5E /* MWMagnetometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487921C26C335600066CD5E /* MWMagnetometerVM.swift */; };
+		9487921E26C335600066CD5E /* MWMagnetometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487921C26C335600066CD5E /* MWMagnetometerVM.swift */; };
+		9488E57126B8EF5B006A6262 /* AccelerometerSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E57026B8EF5B006A6262 /* AccelerometerSUIVC.swift */; };
 		9488E57326B8F018006A6262 /* MWAccelerometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9488E57226B8F018006A6262 /* MWAccelerometerVM.swift */; };
+		948E48DB26C4551300CB9152 /* DataPointModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E48DA26C4551300CB9152 /* DataPointModels.swift */; };
+		948E48DC26C4551300CB9152 /* DataPointModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E48DA26C4551300CB9152 /* DataPointModels.swift */; };
 		948E61C426BF3D2C00A387E7 /* CopyMacButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E61C326BF3D2C00A387E7 /* CopyMacButton.swift */; };
-		948E61C626BF3FB700A387E7 /* MWScannedDeviceCellSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E61C526BF3FB700A387E7 /* MWScannedDeviceCellSVC.swift */; };
+		948E61C626BF3FB700A387E7 /* ScannedDeviceCellSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E61C526BF3FB700A387E7 /* ScannedDeviceCellSUIVC.swift */; };
 		948E61C726BF400A00A387E7 /* CopyMacButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E61C326BF3D2C00A387E7 /* CopyMacButton.swift */; };
-		948E61C826BF405700A387E7 /* MWScannedDeviceCellSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E61C526BF3FB700A387E7 /* MWScannedDeviceCellSVC.swift */; };
+		948E61C826BF405700A387E7 /* ScannedDeviceCellSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E61C526BF3FB700A387E7 /* ScannedDeviceCellSUIVC.swift */; };
 		948E61C926BF515200A387E7 /* AdaptiveFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC2326BE5ECD0087F960 /* AdaptiveFont.swift */; };
 		948E61CA26BF516A00A387E7 /* AdaptiveFont+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC2726BE73880087F960 /* AdaptiveFont+SwiftUI.swift */; };
 		948E61CB26BF517200A387E7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC2926BE74600087F960 /* Fonts.swift */; };
@@ -226,7 +224,7 @@
 		948E61D026BF534000A387E7 /* MetaWearDeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC2F26BE8EAE0087F960 /* MetaWearDeviceModel.swift */; };
 		948E61D126BF539000A387E7 /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 941EFC3826BE95EB0087F960 /* SharedAssets.xcassets */; };
 		948E61D326BFA7C100A387E7 /* NaiveGraphController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E61D226BFA7C100A387E7 /* NaiveGraphController.swift */; };
-		94A271F626C1C2C600512626 /* MetaMotionPlaceholderScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A271F526C1C2C600512626 /* MetaMotionPlaceholderScreen.swift */; };
+		94A271F626C1C2C600512626 /* PlaceholderDeviceConnectionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A271F526C1C2C600512626 /* PlaceholderDeviceConnectionScreen.swift */; };
 		94A271F826C1C3EA00512626 /* GlintingMLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A271F726C1C3EA00512626 /* GlintingMLogo.swift */; };
 		94A271F926C1C42400512626 /* GlintingMLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A271F726C1C3EA00512626 /* GlintingMLogo.swift */; };
 		94A514AC26B87BFB008707ED /* MWBatteryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514AB26B87BFB008707ED /* MWBatteryVM.swift */; };
@@ -235,31 +233,48 @@
 		94A514B226B882B6008707ED /* MWLEDVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B126B882B6008707ED /* MWLEDVM.swift */; };
 		94A514B426B883D7008707ED /* MWMechanicalSwitchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B326B883D7008707ED /* MWMechanicalSwitchVM.swift */; };
 		94A514B626B884A3008707ED /* MWTemperatureVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B526B884A3008707ED /* MWTemperatureVM.swift */; };
-		94A514B826B88864008707ED /* MWTemperatureSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B726B88864008707ED /* MWTemperatureSVC.swift */; };
-		94A514BA26B89A90008707ED /* MWMechanicalSwitchSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B926B89A90008707ED /* MWMechanicalSwitchSVC.swift */; };
-		94A514BE26B8A4D5008707ED /* MWLEDSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514BD26B8A4D5008707ED /* MWLEDSVC.swift */; };
-		94A514C226B8AD04008707ED /* MWBatterySVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C126B8AD04008707ED /* MWBatterySVC.swift */; };
-		94A514C426B8AFF6008707ED /* MWSignalStrengthSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C326B8AFF6008707ED /* MWSignalStrengthSVC.swift */; };
-		94A514C626B8C811008707ED /* MWFirmwareSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C526B8C811008707ED /* MWFirmwareSVC.swift */; };
+		94A514B826B88864008707ED /* TemperatureSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514B726B88864008707ED /* TemperatureSUIVC.swift */; };
+		94A514C426B8AFF6008707ED /* SignalSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C326B8AFF6008707ED /* SignalSUIVC.swift */; };
 		94A514C826B8CCE6008707ED /* ResetVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C726B8CCE6008707ED /* ResetVM.swift */; };
-		94A514CA26B8CD6F008707ED /* MWResetSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514C926B8CD6F008707ED /* MWResetSVC.swift */; };
 		94A514CC26B8CDD7008707ED /* MWResetVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A514CB26B8CDD7008707ED /* MWResetVM.swift */; };
 		94ACC9DD26B9C6D100264F6E /* LabeledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9DC26B9C6D100264F6E /* LabeledItem.swift */; };
 		94ACC9DF26B9D10100264F6E /* UpdateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9DE26B9D10100264F6E /* UpdateButton.swift */; };
 		94ACC9E126B9F5F700264F6E /* ExportDataButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9E026B9F5F700264F6E /* ExportDataButton.swift */; };
-		94ACC9E726B9FD2C00264F6E /* MWDeviceDetailScreenSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9E626B9FD2C00264F6E /* MWDeviceDetailScreenSVC.swift */; };
+		94ACC9E726B9FD2C00264F6E /* DeviceDetailScreenSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9E626B9FD2C00264F6E /* DeviceDetailScreenSUIVC.swift */; };
 		94AFED3526B875C6004326C8 /* MWldentifiersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AFED3426B875C6004326C8 /* MWldentifiersVM.swift */; };
+		94BAA73E26C38A780045E5E4 /* MWI2CVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA73D26C38A780045E5E4 /* MWI2CVM.swift */; };
+		94BAA73F26C38A780045E5E4 /* MWI2CVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA73D26C38A780045E5E4 /* MWI2CVM.swift */; };
+		94BAA74126C38AD40045E5E4 /* MWAmbientLightVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74026C38AD40045E5E4 /* MWAmbientLightVM.swift */; };
+		94BAA74226C38AD40045E5E4 /* MWAmbientLightVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74026C38AD40045E5E4 /* MWAmbientLightVM.swift */; };
+		94BAA74426C38AFA0045E5E4 /* MWBarometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74326C38AFA0045E5E4 /* MWBarometerVM.swift */; };
+		94BAA74526C38AFA0045E5E4 /* MWBarometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74326C38AFA0045E5E4 /* MWBarometerVM.swift */; };
+		94BAA74726C38B290045E5E4 /* MWHapticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74626C38B290045E5E4 /* MWHapticVM.swift */; };
+		94BAA74826C38B290045E5E4 /* MWHapticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74626C38B290045E5E4 /* MWHapticVM.swift */; };
+		94BAA74A26C38B560045E5E4 /* MWiBeaconVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74926C38B560045E5E4 /* MWiBeaconVM.swift */; };
+		94BAA74B26C38B560045E5E4 /* MWiBeaconVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74926C38B560045E5E4 /* MWiBeaconVM.swift */; };
+		94BAA74D26C38CC70045E5E4 /* HygrometerBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74C26C38CC70045E5E4 /* HygrometerBlock.swift */; };
+		94BAA74E26C38CC70045E5E4 /* HygrometerBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74C26C38CC70045E5E4 /* HygrometerBlock.swift */; };
+		94BAA75026C394370045E5E4 /* MWHumidityVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74F26C394370045E5E4 /* MWHumidityVM.swift */; };
+		94BAA75126C394370045E5E4 /* MWHumidityVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74F26C394370045E5E4 /* MWHumidityVM.swift */; };
+		94BAA75326C3A8D10045E5E4 /* MWGPIOVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA75226C3A8D10045E5E4 /* MWGPIOVM.swift */; };
+		94BAA75426C3A8D10045E5E4 /* MWGPIOVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA75226C3A8D10045E5E4 /* MWGPIOVM.swift */; };
+		94BAA75626C3B8550045E5E4 /* MWSensorFusionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA75526C3B8550045E5E4 /* MWSensorFusionVM.swift */; };
+		94BAA75726C3B8550045E5E4 /* MWSensorFusionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA75526C3B8550045E5E4 /* MWSensorFusionVM.swift */; };
 		94C07E8726BB2F35008D875B /* DividerPadded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C07E8626BB2F35008D875B /* DividerPadded.swift */; };
 		94C2788526C10732006772F6 /* iOSDetailLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2788426C10732006772F6 /* iOSDetailLayout.swift */; };
 		94C2788726C1076D006772F6 /* DeviceDetailScreenComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2788626C1076D006772F6 /* DeviceDetailScreenComponents.swift */; };
 		94C2788826C11314006772F6 /* DeviceDetailScreenComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2788626C1076D006772F6 /* DeviceDetailScreenComponents.swift */; };
+		94C27C0726C4CBA10071E1D5 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C27C0626C4CBA10071E1D5 /* UserDefaults.swift */; };
+		94C27C0826C4CBA10071E1D5 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C27C0626C4CBA10071E1D5 /* UserDefaults.swift */; };
+		94C27C0D26C4CD4A0071E1D5 /* UIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C27C0C26C4CD4A0071E1D5 /* UIEnvironment.swift */; };
+		94C27C0E26C4CD4A0071E1D5 /* UIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C27C0C26C4CD4A0071E1D5 /* UIEnvironment.swift */; };
 		94C5539226B7DF5A00E7B2DC /* IdentifiersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539126B7DF5A00E7B2DC /* IdentifiersVM.swift */; };
-		94C553A426B7E0F700E7B2DC /* SignalStrengthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539326B7E0F600E7B2DC /* SignalStrengthVM.swift */; };
+		94C553A426B7E0F700E7B2DC /* SignalVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539326B7E0F600E7B2DC /* SignalVM.swift */; };
 		94C553A526B7E0F700E7B2DC /* AmbientLightVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539426B7E0F600E7B2DC /* AmbientLightVM.swift */; };
 		94C553A626B7E0F700E7B2DC /* HapticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539526B7E0F600E7B2DC /* HapticVM.swift */; };
 		94C553A726B7E0F700E7B2DC /* MechanicalSwitchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539626B7E0F600E7B2DC /* MechanicalSwitchVM.swift */; };
 		94C553A826B7E0F700E7B2DC /* HumidityVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539726B7E0F600E7B2DC /* HumidityVM.swift */; };
-		94C553A926B7E0F700E7B2DC /* BeaconVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539826B7E0F600E7B2DC /* BeaconVM.swift */; };
+		94C553A926B7E0F700E7B2DC /* IBeaconVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539826B7E0F600E7B2DC /* IBeaconVM.swift */; };
 		94C553AA26B7E0F700E7B2DC /* BarometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539926B7E0F600E7B2DC /* BarometerVM.swift */; };
 		94C553AB26B7E0F700E7B2DC /* LEDVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539A26B7E0F600E7B2DC /* LEDVM.swift */; };
 		94C553AC26B7E0F700E7B2DC /* BatteryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539B26B7E0F600E7B2DC /* BatteryVM.swift */; };
@@ -275,10 +290,19 @@
 		94CD3AA726B3ED1400854FBA /* MWScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */; };
 		94DABBC726C0F483004590E4 /* iPadGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DABBC626C0F483004590E4 /* iPadGridLayout.swift */; };
 		94DABBC826C0F4A3004590E4 /* MacGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC3126BE8F7E0087F960 /* MacGridLayout.swift */; };
-		94F3316726B518D30015EE88 /* MWHeaderSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316626B518D30015EE88 /* MWHeaderSVC.swift */; };
+		94E155CB26C4DAE100B73487 /* MWToastServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */; };
+		94E155CC26C4DAE100B73487 /* MWToastServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */; };
+		94E155CE26C4DAF200B73487 /* ToastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CD26C4DAF200B73487 /* ToastVM.swift */; };
+		94E155CF26C4DAF200B73487 /* ToastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CD26C4DAF200B73487 /* ToastVM.swift */; };
+		94E155D126C4E4FF00B73487 /* DataStreamStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155D026C4E4FF00B73487 /* DataStreamStats.swift */; };
+		94E155D226C4E4FF00B73487 /* DataStreamStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155D026C4E4FF00B73487 /* DataStreamStats.swift */; };
+		94E155D826C4EC6C00B73487 /* I2CSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155D726C4EC6C00B73487 /* I2CSize.swift */; };
+		94E155D926C4EC6C00B73487 /* I2CSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155D726C4EC6C00B73487 /* I2CSize.swift */; };
+		94E155E126C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155E026C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift */; };
+		94E155E226C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155E026C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift */; };
+		94F3316726B518D30015EE88 /* DetailHeaderSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316626B518D30015EE88 /* DetailHeaderSUIVC.swift */; };
 		94F3316D26B52FD90015EE88 /* DetailConfiguring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316C26B52FD90015EE88 /* DetailConfiguring.swift */; };
-		94F3316F26B530500015EE88 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316E26B530500015EE88 /* UserDefaults.swift */; };
-		94F3317126B5308B0015EE88 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317026B5308B0015EE88 /* AlertPresenter.swift */; };
+		94F3317126B5308B0015EE88 /* CrossPlatformAlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317026B5308B0015EE88 /* CrossPlatformAlertPresenter.swift */; };
 		94F3317326B530FF0015EE88 /* MWHeaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317226B530FF0015EE88 /* MWHeaderVM.swift */; };
 		94F3317526B531C50015EE88 /* DeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317426B531C50015EE88 /* DeviceDetailsCoordinator.swift */; };
 		94FF66FF26BC7AD6009F7EB5 /* GraphConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF66FE26BC7AD6009F7EB5 /* GraphConfig.swift */; };
@@ -295,7 +319,6 @@
 		AB5D5F5425B8A0B400D2591C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5D5F5325B8A0B400D2591C /* CoreGraphics.framework */; };
 		AB5D5F5625B8A0B900D2591C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5D5F5525B8A0B900D2591C /* Foundation.framework */; };
 		AB5D5F5A25B8A1AF00D2591C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5D5F5925B8A1AF00D2591C /* UIKit.framework */; };
-		AB5D5F9025B8A7B400D2591C /* DeviceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F8D25B8A7B400D2591C /* DeviceDetailViewController.swift */; };
 		AB5D5F9125B8A7B400D2591C /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F8E25B8A7B400D2591C /* DeviceTableViewCell.swift */; };
 		AB5D5F9225B8A7B400D2591C /* DevicesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F8F25B8A7B400D2591C /* DevicesTableViewController.swift */; };
 		AB5D5F9925B8AA4A00D2591C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5D5F9825B8AA4A00D2591C /* SceneDelegate.swift */; };
@@ -331,6 +354,8 @@
 		08565629A4901D7CAF20F3C6 /* Pods-MetaWearMac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearMac.debug.xcconfig"; path = "Target Support Files/Pods-MetaWearMac/Pods-MetaWearMac.debug.xcconfig"; sourceTree = "<group>"; };
 		2DB2F6EBD41DBFC307375FEE /* Pods-MetaWearApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearApp.release.xcconfig"; path = "Target Support Files/Pods-MetaWearApp/Pods-MetaWearApp.release.xcconfig"; sourceTree = "<group>"; };
 		5651C5F9CEA034E398221BEF /* Pods-MetaWearMac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MetaWearMac.release.xcconfig"; path = "Target Support Files/Pods-MetaWearMac/Pods-MetaWearMac.release.xcconfig"; sourceTree = "<group>"; };
+		94006FBA26C4D4170048C5AD /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
+		94006FBD26C4D4630048C5AD /* DownloadHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadHandler.swift; sourceTree = "<group>"; };
 		9406193A26C03DF3007BE281 /* NaiveGraphFixedSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveGraphFixedSize.swift; sourceTree = "<group>"; };
 		9406194226C0421F007BE281 /* GraphDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphDriver.swift; sourceTree = "<group>"; };
 		94092E0D26C0CDBE00997C45 /* DeviceNavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceNavigationLink.swift; sourceTree = "<group>"; };
@@ -347,7 +372,6 @@
 		941EFB6626BCE5BB0087F960 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		941EFB6C26BCE5F70087F960 /* ScannedDeviceCellSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedDeviceCellSwiftUI.swift; sourceTree = "<group>"; };
 		941EFB6E26BCE6640087F960 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
-		941EFB7126BCE6820087F960 /* DeviceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceItem.swift; sourceTree = "<group>"; };
 		941EFB7426BCE6B20087F960 /* MetaWearScanningSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWearScanningSVC.swift; sourceTree = "<group>"; };
 		941EFBD926BCE8730087F960 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		941EFBDA26BCE9150087F960 /* MetaWearMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MetaWearMac.entitlements; sourceTree = "<group>"; };
@@ -359,7 +383,7 @@
 		941EFC0226BD973A0087F960 /* Sort+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sort+RawRepresentable.swift"; sourceTree = "<group>"; };
 		941EFC0426BDA7450087F960 /* DetailGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGroup.swift; sourceTree = "<group>"; };
 		941EFC0626BDA87D0087F960 /* TableOfContentsMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableOfContentsMenuButton.swift; sourceTree = "<group>"; };
-		941EFC0926BDB08E0087F960 /* SwiftUIStandardFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIStandardFactory.swift; sourceTree = "<group>"; };
+		941EFC0926BDB08E0087F960 /* DevelopmentUIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentUIFactory.swift; sourceTree = "<group>"; };
 		941EFC0B26BDB23C0087F960 /* UIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFactory.swift; sourceTree = "<group>"; };
 		941EFC0D26BDB46C0087F960 /* Array+CountedByIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+CountedByIndex.swift"; sourceTree = "<group>"; };
 		941EFC0F26BDB6390087F960 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
@@ -386,11 +410,10 @@
 		9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesScanningVM.swift; sourceTree = "<group>"; };
 		9438D95826B4692C0014FC91 /* MWDevicesScanningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDevicesScanningVM.swift; sourceTree = "<group>"; };
 		9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Drop0xPrefix.swift"; sourceTree = "<group>"; };
+		944EACAF26C2FBD300B73814 /* MWGyroVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGyroVM.swift; sourceTree = "<group>"; };
 		9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDeviceDetailsCoordinator.swift; sourceTree = "<group>"; };
 		9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWearEnumsSwiftBridges.swift; sourceTree = "<group>"; };
 		9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerometerSampleFrequency.swift; sourceTree = "<group>"; };
-		947979AD26B98E4500AEB5EA /* ToastServerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastServerVM.swift; sourceTree = "<group>"; };
-		947979AF26B98E5800AEB5EA /* ToastVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastVM.swift; sourceTree = "<group>"; };
 		947979B126B98EC800AEB5EA /* UIKit+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+KeyWindow.swift"; sourceTree = "<group>"; };
 		947979B326B98F0400AEB5EA /* DetailVMContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVMContainer.swift; sourceTree = "<group>"; };
 		947979B926B9985700AEB5EA /* DeviceDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailScreen.swift; sourceTree = "<group>"; };
@@ -418,16 +441,17 @@
 		947979E826B9B50500AEB5EA /* AmbientLightBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbientLightBlock.swift; sourceTree = "<group>"; };
 		947979EA26B9B51100AEB5EA /* I2CBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = I2CBlock.swift; sourceTree = "<group>"; };
 		947979EC26B9B5A200AEB5EA /* ToastServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastServer.swift; sourceTree = "<group>"; };
-		947979EF26B9C3AA00AEB5EA /* MWIdentifiersSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWIdentifiersSVC.swift; sourceTree = "<group>"; };
 		9481A57826BC6728008CD909 /* AAGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AAGraph.swift; sourceTree = "<group>"; };
-		9482DC4C26B501CF00DD19EB /* _DeviceDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _DeviceDetailVC.swift; sourceTree = "<group>"; };
 		9482DC4E26B5078A00DD19EB /* HeaderVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderVM.swift; sourceTree = "<group>"; };
-		9488E57026B8EF5B006A6262 /* MWAccelerometerSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccelerometerSVC.swift; sourceTree = "<group>"; };
+		9487921926C32C020066CD5E /* ToastPresentingLogDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPresentingLogDownloader.swift; sourceTree = "<group>"; };
+		9487921C26C335600066CD5E /* MWMagnetometerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMagnetometerVM.swift; sourceTree = "<group>"; };
+		9488E57026B8EF5B006A6262 /* AccelerometerSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerometerSUIVC.swift; sourceTree = "<group>"; };
 		9488E57226B8F018006A6262 /* MWAccelerometerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccelerometerVM.swift; sourceTree = "<group>"; };
+		948E48DA26C4551300CB9152 /* DataPointModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPointModels.swift; sourceTree = "<group>"; };
 		948E61C326BF3D2C00A387E7 /* CopyMacButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyMacButton.swift; sourceTree = "<group>"; };
-		948E61C526BF3FB700A387E7 /* MWScannedDeviceCellSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScannedDeviceCellSVC.swift; sourceTree = "<group>"; };
+		948E61C526BF3FB700A387E7 /* ScannedDeviceCellSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedDeviceCellSUIVC.swift; sourceTree = "<group>"; };
 		948E61D226BFA7C100A387E7 /* NaiveGraphController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveGraphController.swift; sourceTree = "<group>"; };
-		94A271F526C1C2C600512626 /* MetaMotionPlaceholderScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaMotionPlaceholderScreen.swift; sourceTree = "<group>"; };
+		94A271F526C1C2C600512626 /* PlaceholderDeviceConnectionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderDeviceConnectionScreen.swift; sourceTree = "<group>"; };
 		94A271F726C1C3EA00512626 /* GlintingMLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlintingMLogo.swift; sourceTree = "<group>"; };
 		94A514AB26B87BFB008707ED /* MWBatteryVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWBatteryVM.swift; sourceTree = "<group>"; };
 		94A514AD26B87F17008707ED /* MWSignalStrengthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSignalStrengthVM.swift; sourceTree = "<group>"; };
@@ -435,30 +459,36 @@
 		94A514B126B882B6008707ED /* MWLEDVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWLEDVM.swift; sourceTree = "<group>"; };
 		94A514B326B883D7008707ED /* MWMechanicalSwitchVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMechanicalSwitchVM.swift; sourceTree = "<group>"; };
 		94A514B526B884A3008707ED /* MWTemperatureVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWTemperatureVM.swift; sourceTree = "<group>"; };
-		94A514B726B88864008707ED /* MWTemperatureSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWTemperatureSVC.swift; sourceTree = "<group>"; };
-		94A514B926B89A90008707ED /* MWMechanicalSwitchSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMechanicalSwitchSVC.swift; sourceTree = "<group>"; };
-		94A514BD26B8A4D5008707ED /* MWLEDSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWLEDSVC.swift; sourceTree = "<group>"; };
-		94A514C126B8AD04008707ED /* MWBatterySVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWBatterySVC.swift; sourceTree = "<group>"; };
-		94A514C326B8AFF6008707ED /* MWSignalStrengthSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSignalStrengthSVC.swift; sourceTree = "<group>"; };
-		94A514C526B8C811008707ED /* MWFirmwareSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWFirmwareSVC.swift; sourceTree = "<group>"; };
+		94A514B726B88864008707ED /* TemperatureSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureSUIVC.swift; sourceTree = "<group>"; };
+		94A514C326B8AFF6008707ED /* SignalSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalSUIVC.swift; sourceTree = "<group>"; };
 		94A514C726B8CCE6008707ED /* ResetVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetVM.swift; sourceTree = "<group>"; };
-		94A514C926B8CD6F008707ED /* MWResetSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWResetSVC.swift; sourceTree = "<group>"; };
 		94A514CB26B8CDD7008707ED /* MWResetVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWResetVM.swift; sourceTree = "<group>"; };
 		94ACC9DC26B9C6D100264F6E /* LabeledItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledItem.swift; sourceTree = "<group>"; };
 		94ACC9DE26B9D10100264F6E /* UpdateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateButton.swift; sourceTree = "<group>"; };
 		94ACC9E026B9F5F700264F6E /* ExportDataButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDataButton.swift; sourceTree = "<group>"; };
-		94ACC9E626B9FD2C00264F6E /* MWDeviceDetailScreenSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDeviceDetailScreenSVC.swift; sourceTree = "<group>"; };
+		94ACC9E626B9FD2C00264F6E /* DeviceDetailScreenSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailScreenSUIVC.swift; sourceTree = "<group>"; };
 		94AFED3426B875C6004326C8 /* MWldentifiersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWldentifiersVM.swift; sourceTree = "<group>"; };
+		94BAA73D26C38A780045E5E4 /* MWI2CVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWI2CVM.swift; sourceTree = "<group>"; };
+		94BAA74026C38AD40045E5E4 /* MWAmbientLightVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAmbientLightVM.swift; sourceTree = "<group>"; };
+		94BAA74326C38AFA0045E5E4 /* MWBarometerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWBarometerVM.swift; sourceTree = "<group>"; };
+		94BAA74626C38B290045E5E4 /* MWHapticVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWHapticVM.swift; sourceTree = "<group>"; };
+		94BAA74926C38B560045E5E4 /* MWiBeaconVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWiBeaconVM.swift; sourceTree = "<group>"; };
+		94BAA74C26C38CC70045E5E4 /* HygrometerBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HygrometerBlock.swift; sourceTree = "<group>"; };
+		94BAA74F26C394370045E5E4 /* MWHumidityVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWHumidityVM.swift; sourceTree = "<group>"; };
+		94BAA75226C3A8D10045E5E4 /* MWGPIOVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGPIOVM.swift; sourceTree = "<group>"; };
+		94BAA75526C3B8550045E5E4 /* MWSensorFusionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSensorFusionVM.swift; sourceTree = "<group>"; };
 		94C07E8626BB2F35008D875B /* DividerPadded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerPadded.swift; sourceTree = "<group>"; };
 		94C2788426C10732006772F6 /* iOSDetailLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDetailLayout.swift; sourceTree = "<group>"; };
 		94C2788626C1076D006772F6 /* DeviceDetailScreenComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailScreenComponents.swift; sourceTree = "<group>"; };
+		94C27C0626C4CBA10071E1D5 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDefaults.swift; path = Common/Constants/UserDefaults.swift; sourceTree = SOURCE_ROOT; };
+		94C27C0C26C4CD4A0071E1D5 /* UIEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEnvironment.swift; sourceTree = "<group>"; };
 		94C5539126B7DF5A00E7B2DC /* IdentifiersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiersVM.swift; sourceTree = "<group>"; };
-		94C5539326B7E0F600E7B2DC /* SignalStrengthVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalStrengthVM.swift; sourceTree = "<group>"; };
+		94C5539326B7E0F600E7B2DC /* SignalVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalVM.swift; sourceTree = "<group>"; };
 		94C5539426B7E0F600E7B2DC /* AmbientLightVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmbientLightVM.swift; sourceTree = "<group>"; };
 		94C5539526B7E0F600E7B2DC /* HapticVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticVM.swift; sourceTree = "<group>"; };
 		94C5539626B7E0F600E7B2DC /* MechanicalSwitchVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MechanicalSwitchVM.swift; sourceTree = "<group>"; };
 		94C5539726B7E0F600E7B2DC /* HumidityVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumidityVM.swift; sourceTree = "<group>"; };
-		94C5539826B7E0F600E7B2DC /* BeaconVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconVM.swift; sourceTree = "<group>"; };
+		94C5539826B7E0F600E7B2DC /* IBeaconVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBeaconVM.swift; sourceTree = "<group>"; };
 		94C5539926B7E0F600E7B2DC /* BarometerVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarometerVM.swift; sourceTree = "<group>"; };
 		94C5539A26B7E0F600E7B2DC /* LEDVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LEDVM.swift; sourceTree = "<group>"; };
 		94C5539B26B7E0F600E7B2DC /* BatteryVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryVM.swift; sourceTree = "<group>"; };
@@ -474,10 +504,14 @@
 		94C7511A26C1EB9A00AB3E47 /* MetaWearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWearTests.swift; sourceTree = "<group>"; };
 		94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScannedDeviceCellVM.swift; sourceTree = "<group>"; };
 		94DABBC626C0F483004590E4 /* iPadGridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGridLayout.swift; sourceTree = "<group>"; };
-		94F3316626B518D30015EE88 /* MWHeaderSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWHeaderSVC.swift; sourceTree = "<group>"; };
+		94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWToastServerVM.swift; sourceTree = "<group>"; };
+		94E155CD26C4DAF200B73487 /* ToastVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastVM.swift; sourceTree = "<group>"; };
+		94E155D026C4E4FF00B73487 /* DataStreamStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStreamStats.swift; sourceTree = "<group>"; };
+		94E155D726C4EC6C00B73487 /* I2CSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = I2CSize.swift; sourceTree = "<group>"; };
+		94E155E026C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughSwiftUIVCs.swift; sourceTree = "<group>"; };
+		94F3316626B518D30015EE88 /* DetailHeaderSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderSUIVC.swift; sourceTree = "<group>"; };
 		94F3316C26B52FD90015EE88 /* DetailConfiguring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailConfiguring.swift; sourceTree = "<group>"; };
-		94F3316E26B530500015EE88 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		94F3317026B5308B0015EE88 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
+		94F3317026B5308B0015EE88 /* CrossPlatformAlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPlatformAlertPresenter.swift; sourceTree = "<group>"; };
 		94F3317226B530FF0015EE88 /* MWHeaderVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWHeaderVM.swift; sourceTree = "<group>"; };
 		94F3317426B531C50015EE88 /* DeviceDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsCoordinator.swift; sourceTree = "<group>"; };
 		94FF66FE26BC7AD6009F7EB5 /* GraphConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphConfig.swift; sourceTree = "<group>"; };
@@ -498,7 +532,6 @@
 		AB5D5F5525B8A0B900D2591C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AB5D5F5925B8A1AF00D2591C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AB5D5F8925B8A5E100D2591C /* MetaWearApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MetaWearApp-Bridging-Header.h"; path = "MetaWearApp/MetaWearApp-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
-		AB5D5F8D25B8A7B400D2591C /* DeviceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDetailViewController.swift; sourceTree = "<group>"; };
 		AB5D5F8E25B8A7B400D2591C /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
 		AB5D5F8F25B8A7B400D2591C /* DevicesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicesTableViewController.swift; sourceTree = "<group>"; };
 		AB5D5F9825B8AA4A00D2591C /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -537,6 +570,169 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		94006FAC26C4CF4B0048C5AD /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				947979BC26B99EE600AEB5EA /* Blockify.swift */,
+				947979D626B9A3BA00AEB5EA /* DetailsBlockCard.swift */,
+				94ACC9DC26B9C6D100264F6E /* LabeledItem.swift */,
+				94FF670626BCA17F009F7EB5 /* StatsBlock.swift */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
+		94006FAD26C4CF610048C5AD /* TextFields */ = {
+			isa = PBXGroup;
+			children = (
+				941EFC2026BE59590087F960 /* SingleLineTextField.swift */,
+			);
+			path = TextFields;
+			sourceTree = "<group>";
+		};
+		94006FAE26C4CF6D0048C5AD /* Visuals */ = {
+			isa = PBXGroup;
+			children = (
+				941EFC3626BE945B0087F960 /* DeviceImage.swift */,
+				94C07E8626BB2F35008D875B /* DividerPadded.swift */,
+				94A271F726C1C3EA00512626 /* GlintingMLogo.swift */,
+				941EFB6426BCE5980087F960 /* SignalDots.swift */,
+			);
+			path = Visuals;
+			sourceTree = "<group>";
+		};
+		94006FB026C4D1060048C5AD /* ScreenComposition */ = {
+			isa = PBXGroup;
+			children = (
+				941EFC1A26BE05E40087F960 /* CardBuilder.swift */,
+				947979B926B9985700AEB5EA /* DeviceDetailScreen.swift */,
+				94C2788626C1076D006772F6 /* DeviceDetailScreenComponents.swift */,
+				941EFC1826BDD4E10087F960 /* DeviceDetailScreenHostingViews.swift */,
+				941EFC0626BDA87D0087F960 /* TableOfContentsMenuButton.swift */,
+			);
+			path = ScreenComposition;
+			sourceTree = "<group>";
+		};
+		94006FB126C4D1650048C5AD /* Parent */ = {
+			isa = PBXGroup;
+			children = (
+				94F3316C26B52FD90015EE88 /* DetailConfiguring.swift */,
+				947979B326B98F0400AEB5EA /* DetailVMContainer.swift */,
+				94F3317426B531C50015EE88 /* DeviceDetailsCoordinator.swift */,
+			);
+			path = Parent;
+			sourceTree = "<group>";
+		};
+		94006FB226C4D1720048C5AD /* Child */ = {
+			isa = PBXGroup;
+			children = (
+				94C553A126B7E0F700E7B2DC /* AccelerometerVM.swift */,
+				94C5539426B7E0F600E7B2DC /* AmbientLightVM.swift */,
+				94C5539926B7E0F600E7B2DC /* BarometerVM.swift */,
+				94C5539B26B7E0F600E7B2DC /* BatteryVM.swift */,
+				94C553A226B7E0F700E7B2DC /* FirmwareVM.swift */,
+				94C5539E26B7E0F700E7B2DC /* GPIOVM.swift */,
+				94C553A326B7E0F700E7B2DC /* GyroVM.swift */,
+				94C5539526B7E0F600E7B2DC /* HapticVM.swift */,
+				9482DC4E26B5078A00DD19EB /* HeaderVM.swift */,
+				94C5539726B7E0F600E7B2DC /* HumidityVM.swift */,
+				94C5539D26B7E0F600E7B2DC /* I2CVM.swift */,
+				94C5539826B7E0F600E7B2DC /* IBeaconVM.swift */,
+				94C5539126B7DF5A00E7B2DC /* IdentifiersVM.swift */,
+				94C5539A26B7E0F600E7B2DC /* LEDVM.swift */,
+				94C553A026B7E0F700E7B2DC /* MagenetometerVM.swift */,
+				94C5539626B7E0F600E7B2DC /* MechanicalSwitchVM.swift */,
+				94A514C726B8CCE6008707ED /* ResetVM.swift */,
+				94C5539C26B7E0F600E7B2DC /* SensorFusionVM.swift */,
+				94C5539326B7E0F600E7B2DC /* SignalVM.swift */,
+				94C5539F26B7E0F700E7B2DC /* TemperatureVM.swift */,
+			);
+			path = Child;
+			sourceTree = "<group>";
+		};
+		94006FB326C4D27D0048C5AD /* Child */ = {
+			isa = PBXGroup;
+			children = (
+				9488E57226B8F018006A6262 /* MWAccelerometerVM.swift */,
+				94BAA74026C38AD40045E5E4 /* MWAmbientLightVM.swift */,
+				94BAA74326C38AFA0045E5E4 /* MWBarometerVM.swift */,
+				94A514AB26B87BFB008707ED /* MWBatteryVM.swift */,
+				94A514AF26B88184008707ED /* MWFirmwareVM.swift */,
+				94BAA75226C3A8D10045E5E4 /* MWGPIOVM.swift */,
+				944EACAF26C2FBD300B73814 /* MWGyroVM.swift */,
+				94BAA74626C38B290045E5E4 /* MWHapticVM.swift */,
+				94F3317226B530FF0015EE88 /* MWHeaderVM.swift */,
+				94BAA74F26C394370045E5E4 /* MWHumidityVM.swift */,
+				94BAA73D26C38A780045E5E4 /* MWI2CVM.swift */,
+				94BAA74926C38B560045E5E4 /* MWiBeaconVM.swift */,
+				94AFED3426B875C6004326C8 /* MWldentifiersVM.swift */,
+				94A514B126B882B6008707ED /* MWLEDVM.swift */,
+				9487921C26C335600066CD5E /* MWMagnetometerVM.swift */,
+				94A514B326B883D7008707ED /* MWMechanicalSwitchVM.swift */,
+				94A514CB26B8CDD7008707ED /* MWResetVM.swift */,
+				94BAA75526C3B8550045E5E4 /* MWSensorFusionVM.swift */,
+				94A514AD26B87F17008707ED /* MWSignalStrengthVM.swift */,
+				94A514B526B884A3008707ED /* MWTemperatureVM.swift */,
+			);
+			path = Child;
+			sourceTree = "<group>";
+		};
+		94006FB426C4D2920048C5AD /* Parent */ = {
+			isa = PBXGroup;
+			children = (
+				9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */,
+			);
+			path = Parent;
+			sourceTree = "<group>";
+		};
+		94006FB526C4D3020048C5AD /* DeviceDetail */ = {
+			isa = PBXGroup;
+			children = (
+				94006FB626C4D30F0048C5AD /* Child */,
+				94006FB726C4D31C0048C5AD /* Parent */,
+			);
+			path = DeviceDetail;
+			sourceTree = "<group>";
+		};
+		94006FB626C4D30F0048C5AD /* Child */ = {
+			isa = PBXGroup;
+			children = (
+				9488E57026B8EF5B006A6262 /* AccelerometerSUIVC.swift */,
+				94F3316626B518D30015EE88 /* DetailHeaderSUIVC.swift */,
+				94A514C326B8AFF6008707ED /* SignalSUIVC.swift */,
+				94A514B726B88864008707ED /* TemperatureSUIVC.swift */,
+				94E155E026C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift */,
+			);
+			path = Child;
+			sourceTree = "<group>";
+		};
+		94006FB726C4D31C0048C5AD /* Parent */ = {
+			isa = PBXGroup;
+			children = (
+				94ACC9E626B9FD2C00264F6E /* DeviceDetailScreenSUIVC.swift */,
+			);
+			path = Parent;
+			sourceTree = "<group>";
+		};
+		94006FB826C4D3380048C5AD /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				94006FBA26C4D4170048C5AD /* AlertPresenter.swift */,
+				94006FBD26C4D4630048C5AD /* DownloadHandler.swift */,
+				94E155CD26C4DAF200B73487 /* ToastVM.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		94006FB926C4D3450048C5AD /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				94F3317026B5308B0015EE88 /* CrossPlatformAlertPresenter.swift */,
+				9487921926C32C020066CD5E /* ToastPresentingLogDownloader.swift */,
+				94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 		9406193926C03DE5007BE281 /* NaiveGraph */ = {
 			isa = PBXGroup;
 			children = (
@@ -557,6 +753,7 @@
 		94092E0F26C0E37200997C45 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				94C27C0626C4CBA10071E1D5 /* UserDefaults.swift */,
 				94092E1026C0E38300997C45 /* PreferencesPersistence.swift */,
 			);
 			path = Persistence;
@@ -575,7 +772,6 @@
 			isa = PBXGroup;
 			children = (
 				941EFB4D26BCD9660087F960 /* ShakeEffect.swift */,
-				941EFC1E26BE0F740087F960 /* WhenHovered.swift */,
 				941EFC2D26BE8AAB0087F960 /* SpinEffect.swift */,
 			);
 			path = Effects;
@@ -597,8 +793,7 @@
 				941EFB5826BCE16B0087F960 /* MetaWearMacApp.swift */,
 				941EFB5C26BCE16C0087F960 /* Assets.xcassets */,
 				941EFC3A26BEA0980087F960 /* Fonts */,
-				941EFB7026BCE6780087F960 /* Model */,
-				941EFB6826BCE5D60087F960 /* Presentation */,
+				941EFB6926BCE5DC0087F960 /* UI */,
 				941EFB5E26BCE16C0087F960 /* Preview Content */,
 			);
 			path = MetaWearMac;
@@ -610,15 +805,6 @@
 				941EFB5F26BCE16C0087F960 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		941EFB6826BCE5D60087F960 /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				941EFC2B26BE7CCC0087F960 /* Menus.swift */,
-				941EFB6926BCE5DC0087F960 /* UI */,
-			);
-			path = Presentation;
 			sourceTree = "<group>";
 		};
 		941EFB6926BCE5DC0087F960 /* UI */ = {
@@ -634,9 +820,10 @@
 			isa = PBXGroup;
 			children = (
 				941EFB5A26BCE16B0087F960 /* MainWindow.swift */,
+				941EFC2B26BE7CCC0087F960 /* Menus.swift */,
+				94A271F526C1C2C600512626 /* PlaceholderDeviceConnectionScreen.swift */,
 				941EFBFF26BD89D70087F960 /* Detail */,
 				941EFB6B26BCE5E90087F960 /* Sidebar */,
-				94A271F526C1C2C600512626 /* MetaMotionPlaceholderScreen.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -654,14 +841,6 @@
 			path = Sidebar;
 			sourceTree = "<group>";
 		};
-		941EFB7026BCE6780087F960 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				941EFB7126BCE6820087F960 /* DeviceItem.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		941EFB7326BCE6A30087F960 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -673,9 +852,15 @@
 		941EFBF526BD1CB20087F960 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				941EFBF626BD1CBE0087F960 /* SignalLevel.swift */,
+				9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */,
+				948E48DA26C4551300CB9152 /* DataPointModels.swift */,
+				94E155D026C4E4FF00B73487 /* DataStreamStats.swift */,
 				941EFC0426BDA7450087F960 /* DetailGroup.swift */,
+				94E155D726C4EC6C00B73487 /* I2CSize.swift */,
 				941EFC2F26BE8EAE0087F960 /* MetaWearDeviceModel.swift */,
+				9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */,
+				941EFBF626BD1CBE0087F960 /* SignalLevel.swift */,
+				9438D95A26B47C820014FC91 /* Helpers */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -691,8 +876,9 @@
 		941EFC0826BDB0780087F960 /* Factories */ = {
 			isa = PBXGroup;
 			children = (
-				941EFC0926BDB08E0087F960 /* SwiftUIStandardFactory.swift */,
+				941EFC0926BDB08E0087F960 /* DevelopmentUIFactory.swift */,
 				941EFC0B26BDB23C0087F960 /* UIFactory.swift */,
+				94C27C0C26C4CD4A0071E1D5 /* UIEnvironment.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -712,7 +898,7 @@
 			isa = PBXGroup;
 			children = (
 				947979B126B98EC800AEB5EA /* UIKit+KeyWindow.swift */,
-				94F3317026B5308B0015EE88 /* AlertPresenter.swift */,
+				941EFC1E26BE0F740087F960 /* WhenHovered.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -730,25 +916,11 @@
 		9438D95126B45DD30014FC91 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
-				94F3316C26B52FD90015EE88 /* DetailConfiguring.swift */,
-				947979B326B98F0400AEB5EA /* DetailVMContainer.swift */,
-				94F3317426B531C50015EE88 /* DeviceDetailsCoordinator.swift */,
-				947979AF26B98E5800AEB5EA /* ToastVM.swift */,
-				94F3316B26B52FBA0015EE88 /* Detail */,
-				94F3316A26B52FA70015EE88 /* Discovery */,
+				94F3316B26B52FBA0015EE88 /* DeviceDetail */,
+				94F3316A26B52FA70015EE88 /* DeviceDiscovery */,
+				94006FB826C4D3380048C5AD /* Notifications */,
 			);
 			path = Interfaces;
-			sourceTree = "<group>";
-		};
-		9438D95426B45E130014FC91 /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-				9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */,
-				9438D94D26B453F30014FC91 /* Images.swift */,
-				9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */,
-				94F3316E26B530500015EE88 /* UserDefaults.swift */,
-			);
-			path = Constants;
 			sourceTree = "<group>";
 		};
 		9438D95526B45E1D0014FC91 /* ViewModels */ = {
@@ -773,11 +945,9 @@
 		947979B526B9976B00AEB5EA /* Implementations */ = {
 			isa = PBXGroup;
 			children = (
-				947979AD26B98E4500AEB5EA /* ToastServerVM.swift */,
-				94FF670226BC8983009F7EB5 /* MWSensorDataStore.swift */,
-				9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */,
-				94F3316526B518C60015EE88 /* Detail */,
-				94F3316826B52F180015EE88 /* Discovery */,
+				94F3316526B518C60015EE88 /* DeviceDetail */,
+				94F3316826B52F180015EE88 /* DeviceDiscovery */,
+				94006FB926C4D3450048C5AD /* Notifications */,
 			);
 			path = Implementations;
 			sourceTree = "<group>";
@@ -785,12 +955,8 @@
 		947979B626B9979900AEB5EA /* DeviceDetail */ = {
 			isa = PBXGroup;
 			children = (
-				947979B926B9985700AEB5EA /* DeviceDetailScreen.swift */,
-				941EFC1826BDD4E10087F960 /* DeviceDetailScreenHostingViews.swift */,
-				941EFC0626BDA87D0087F960 /* TableOfContentsMenuButton.swift */,
 				947979C126B9A01800AEB5EA /* Blocks */,
-				941EFC1A26BE05E40087F960 /* CardBuilder.swift */,
-				94C2788626C1076D006772F6 /* DeviceDetailScreenComponents.swift */,
+				94006FB026C4D1060048C5AD /* ScreenComposition */,
 			);
 			path = DeviceDetail;
 			sourceTree = "<group>";
@@ -798,6 +964,7 @@
 		947979B726B997B400AEB5EA /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				947979EE26B9C39C00AEB5EA /* Controllers */,
 				941EFC0826BDB0780087F960 /* Factories */,
 				947979B826B997C300AEB5EA /* UI */,
 				9438D95526B45E1D0014FC91 /* ViewModels */,
@@ -809,11 +976,8 @@
 			isa = PBXGroup;
 			children = (
 				941EFC3826BE95EB0087F960 /* SharedAssets.xcassets */,
-				941EFC3526BE8FE40087F960 /* Utilities */,
 				94FF670B26BCA25A009F7EB5 /* Components */,
 				947979BE26B99F0500AEB5EA /* Constants */,
-				947979EE26B9C39C00AEB5EA /* Controllers */,
-				941EFB4C26BCD95B0087F960 /* Effects */,
 				941EFB4F26BCDD540087F960 /* Environment */,
 				941EFC2226BE5EBF0087F960 /* Font */,
 				94ACC9E526B9FC4C00264F6E /* Views */,
@@ -824,9 +988,10 @@
 		947979BE26B99F0500AEB5EA /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				947979BF26B99F0F00AEB5EA /* Dimensions.swift */,
-				947979D826B9A41600AEB5EA /* SFSymbol.swift */,
 				941EFB6626BCE5BB0087F960 /* Color.swift */,
+				947979BF26B99F0F00AEB5EA /* Dimensions.swift */,
+				9438D94D26B453F30014FC91 /* Images.swift */,
+				947979D826B9A41600AEB5EA /* SFSymbol.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -853,6 +1018,7 @@
 				947979DA26B9B49100AEB5EA /* SensorFusionBlock.swift */,
 				947979CE26B9A06800AEB5EA /* SignalBlock.swift */,
 				947979C426B9A03700AEB5EA /* TemperatureBlock.swift */,
+				94BAA74C26C38CC70045E5E4 /* HygrometerBlock.swift */,
 			);
 			path = Blocks;
 			sourceTree = "<group>";
@@ -860,19 +1026,8 @@
 		947979EE26B9C39C00AEB5EA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				9482DC4C26B501CF00DD19EB /* _DeviceDetailVC.swift */,
-				9488E57026B8EF5B006A6262 /* MWAccelerometerSVC.swift */,
-				94A514C126B8AD04008707ED /* MWBatterySVC.swift */,
-				947979EF26B9C3AA00AEB5EA /* MWIdentifiersSVC.swift */,
-				94ACC9E626B9FD2C00264F6E /* MWDeviceDetailScreenSVC.swift */,
-				94A514C526B8C811008707ED /* MWFirmwareSVC.swift */,
-				94F3316626B518D30015EE88 /* MWHeaderSVC.swift */,
-				94A514BD26B8A4D5008707ED /* MWLEDSVC.swift */,
-				94A514B926B89A90008707ED /* MWMechanicalSwitchSVC.swift */,
-				94A514C926B8CD6F008707ED /* MWResetSVC.swift */,
-				94A514C326B8AFF6008707ED /* MWSignalStrengthSVC.swift */,
-				94A514B726B88864008707ED /* MWTemperatureSVC.swift */,
-				948E61C526BF3FB700A387E7 /* MWScannedDeviceCellSVC.swift */,
+				94006FB526C4D3020048C5AD /* DeviceDetail */,
+				94E155E326C4F2D000B73487 /* DeviceDiscovery */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -886,14 +1041,33 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		94C2788326C1071B006772F6 /* Detail */ = {
+		94C27C0926C4CC410071E1D5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				AB5D5F9825B8AA4A00D2591C /* SceneDelegate.swift */,
+				94C27C0A26C4CC790071E1D5 /* Controllers */,
+				94C27C0B26C4CC850071E1D5 /* Views */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		94C27C0A26C4CC790071E1D5 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AB19083325B9060100249906 /* StartViewController.swift */,
+				AB5D5F8F25B8A7B400D2591C /* DevicesTableViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		94C27C0B26C4CC850071E1D5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AB5D5F8E25B8A7B400D2591C /* DeviceTableViewCell.swift */,
 				94DABBC626C0F483004590E4 /* iPadGridLayout.swift */,
-				AB5D5F8D25B8A7B400D2591C /* DeviceDetailViewController.swift */,
 				94C2788426C10732006772F6 /* iOSDetailLayout.swift */,
 			);
-			path = Detail;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		94C7511926C1EB9A00AB3E47 /* MetaWearTests */ = {
@@ -907,86 +1081,67 @@
 		94CD3AA526B3ECF200854FBA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				941EFBF526BD1CB20087F960 /* Model */,
 				94092E1626C0E3AF00997C45 /* State */,
 				94092E0F26C0E37200997C45 /* Persistence */,
-				9438D95426B45E130014FC91 /* Constants */,
-				9438D95A26B47C820014FC91 /* Helpers */,
-				941EFBF526BD1CB20087F960 /* Model */,
 				947979B726B997B400AEB5EA /* Presentation */,
 			);
 			path = Common;
 			sourceTree = "<group>";
 		};
-		94F3316526B518C60015EE88 /* Detail */ = {
+		94E155E326C4F2D000B73487 /* DeviceDiscovery */ = {
 			isa = PBXGroup;
 			children = (
-				94F3317226B530FF0015EE88 /* MWHeaderVM.swift */,
-				94AFED3426B875C6004326C8 /* MWldentifiersVM.swift */,
-				94A514AB26B87BFB008707ED /* MWBatteryVM.swift */,
-				94A514AD26B87F17008707ED /* MWSignalStrengthVM.swift */,
-				94A514AF26B88184008707ED /* MWFirmwareVM.swift */,
-				94A514B126B882B6008707ED /* MWLEDVM.swift */,
-				94A514B326B883D7008707ED /* MWMechanicalSwitchVM.swift */,
-				94A514B526B884A3008707ED /* MWTemperatureVM.swift */,
-				94A514CB26B8CDD7008707ED /* MWResetVM.swift */,
-				9488E57226B8F018006A6262 /* MWAccelerometerVM.swift */,
+				948E61C526BF3FB700A387E7 /* ScannedDeviceCellSUIVC.swift */,
 			);
-			path = Detail;
+			path = DeviceDiscovery;
 			sourceTree = "<group>";
 		};
-		94F3316826B52F180015EE88 /* Discovery */ = {
+		94F3316526B518C60015EE88 /* DeviceDetail */ = {
+			isa = PBXGroup;
+			children = (
+				94FF670226BC8983009F7EB5 /* MWSensorDataStore.swift */,
+				94006FB326C4D27D0048C5AD /* Child */,
+				94006FB426C4D2920048C5AD /* Parent */,
+			);
+			path = DeviceDetail;
+			sourceTree = "<group>";
+		};
+		94F3316826B52F180015EE88 /* DeviceDiscovery */ = {
 			isa = PBXGroup;
 			children = (
 				94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */,
 				9438D95826B4692C0014FC91 /* MWDevicesScanningVM.swift */,
 			);
-			path = Discovery;
+			path = DeviceDiscovery;
 			sourceTree = "<group>";
 		};
-		94F3316A26B52FA70015EE88 /* Discovery */ = {
+		94F3316A26B52FA70015EE88 /* DeviceDiscovery */ = {
 			isa = PBXGroup;
 			children = (
 				9438D94F26B45B770014FC91 /* ScannedDeviceCellVM.swift */,
 				9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */,
 			);
-			path = Discovery;
+			path = DeviceDiscovery;
 			sourceTree = "<group>";
 		};
-		94F3316B26B52FBA0015EE88 /* Detail */ = {
+		94F3316B26B52FBA0015EE88 /* DeviceDetail */ = {
 			isa = PBXGroup;
 			children = (
-				94C553A126B7E0F700E7B2DC /* AccelerometerVM.swift */,
-				94C5539426B7E0F600E7B2DC /* AmbientLightVM.swift */,
-				94C5539926B7E0F600E7B2DC /* BarometerVM.swift */,
-				94C5539B26B7E0F600E7B2DC /* BatteryVM.swift */,
-				94C553A226B7E0F700E7B2DC /* FirmwareVM.swift */,
-				94C5539E26B7E0F700E7B2DC /* GPIOVM.swift */,
-				94C553A326B7E0F700E7B2DC /* GyroVM.swift */,
-				94C5539526B7E0F600E7B2DC /* HapticVM.swift */,
-				9482DC4E26B5078A00DD19EB /* HeaderVM.swift */,
-				94C5539726B7E0F600E7B2DC /* HumidityVM.swift */,
-				94C5539D26B7E0F600E7B2DC /* I2CVM.swift */,
-				94C5539826B7E0F600E7B2DC /* BeaconVM.swift */,
-				94C5539126B7DF5A00E7B2DC /* IdentifiersVM.swift */,
-				94C5539A26B7E0F600E7B2DC /* LEDVM.swift */,
-				94C553A026B7E0F700E7B2DC /* MagenetometerVM.swift */,
-				94C5539626B7E0F600E7B2DC /* MechanicalSwitchVM.swift */,
-				94C5539C26B7E0F600E7B2DC /* SensorFusionVM.swift */,
-				94C5539326B7E0F600E7B2DC /* SignalStrengthVM.swift */,
-				94C5539F26B7E0F700E7B2DC /* TemperatureVM.swift */,
-				94A514C726B8CCE6008707ED /* ResetVM.swift */,
+				94006FB226C4D1720048C5AD /* Child */,
+				94006FB126C4D1650048C5AD /* Parent */,
 			);
-			path = Detail;
+			path = DeviceDetail;
 			sourceTree = "<group>";
 		};
 		94FF66FD26BC7AC5009F7EB5 /* Graphs */ = {
 			isa = PBXGroup;
 			children = (
+				94FF66FE26BC7AD6009F7EB5 /* GraphConfig.swift */,
+				9406194226C0421F007BE281 /* GraphDriver.swift */,
+				94FF670026BC8470009F7EB5 /* GraphInterface.swift */,
 				9406193C26C03FBA007BE281 /* AAInfographics */,
 				9406193926C03DE5007BE281 /* NaiveGraph */,
-				94FF66FE26BC7AD6009F7EB5 /* GraphConfig.swift */,
-				94FF670026BC8470009F7EB5 /* GraphInterface.swift */,
-				9406194226C0421F007BE281 /* GraphDriver.swift */,
 			);
 			path = Graphs;
 			sourceTree = "<group>";
@@ -1007,17 +1162,13 @@
 		94FF670B26BCA25A009F7EB5 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				947979BC26B99EE600AEB5EA /* Blockify.swift */,
-				947979D626B9A3BA00AEB5EA /* DetailsBlockCard.swift */,
-				941EFC3626BE945B0087F960 /* DeviceImage.swift */,
-				94C07E8626BB2F35008D875B /* DividerPadded.swift */,
-				94ACC9DC26B9C6D100264F6E /* LabeledItem.swift */,
-				941EFB6426BCE5980087F960 /* SignalDots.swift */,
-				941EFC2026BE59590087F960 /* SingleLineTextField.swift */,
-				94FF670626BCA17F009F7EB5 /* StatsBlock.swift */,
 				94FF670826BCA192009F7EB5 /* Buttons */,
+				941EFB4C26BCD95B0087F960 /* Effects */,
 				94FF66FD26BC7AC5009F7EB5 /* Graphs */,
-				94A271F726C1C3EA00512626 /* GlintingMLogo.swift */,
+				94006FAC26C4CF4B0048C5AD /* Templates */,
+				94006FAD26C4CF610048C5AD /* TextFields */,
+				941EFC3526BE8FE40087F960 /* Utilities */,
+				94006FAE26C4CF6D0048C5AD /* Visuals */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1056,13 +1207,9 @@
 		AB5D5F3A25B7D47300D2591C /* MetaWearApp */ = {
 			isa = PBXGroup;
 			children = (
-				94C2788326C1071B006772F6 /* Detail */,
 				AB5D5F3B25B7D47300D2591C /* AppDelegate.swift */,
-				AB5D5F9825B8AA4A00D2591C /* SceneDelegate.swift */,
+				94C27C0926C4CC410071E1D5 /* UI */,
 				AB5D5F8925B8A5E100D2591C /* MetaWearApp-Bridging-Header.h */,
-				AB19083325B9060100249906 /* StartViewController.swift */,
-				AB5D5F8F25B8A7B400D2591C /* DevicesTableViewController.swift */,
-				AB5D5F8E25B8A7B400D2591C /* DeviceTableViewCell.swift */,
 				AB5D5F4125B7D47300D2591C /* Main.storyboard */,
 				AB5D5F4425B7D47300D2591C /* Assets.xcassets */,
 				AB5D5F4625B7D47300D2591C /* LaunchScreen.storyboard */,
@@ -1319,50 +1466,59 @@
 			buildActionMask = 2147483647;
 			files = (
 				941EFBAF26BCE7990087F960 /* DetailConfiguring.swift in Sources */,
-				941EFB9526BCE7890087F960 /* MWLEDSVC.swift in Sources */,
+				94006FBC26C4D4170048C5AD /* AlertPresenter.swift in Sources */,
 				941EFC3426BE8FB60087F960 /* UIKit+KeyWindow.swift in Sources */,
 				941EFB7C26BCE74C0087F960 /* EnvironmentValues+.swift in Sources */,
 				941EFBB326BCE79D0087F960 /* IdentifiersVM.swift in Sources */,
 				941EFBD026BCE7AD0087F960 /* MWAccelerometerVM.swift in Sources */,
+				94BAA75726C3B8550045E5E4 /* MWSensorFusionVM.swift in Sources */,
 				941EFC1B26BE05E40087F960 /* CardBuilder.swift in Sources */,
 				941EFBA326BCE7920087F960 /* IdentifiersBlock.swift in Sources */,
+				94BAA74826C38B290045E5E4 /* MWHapticVM.swift in Sources */,
 				941EFC1F26BE0F740087F960 /* WhenHovered.swift in Sources */,
+				9487921E26C335600066CD5E /* MWMagnetometerVM.swift in Sources */,
 				941EFBAA26BCE7920087F960 /* iBeaconBlock.swift in Sources */,
+				9487921B26C32C020066CD5E /* ToastPresentingLogDownloader.swift in Sources */,
+				94E155CF26C4DAF200B73487 /* ToastVM.swift in Sources */,
 				941EFBF826BD1CE70087F960 /* SignalLevel.swift in Sources */,
 				941EFB6D26BCE5F70087F960 /* ScannedDeviceCellSwiftUI.swift in Sources */,
 				941EFB9C26BCE7920087F960 /* AccelerometerBlock.swift in Sources */,
+				94BAA74B26C38B560045E5E4 /* MWiBeaconVM.swift in Sources */,
 				941EFBFC26BD7D970087F960 /* ScanButton.swift in Sources */,
 				941EFBB726BCE79D0087F960 /* BatteryVM.swift in Sources */,
 				9406194026C04198007BE281 /* NaiveGraphController.swift in Sources */,
 				941EFBCC26BCE7AD0087F960 /* MWTemperatureVM.swift in Sources */,
 				941EFB8126BCE7710087F960 /* GraphInterface.swift in Sources */,
-				941EFB9226BCE7890087F960 /* MWAccelerometerSVC.swift in Sources */,
+				941EFB9226BCE7890087F960 /* AccelerometerSUIVC.swift in Sources */,
 				941EFBBF26BCE79E0087F960 /* HumidityVM.swift in Sources */,
 				941EFC2426BE5ECD0087F960 /* AdaptiveFont.swift in Sources */,
 				941EFC2A26BE74600087F960 /* Fonts.swift in Sources */,
-				948E61C826BF405700A387E7 /* MWScannedDeviceCellSVC.swift in Sources */,
-				941EFB7A26BCE7440087F960 /* AlertPresenter.swift in Sources */,
+				948E61C826BF405700A387E7 /* ScannedDeviceCellSUIVC.swift in Sources */,
+				941EFB7A26BCE7440087F960 /* CrossPlatformAlertPresenter.swift in Sources */,
 				941EFBB426BCE79D0087F960 /* MagenetometerVM.swift in Sources */,
 				941EFB8826BCE7770087F960 /* SignalDots.swift in Sources */,
 				941EFBD226BCE7AD0087F960 /* MWFirmwareVM.swift in Sources */,
+				94BAA73F26C38A780045E5E4 /* MWI2CVM.swift in Sources */,
 				941EFBD326BCE7AD0087F960 /* MWBatteryVM.swift in Sources */,
 				941EFC1026BDB6390087F960 /* AppStore.swift in Sources */,
-				941EFB8F26BCE7890087F960 /* MWHeaderSVC.swift in Sources */,
+				941EFB8F26BCE7890087F960 /* DetailHeaderSUIVC.swift in Sources */,
 				941EFC3026BE8EAE0087F960 /* MetaWearDeviceModel.swift in Sources */,
 				941EFC1926BDD4E10087F960 /* DeviceDetailScreenHostingViews.swift in Sources */,
 				941EFC0526BDA7450087F960 /* DetailGroup.swift in Sources */,
 				941EFBBD26BCE79E0087F960 /* TemperatureVM.swift in Sources */,
 				941EFC2C26BE7CCC0087F960 /* Menus.swift in Sources */,
+				94BAA74526C38AFA0045E5E4 /* MWBarometerVM.swift in Sources */,
 				941EFC0726BDA87D0087F960 /* TableOfContentsMenuButton.swift in Sources */,
+				94E155D926C4EC6C00B73487 /* I2CSize.swift in Sources */,
+				948E48DC26C4551300CB9152 /* DataPointModels.swift in Sources */,
 				941EFB7D26BCE7500087F960 /* ShakeEffect.swift in Sources */,
-				941EFB9626BCE7890087F960 /* MWMechanicalSwitchSVC.swift in Sources */,
 				941EFBCB26BCE7AD0087F960 /* MWSignalStrengthVM.swift in Sources */,
 				941EFB9A26BCE7920087F960 /* I2CBlock.swift in Sources */,
 				941EFB7E26BCE76E0087F960 /* DownloadButton.swift in Sources */,
 				941EFC2126BE59590087F960 /* SingleLineTextField.swift in Sources */,
 				941EFC2826BE73890087F960 /* AdaptiveFont+SwiftUI.swift in Sources */,
 				941EFBCD26BCE7AD0087F960 /* MWMechanicalSwitchVM.swift in Sources */,
-				941EFBC326BCE79E0087F960 /* SignalStrengthVM.swift in Sources */,
+				941EFBC326BCE79E0087F960 /* SignalVM.swift in Sources */,
 				941EFC0C26BDB23C0087F960 /* UIFactory.swift in Sources */,
 				941EFC0126BD92750087F960 /* ConnectionToolbarButton.swift in Sources */,
 				941EFB8C26BCE77A0087F960 /* SFSymbol.swift in Sources */,
@@ -1378,31 +1534,29 @@
 				941EFBC826BCE7A80087F960 /* MWDeviceDetailsCoordinator.swift in Sources */,
 				941EFBB026BCE7990087F960 /* DetailVMContainer.swift in Sources */,
 				941EFBC926BCE7A80087F960 /* MWSensorDataStore.swift in Sources */,
+				94006FBF26C4D4630048C5AD /* DownloadHandler.swift in Sources */,
 				941EFB8326BCE7710087F960 /* GraphConfig.swift in Sources */,
 				941EFBCF26BCE7AD0087F960 /* MWLEDVM.swift in Sources */,
 				941EFB9B26BCE7920087F960 /* ResetBlock.swift in Sources */,
 				941EFBB526BCE79D0087F960 /* GyroVM.swift in Sources */,
-				94A271F626C1C2C600512626 /* MetaMotionPlaceholderScreen.swift in Sources */,
+				94A271F626C1C2C600512626 /* PlaceholderDeviceConnectionScreen.swift in Sources */,
 				941EFB8626BCE7770087F960 /* DividerPadded.swift in Sources */,
 				941EFB8226BCE7710087F960 /* AAGraph.swift in Sources */,
-				941EFB8D26BCE7890087F960 /* MWTemperatureSVC.swift in Sources */,
+				941EFB8D26BCE7890087F960 /* TemperatureSUIVC.swift in Sources */,
 				941EFBA926BCE7920087F960 /* SignalBlock.swift in Sources */,
 				94A271F826C1C3EA00512626 /* GlintingMLogo.swift in Sources */,
-				941EFB9426BCE7890087F960 /* MWFirmwareSVC.swift in Sources */,
+				94E155D226C4E4FF00B73487 /* DataStreamStats.swift in Sources */,
 				941EFB8B26BCE77A0087F960 /* Dimensions.swift in Sources */,
-				941EFBAE26BCE7990087F960 /* ToastVM.swift in Sources */,
 				941EFB7526BCE6B20087F960 /* MetaWearScanningSVC.swift in Sources */,
 				941EFBA426BCE7920087F960 /* GyroscopeBlock.swift in Sources */,
 				941EFB8726BCE7770087F960 /* Blockify.swift in Sources */,
 				94092E1426C0E39A00997C45 /* PreferencesStore.swift in Sources */,
-				941EFB9126BCE7890087F960 /* MWBatterySVC.swift in Sources */,
 				941EFBB926BCE79D0087F960 /* AccelerometerVM.swift in Sources */,
 				941EFBB126BCE79D0087F960 /* SensorFusionVM.swift in Sources */,
 				941EFB9F26BCE7920087F960 /* SensorFusionBlock.swift in Sources */,
-				941EFBB826BCE79D0087F960 /* BeaconVM.swift in Sources */,
+				941EFBB826BCE79D0087F960 /* IBeaconVM.swift in Sources */,
 				941EFB7B26BCE7440087F960 /* String+Drop0xPrefix.swift in Sources */,
 				941EFB9826BCE78E0087F960 /* ToastServer.swift in Sources */,
-				941EFB7226BCE6820087F960 /* DeviceItem.swift in Sources */,
 				941EFBFA26BD7D8C0087F960 /* MetaBootCheckButton.swift in Sources */,
 				941EFBA526BCE7920087F960 /* BatteryBlock.swift in Sources */,
 				941EFBCE26BCE7AD0087F960 /* MWResetVM.swift in Sources */,
@@ -1411,38 +1565,41 @@
 				941EFBBA26BCE79D0087F960 /* HeaderVM.swift in Sources */,
 				941EFC2E26BE8AAB0087F960 /* SpinEffect.swift in Sources */,
 				941EFC0E26BDB46C0087F960 /* Array+CountedByIndex.swift in Sources */,
-				941EFB9726BCE7890087F960 /* MWSignalStrengthSVC.swift in Sources */,
+				941EFB9726BCE7890087F960 /* SignalSUIVC.swift in Sources */,
 				941EFB9D26BCE7920087F960 /* MagnetometerBlock.swift in Sources */,
 				941EFBA126BCE7920087F960 /* BarometerBlock.swift in Sources */,
 				941EFBBE26BCE79E0087F960 /* ResetVM.swift in Sources */,
 				941EFBCA26BCE7AD0087F960 /* MWHeaderVM.swift in Sources */,
+				94BAA75426C3A8D10045E5E4 /* MWGPIOVM.swift in Sources */,
 				941EFC2626BE73720087F960 /* AdaptiveFont+AppKit.swift in Sources */,
 				941EFBBC26BCE79D0087F960 /* BarometerVM.swift in Sources */,
+				94C27C0826C4CBA10071E1D5 /* UserDefaults.swift in Sources */,
 				941EFBA026BCE7920087F960 /* AmbientLightBlock.swift in Sources */,
+				94BAA75126C394370045E5E4 /* MWHumidityVM.swift in Sources */,
+				94C27C0E26C4CD4A0071E1D5 /* UIEnvironment.swift in Sources */,
 				941EFBC226BCE79E0087F960 /* I2CVM.swift in Sources */,
 				941EFB8526BCE7770087F960 /* StatsBlock.swift in Sources */,
 				941EFBC026BCE79E0087F960 /* MechanicalSwitchVM.swift in Sources */,
+				94E155CC26C4DAE100B73487 /* MWToastServerVM.swift in Sources */,
 				94092E1126C0E38300997C45 /* PreferencesPersistence.swift in Sources */,
-				941EFB9326BCE7890087F960 /* MWDeviceDetailScreenSVC.swift in Sources */,
+				941EFB9326BCE7890087F960 /* DeviceDetailScreenSUIVC.swift in Sources */,
 				941EFBA726BCE7920087F960 /* MechanicalSwitchBlock.swift in Sources */,
 				941EFBD426BCE7B30087F960 /* MWScannedDeviceCellVM.swift in Sources */,
-				941EFBC726BCE7A80087F960 /* ToastServerVM.swift in Sources */,
 				941EFBC526BCE7A30087F960 /* ScannedDeviceCellVM.swift in Sources */,
 				941EFBA826BCE7920087F960 /* GPIOBlock.swift in Sources */,
-				941EFC0A26BDB08E0087F960 /* SwiftUIStandardFactory.swift in Sources */,
-				941EFB9026BCE7890087F960 /* MWIdentifiersSVC.swift in Sources */,
+				941EFC0A26BDB08E0087F960 /* DevelopmentUIFactory.swift in Sources */,
 				941EFC3726BE945B0087F960 /* DeviceImage.swift in Sources */,
 				948E61C726BF400A00A387E7 /* CopyMacButton.swift in Sources */,
 				941EFBB626BCE79D0087F960 /* GPIOVM.swift in Sources */,
 				941EFB8A26BCE77A0087F960 /* Color.swift in Sources */,
 				941EFBAB26BCE7920087F960 /* FirmwareBlock.swift in Sources */,
+				94BAA74226C38AD40045E5E4 /* MWAmbientLightVM.swift in Sources */,
 				94092E0E26C0CDBE00997C45 /* DeviceNavigationLink.swift in Sources */,
 				941EFBFE26BD7E720087F960 /* EmptyDevicesListButton.swift in Sources */,
 				941EFC1D26BE0E780087F960 /* BorderlessHighlightingButtonStyle.swift in Sources */,
 				941EFB8426BCE7770087F960 /* LabeledItem.swift in Sources */,
 				941EFB5B26BCE16B0087F960 /* MainWindow.swift in Sources */,
 				941EFBD126BCE7AD0087F960 /* MWldentifiersVM.swift in Sources */,
-				941EFB7826BCE7380087F960 /* UserDefaults.swift in Sources */,
 				941EFBA226BCE7920087F960 /* HeaderBlock.swift in Sources */,
 				941EFB7F26BCE76E0087F960 /* UpdateButton.swift in Sources */,
 				941EFBAC26BCE7920087F960 /* HapticBlock.swift in Sources */,
@@ -1452,12 +1609,14 @@
 				941EFBB226BCE79D0087F960 /* LEDVM.swift in Sources */,
 				941EFB7726BCE7380087F960 /* Images.swift in Sources */,
 				941EFB9E26BCE7920087F960 /* LEDBlock.swift in Sources */,
+				94E155E226C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift in Sources */,
 				941EFB6F26BCE6640087F960 /* Sidebar.swift in Sources */,
-				941EFB8E26BCE7890087F960 /* MWResetSVC.swift in Sources */,
 				941EFB5926BCE16B0087F960 /* MetaWearMacApp.swift in Sources */,
+				944EACB126C2FBD300B73814 /* MWGyroVM.swift in Sources */,
 				941EFB8926BCE7770087F960 /* DetailsBlockCard.swift in Sources */,
 				941EFB8026BCE76E0087F960 /* ExportDataButton.swift in Sources */,
 				941EFBAD26BCE7990087F960 /* DeviceDetailsCoordinator.swift in Sources */,
+				94BAA74E26C38CC70045E5E4 /* HygrometerBlock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1473,50 +1632,51 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94BAA74126C38AD40045E5E4 /* MWAmbientLightVM.swift in Sources */,
 				947979DF26B9B4B500AEB5EA /* MagnetometerBlock.swift in Sources */,
 				94DABBC726C0F483004590E4 /* iPadGridLayout.swift in Sources */,
 				AB5D5F3C25B7D47300D2591C /* AppDelegate.swift in Sources */,
 				941EFC1426BDC0DB0087F960 /* DetailGroup.swift in Sources */,
 				9406194326C0421F007BE281 /* GraphDriver.swift in Sources */,
 				947979C726B9A04200AEB5EA /* LEDBlock.swift in Sources */,
-				941EFC1226BDC0CB0087F960 /* SwiftUIStandardFactory.swift in Sources */,
+				941EFC1226BDC0CB0087F960 /* DevelopmentUIFactory.swift in Sources */,
 				947979D126B9A06E00AEB5EA /* BatteryBlock.swift in Sources */,
 				948E61D326BFA7C100A387E7 /* NaiveGraphController.swift in Sources */,
 				948E61C926BF515200A387E7 /* AdaptiveFont.swift in Sources */,
 				947979EB26B9B51100AEB5EA /* I2CBlock.swift in Sources */,
+				9487921A26C32C020066CD5E /* ToastPresentingLogDownloader.swift in Sources */,
 				94C553AC26B7E0F700E7B2DC /* BatteryVM.swift in Sources */,
 				9482DC4F26B5078A00DD19EB /* HeaderVM.swift in Sources */,
 				94F3317526B531C50015EE88 /* DeviceDetailsCoordinator.swift in Sources */,
 				94ACC9E126B9F5F700264F6E /* ExportDataButton.swift in Sources */,
+				94E155D826C4EC6C00B73487 /* I2CSize.swift in Sources */,
 				94C553B426B7E0F700E7B2DC /* GyroVM.swift in Sources */,
-				94A514C626B8C811008707ED /* MWFirmwareSVC.swift in Sources */,
 				9438D95726B467FC0014FC91 /* DevicesScanningVM.swift in Sources */,
 				948E61CF26BF529E00A387E7 /* MetaWearScanningSVC.swift in Sources */,
 				948E61CD26BF524C00A387E7 /* DeviceImage.swift in Sources */,
 				947979D926B9A41600AEB5EA /* SFSymbol.swift in Sources */,
 				94FF66FF26BC7AD6009F7EB5 /* GraphConfig.swift in Sources */,
+				94E155E126C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift in Sources */,
 				947979C326B9A02D00AEB5EA /* AccelerometerBlock.swift in Sources */,
 				94A514B226B882B6008707ED /* MWLEDVM.swift in Sources */,
 				941EFBF726BD1CBE0087F960 /* SignalLevel.swift in Sources */,
 				947979DD26B9B49D00AEB5EA /* GyroscopeBlock.swift in Sources */,
 				947979C526B9A03700AEB5EA /* TemperatureBlock.swift in Sources */,
 				941EFC1726BDC1240087F960 /* ConnectionToolbarButton.swift in Sources */,
-				948E61C626BF3FB700A387E7 /* MWScannedDeviceCellSVC.swift in Sources */,
+				948E61C626BF3FB700A387E7 /* ScannedDeviceCellSUIVC.swift in Sources */,
+				94BAA74426C38AFA0045E5E4 /* MWBarometerVM.swift in Sources */,
 				94FF670126BC8470009F7EB5 /* GraphInterface.swift in Sources */,
-				947979B026B98E5800AEB5EA /* ToastVM.swift in Sources */,
 				9453FD3926B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift in Sources */,
 				94C553B326B7E0F700E7B2DC /* FirmwareVM.swift in Sources */,
 				947979E526B9B4EB00AEB5EA /* BarometerBlock.swift in Sources */,
 				941EFB6726BCE5BB0087F960 /* Color.swift in Sources */,
 				94A514AE26B87F17008707ED /* MWSignalStrengthVM.swift in Sources */,
-				9482DC4D26B501CF00DD19EB /* _DeviceDetailVC.swift in Sources */,
 				94C553A626B7E0F700E7B2DC /* HapticVM.swift in Sources */,
 				94092E1526C0E3A600997C45 /* PreferencesStore.swift in Sources */,
-				94A514BA26B89A90008707ED /* MWMechanicalSwitchSVC.swift in Sources */,
 				94C2788726C1076D006772F6 /* DeviceDetailScreenComponents.swift in Sources */,
 				AB19083425B9060100249906 /* StartViewController.swift in Sources */,
 				947979E726B9B4F800AEB5EA /* iBeaconBlock.swift in Sources */,
-				94A514C426B8AFF6008707ED /* MWSignalStrengthSVC.swift in Sources */,
+				94A514C426B8AFF6008707ED /* SignalSUIVC.swift in Sources */,
 				94C553A526B7E0F700E7B2DC /* AmbientLightVM.swift in Sources */,
 				94FF670326BC8984009F7EB5 /* MWSensorDataStore.swift in Sources */,
 				94ACC9DD26B9C6D100264F6E /* LabeledItem.swift in Sources */,
@@ -1526,36 +1686,45 @@
 				94C5539226B7DF5A00E7B2DC /* IdentifiersVM.swift in Sources */,
 				94C553AB26B7E0F700E7B2DC /* LEDVM.swift in Sources */,
 				94A514CC26B8CDD7008707ED /* MWResetVM.swift in Sources */,
-				947979F026B9C3AA00AEB5EA /* MWIdentifiersSVC.swift in Sources */,
 				94AFED3526B875C6004326C8 /* MWldentifiersVM.swift in Sources */,
+				94BAA74A26C38B560045E5E4 /* MWiBeaconVM.swift in Sources */,
 				947979C026B99F0F00AEB5EA /* Dimensions.swift in Sources */,
 				947979ED26B9B5A200AEB5EA /* ToastServer.swift in Sources */,
 				94A514C826B8CCE6008707ED /* ResetVM.swift in Sources */,
-				94ACC9E726B9FD2C00264F6E /* MWDeviceDetailScreenSVC.swift in Sources */,
+				94ACC9E726B9FD2C00264F6E /* DeviceDetailScreenSUIVC.swift in Sources */,
+				94E155D126C4E4FF00B73487 /* DataStreamStats.swift in Sources */,
 				9406193B26C03DF3007BE281 /* NaiveGraphFixedSize.swift in Sources */,
 				94C553AA26B7E0F700E7B2DC /* BarometerVM.swift in Sources */,
+				94BAA75326C3A8D10045E5E4 /* MWGPIOVM.swift in Sources */,
 				AB5D5F9225B8A7B400D2591C /* DevicesTableViewController.swift in Sources */,
 				9438D94E26B453F30014FC91 /* Images.swift in Sources */,
+				94C27C0726C4CBA10071E1D5 /* UserDefaults.swift in Sources */,
 				94C553B126B7E0F700E7B2DC /* MagenetometerVM.swift in Sources */,
+				94BAA75026C394370045E5E4 /* MWHumidityVM.swift in Sources */,
 				947979CB26B9A05600AEB5EA /* ResetBlock.swift in Sources */,
 				947979DB26B9B49100AEB5EA /* SensorFusionBlock.swift in Sources */,
 				9481A57926BC6728008CD909 /* AAGraph.swift in Sources */,
 				94C553B026B7E0F700E7B2DC /* TemperatureVM.swift in Sources */,
 				948E61CE26BF529000A387E7 /* DeviceDetailScreenHostingViews.swift in Sources */,
+				94BAA74D26C38CC70045E5E4 /* HygrometerBlock.swift in Sources */,
 				947979CD26B9A06100AEB5EA /* FirmwareBlock.swift in Sources */,
 				94CD3AA726B3ED1400854FBA /* MWScannedDeviceCellVM.swift in Sources */,
+				94E155CE26C4DAF200B73487 /* ToastVM.swift in Sources */,
 				941EFB5126BCDD620087F960 /* EnvironmentValues+.swift in Sources */,
-				AB5D5F9025B8A7B400D2591C /* DeviceDetailViewController.swift in Sources */,
 				94C553AD26B7E0F700E7B2DC /* SensorFusionVM.swift in Sources */,
 				948E61C426BF3D2C00A387E7 /* CopyMacButton.swift in Sources */,
 				941EFC1626BDC1000087F960 /* Sort+RawRepresentable.swift in Sources */,
 				9488E57326B8F018006A6262 /* MWAccelerometerVM.swift in Sources */,
 				947979B426B98F0400AEB5EA /* DetailVMContainer.swift in Sources */,
+				94E155CB26C4DAE100B73487 /* MWToastServerVM.swift in Sources */,
 				94C2788526C10732006772F6 /* iOSDetailLayout.swift in Sources */,
 				94FF670726BCA17F009F7EB5 /* StatsBlock.swift in Sources */,
 				947979C926B9A05000AEB5EA /* MechanicalSwitchBlock.swift in Sources */,
+				948E48DB26C4551300CB9152 /* DataPointModels.swift in Sources */,
 				9473587B26B92D610032EE87 /* AccelerometerSampleFrequency.swift in Sources */,
+				94BAA73E26C38A780045E5E4 /* MWI2CVM.swift in Sources */,
 				9438D95C26B47C990014FC91 /* String+Drop0xPrefix.swift in Sources */,
+				9487921D26C335600066CD5E /* MWMagnetometerVM.swift in Sources */,
 				94C07E8726BB2F35008D875B /* DividerPadded.swift in Sources */,
 				941EFC1526BDC0EA0087F960 /* Array+CountedByIndex.swift in Sources */,
 				948E61CB26BF517200A387E7 /* Fonts.swift in Sources */,
@@ -1563,10 +1732,9 @@
 				941EFB6526BCE5980087F960 /* SignalDots.swift in Sources */,
 				94C553A826B7E0F700E7B2DC /* HumidityVM.swift in Sources */,
 				94F3316D26B52FD90015EE88 /* DetailConfiguring.swift in Sources */,
+				94BAA74726C38B290045E5E4 /* MWHapticVM.swift in Sources */,
 				9473587926B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift in Sources */,
-				94A514CA26B8CD6F008707ED /* MWResetSVC.swift in Sources */,
-				94C553A926B7E0F700E7B2DC /* BeaconVM.swift in Sources */,
-				94A514BE26B8A4D5008707ED /* MWLEDSVC.swift in Sources */,
+				94C553A926B7E0F700E7B2DC /* IBeaconVM.swift in Sources */,
 				94A514B626B884A3008707ED /* MWTemperatureVM.swift in Sources */,
 				941EFC1126BDC0C00087F960 /* AppStore.swift in Sources */,
 				947979CF26B9A06800AEB5EA /* SignalBlock.swift in Sources */,
@@ -1575,11 +1743,11 @@
 				948E61D026BF534000A387E7 /* MetaWearDeviceModel.swift in Sources */,
 				941EFC1326BDC0CB0087F960 /* UIFactory.swift in Sources */,
 				947979E326B9B4D700AEB5EA /* GPIOBlock.swift in Sources */,
-				94F3316F26B530500015EE88 /* UserDefaults.swift in Sources */,
-				94F3317126B5308B0015EE88 /* AlertPresenter.swift in Sources */,
-				94F3316726B518D30015EE88 /* MWHeaderSVC.swift in Sources */,
-				9488E57126B8EF5B006A6262 /* MWAccelerometerSVC.swift in Sources */,
-				94C553A426B7E0F700E7B2DC /* SignalStrengthVM.swift in Sources */,
+				94F3317126B5308B0015EE88 /* CrossPlatformAlertPresenter.swift in Sources */,
+				94006FBE26C4D4630048C5AD /* DownloadHandler.swift in Sources */,
+				94F3316726B518D30015EE88 /* DetailHeaderSUIVC.swift in Sources */,
+				9488E57126B8EF5B006A6262 /* AccelerometerSUIVC.swift in Sources */,
+				94C553A426B7E0F700E7B2DC /* SignalVM.swift in Sources */,
 				94C553AF26B7E0F700E7B2DC /* GPIOVM.swift in Sources */,
 				947979D726B9A3BA00AEB5EA /* DetailsBlockCard.swift in Sources */,
 				94A514B026B88184008707ED /* MWFirmwareVM.swift in Sources */,
@@ -1591,16 +1759,18 @@
 				94A514AC26B87BFB008707ED /* MWBatteryVM.swift in Sources */,
 				947979BA26B9985700AEB5EA /* DeviceDetailScreen.swift in Sources */,
 				94FF670526BCA15D009F7EB5 /* DownloadButton.swift in Sources */,
-				947979AE26B98E4500AEB5EA /* ToastServerVM.swift in Sources */,
+				94C27C0D26C4CD4A0071E1D5 /* UIEnvironment.swift in Sources */,
+				94006FBB26C4D4170048C5AD /* AlertPresenter.swift in Sources */,
 				9438D95026B45B770014FC91 /* ScannedDeviceCellVM.swift in Sources */,
-				94A514C226B8AD04008707ED /* MWBatterySVC.swift in Sources */,
+				94BAA75626C3B8550045E5E4 /* MWSensorFusionVM.swift in Sources */,
 				AB5D5F9925B8AA4A00D2591C /* SceneDelegate.swift in Sources */,
 				9438D95926B4692C0014FC91 /* MWDevicesScanningVM.swift in Sources */,
 				94A271F926C1C42400512626 /* GlintingMLogo.swift in Sources */,
 				94A514B426B883D7008707ED /* MWMechanicalSwitchVM.swift in Sources */,
+				944EACB026C2FBD300B73814 /* MWGyroVM.swift in Sources */,
 				947979E126B9B4C800AEB5EA /* HapticBlock.swift in Sources */,
 				948E61CA26BF516A00A387E7 /* AdaptiveFont+SwiftUI.swift in Sources */,
-				94A514B826B88864008707ED /* MWTemperatureSVC.swift in Sources */,
+				94A514B826B88864008707ED /* TemperatureSUIVC.swift in Sources */,
 				948E61CC26BF524100A387E7 /* CardBuilder.swift in Sources */,
 				94F3317326B530FF0015EE88 /* MWHeaderVM.swift in Sources */,
 				947979B226B98EC800AEB5EA /* UIKit+KeyWindow.swift in Sources */,

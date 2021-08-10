@@ -6,7 +6,7 @@ import SwiftUI
 
 struct MechanicalSwitchBlock: View {
 
-    @ObservedObject var vm: MWMechanicalSwitchSVC
+    @ObservedObject var vm: MechanicalSwitchSUIVC
 
     var body: some View {
         VStack(spacing: .cardVSpacing) {

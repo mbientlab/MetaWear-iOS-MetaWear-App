@@ -6,7 +6,7 @@ import SwiftUI
 
 struct ToastServer: View {
 
-    @ObservedObject var vm: ToastServerVM
+    @ObservedObject var vm: MWToastServerVM
 
     var body: some View {
         VStack {

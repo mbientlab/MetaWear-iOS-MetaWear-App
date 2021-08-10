@@ -6,7 +6,7 @@ import SwiftUI
 
 struct BatteryBlock: View {
 
-    @ObservedObject var vm: MWDetailBatterySVC
+    @ObservedObject var vm: BatterySUIVC
 
     var body: some View {
         HStack(spacing: .cardVSpacing) {
