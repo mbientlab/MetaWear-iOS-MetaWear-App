@@ -70,7 +70,7 @@ private extension DeviceNavigationLink {
         : vc.connectedDevices[index]
     }
 
-    func getDetailSVC() -> MWDeviceDetailScreenSVC {
-        app.ui.makeDetailScreenVC(device: getDevice()) as! MWDeviceDetailScreenSVC
+    func getDetailSVC() -> DeviceDetailScreenSUIVC {
+        app.ui.makeDetailScreenVC(device: getDevice()) as! DeviceDetailScreenSUIVC
     }
 }

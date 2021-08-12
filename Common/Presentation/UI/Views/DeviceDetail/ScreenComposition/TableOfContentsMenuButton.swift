@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TableOfContentsMenuButton: View {
 
-    @EnvironmentObject private var vc: MWDeviceDetailScreenSVC
+    @EnvironmentObject private var vc: DeviceDetailScreenSUIVC
     @Environment(\.scrollProxy) private var scroller
 
     var body: some View {
