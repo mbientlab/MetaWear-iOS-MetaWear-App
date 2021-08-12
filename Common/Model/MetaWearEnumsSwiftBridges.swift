@@ -522,6 +522,14 @@ public enum GPIOChangeType: Int, CaseIterable, Identifiable {
         }
     }
 
+    public var displayName: String {
+        switch self {
+            case .rising: return "Rising"
+            case .falling: return "Falling"
+            case .any: return "Any"
+        }
+    }
+
     public var id: Int { rawValue }
 
 }
@@ -537,6 +545,8 @@ public enum GPIOPin: Int, CaseIterable, Identifiable {
     case seven
 
     public var pinValue: UInt8 { UInt8(rawValue) }
+
+    public var displayName: String { String(rawValue) }
 
     public var isReadable: Bool { return true } // Not the case
 

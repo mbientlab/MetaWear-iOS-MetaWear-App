@@ -101,11 +101,11 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
             case .magnetometer:         return false
             case .gpio:                 return false
             case .haptic:               return false
-            case .ibeacon:              return false
+            case .ibeacon:              return true
             case .barometer:            return false
             case .ambientLight:         return false
             case .hygrometer:           return false
-            case .i2c:                  return false
+            case .i2c:                  return true
         }
     }
 

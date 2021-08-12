@@ -8,10 +8,15 @@ public protocol GPIOVM: AnyObject, DetailConfiguring {
 
     var delegate: GPIOVMDelegate? { get set }
 
+    var digitalValue: String { get }
+    var analogAbsoluteValue: String { get }
+    var analogRatioValue: String { get }
+
     var isChangingPins: Bool { get }
+    var showAnalogReadouts: Bool { get }
+
     var pins: [GPIOPin] { get }
     var pinSelected: GPIOPin { get }
-    var showAnalogReadouts: Bool { get }
 
     var changeType: GPIOChangeType { get }
     var pullMode: GPIOPullMode { get }

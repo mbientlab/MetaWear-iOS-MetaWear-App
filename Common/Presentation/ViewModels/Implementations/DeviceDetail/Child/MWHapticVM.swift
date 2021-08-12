@@ -9,7 +9,9 @@ import MetaWearCpp
 public class MWHapticVM: HapticVM {
 
     // UI State
-    public private(set) var canSendCommand = true
+    public var canSendCommand: Bool { !isUsingBuzzer && !isUsingHaptic }
+    public private(set) var isUsingBuzzer = false
+    public private(set) var isUsingHaptic = false
 
     // Settings
     public private(set) var hapticPulseWidth: Double = 500
@@ -45,6 +47,11 @@ extension MWHapticVM: DetailConfiguring {
 
 public extension MWHapticVM {
 
+    func userSetPulseWidth(string: String) {
+        guard let double = Double(string) else { return }
+        userSetPulseWidth(ms: double)
+    }
+
     func userSetPulseWidth(ms: Double) {
         let legal = max(0, min(ms, 10_000))
         hapticPulseWidth = legal
@@ -63,7 +70,7 @@ public extension MWHapticVM {
         let _dutyCycle = UInt8(dutyCycle)
         let _pulseWidth = UInt16(hapticPulseWidth)
 
-        canSendCommand = false
+        isUsingHaptic = true
         hapticCount += 1
         delegate?.refreshView()
 
@@ -71,7 +78,7 @@ public extension MWHapticVM {
 
         let delay = Double(_pulseWidth) / 1000.0
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
-            self?.canSendCommand = true
+            self?.isUsingHaptic = false
             self?.delegate?.refreshView()
         }
     }
@@ -81,7 +88,7 @@ public extension MWHapticVM {
 
         let _pulseWidth = UInt16(hapticPulseWidth)
 
-        canSendCommand = false
+        isUsingBuzzer = true
         buzzCount += 1
         delegate?.refreshView()
 
@@ -89,11 +96,10 @@ public extension MWHapticVM {
 
         let delay = Double(_pulseWidth) / 1000.0
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
-            self?.canSendCommand = true
+            self?.isUsingBuzzer = false
             self?.delegate?.refreshView()
         }
 
         delegate?.refreshView()
     }
-
 }

@@ -8,6 +8,7 @@ struct BarometerBlock: View {
 
     @ObservedObject var vm: BarometerSUIVC
 
+    @State private var unitWidth = CGFloat(0)
     @State private var read = ""
     @State private var enable = ""
 
@@ -37,6 +38,7 @@ struct BarometerBlock: View {
                 content: stream
             )
         }
+        .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }
     }
 
     // MARK: - Pickers
@@ -79,8 +81,10 @@ struct BarometerBlock: View {
 
             Text("x")
                 .fontVerySmall()
+                .fixedSize(horizontal: true, vertical: false)
                 .foregroundColor(.secondary)
                 .padding(.leading, 5)
+                .matchWidths(to: UnitWidthKey.self, width: unitWidth, alignment: .leading)
         }
     }
 
@@ -104,8 +108,10 @@ struct BarometerBlock: View {
 
             Text("ms")
                 .fontVerySmall()
+                .fixedSize(horizontal: true, vertical: false)
                 .foregroundColor(.secondary)
                 .padding(.leading, 5)
+                .matchWidths(to: UnitWidthKey.self, width: unitWidth, alignment: .leading)
         }
     }
 
@@ -136,3 +142,14 @@ struct BarometerBlock: View {
         }
     }
 }
+
+private extension BarometerBlock {
+
+    struct UnitWidthKey: WidthKey {
+        static let defaultValue: CGFloat = 0
+        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+            value = max(value, nextValue())
+        }
+    }
+}
+

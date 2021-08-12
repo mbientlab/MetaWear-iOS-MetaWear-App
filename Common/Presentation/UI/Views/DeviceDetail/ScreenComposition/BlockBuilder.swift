@@ -46,25 +46,23 @@ struct BlockBuilder: View  {
             case .accelerometer:
                 AccelerometerBlock(vm: vc.vms.accelerometer as! AccelerometerSUIVC)
 
-                // MARK: - Not Yet Built
-
             case .sensorFusion:
-                SensorFusionBlock()
+                SensorFusionBlock() // ------------
 
             case .gyroscope:
-                GyroscopeBlock(vm: MWGyroVM())
+                GyroscopeBlock(vm: MWGyroVM()) // -----------
 
             case .magnetometer:
-                MagnetometerBlock() //
+                MagnetometerBlock() // ---------------
 
             case .gpio:
-                GPIOBlock() // 
+                GPIOBlock(vm: vc.vms.gpio as! GPIOSUIVC)
 
             case .haptic:
-                HapticBlock() // 
+                HapticBlock(vm: vc.vms.haptic as! HapticSUIVC)
 
             case .ibeacon:
-                iBeaconBlock() //
+                iBeaconBlock(vm: vc.vms.ibeacon as! iBeaconSUIVC)
 
             case .barometer:
                 BarometerBlock(vm: vc.vms.barometer as! BarometerSUIVC)
@@ -73,7 +71,7 @@ struct BlockBuilder: View  {
                 AmbientLightBlock(vm: vc.vms.ambientLight as! AmbientLightSUIVC)
 
             case .hygrometer:
-                HygrometerBlock() //
+                HygrometerBlock() // -----------
 
             case .i2c:
                 I2CBlock(vm: vc.vms.i2c as! I2CBusSUIVC)

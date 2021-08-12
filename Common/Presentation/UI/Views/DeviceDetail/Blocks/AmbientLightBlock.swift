@@ -10,6 +10,7 @@ struct AmbientLightBlock: View {
 
     @State private var read = ""
     @State private var enable = ""
+    @State private var unitWidth = CGFloat(0)
 
     var body: some View {
         VStack(spacing: .cardVSpacing) {
@@ -37,6 +38,7 @@ struct AmbientLightBlock: View {
                 content: stream
             )
         }
+        .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }
     }
 
     // MARK: - Pickers
@@ -61,8 +63,10 @@ struct AmbientLightBlock: View {
 
             Text("x")
                 .fontVerySmall()
+                .fixedSize(horizontal: true, vertical: false)
                 .foregroundColor(.secondary)
                 .padding(.leading, 5)
+                .matchWidths(to: UnitWidthKey.self, width: unitWidth, alignment: .leading)
         }
     }
 
@@ -86,8 +90,10 @@ struct AmbientLightBlock: View {
 
             Text("ms")
                 .fontVerySmall()
+                .fixedSize(horizontal: true, vertical: false)
                 .foregroundColor(.secondary)
                 .padding(.leading, 5)
+                .matchWidths(to: UnitWidthKey.self, width: unitWidth, alignment: .leading)
         }
     }
 
@@ -111,8 +117,10 @@ struct AmbientLightBlock: View {
 
             Text("ms")
                 .fontVerySmall()
+                .fixedSize(horizontal: true, vertical: false)
                 .foregroundColor(.secondary)
                 .padding(.leading, 5)
+                .matchWidths(to: UnitWidthKey.self, width: unitWidth, alignment: .leading)
         }
     }
 
@@ -140,6 +148,16 @@ struct AmbientLightBlock: View {
                 if vm.isStreaming { vm.userRequestedStreamStop() }
                 else { vm.userRequestedStreamStart() }
             }
+        }
+    }
+}
+
+private extension AmbientLightBlock {
+
+    struct UnitWidthKey: WidthKey {
+        static let defaultValue: CGFloat = 0
+        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+            value = max(value, nextValue())
         }
     }
 }

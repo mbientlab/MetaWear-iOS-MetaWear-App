@@ -7,7 +7,7 @@ import MetaWear
 import MetaWearCpp
 import Combine
 
-public class MWGPIOVM: ObservableObject, GPIOVM {
+public class MWGPIOVM: GPIOVM {
 
     public private(set) var digitalValue = ""
     public private(set) var analogAbsoluteValue = ""

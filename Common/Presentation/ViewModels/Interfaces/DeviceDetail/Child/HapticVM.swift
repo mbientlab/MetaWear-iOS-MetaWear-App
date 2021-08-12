@@ -8,6 +8,8 @@ public protocol HapticVM: AnyObject, DetailConfiguring {
 
     var delegate: HapticVMDelegate? { get set }
 
+    var isUsingHaptic: Bool { get }
+    var isUsingBuzzer: Bool { get }
     var canSendCommand: Bool { get }
 
     var hapticPulseWidth: Double{ get }
