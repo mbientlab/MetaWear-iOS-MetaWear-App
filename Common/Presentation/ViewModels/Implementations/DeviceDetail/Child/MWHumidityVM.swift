@@ -7,7 +7,7 @@ import MetaWear
 import MetaWearCpp
 import Combine
 
-public class MWHumidityVM: ObservableObject, HumidityVM {
+public class MWHumidityVM: HumidityVM {
 
     public private(set) var humidity = Float(0)
     public private(set) var humidityReadout = " "

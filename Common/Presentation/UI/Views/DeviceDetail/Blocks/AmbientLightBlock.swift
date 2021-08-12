@@ -36,7 +36,7 @@ struct AmbientLightBlock: View {
             DividerPadded()
 
             LabeledItem(
-                label: "Illuminance",
+                label: "Live",
                 content: stream
             )
         }

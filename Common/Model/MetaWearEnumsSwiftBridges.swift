@@ -470,11 +470,11 @@ public enum BarometerModel: CaseIterable {
 // MARK: - Hygrometer
 
 public enum HumidityOversampling: Int, CaseIterable, Identifiable {
-    case x1
-    case x2
-    case x4
-    case x8
-    case x16
+    case x1 = 1
+    case x2 = 2
+    case x4 = 4
+    case x8 = 8
+    case x16 = 16
 
     public var cppEnumValue: MblMwHumidityBme280Oversampling {
         switch self {
@@ -485,6 +485,8 @@ public enum HumidityOversampling: Int, CaseIterable, Identifiable {
             case .x16: return MBL_MW_HUMIDITY_BME280_OVERSAMPLING_16X
         }
     }
+
+    public var displayName: String { String(rawValue) }
 
     public var id: Int { rawValue }
 

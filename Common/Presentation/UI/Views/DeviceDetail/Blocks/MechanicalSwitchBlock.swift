@@ -11,7 +11,7 @@ struct MechanicalSwitchBlock: View {
     var body: some View {
         VStack(spacing: .cardVSpacing) {
             LabeledItem(
-                label: "State",
+                label: "Live",
                 content: button
             )
         }

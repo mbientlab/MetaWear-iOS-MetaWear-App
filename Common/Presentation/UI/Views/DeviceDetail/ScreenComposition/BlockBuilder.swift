@@ -71,7 +71,7 @@ struct BlockBuilder: View  {
                 AmbientLightBlock(vm: vc.vms.ambientLight as! AmbientLightSUIVC)
 
             case .hygrometer:
-                HygrometerBlock() // -----------
+                HygrometerBlock(vm: vc.vms.hygrometer as! HumiditySUIVC)
 
             case .i2c:
                 I2CBlock(vm: vc.vms.i2c as! I2CBusSUIVC)

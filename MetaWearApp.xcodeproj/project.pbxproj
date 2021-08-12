@@ -1022,6 +1022,7 @@
 				947979DC26B9B49D00AEB5EA /* GyroscopeBlock.swift */,
 				947979E026B9B4C800AEB5EA /* HapticBlock.swift */,
 				947979D426B9A07C00AEB5EA /* HeaderBlock.swift */,
+				94BAA74C26C38CC70045E5E4 /* HygrometerBlock.swift */,
 				947979EA26B9B51100AEB5EA /* I2CBlock.swift */,
 				947979E626B9B4F800AEB5EA /* iBeaconBlock.swift */,
 				947979D226B9A07500AEB5EA /* IdentifiersBlock.swift */,
@@ -1032,7 +1033,6 @@
 				947979DA26B9B49100AEB5EA /* SensorFusionBlock.swift */,
 				947979CE26B9A06800AEB5EA /* SignalBlock.swift */,
 				947979C426B9A03700AEB5EA /* TemperatureBlock.swift */,
-				94BAA74C26C38CC70045E5E4 /* HygrometerBlock.swift */,
 			);
 			path = Blocks;
 			sourceTree = "<group>";

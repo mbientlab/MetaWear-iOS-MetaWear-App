@@ -88,6 +88,18 @@ public class HapticSUIVC: MWHapticVM, ObservableObject, HapticVMDelegate {
     }
 }
 
+public class HumiditySUIVC: MWHumidityVM, ObservableObject, HumidityVMDelegate {
+
+    public func refreshView() {
+        self.objectWillChange.send()
+    }
+
+    public override init() {
+        super.init()
+        self.delegate = self
+    }
+}
+
 public class LedSUIVC: MWLedVM, LedVMDelegate, ObservableObject {
 
     public func refreshView() {
