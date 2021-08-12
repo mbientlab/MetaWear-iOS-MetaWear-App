@@ -24,11 +24,16 @@ struct TextFieldConfig {
     static func largeDeviceStyle(face: FontFace) -> Self {
         self.init(font: face, size: 18)
     }
+
+    static func bodyStyle(face: FontFace, alignment: NSTextAlignment = .left) -> Self {
+        self.init(font: face, size: MWBody.fontSize, alignment: alignment)
+    }
 }
 
 struct SingleLineTextField: NSViewControllerRepresentable {
 
     var initialText: String
+    var placeholderText: String
     var config: TextFieldConfig
 
     let onCommit: ((String) -> Void)
@@ -37,11 +42,11 @@ struct SingleLineTextField: NSViewControllerRepresentable {
     func makeNSViewController(context: Context) -> SingleLineTextFieldVC {
         let vc = SingleLineTextFieldVC(
             initialText: initialText,
+            placeholder: placeholderText,
             font: config.font,
             size: config.size,
             alignment: config.alignment
         )
-
         vc.field.textColor = NSColor(config.textColor)
         vc.field.textContainer?.lineBreakMode = config.lineBreakMode
         vc.onCommit = onCommit
@@ -55,9 +60,17 @@ struct SingleLineTextField: NSViewControllerRepresentable {
         vc.field.textColor = NSColor(config.textColor)
         vc.field.font = .adaptiveFont(for: config.font, size: config.size, weight: config.weight, design: config.design)
         switch config.alignment {
-            case .left: vc.field.alignLeft(nil)
-            case .right: vc.field.alignRight(nil)
-            default: vc.field.alignCenter(nil)
+            case .left:
+                vc.placeholder.alignment = .left
+                vc.field.alignLeft(nil)
+
+            case .right:
+                vc.placeholder.alignment = .right
+                vc.field.alignRight(nil)
+
+            default:
+                vc.placeholder.alignment = .center
+                vc.field.alignCenter(nil)
         }
     }
 }
@@ -73,9 +86,14 @@ final class SingleLineTextFieldVC: NSViewController {
     private var subs: Set<AnyCancellable> = []
 
     let field = FatRoundInsertionCaretTextView(frame: .zero)
-    let placeholder = NSTextField(string: "")
+    let placeholder: NSTextField
 
-    init(initialText: String, font: FontFace, size: CGFloat, alignment: NSTextAlignment) {
+    init(initialText: String,
+         placeholder: String,
+         font: FontFace,
+         size: CGFloat,
+         alignment: NSTextAlignment) {
+        self.placeholder = NSTextField(string: placeholder)
         self.initialText = initialText
         self.font = .adaptiveFont(for: font, size: size)
         self.applyTextAlignment = alignment
@@ -127,6 +145,7 @@ final class SingleLineTextFieldVC: NSViewController {
         placeholder.isSelectable = false
         placeholder.isEnabled = false
         placeholder.isEditable = false
+        placeholder.alignment = field.alignment
     }
 
     private func resignFirstResponderOnClickMonitor() {
@@ -173,6 +192,10 @@ extension SingleLineTextFieldVC: NSTextViewDelegate {
         onCommit?(field.string)
         onCancel?()
         view.window?.makeFirstResponder(nil)
+    }
+
+    func textDidChange(_ notification: Notification) {
+        showOrHidePlaceholder()
     }
 
     func textView(_ view: NSTextView, doCommandBy commandSelector: Selector) -> Bool {

@@ -107,6 +107,7 @@ struct DeviceTitleEditor: View {
 #if os(macOS)
     private var macTextField: some View {
         SingleLineTextField(initialText: vm.deviceName,
+                            placeholderText: "Name",
                             config: .largeDeviceStyle(face: fontFace),
                             onCommit: validateTextFieldCommit,
                             onCancel: { }

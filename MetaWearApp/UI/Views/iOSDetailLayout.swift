@@ -20,7 +20,7 @@ struct iOSDeviceDetailLayout: View {
                     Header()
 
                     ForEach(vc.sortedVisibleGroups) { group in
-                        CardBuilder(group: group, namespace: details)
+                        BlockBuilder(group: group, namespace: details)
                     }
                 }
                 .padding(.top, 10)

@@ -55,7 +55,7 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
             case .barometer:            return "Barometer"
             case .ambientLight:         return "Ambient Light"
             case .hygrometer:           return "Hygrometer"
-            case .i2c:                  return "I2C"
+            case .i2c:                  return "I2C Bus"
         }
     }
 

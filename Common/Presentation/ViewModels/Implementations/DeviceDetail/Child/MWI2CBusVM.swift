@@ -6,26 +6,26 @@ import Foundation
 import MetaWear
 import MetaWearCpp
 
-public class MWI2CVM: ObservableObject, I2CVM {
+public class MWI2CBusVM: I2CBusVM {
 
     // Inputs
     public private(set) var selectedSize: I2CSize = .byte
-    public let selectedSizeOptions: [I2CSize] = I2CSize.allCases
+    public let sizeOptions: [I2CSize] = I2CSize.allCases
 
-    public private(set) var deviceAddressInput = " "
-    public private(set) var deviceRegisterInput = " "
-    public private(set) var bytesToWriteInput = " "
+    public private(set) var deviceAddressInput = ""
+    public private(set) var deviceRegisterInput = ""
+    public private(set) var bytesToWriteInput = ""
 
     // Output
     public private(set) var bytesReadFromDeviceOutput = " "
 
     // Identity
-    public weak var delegate: I2CVMDelegate? = nil
+    public weak var delegate: I2CBusVMDelegate? = nil
     private var parent: DeviceDetailsCoordinator? = nil
     private var device: MetaWear? = nil
 }
 
-extension MWI2CVM: DetailConfiguring {
+extension MWI2CBusVM: DetailConfiguring {
 
     public func configure(parent: DeviceDetailsCoordinator, device: MetaWear) {
         self.parent = parent
@@ -40,7 +40,12 @@ extension MWI2CVM: DetailConfiguring {
 
 // MARK: - Intents
 
-public extension MWI2CVM {
+public extension MWI2CBusVM {
+
+    func userSelectedSize(_ newValue: I2CSize) {
+        selectedSize = newValue
+        delegate?.refreshView()
+    }
 
     func userSetDeviceAddress(_ newValue: String) {
         deviceAddressInput = newValue
@@ -58,7 +63,7 @@ public extension MWI2CVM {
     }
 }
 
-public extension MWI2CVM {
+public extension MWI2CBusVM {
 
     func userRequestedReadBytes() {
         guard let (deviceAddress, registerAddress) = getValidDeviceAndRegisterAddresses() else { return }
@@ -69,7 +74,7 @@ public extension MWI2CVM {
 
         mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
             let bytes: [UInt8] = obj!.pointee.valueAs()
-            let _self: MWI2CVM = bridge(ptr: context!)
+            let _self: MWI2CBusVM = bridge(ptr: context!)
 
             DispatchQueue.main.async {
                 _self.bytesReadFromDeviceOutput = bytes.description
@@ -107,7 +112,7 @@ public extension MWI2CVM {
 
 // MARK: - Helpers
 
-private extension MWI2CVM {
+private extension MWI2CBusVM {
 
     func getValidDeviceAndRegisterAddresses() -> (device: UInt8, register: UInt8)? {
         guard let deviceAddress = UInt8(deviceAddressInput.drop0xPrefix, radix: 16) else {

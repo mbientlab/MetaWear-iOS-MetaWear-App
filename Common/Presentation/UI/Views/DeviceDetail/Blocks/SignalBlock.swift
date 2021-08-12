@@ -17,7 +17,8 @@ struct SignalBlock: View {
 
             LabeledItem(
                 label: "Tx Power",
-                content: txPicker
+                content: txPicker,
+                contentAlignment: .trailing
             )
         }
     }

@@ -16,7 +16,7 @@ public protocol DetailVMContainer: AnyObject {
     var gyroscope:      MWGyroVM                 { get }
     var haptic:         MWHapticVM               { get }
     var hygrometer:     MWHumidityVM             { get }
-    var i2c:            MWI2CVM                  { get }
+    var i2c:            MWI2CBusVM                  { get }
     var ibeacon:        MWiBeaconVM              { get }
     var identifiers:    IdentifiersVM            { get }
     var led:            LedVM                    { get }

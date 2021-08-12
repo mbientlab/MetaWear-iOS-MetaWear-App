@@ -53,7 +53,7 @@ public class DetailVMContainerA: DetailVMContainer {
     public lazy private(set) var gyroscope: MWGyroVM                  = MWGyroVM()
     public lazy private(set) var haptic: MWHapticVM                   = MWHapticVM()
     public lazy private(set) var hygrometer: MWHumidityVM             = MWHumidityVM()
-    public lazy private(set) var i2c: MWI2CVM                         = MWI2CVM()
+    public lazy private(set) var i2c: MWI2CBusVM                      = I2CBusSUIVC()
     public lazy private(set) var ibeacon: MWiBeaconVM                 = MWiBeaconVM()
     public lazy private(set) var identifiers: IdentifiersVM           = IdentifiersSUIVC()
     public lazy private(set) var led: LedVM                           = LedSUIVC()

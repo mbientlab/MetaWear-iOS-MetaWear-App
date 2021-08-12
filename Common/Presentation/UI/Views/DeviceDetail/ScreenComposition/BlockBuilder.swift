@@ -1,15 +1,12 @@
-//
-//  CardBuilder.swift
-//  CardBuilder
-//
 //  Created by Ryan Ferrell on 8/6/21.
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
 import SwiftUI
 
-/// Until a Swift Evolution proposal passes, SwiftUI doesn't exactly play well with protocol composition (generics can get out of hand). Here, views force cast a sub-classable declarative wrapper of a view model.
-struct CardBuilder: View  {
+/// Until a Swift Evolution proposal passes, SwiftUI doesn't completely play well with protocol composition (generics get out of hand when passing a container of injected VMs/VCs). Here, views force cast a  declarative VM wrapper.
+///
+struct BlockBuilder: View  {
 
     var group: DetailGroup
     var namespace: Namespace.ID
@@ -79,7 +76,7 @@ struct CardBuilder: View  {
                 HygrometerBlock() //
 
             case .i2c:
-                I2CBlock() //
+                I2CBlock(vm: vc.vms.i2c as! I2CBusSUIVC)
 
             case .headerInfoAndState:
                 HeaderBlock(vm: vc.vms.header as! DetailHeaderSUIVC)

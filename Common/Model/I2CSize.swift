@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum I2CSize: Int, CaseIterable {
+public enum I2CSize: Int, CaseIterable, Identifiable {
     case byte
     case word
     case dword
@@ -16,4 +16,14 @@ public enum I2CSize: Int, CaseIterable {
             case .dword: return 4
         }
     }
+
+    public var displayName: String {
+        switch self {
+            case .byte: return "byte"
+            case .word: return "word"
+            case .dword: return "dword"
+        }
+    }
+
+    public var id: Int { rawValue }
 }

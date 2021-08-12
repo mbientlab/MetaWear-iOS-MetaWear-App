@@ -103,7 +103,7 @@
 		941EFBBF26BCE79E0087F960 /* HumidityVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539726B7E0F600E7B2DC /* HumidityVM.swift */; };
 		941EFBC026BCE79E0087F960 /* MechanicalSwitchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539626B7E0F600E7B2DC /* MechanicalSwitchVM.swift */; };
 		941EFBC126BCE79E0087F960 /* FirmwareVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C553A226B7E0F700E7B2DC /* FirmwareVM.swift */; };
-		941EFBC226BCE79E0087F960 /* I2CVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539D26B7E0F600E7B2DC /* I2CVM.swift */; };
+		941EFBC226BCE79E0087F960 /* I2CBusVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539D26B7E0F600E7B2DC /* I2CBusVM.swift */; };
 		941EFBC326BCE79E0087F960 /* SignalVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539326B7E0F600E7B2DC /* SignalVM.swift */; };
 		941EFBC426BCE79E0087F960 /* HapticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539526B7E0F600E7B2DC /* HapticVM.swift */; };
 		941EFBC526BCE7A30087F960 /* ScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94F26B45B770014FC91 /* ScannedDeviceCellVM.swift */; };
@@ -143,7 +143,7 @@
 		941EFC1626BDC1000087F960 /* Sort+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0226BD973A0087F960 /* Sort+RawRepresentable.swift */; };
 		941EFC1726BDC1240087F960 /* ConnectionToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC0026BD92750087F960 /* ConnectionToolbarButton.swift */; };
 		941EFC1926BDD4E10087F960 /* DeviceDetailScreenHostingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC1826BDD4E10087F960 /* DeviceDetailScreenHostingViews.swift */; };
-		941EFC1B26BE05E40087F960 /* CardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC1A26BE05E40087F960 /* CardBuilder.swift */; };
+		941EFC1B26BE05E40087F960 /* BlockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC1A26BE05E40087F960 /* BlockBuilder.swift */; };
 		941EFC1D26BE0E780087F960 /* BorderlessHighlightingButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC1C26BE0E780087F960 /* BorderlessHighlightingButtonStyle.swift */; };
 		941EFC1F26BE0F740087F960 /* WhenHovered.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC1E26BE0F740087F960 /* WhenHovered.swift */; };
 		941EFC2126BE59590087F960 /* SingleLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC2026BE59590087F960 /* SingleLineTextField.swift */; };
@@ -217,13 +217,14 @@
 		948E61C926BF515200A387E7 /* AdaptiveFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC2326BE5ECD0087F960 /* AdaptiveFont.swift */; };
 		948E61CA26BF516A00A387E7 /* AdaptiveFont+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC2726BE73880087F960 /* AdaptiveFont+SwiftUI.swift */; };
 		948E61CB26BF517200A387E7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC2926BE74600087F960 /* Fonts.swift */; };
-		948E61CC26BF524100A387E7 /* CardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC1A26BE05E40087F960 /* CardBuilder.swift */; };
+		948E61CC26BF524100A387E7 /* BlockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC1A26BE05E40087F960 /* BlockBuilder.swift */; };
 		948E61CD26BF524C00A387E7 /* DeviceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC3626BE945B0087F960 /* DeviceImage.swift */; };
 		948E61CE26BF529000A387E7 /* DeviceDetailScreenHostingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC1826BDD4E10087F960 /* DeviceDetailScreenHostingViews.swift */; };
 		948E61CF26BF529E00A387E7 /* MetaWearScanningSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB7426BCE6B20087F960 /* MetaWearScanningSVC.swift */; };
 		948E61D026BF534000A387E7 /* MetaWearDeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC2F26BE8EAE0087F960 /* MetaWearDeviceModel.swift */; };
 		948E61D126BF539000A387E7 /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 941EFC3826BE95EB0087F960 /* SharedAssets.xcassets */; };
 		948E61D326BFA7C100A387E7 /* NaiveGraphController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E61D226BFA7C100A387E7 /* NaiveGraphController.swift */; };
+		9493629F26C58A85009A80B7 /* SmallTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9493629E26C58A85009A80B7 /* SmallTextField.swift */; };
 		94A271F626C1C2C600512626 /* PlaceholderDeviceConnectionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A271F526C1C2C600512626 /* PlaceholderDeviceConnectionScreen.swift */; };
 		94A271F826C1C3EA00512626 /* GlintingMLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A271F726C1C3EA00512626 /* GlintingMLogo.swift */; };
 		94A271F926C1C42400512626 /* GlintingMLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A271F726C1C3EA00512626 /* GlintingMLogo.swift */; };
@@ -242,8 +243,8 @@
 		94ACC9E126B9F5F700264F6E /* ExportDataButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9E026B9F5F700264F6E /* ExportDataButton.swift */; };
 		94ACC9E726B9FD2C00264F6E /* DeviceDetailScreenSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ACC9E626B9FD2C00264F6E /* DeviceDetailScreenSUIVC.swift */; };
 		94AFED3526B875C6004326C8 /* MWldentifiersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AFED3426B875C6004326C8 /* MWldentifiersVM.swift */; };
-		94BAA73E26C38A780045E5E4 /* MWI2CVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA73D26C38A780045E5E4 /* MWI2CVM.swift */; };
-		94BAA73F26C38A780045E5E4 /* MWI2CVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA73D26C38A780045E5E4 /* MWI2CVM.swift */; };
+		94BAA73E26C38A780045E5E4 /* MWI2CBusVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA73D26C38A780045E5E4 /* MWI2CBusVM.swift */; };
+		94BAA73F26C38A780045E5E4 /* MWI2CBusVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA73D26C38A780045E5E4 /* MWI2CBusVM.swift */; };
 		94BAA74126C38AD40045E5E4 /* MWAmbientLightVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74026C38AD40045E5E4 /* MWAmbientLightVM.swift */; };
 		94BAA74226C38AD40045E5E4 /* MWAmbientLightVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74026C38AD40045E5E4 /* MWAmbientLightVM.swift */; };
 		94BAA74426C38AFA0045E5E4 /* MWBarometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA74326C38AFA0045E5E4 /* MWBarometerVM.swift */; };
@@ -279,7 +280,7 @@
 		94C553AB26B7E0F700E7B2DC /* LEDVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539A26B7E0F600E7B2DC /* LEDVM.swift */; };
 		94C553AC26B7E0F700E7B2DC /* BatteryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539B26B7E0F600E7B2DC /* BatteryVM.swift */; };
 		94C553AD26B7E0F700E7B2DC /* SensorFusionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539C26B7E0F600E7B2DC /* SensorFusionVM.swift */; };
-		94C553AE26B7E0F700E7B2DC /* I2CVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539D26B7E0F600E7B2DC /* I2CVM.swift */; };
+		94C553AE26B7E0F700E7B2DC /* I2CBusVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539D26B7E0F600E7B2DC /* I2CBusVM.swift */; };
 		94C553AF26B7E0F700E7B2DC /* GPIOVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539E26B7E0F700E7B2DC /* GPIOVM.swift */; };
 		94C553B026B7E0F700E7B2DC /* TemperatureVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5539F26B7E0F700E7B2DC /* TemperatureVM.swift */; };
 		94C553B126B7E0F700E7B2DC /* MagenetometerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C553A026B7E0F700E7B2DC /* MagenetometerVM.swift */; };
@@ -300,6 +301,8 @@
 		94E155D926C4EC6C00B73487 /* I2CSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155D726C4EC6C00B73487 /* I2CSize.swift */; };
 		94E155E126C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155E026C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift */; };
 		94E155E226C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155E026C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift */; };
+		94E155E526C57CBB00B73487 /* I2CBusSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155E426C57CBB00B73487 /* I2CBusSUIVC.swift */; };
+		94E155E626C57CBB00B73487 /* I2CBusSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155E426C57CBB00B73487 /* I2CBusSUIVC.swift */; };
 		94F3316726B518D30015EE88 /* DetailHeaderSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316626B518D30015EE88 /* DetailHeaderSUIVC.swift */; };
 		94F3316D26B52FD90015EE88 /* DetailConfiguring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3316C26B52FD90015EE88 /* DetailConfiguring.swift */; };
 		94F3317126B5308B0015EE88 /* CrossPlatformAlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317026B5308B0015EE88 /* CrossPlatformAlertPresenter.swift */; };
@@ -388,7 +391,7 @@
 		941EFC0D26BDB46C0087F960 /* Array+CountedByIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+CountedByIndex.swift"; sourceTree = "<group>"; };
 		941EFC0F26BDB6390087F960 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		941EFC1826BDD4E10087F960 /* DeviceDetailScreenHostingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailScreenHostingViews.swift; sourceTree = "<group>"; };
-		941EFC1A26BE05E40087F960 /* CardBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBuilder.swift; sourceTree = "<group>"; };
+		941EFC1A26BE05E40087F960 /* BlockBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockBuilder.swift; sourceTree = "<group>"; };
 		941EFC1C26BE0E780087F960 /* BorderlessHighlightingButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderlessHighlightingButtonStyle.swift; sourceTree = "<group>"; };
 		941EFC1E26BE0F740087F960 /* WhenHovered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhenHovered.swift; sourceTree = "<group>"; };
 		941EFC2026BE59590087F960 /* SingleLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLineTextField.swift; sourceTree = "<group>"; };
@@ -451,6 +454,7 @@
 		948E61C326BF3D2C00A387E7 /* CopyMacButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyMacButton.swift; sourceTree = "<group>"; };
 		948E61C526BF3FB700A387E7 /* ScannedDeviceCellSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedDeviceCellSUIVC.swift; sourceTree = "<group>"; };
 		948E61D226BFA7C100A387E7 /* NaiveGraphController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaiveGraphController.swift; sourceTree = "<group>"; };
+		9493629E26C58A85009A80B7 /* SmallTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallTextField.swift; sourceTree = "<group>"; };
 		94A271F526C1C2C600512626 /* PlaceholderDeviceConnectionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderDeviceConnectionScreen.swift; sourceTree = "<group>"; };
 		94A271F726C1C3EA00512626 /* GlintingMLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlintingMLogo.swift; sourceTree = "<group>"; };
 		94A514AB26B87BFB008707ED /* MWBatteryVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWBatteryVM.swift; sourceTree = "<group>"; };
@@ -468,7 +472,7 @@
 		94ACC9E026B9F5F700264F6E /* ExportDataButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDataButton.swift; sourceTree = "<group>"; };
 		94ACC9E626B9FD2C00264F6E /* DeviceDetailScreenSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailScreenSUIVC.swift; sourceTree = "<group>"; };
 		94AFED3426B875C6004326C8 /* MWldentifiersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWldentifiersVM.swift; sourceTree = "<group>"; };
-		94BAA73D26C38A780045E5E4 /* MWI2CVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWI2CVM.swift; sourceTree = "<group>"; };
+		94BAA73D26C38A780045E5E4 /* MWI2CBusVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWI2CBusVM.swift; sourceTree = "<group>"; };
 		94BAA74026C38AD40045E5E4 /* MWAmbientLightVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAmbientLightVM.swift; sourceTree = "<group>"; };
 		94BAA74326C38AFA0045E5E4 /* MWBarometerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWBarometerVM.swift; sourceTree = "<group>"; };
 		94BAA74626C38B290045E5E4 /* MWHapticVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWHapticVM.swift; sourceTree = "<group>"; };
@@ -493,7 +497,7 @@
 		94C5539A26B7E0F600E7B2DC /* LEDVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LEDVM.swift; sourceTree = "<group>"; };
 		94C5539B26B7E0F600E7B2DC /* BatteryVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryVM.swift; sourceTree = "<group>"; };
 		94C5539C26B7E0F600E7B2DC /* SensorFusionVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorFusionVM.swift; sourceTree = "<group>"; };
-		94C5539D26B7E0F600E7B2DC /* I2CVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = I2CVM.swift; sourceTree = "<group>"; };
+		94C5539D26B7E0F600E7B2DC /* I2CBusVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = I2CBusVM.swift; sourceTree = "<group>"; };
 		94C5539E26B7E0F700E7B2DC /* GPIOVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPIOVM.swift; sourceTree = "<group>"; };
 		94C5539F26B7E0F700E7B2DC /* TemperatureVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemperatureVM.swift; sourceTree = "<group>"; };
 		94C553A026B7E0F700E7B2DC /* MagenetometerVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagenetometerVM.swift; sourceTree = "<group>"; };
@@ -509,6 +513,7 @@
 		94E155D026C4E4FF00B73487 /* DataStreamStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStreamStats.swift; sourceTree = "<group>"; };
 		94E155D726C4EC6C00B73487 /* I2CSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = I2CSize.swift; sourceTree = "<group>"; };
 		94E155E026C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughSwiftUIVCs.swift; sourceTree = "<group>"; };
+		94E155E426C57CBB00B73487 /* I2CBusSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = I2CBusSUIVC.swift; sourceTree = "<group>"; };
 		94F3316626B518D30015EE88 /* DetailHeaderSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderSUIVC.swift; sourceTree = "<group>"; };
 		94F3316C26B52FD90015EE88 /* DetailConfiguring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailConfiguring.swift; sourceTree = "<group>"; };
 		94F3317026B5308B0015EE88 /* CrossPlatformAlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPlatformAlertPresenter.swift; sourceTree = "<group>"; };
@@ -585,6 +590,7 @@
 			isa = PBXGroup;
 			children = (
 				941EFC2026BE59590087F960 /* SingleLineTextField.swift */,
+				9493629E26C58A85009A80B7 /* SmallTextField.swift */,
 			);
 			path = TextFields;
 			sourceTree = "<group>";
@@ -603,7 +609,7 @@
 		94006FB026C4D1060048C5AD /* ScreenComposition */ = {
 			isa = PBXGroup;
 			children = (
-				941EFC1A26BE05E40087F960 /* CardBuilder.swift */,
+				941EFC1A26BE05E40087F960 /* BlockBuilder.swift */,
 				947979B926B9985700AEB5EA /* DeviceDetailScreen.swift */,
 				94C2788626C1076D006772F6 /* DeviceDetailScreenComponents.swift */,
 				941EFC1826BDD4E10087F960 /* DeviceDetailScreenHostingViews.swift */,
@@ -635,7 +641,7 @@
 				94C5539526B7E0F600E7B2DC /* HapticVM.swift */,
 				9482DC4E26B5078A00DD19EB /* HeaderVM.swift */,
 				94C5539726B7E0F600E7B2DC /* HumidityVM.swift */,
-				94C5539D26B7E0F600E7B2DC /* I2CVM.swift */,
+				94C5539D26B7E0F600E7B2DC /* I2CBusVM.swift */,
 				94C5539826B7E0F600E7B2DC /* IBeaconVM.swift */,
 				94C5539126B7DF5A00E7B2DC /* IdentifiersVM.swift */,
 				94C5539A26B7E0F600E7B2DC /* LEDVM.swift */,
@@ -662,7 +668,7 @@
 				94BAA74626C38B290045E5E4 /* MWHapticVM.swift */,
 				94F3317226B530FF0015EE88 /* MWHeaderVM.swift */,
 				94BAA74F26C394370045E5E4 /* MWHumidityVM.swift */,
-				94BAA73D26C38A780045E5E4 /* MWI2CVM.swift */,
+				94BAA73D26C38A780045E5E4 /* MWI2CBusVM.swift */,
 				94BAA74926C38B560045E5E4 /* MWiBeaconVM.swift */,
 				94AFED3426B875C6004326C8 /* MWldentifiersVM.swift */,
 				94A514B126B882B6008707ED /* MWLEDVM.swift */,
@@ -698,9 +704,10 @@
 			children = (
 				9488E57026B8EF5B006A6262 /* AccelerometerSUIVC.swift */,
 				94F3316626B518D30015EE88 /* DetailHeaderSUIVC.swift */,
+				94E155E426C57CBB00B73487 /* I2CBusSUIVC.swift */,
+				94E155E026C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift */,
 				94A514C326B8AFF6008707ED /* SignalSUIVC.swift */,
 				94A514B726B88864008707ED /* TemperatureSUIVC.swift */,
-				94E155E026C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift */,
 			);
 			path = Child;
 			sourceTree = "<group>";
@@ -1472,7 +1479,7 @@
 				941EFBB326BCE79D0087F960 /* IdentifiersVM.swift in Sources */,
 				941EFBD026BCE7AD0087F960 /* MWAccelerometerVM.swift in Sources */,
 				94BAA75726C3B8550045E5E4 /* MWSensorFusionVM.swift in Sources */,
-				941EFC1B26BE05E40087F960 /* CardBuilder.swift in Sources */,
+				941EFC1B26BE05E40087F960 /* BlockBuilder.swift in Sources */,
 				941EFBA326BCE7920087F960 /* IdentifiersBlock.swift in Sources */,
 				94BAA74826C38B290045E5E4 /* MWHapticVM.swift in Sources */,
 				941EFC1F26BE0F740087F960 /* WhenHovered.swift in Sources */,
@@ -1498,7 +1505,7 @@
 				941EFBB426BCE79D0087F960 /* MagenetometerVM.swift in Sources */,
 				941EFB8826BCE7770087F960 /* SignalDots.swift in Sources */,
 				941EFBD226BCE7AD0087F960 /* MWFirmwareVM.swift in Sources */,
-				94BAA73F26C38A780045E5E4 /* MWI2CVM.swift in Sources */,
+				94BAA73F26C38A780045E5E4 /* MWI2CBusVM.swift in Sources */,
 				941EFBD326BCE7AD0087F960 /* MWBatteryVM.swift in Sources */,
 				941EFC1026BDB6390087F960 /* AppStore.swift in Sources */,
 				941EFB8F26BCE7890087F960 /* DetailHeaderSUIVC.swift in Sources */,
@@ -1512,6 +1519,7 @@
 				94E155D926C4EC6C00B73487 /* I2CSize.swift in Sources */,
 				948E48DC26C4551300CB9152 /* DataPointModels.swift in Sources */,
 				941EFB7D26BCE7500087F960 /* ShakeEffect.swift in Sources */,
+				94E155E626C57CBB00B73487 /* I2CBusSUIVC.swift in Sources */,
 				941EFBCB26BCE7AD0087F960 /* MWSignalStrengthVM.swift in Sources */,
 				941EFB9A26BCE7920087F960 /* I2CBlock.swift in Sources */,
 				941EFB7E26BCE76E0087F960 /* DownloadButton.swift in Sources */,
@@ -1561,6 +1569,7 @@
 				941EFBA526BCE7920087F960 /* BatteryBlock.swift in Sources */,
 				941EFBCE26BCE7AD0087F960 /* MWResetVM.swift in Sources */,
 				9406194426C0423B007BE281 /* GraphDriver.swift in Sources */,
+				9493629F26C58A85009A80B7 /* SmallTextField.swift in Sources */,
 				941EFC0326BD973A0087F960 /* Sort+RawRepresentable.swift in Sources */,
 				941EFBBA26BCE79D0087F960 /* HeaderVM.swift in Sources */,
 				941EFC2E26BE8AAB0087F960 /* SpinEffect.swift in Sources */,
@@ -1577,7 +1586,7 @@
 				941EFBA026BCE7920087F960 /* AmbientLightBlock.swift in Sources */,
 				94BAA75126C394370045E5E4 /* MWHumidityVM.swift in Sources */,
 				94C27C0E26C4CD4A0071E1D5 /* UIEnvironment.swift in Sources */,
-				941EFBC226BCE79E0087F960 /* I2CVM.swift in Sources */,
+				941EFBC226BCE79E0087F960 /* I2CBusVM.swift in Sources */,
 				941EFB8526BCE7770087F960 /* StatsBlock.swift in Sources */,
 				941EFBC026BCE79E0087F960 /* MechanicalSwitchVM.swift in Sources */,
 				94E155CC26C4DAE100B73487 /* MWToastServerVM.swift in Sources */,
@@ -1705,6 +1714,7 @@
 				947979DB26B9B49100AEB5EA /* SensorFusionBlock.swift in Sources */,
 				9481A57926BC6728008CD909 /* AAGraph.swift in Sources */,
 				94C553B026B7E0F700E7B2DC /* TemperatureVM.swift in Sources */,
+				94E155E526C57CBB00B73487 /* I2CBusSUIVC.swift in Sources */,
 				948E61CE26BF529000A387E7 /* DeviceDetailScreenHostingViews.swift in Sources */,
 				94BAA74D26C38CC70045E5E4 /* HygrometerBlock.swift in Sources */,
 				947979CD26B9A06100AEB5EA /* FirmwareBlock.swift in Sources */,
@@ -1722,7 +1732,7 @@
 				947979C926B9A05000AEB5EA /* MechanicalSwitchBlock.swift in Sources */,
 				948E48DB26C4551300CB9152 /* DataPointModels.swift in Sources */,
 				9473587B26B92D610032EE87 /* AccelerometerSampleFrequency.swift in Sources */,
-				94BAA73E26C38A780045E5E4 /* MWI2CVM.swift in Sources */,
+				94BAA73E26C38A780045E5E4 /* MWI2CBusVM.swift in Sources */,
 				9438D95C26B47C990014FC91 /* String+Drop0xPrefix.swift in Sources */,
 				9487921D26C335600066CD5E /* MWMagnetometerVM.swift in Sources */,
 				94C07E8726BB2F35008D875B /* DividerPadded.swift in Sources */,
@@ -1751,7 +1761,7 @@
 				94C553AF26B7E0F700E7B2DC /* GPIOVM.swift in Sources */,
 				947979D726B9A3BA00AEB5EA /* DetailsBlockCard.swift in Sources */,
 				94A514B026B88184008707ED /* MWFirmwareVM.swift in Sources */,
-				94C553AE26B7E0F700E7B2DC /* I2CVM.swift in Sources */,
+				94C553AE26B7E0F700E7B2DC /* I2CBusVM.swift in Sources */,
 				947979D326B9A07500AEB5EA /* IdentifiersBlock.swift in Sources */,
 				94092E1226C0E38B00997C45 /* PreferencesPersistence.swift in Sources */,
 				AB5D5F9125B8A7B400D2591C /* DeviceTableViewCell.swift in Sources */,
@@ -1771,7 +1781,7 @@
 				947979E126B9B4C800AEB5EA /* HapticBlock.swift in Sources */,
 				948E61CA26BF516A00A387E7 /* AdaptiveFont+SwiftUI.swift in Sources */,
 				94A514B826B88864008707ED /* TemperatureSUIVC.swift in Sources */,
-				948E61CC26BF524100A387E7 /* CardBuilder.swift in Sources */,
+				948E61CC26BF524100A387E7 /* BlockBuilder.swift in Sources */,
 				94F3317326B530FF0015EE88 /* MWHeaderVM.swift in Sources */,
 				947979B226B98EC800AEB5EA /* UIKit+KeyWindow.swift in Sources */,
 			);

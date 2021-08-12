@@ -46,7 +46,7 @@ struct LeftColumn: View {
 
         ForEach(vc.sortedVisibleGroups) { group in
             if group.isInfo {
-                CardBuilder(group: group, namespace: details)
+                BlockBuilder(group: group, namespace: details)
             }
         }
         .animation(.easeOut(duration: 0.15))
@@ -62,7 +62,7 @@ struct RightColumns: View {
     var body: some View {
         ForEach(vc.sortedVisibleGroups) { group in
             if !group.isInfo {
-                CardBuilder(group: group, namespace: details)
+                BlockBuilder(group: group, namespace: details)
             }
         }.animation(.easeOut(duration: 0.15))
     }
