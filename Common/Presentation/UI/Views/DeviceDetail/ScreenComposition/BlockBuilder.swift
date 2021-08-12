@@ -70,7 +70,7 @@ struct BlockBuilder: View  {
                 BarometerBlock() //
 
             case .ambientLight:
-                AmbientLightBlock() //
+                AmbientLightBlock(vm: vc.vms.ambientLight as! AmbientLightSUIVC)
 
             case .hygrometer:
                 HygrometerBlock() //

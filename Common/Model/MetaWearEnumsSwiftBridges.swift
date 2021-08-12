@@ -212,12 +212,12 @@ case hz25
 // MARK: - Ambient Light
 
 public enum AmbientLightGain: Int, CaseIterable, Identifiable {
-    case gain1
-    case gain2
-    case gain4
-    case gain8
-    case gain48
-    case gain96
+    case gain1 = 1
+    case gain2 = 2
+    case gain4 = 4
+    case gain8 = 8
+    case gain48 = 48
+    case gain96 = 96
 
     public var cppEnumValue: MblMwAlsLtr329Gain {
         switch self {
@@ -230,18 +230,20 @@ public enum AmbientLightGain: Int, CaseIterable, Identifiable {
         }
     }
 
+    var displayName: String { String(rawValue) }
+
     public var id: Int { rawValue }
 }
 
 public enum AmbientLightTR329IntegrationTime: Int, CaseIterable, Identifiable {
-    case ms50
-    case ms100
-    case ms150
-    case ms200
-    case ms250
-    case ms300
-    case ms350
-    case ms400
+    case ms50 = 50
+    case ms100 = 100
+    case ms150 = 150
+    case ms200 = 200
+    case ms250 = 250
+    case ms300 = 300
+    case ms350 = 350
+    case ms400 = 400
 
     public var cppEnumValue: MblMwAlsLtr329IntegrationTime {
         switch self {
@@ -256,16 +258,18 @@ public enum AmbientLightTR329IntegrationTime: Int, CaseIterable, Identifiable {
         }
     }
 
+    var displayName: String { String(rawValue) }
+
     public var id: Int { rawValue }
 }
 
 public enum AmbientLightTR329MeasurementRate: Int, CaseIterable, Identifiable {
-    case ms50
-    case ms100
-    case ms200
-    case ms500
-    case ms1000
-    case ms2000
+    case ms50 = 50
+    case ms100 = 100
+    case ms200 = 200
+    case ms500 = 500
+    case ms1000 = 1000
+    case ms2000 = 2000
 
     public var cppEnumValue: MblMwAlsLtr329MeasurementRate {
         switch self {
@@ -277,6 +281,8 @@ public enum AmbientLightTR329MeasurementRate: Int, CaseIterable, Identifiable {
             case .ms2000: return MBL_MW_ALS_LTR329_RATE_2000ms
         }
     }
+
+    var displayName: String { String(rawValue) }
 
     public var id: Int { rawValue }
 }

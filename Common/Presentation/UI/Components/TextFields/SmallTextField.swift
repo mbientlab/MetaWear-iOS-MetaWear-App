@@ -8,6 +8,7 @@ struct SmallTextField: View {
 
     @Environment(\.fontFace) private var fontFace
 
+    var smallest: Bool = false
     var initialText: String
     var placeholder: String
     /// Triggers animation on any change.
@@ -40,7 +41,7 @@ struct SmallTextField: View {
                             onCommit: validateTextFieldCommit,
                             onCancel: { }
         )
-            .frame(width: .detailBlockWidth * 0.4,
+            .frame(width: .detailBlockWidth * (smallest ? 0.2 : 0.4),
                    height: fontFace == .openDyslexic ? size + 8 : size + 5,
                    alignment: .trailing)
             .padding(6)

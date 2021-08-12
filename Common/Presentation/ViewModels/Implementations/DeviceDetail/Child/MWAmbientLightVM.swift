@@ -6,7 +6,7 @@ import Foundation
 import MetaWear
 import MetaWearCpp
 
-public class MWAmbientLightVM: ObservableObject, AmbientLightVM {
+public class MWAmbientLightVM: AmbientLightVM {
 
     // Button state
     public private(set) var isStreaming = false
@@ -21,7 +21,7 @@ public class MWAmbientLightVM: ObservableObject, AmbientLightVM {
 
     // Data state
     public private(set) var illuminance: Double = 0
-    public private(set) var illuminanceString: String = " "
+    public private(set) var illuminanceString: String = ""
     public let illuminanceUnitLabel = "lux"
 
     // Identity

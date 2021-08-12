@@ -64,7 +64,7 @@ struct I2CBlock: View {
     // MARK: - Text Fields
 
     private var device: some View {
-        SmallTextField(
+        SmallTextField(smallest: true,
             initialText: vm.deviceAddressInput,
             placeholder: "0x12",
             invalidEntry: vm.showDeviceInputInvalid,
@@ -73,7 +73,7 @@ struct I2CBlock: View {
     }
 
     private var register: some View {
-        SmallTextField(
+        SmallTextField(smallest: true,
             initialText: vm.deviceRegisterInput,
             placeholder: "0x34",
             invalidEntry: vm.showRegisterInputInvalid,

@@ -122,6 +122,7 @@ final class SingleLineTextFieldVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         resignFirstResponderOnClickMonitor()
+        placeholder.frame = view.frame
     }
 
     private func configureTextField() {

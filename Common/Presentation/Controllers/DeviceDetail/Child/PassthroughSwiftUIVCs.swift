@@ -4,6 +4,18 @@
 
 import Foundation
 
+public class AmbientLightSUIVC: MWAmbientLightVM, ObservableObject, AmbientLightVMDelegate {
+
+    public func refreshView() {
+        self.objectWillChange.send()
+    }
+
+    public override init() {
+        super.init()
+        self.delegate = self
+    }
+}
+
 public class BatterySUIVC: MWBatteryVM, ObservableObject, BatteryVMDelegate {
 
     public func refreshView() {
