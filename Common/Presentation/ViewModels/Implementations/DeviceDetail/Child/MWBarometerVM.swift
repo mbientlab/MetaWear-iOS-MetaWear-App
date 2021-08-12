@@ -6,24 +6,24 @@ import Foundation
 import MetaWear
 import MetaWearCpp
 
-public class MWBarometerVM: ObservableObject, BarometerVM {
+public class MWBarometerVM: BarometerVM {
 
     // Button state
     public private(set) var isStreaming = false
 
     // Sensor settings
-    public private(set) var barometerStandbyTimeSelected: BarometerStandbyTime = .ms1000
-    public private(set) var barometerIIRFilterSelected: BarometerIIRFilter = .avg16
-    public private(set) var barometerOversamplingSelected: BarometerOversampling = .standard
+    public private(set) var standbyTimeSelected: BarometerStandbyTime = .ms1000
+    public private(set) var iirFilterSelected: BarometerIIRFilter = .avg16
+    public private(set) var oversamplingSelected: BarometerOversampling = .standard
 
     // Sensor settings options available
-    public private(set) lazy var barometerStandbyTimeOptions: [BarometerStandbyTime] = getStandbyOptions()
-    public private(set) var barometerIIRTimeOptions: [BarometerIIRFilter] = BarometerIIRFilter.allCases
-    public private(set) var barometerOversamplingOption: [BarometerOversampling] = BarometerOversampling.allCases
+    public private(set) lazy var standbyTimeOptions: [BarometerStandbyTime] = getStandbyOptions()
+    public private(set) var iirTimeOptions: [BarometerIIRFilter] = BarometerIIRFilter.allCases
+    public private(set) var oversamplingOptions: [BarometerOversampling] = BarometerOversampling.allCases
 
     // Data state
     public private(set) var altitude = Float(0)
-    public private(set) var altitudeString = " "
+    public private(set) var altitudeString = ""
     public let altitudeUnitLabel = "m"
 
     // Identity
@@ -52,17 +52,17 @@ extension MWBarometerVM: DetailConfiguring {
 public extension MWBarometerVM {
 
     func userSetStandbyTime(_ newValue: BarometerStandbyTime) {
-        barometerStandbyTimeSelected = newValue
+        standbyTimeSelected = newValue
         delegate?.refreshView()
     }
 
     func userSetIIRFilter(_ newValue: BarometerIIRFilter) {
-        barometerIIRFilterSelected = newValue
+        iirFilterSelected = newValue
         delegate?.refreshView()
     }
 
     func userSetOversampling(_ newValue: BarometerOversampling) {
-        barometerOversamplingSelected = newValue
+        oversamplingSelected = newValue
         delegate?.refreshView()
     }
 }
@@ -77,15 +77,15 @@ public extension MWBarometerVM {
 
         guard let board = device?.board else { return }
 
-        mbl_mw_baro_bosch_set_oversampling(board, barometerOversamplingSelected.cppEnumValue)
-        mbl_mw_baro_bosch_set_iir_filter(board, barometerIIRFilterSelected.cppEnumValue)
+        mbl_mw_baro_bosch_set_oversampling(board, oversamplingSelected.cppEnumValue)
+        mbl_mw_baro_bosch_set_iir_filter(board, iirFilterSelected.cppEnumValue)
 
         switch model {
             case .bme280:
-                mbl_mw_baro_bme280_set_standby_time(board, barometerStandbyTimeSelected.BME_cppEnumValue)
+                mbl_mw_baro_bme280_set_standby_time(board, standbyTimeSelected.BME_cppEnumValue)
 
             case .bmp280:
-                mbl_mw_baro_bmp280_set_standby_time(board, barometerStandbyTimeSelected.BMP_cppEnumValue)
+                mbl_mw_baro_bmp280_set_standby_time(board, standbyTimeSelected.BMP_cppEnumValue)
 
             case .none: break
         }

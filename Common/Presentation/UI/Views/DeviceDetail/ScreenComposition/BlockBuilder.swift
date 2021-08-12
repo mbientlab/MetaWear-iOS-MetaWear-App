@@ -67,7 +67,7 @@ struct BlockBuilder: View  {
                 iBeaconBlock() //
 
             case .barometer:
-                BarometerBlock() //
+                BarometerBlock(vm: vc.vms.barometer as! BarometerSUIVC)
 
             case .ambientLight:
                 AmbientLightBlock(vm: vc.vms.ambientLight as! AmbientLightSUIVC)

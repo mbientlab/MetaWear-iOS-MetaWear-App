@@ -45,8 +45,8 @@ public class DetailVMContainerA: DetailVMContainer {
 
     public lazy private(set) var header: HeaderVM                     = DetailHeaderSUIVC()
     public lazy private(set) var accelerometer: AccelerometerVM       = AccelerometerSUIVC()
-    public lazy private(set) var barometer: MWBarometerVM             = MWBarometerVM()
     public lazy private(set) var ambientLight: MWAmbientLightVM       = AmbientLightSUIVC()
+    public lazy private(set) var barometer: MWBarometerVM             = BarometerSUIVC()
     public lazy private(set) var battery: BatteryVM                   = BatterySUIVC()
     public lazy private(set) var firmware: FirmwareVM                 = FirmwareSUIVC()
     public lazy private(set) var gpio: MWGPIOVM                       = MWGPIOVM()

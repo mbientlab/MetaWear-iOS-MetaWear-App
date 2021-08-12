@@ -16,6 +16,18 @@ public class AmbientLightSUIVC: MWAmbientLightVM, ObservableObject, AmbientLight
     }
 }
 
+public class BarometerSUIVC: MWBarometerVM, ObservableObject, MWBarometerVMDelegate {
+
+    public func refreshView() {
+        self.objectWillChange.send()
+    }
+
+    public override init() {
+        super.init()
+        self.delegate = self
+    }
+}
+
 public class BatterySUIVC: MWBatteryVM, ObservableObject, BatteryVMDelegate {
 
     public func refreshView() {

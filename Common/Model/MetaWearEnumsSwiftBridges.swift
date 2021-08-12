@@ -325,6 +325,21 @@ public enum BarometerStandbyTime: Int, Identifiable {
         // Missing these two options
     ]
 
+    public var displayName: String {
+        switch self {
+            case .ms0_5: return "0.5"
+            case .ms10: return "10"
+            case .ms20: return "20"
+            case .ms62_5: return "62.5"
+            case .ms125: return "125"
+            case .ms250: return "250"
+            case .ms500: return "500"
+            case .ms1000: return "100"
+            case .ms2000: return "2000"
+            case .ms4000: return "4000"
+        }
+    }
+
     public var BME_cppEnumValue: MblMwBaroBme280StandbyTime {
         switch self {
             case .ms0_5: return MBL_MW_BARO_BME280_STANDBY_TIME_0_5ms
@@ -378,6 +393,16 @@ public enum BarometerIIRFilter: Int, CaseIterable, Identifiable {
         }
     }
 
+    public var displayName: String {
+        switch self {
+            case .off: return "Off"
+            case .avg2: return "2"
+            case .avg4: return "4"
+            case .avg8: return "8"
+            case .avg16: return "16"
+        }
+    }
+
     public var id: Int { rawValue }
 }
 
@@ -395,6 +420,16 @@ public enum BarometerOversampling: Int, CaseIterable, Identifiable {
             case .standard: return MBL_MW_BARO_BOSCH_OVERSAMPLING_STANDARD
             case .high: return MBL_MW_BARO_BOSCH_OVERSAMPLING_HIGH
             case .ultraHigh: return MBL_MW_BARO_BOSCH_OVERSAMPLING_ULTRA_HIGH
+        }
+    }
+
+    public var displayName: String {
+        switch self {
+            case .ultraLowPower: return "Ultra Low"
+            case .lowPower: return "Low"
+            case .standard: return "Standard"
+            case .high: return "High"
+            case .ultraHigh: return "Ultra High"
         }
     }
 

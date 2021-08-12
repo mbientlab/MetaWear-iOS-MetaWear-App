@@ -11,12 +11,12 @@ public protocol BarometerVM: AnyObject, DetailConfiguring {
     var isStreaming: Bool { get }
 
     // Sensor settings
-    var barometerStandbyTimeSelected: BarometerStandbyTime { get }
-    var barometerIIRFilterSelected: BarometerIIRFilter { get }
-    var barometerOversamplingSelected: BarometerOversampling { get }
-    var barometerStandbyTimeOptions: [BarometerStandbyTime] { get }
-    var barometerIIRTimeOptions: [BarometerIIRFilter] { get }
-    var barometerOversamplingOption: [BarometerOversampling] { get }
+    var standbyTimeSelected: BarometerStandbyTime { get }
+    var iirFilterSelected: BarometerIIRFilter { get }
+    var oversamplingSelected: BarometerOversampling { get }
+    var standbyTimeOptions: [BarometerStandbyTime] { get }
+    var iirTimeOptions: [BarometerIIRFilter] { get }
+    var oversamplingOptions: [BarometerOversampling] { get }
 
     func userRequestedStreamStart()
     func userRequestedStreamStop()

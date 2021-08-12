@@ -6,9 +6,133 @@ import SwiftUI
 
 struct BarometerBlock: View {
 
+    @ObservedObject var vm: BarometerSUIVC
+
+    @State private var read = ""
+    @State private var enable = ""
+
     var body: some View {
         VStack(spacing: .cardVSpacing) {
 
+            LabeledItem(
+                label: "Oversampling",
+                content: oversampling,
+                contentAlignment: .trailing
+            )
+
+            LabeledItem(
+                label: "Averaging",
+                content: averaging,
+                contentAlignment: .trailing
+            )
+
+            LabeledItem(
+                label: "Standby Time",
+                content: standbyTime,
+                contentAlignment: .trailing
+            )
+
+            LabeledItem(
+                label: "Altitude",
+                content: stream
+            )
+        }
+    }
+
+    // MARK: - Pickers
+
+    private var oversamplingBinding: Binding<BarometerOversampling> {
+        Binding { vm.oversamplingSelected }
+        set: { vm.userSetOversampling($0) }
+    }
+
+    private var oversampling: some View {
+            Picker("", selection: oversamplingBinding) {
+                ForEach(vm.oversamplingOptions) {
+                    Text($0.displayName).tag($0)
+                }
+            }
+            .pickerStyle(.menu)
+#if os(macOS)
+            .fixedSize()
+            .accentColor(.gray)
+#endif
+    }
+
+    private var iirFilterBinding: Binding<BarometerIIRFilter> {
+        Binding { vm.iirFilterSelected }
+        set: { vm.userSetIIRFilter($0) }
+    }
+
+    private var averaging: some View {
+        HStack {
+            Picker("", selection: iirFilterBinding) {
+                ForEach(vm.iirTimeOptions) {
+                    Text($0.displayName).tag($0)
+                }
+            }
+            .pickerStyle(.menu)
+#if os(macOS)
+            .fixedSize()
+            .accentColor(.gray)
+#endif
+
+            Text("x")
+                .fontVerySmall()
+                .foregroundColor(.secondary)
+                .padding(.leading, 5)
+        }
+    }
+
+    private var standbyTimeBinding: Binding<BarometerStandbyTime> {
+        Binding { vm.standbyTimeSelected }
+        set: { vm.userSetStandbyTime($0) }
+    }
+
+    private var standbyTime: some View {
+        HStack {
+            Picker("", selection: standbyTimeBinding) {
+                ForEach(vm.standbyTimeOptions) {
+                    Text($0.displayName).tag($0)
+                }
+            }
+            .pickerStyle(.menu)
+#if os(macOS)
+            .fixedSize()
+            .accentColor(.gray)
+#endif
+
+            Text("ms")
+                .fontVerySmall()
+                .foregroundColor(.secondary)
+                .padding(.leading, 5)
+        }
+    }
+
+    // MARK: - Streaming
+
+    private var stream: some View {
+        HStack {
+            Text(vm.altitudeString)
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Text("m")
+                .fontVerySmall()
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+                .foregroundColor(.secondary)
+                .padding(.leading, 5)
+                .opacity(vm.altitudeString.isEmpty ? 0 : 1)
+
+            Spacer()
+
+            Button(vm.isStreaming ? "Stop" : "Stream") {
+                if vm.isStreaming { vm.userRequestedStreamStop() }
+                else { vm.userRequestedStreamStart() }
+            }
         }
     }
 }
