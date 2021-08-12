@@ -22,6 +22,8 @@ struct HapticBlock: View {
                 content: duty
             )
 
+            DividerPadded()
+
             LabeledItem(
                 label: "Use Driver",
                 content: drivers

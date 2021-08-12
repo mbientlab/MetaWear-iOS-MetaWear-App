@@ -38,6 +38,8 @@ struct GPIOBlock: View {
                 content: pinChanges
             )
 
+            DividerPadded()
+
             LabeledItem(
                 label: "Digital",
                 content: digitalRead

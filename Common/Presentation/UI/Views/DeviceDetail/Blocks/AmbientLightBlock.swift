@@ -33,6 +33,8 @@ struct AmbientLightBlock: View {
                 contentAlignment: .trailing
             )
 
+            DividerPadded()
+
             LabeledItem(
                 label: "Illuminance",
                 content: stream

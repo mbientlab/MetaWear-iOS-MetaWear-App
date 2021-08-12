@@ -33,6 +33,8 @@ struct BarometerBlock: View {
                 contentAlignment: .trailing
             )
 
+            DividerPadded()
+
             LabeledItem(
                 label: "Altitude",
                 content: stream
