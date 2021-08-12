@@ -18,10 +18,14 @@ public struct GraphConfig {
     
     /// Names for series in graph. The number of names determines the number of channels (e.g., X, Y, Z). Data input should match this order.
     public var channelLabels: [String]
-    /// Hex for series in graph. ["#fe117c","#ffc069","#06caf4"]
+
+    /// Hex for series in graph. ["#fe117c","#ffc069","#06caf4, #758374"]
     public var channelColors: [String]
+
     /// SwiftUI colors for graphs not using JS
-    public var channelColorsSwift: [Color] = [Color(.systemBlue), Color(.systemPink), Color(.systemPurple)]
+    public var channelColorsSwift: [Color] = [
+        .plotPink, .plotBlue, .plotGold, .plotGray
+    ]
     
     public var yAxisMin: Double
     public var yAxisMax: Double
@@ -29,6 +33,7 @@ public struct GraphConfig {
     /// Optional. If empty, the dataPointCount will be used to generate zero-ed blank data.
     /// If supplied, the dataPointCount will be ignored. Data should be BY SERIES and not in time sequence tuples.
     public var initialData: [[Float]] = []
+
     /// Used to generate zero-ed data for a "overwriting" graph. Ignored if initial data supplied.
     public var dataPointCount: Int = 300
 }
@@ -171,6 +176,52 @@ public extension GraphConfig {
         
         config.loadDataConvertingFromTimeSeries(data)
         
+        return config
+    }
+}
+
+public extension GraphConfig {
+
+    static func makeWXYZLiveOverwriting(yAxisScale: Double, dataPoints: Double = 300) -> GraphConfig {
+        GraphConfig(
+            chartType: .line,
+            functionality: .liveViewOverwriting,
+            channelLabels: ["W", "X", "Y", "Z"],
+            channelColors: ["#FD127C", "#04CBF4", "#FBBE69", "#758374"],
+            yAxisMin: -yAxisScale,
+            yAxisMax: yAxisScale,
+            initialData: [],
+            dataPointCount: 300
+        )
+    }
+
+    static func makeWXYZHistoricalScrollable(forSeries data: [[Float]], yAxisScale: Double) -> GraphConfig {
+        GraphConfig(
+            chartType: .line,
+            functionality: .historicalStaticScrolling,
+            channelLabels: ["W", "X", "Y", "Z"],
+            channelColors: ["#FD127C", "#04CBF4", "#FBBE69", "#758374"],
+            yAxisMin: -yAxisScale,
+            yAxisMax: yAxisScale,
+            initialData: data,
+            dataPointCount: 0
+        )
+    }
+
+    static func makeWXYZHistoricalScrollable(forTimePoints data: [[Float]], yAxisScale: Double) -> GraphConfig {
+        var config = GraphConfig(
+            chartType: .line,
+            functionality: .historicalStaticScrolling,
+            channelLabels: ["W", "X", "Y", "Z"],
+            channelColors: ["#FD127C", "#04CBF4", "#FBBE69", "#758374"],
+            yAxisMin: -yAxisScale,
+            yAxisMax: yAxisScale,
+            initialData: [],
+            dataPointCount: 0
+        )
+
+        config.loadDataConvertingFromTimeSeries(data)
+
         return config
     }
 }

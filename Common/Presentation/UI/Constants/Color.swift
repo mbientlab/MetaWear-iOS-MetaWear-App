@@ -9,7 +9,18 @@
 import SwiftUI
 
 extension Color {
+
     static let toastPillBackground = Color("toastPillBackground")
+
+    static let ledRed = Color("red")
+    static let ledGreen = Color("green")
+    static let ledBlue = Color("blue")
+
+    static let plotPink = Color("plotPink")
+    static let plotGold = Color("plotGold")
+    static let plotBlue = Color("plotBlue")
+    static let plotGray = Color("plotGray")
+
 #if os(iOS)
     static let groupedListBackground = Color(.systemGroupedBackground)
     static let reversedTextColor = Color(.systemBackground)
@@ -24,9 +35,4 @@ extension Color {
     static let blockPlatterFill = Color("blockPlatterFill")
     static let blockPlatterStroke = Color(.quaternaryLabelColor)
 #endif
-
-    static let ledRed = Color("red")
-    static let ledGreen = Color("green")
-    static let ledBlue = Color("blue")
 }
-
