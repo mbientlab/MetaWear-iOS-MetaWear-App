@@ -27,7 +27,7 @@ struct AmbientLightBlock: View {
             )
 
             LabeledItem(
-                label: "Measurement Rate",
+                label: "Sampling Rate",
                 content: measurement,
                 contentAlignment: .trailing
             )

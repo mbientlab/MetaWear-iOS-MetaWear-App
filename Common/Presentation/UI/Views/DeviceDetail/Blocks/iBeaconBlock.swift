@@ -6,9 +6,19 @@ import SwiftUI
 
 struct iBeaconBlock: View {
 
-    var body: some View {
-        VStack(spacing: .cardVSpacing) {
+    @ObservedObject var vm: iBeaconSUIVC
 
+    var body: some View {
+        HStack {
+            Spacer()
+            Button(vm.iBeaconIsOn ? "Stop" : "Start") {
+                if vm.iBeaconIsOn {
+                    vm.userRequestedStopIBeacon()
+                } else {
+                    vm.userRequestedStartIBeacon()
+                }
+            }
+            Spacer()
         }
     }
 }

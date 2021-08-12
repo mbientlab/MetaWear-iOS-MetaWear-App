@@ -52,6 +52,7 @@ public extension MWiBeaconVM {
 
         iBeaconIsOn = true
         delegate?.refreshView()
+        parent?.alerts.presentAlert(title: "iBeacon", message: "You must disconnect from your MetaWear before it is visible as an iBeacon.")
     }
 }
 
