@@ -31,7 +31,7 @@ struct DeviceDetailScreen: View {
         .accessibilityLinkedGroup(id: "details", in: chain)
 #if canImport(AppKit)
         .fontBody()
-        .padding(.horizontal)
+        .padding(.leading)
         .overlay(ToastServer(vm: vc.toast as! MWToastServerVM).accessibilityHidden(true), alignment: .top)
 #elseif os(iOS)
         .overlay(ToastServer(vm: vc.toast as! MWToastServerVM)
@@ -53,7 +53,7 @@ struct DeviceDetailScreen: View {
 
     var scrollView: some View {
         ScrollViewReader { scroll in
-            ScrollView {
+            ScrollView(.vertical) {
 #if os(macOS)
                 MacGridLayout(
                     leftColumn: LeftColumn(details: details),
@@ -67,7 +67,6 @@ struct DeviceDetailScreen: View {
 #endif
             }
             .environment(\.scrollProxy, scroll)
-
         }
     }
 }
