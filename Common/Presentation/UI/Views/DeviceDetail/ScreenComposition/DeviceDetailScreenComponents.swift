@@ -34,7 +34,7 @@ struct Header: View {
     }
 }
 
-struct LeftColumn: View {
+struct IdentitySection: View {
 
     var details: Namespace.ID
 
@@ -42,7 +42,7 @@ struct LeftColumn: View {
     @Environment(\.fontFace) private var fontFace
 
     var body: some View {
-        Header().padding(.top, fontFace == .openDyslexic ? 38 : 28)
+        Header().padding(.top, fontFace == .openDyslexic ? 26 : 16)
 
         ForEach(vc.sortedVisibleGroups) { group in
             if group.isInfo {
@@ -54,9 +54,10 @@ struct LeftColumn: View {
 }
 
 
-struct RightColumns: View {
+struct SensorsSection: View {
 
     var details: Namespace.ID
+
     @EnvironmentObject private var vc: DeviceDetailScreenSUIVC
 
     var body: some View {

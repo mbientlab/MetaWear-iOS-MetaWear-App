@@ -12,13 +12,14 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
 
     // Minimum (reflecting existing iOS storyboard)
     case headerInfoAndState
-    case identifiers
     case battery
+    case identifiers
     case firmware
-    case reset
     case signal
+    case reset
 
     // Features
+    case ibeacon
     case mechanicalSwitch
     case temperature
     case LED
@@ -28,7 +29,6 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
     case magnetometer
     case gpio
     case haptic
-    case ibeacon
     case barometer
     case ambientLight
     case hygrometer
@@ -101,11 +101,11 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
             case .magnetometer:         return false
             case .gpio:                 return false
             case .haptic:               return false
-            case .ibeacon:              return true
+            case .ibeacon:              return false
             case .barometer:            return false
             case .ambientLight:         return false
             case .hygrometer:           return false
-            case .i2c:                  return true
+            case .i2c:                  return false
         }
     }
 

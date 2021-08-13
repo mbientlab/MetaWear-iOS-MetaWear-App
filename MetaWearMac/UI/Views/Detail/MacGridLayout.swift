@@ -10,43 +10,24 @@ import SwiftUI
 
 struct MacGridLayout<Column: View, GridItems: View>: View {
 
-    var leftColumn: Column
-    var rightGridItems: GridItems
+    var identitySection: Column
+    var sensors: GridItems
 
     var body: some View {
-        HStack(alignment: .top) {
-            layoutLeftStaticColumn
-            layoutRightDynamicColumn
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .padding(.top, 10)
-    }
-
-    // MARK: - Static
-
-    var layoutLeftStaticColumn: some View {
-        VStack(alignment: .leading, spacing: .cardGridSpacing) {
-            leftColumn
-        }
-        .frame(maxHeight: .infinity, alignment: .topLeading)
-        .frame(width: .detailBlockWidth, alignment: .topLeading)
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel("Device Identity and Management")
-    }
-
-    // MARK: - Dynamic
-
-    var layoutRightDynamicColumn: some View {
         LazyVGrid(columns: gridColumns,
                   alignment: .leading,
                   spacing: .cardGridSpacing) {
 
-            rightGridItems
+            Section {
+                identitySection
+            }.accessibilityLabel("Device Identity and Management")
+
+            Section {
+                sensors
+            } .accessibilityLabel("Device Sensor Readouts")
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-
-        .padding(.top, .cardGridSpacing / 2)
-        .accessibilityLabel("Device Sensor Readouts")
+        .padding(.top, 10)
     }
 
     let gridColumns: [GridItem] = [

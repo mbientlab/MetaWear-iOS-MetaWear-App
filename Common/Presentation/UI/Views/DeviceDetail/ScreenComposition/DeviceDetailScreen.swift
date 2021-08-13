@@ -40,7 +40,7 @@ struct DeviceDetailScreen: View {
                     .shadow(color: colorScheme == .light
                             ? .black.opacity(0.1)
                             : .black.opacity(0.15), radius: 15, x: 0, y: 10)
-                    ,
+                 ,
                  alignment: .top)
 #endif
 
@@ -52,14 +52,18 @@ struct DeviceDetailScreen: View {
 
     // MARK: - Define content layout by platform in ScrollView
 
+    @Environment(\.fontFace) private var fontFace
+
     var scrollView: some View {
         ScrollViewReader { scroll in
             ScrollView(.vertical) {
 #if os(macOS)
                 MacGridLayout(
-                    leftColumn: LeftColumn(details: details),
-                    rightGridItems: RightColumns(details: details)
-                ).padding(.bottom, 20)
+                    identitySection: IdentitySection(details: details),
+                    sensors: SensorsSection(details: details)
+                )
+                    .padding(.bottom, 20)
+                    .padding(.top, fontFace == .openDyslexic ? 28 : 18)
 #else
                 iOSDeviceDetailLayout(
                     chain: chain,
