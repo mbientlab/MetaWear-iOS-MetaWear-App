@@ -70,6 +70,7 @@ struct HapticBlock: View {
             .accentColor(Color.gray)
             #if os(macOS)
             .controlSize(.small)
+            .blendMode(.luminosity)
             #endif
             .frame(width: .detailBlockWidth * 0.25)
             .onAppear { dutyBinding = Float(vm.dutyCycle) }
