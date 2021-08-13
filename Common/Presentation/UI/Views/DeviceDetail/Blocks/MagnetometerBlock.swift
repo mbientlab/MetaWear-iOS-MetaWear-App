@@ -10,7 +10,7 @@ struct MagnetometerBlock: View {
 
     var body: some View {
         VStack(spacing: .cardVSpacing) {
-            LoggingSection()
+            LoggingSectionStandardized(vm: vm)
             DividerPadded()
             LiveInspectorSection()
             
@@ -21,59 +21,6 @@ struct MagnetometerBlock: View {
     }
 }
 
-// MARK: - Log
-
-extension MagnetometerBlock {
-
-    struct LoggingSection: View {
-
-        @EnvironmentObject private var vm: MagnetometerSUIVC
-
-        var body: some View {
-            LabeledItem(
-                label: "Log",
-                content: buttons
-            )
-
-            if vm.logDataIsReadyForDisplay {
-
-                StatsBlock(stats: vm.loggerStats, count: vm.data.loggedCount)
-
-#if os(iOS)
-                AAGraphViewWrapper(initialConfig: vm.makeLoggedDataConfig(),
-                                   graph: vm.setLoggerGraphReference)
-#endif
-            }
-        }
-
-        private var buttons: some View {
-            HStack(alignment: .firstTextBaseline) {
-                let disableLogging = vm.isStreaming || (!vm.isLogging && !vm.allowsNewLogging)
-
-                ExportDataButton(label: "",
-                                 isEnabled: vm.logDataIsReadyForDisplay,
-                                 action: vm.userRequestedLogExport)
-
-                Spacer()
-
-                DownloadButton(isEnabled: true,
-                               onTap: vm.userRequestedDownloadLog)
-
-                Spacer()
-
-                Button(vm.isLogging ? "Stop" : "Log") {
-                    if vm.isLogging { vm.userRequestedStopLogging() }
-                    else { vm.userRequestedStartLogging() }
-                }
-                .disabled(disableLogging)
-                .allowsHitTesting(!disableLogging)
-                .opacity(disableLogging ? 0.5 : 1)
-            }
-        }
-
-    }
-
-}
 
 // MARK: - Live Stream
 

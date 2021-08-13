@@ -41,7 +41,6 @@ public protocol GyroVMDelegate {
     func redrawStreamGraph()
     func refreshGraphScale()
     func drawNewStreamGraphPoint(_ point: TimeIdentifiedCartesianFloat)
-    func drawNewLoggerGraphPoint(_ point: TimeIdentifiedCartesianFloat)
 
     func refreshStreamStats()
     func refreshLoggerStats()

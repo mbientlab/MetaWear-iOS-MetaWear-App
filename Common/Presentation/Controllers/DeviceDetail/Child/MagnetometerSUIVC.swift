@@ -53,7 +53,7 @@ extension MagnetometerSUIVC: MagnetometerVMDelegate {
 
 }
 
-extension MagnetometerSUIVC:  StreamGraphManager, LoggerGraphManager {
+extension MagnetometerSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSectionDriver {
 
     public func setStreamGraphReference(_ graph: GraphObject) {
         self.streamGraph = graph

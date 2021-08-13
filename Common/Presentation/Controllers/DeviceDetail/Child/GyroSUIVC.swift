@@ -31,33 +31,51 @@ extension GyroSUIVC: GyroVMDelegate {
         objectWillChange.send()
     }
 
-    public func redrawStreamGraph() {
 
+    public func drawNewStreamGraphPoint(_ point: TimeIdentifiedCartesianFloat) {
+        streamGraph?.addPointInAllSeries([point.value.x, point.value.y, point.value.z])
+    }
+
+    public func redrawStreamGraph() {
+        streamingStats = .zero(for: data.streamKind)
+        streamGraph?.clearData()
     }
 
     public func refreshGraphScale() {
+        #warning("Scale unclear. Test.")
+        streamGraph?.updateYScale(
+            min: -Double(1),
+            max: Double(1),
+            data: data.stream.map(\.values)
+        )
 
+        loggerGraph?.updateYScale(
+            min: -Double(1),
+            max: Double(1),
+            data: data.logged.map(\.values)
+        )
     }
 
-    public func drawNewStreamGraphPoint(_ point: TimeIdentifiedCartesianFloat) {
+    // Stats
 
-    }
-
-    public func drawNewLoggerGraphPoint(_ point: TimeIdentifiedCartesianFloat) {
-
+    public func refreshLoggerStats() {
+        let stats = data.getLoggedStats()
+        DispatchQueue.main.async { [weak self] in
+            self?.loggerStats = stats
+        }
     }
 
     public func refreshStreamStats() {
-
-    }
-
-    public func refreshLoggerStats() {
-
+        let stats = data.getStreamedStats()
+        DispatchQueue.main.async { [weak self] in
+            self?.streamingStats = stats
+        }
     }
 
 }
 
-extension GyroSUIVC:  StreamGraphManager, LoggerGraphManager {
+extension GyroSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSectionDriver, StreamingSectionDriver {
+
 
     public func setStreamGraphReference(_ graph: GraphObject) {
         self.streamGraph = graph

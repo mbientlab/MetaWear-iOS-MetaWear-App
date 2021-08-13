@@ -9,25 +9,25 @@ struct NaiveGraphFixedSize: View {
     @StateObject var controller: NaiveGraphController
 
     let width: CGFloat
-    let halfHeight: CGFloat = .detailsGraphHeight
+    let height: CGFloat = .detailsGraphHeight
 
     var body: some View {
         ZStack(alignment: .leading) {
             ForEach(controller.displayedPoints) { timepoint in
                 ForEach(timepoint.heights.indices) { seriesIndex in
                     Dot(color: controller.seriesColors[seriesIndex])
-                        .offset(y: timepoint.heights[seriesIndex] / controller.rangeY * -halfHeight)
+                        .offset(y: timepoint.heights[seriesIndex] / controller.rangeY * -height)
                 }
                 .offset(x: timepoint.x / controller.displayablePointCount * width)
             }
         }
         .offset(x: -width/2)
-        .frame(width: width, height: halfHeight)
+        .frame(width: width, height: height)
         .drawingGroup(opaque: true, colorMode: .nonLinear)
         .animation(.none)
         .animation(nil)
         .background(Labels(min: controller.yMin, max: controller.yMax))
-        .frame(width: width, height: halfHeight)
+        .frame(width: width, height: height)
         .accessibility(value: Text(makeAccessibilityValue()))
         .padding(.vertical, 8)
     }
@@ -107,6 +107,7 @@ struct CanvasGraph: View {
 
     let width: CGFloat
     let height: CGFloat = .detailsGraphHeight
+    let pointSize = CGSize(width: 3, height: 3)
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -130,8 +131,6 @@ struct CanvasGraph: View {
         .background(NaiveGraphFixedSize.Labels(min: controller.yMin, max: controller.yMax))
         .accessibility(value: Text(makeAccessibilityValue()))
     }
-
-    let pointSize = CGSize(width: 3, height: 3)
 
     func makePoint(x: CGFloat, y: CGFloat) -> Path {
         Path(ellipseIn: .init(origin: CGPoint(x: x, y: y),

@@ -272,9 +272,8 @@ public extension MWGyroVM {
             acceleration.scaled(by: _self.graphScaleFactor)
             let point = (obj!.pointee.epoch, acceleration)
             DispatchQueue.main.async {
-                _self.delegate?.drawNewLoggerGraphPoint(point)
+                _self.data.logged.append(.init(cartesian: point))
             }
-            _self.data.logged.append(.init(cartesian: point))
         }
 
         downloadProgressHandler = .init()

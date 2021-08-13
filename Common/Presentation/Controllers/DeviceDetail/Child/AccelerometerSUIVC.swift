@@ -74,7 +74,7 @@ extension AccelerometerSUIVC: AccelerometerVMDelegate {
 
 }
 
-extension AccelerometerSUIVC: StreamGraphManager, LoggerGraphManager {
+extension AccelerometerSUIVC: StreamGraphManager, LoggerGraphManager, LoggingSectionDriver, StreamingSectionDriver {
 
     public func graphScaleLabel(_ scale: AccelerometerGraphScale) -> String {
         "\(scale.fullScale)"
