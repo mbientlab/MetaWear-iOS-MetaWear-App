@@ -7,7 +7,7 @@ import MetaWear
 import MetaWearCpp
 import Combine
 
-public class MWSensorFusionVM: ObservableObject, DetailSensorFusionVM {
+public class MWSensorFusionVM: DetailSensorFusionVM {
 
     // Button states
     public private(set) var isLogging = false

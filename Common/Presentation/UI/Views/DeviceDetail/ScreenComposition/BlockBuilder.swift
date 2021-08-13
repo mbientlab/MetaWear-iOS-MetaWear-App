@@ -47,13 +47,13 @@ struct BlockBuilder: View  {
                 AccelerometerBlock(vm: vc.vms.accelerometer as! AccelerometerSUIVC)
 
             case .sensorFusion:
-                SensorFusionBlock() // ------------
+                SensorFusionBlock(vm: vc.vms.sensorFusion as! SensorFusionSUIVC)
 
             case .gyroscope:
-                GyroscopeBlock(vm: MWGyroVM()) // -----------
+                GyroscopeBlock(vm: vc.vms.gyroscope as! GyroSUIVC)
 
             case .magnetometer:
-                MagnetometerBlock() // ---------------
+                MagnetometerBlock(vm: vc.vms.magnetometer as! MagnetometerSUIVC)
 
             case .gpio:
                 GPIOBlock(vm: vc.vms.gpio as! GPIOSUIVC)

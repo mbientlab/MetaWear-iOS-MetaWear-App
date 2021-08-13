@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-public class AccelerometerSUIVC: MWAccelerometerVM, ObservableObject, StreamGraphManager, LoggerGraphManager {
+public class AccelerometerSUIVC: MWAccelerometerVM, ObservableObject {
 
     internal weak var loggerGraph: GraphObject? = nil
     internal weak var streamGraph: GraphObject? = nil
@@ -74,26 +74,25 @@ extension AccelerometerSUIVC: AccelerometerVMDelegate {
 
 }
 
-public extension AccelerometerSUIVC {
+extension AccelerometerSUIVC: StreamGraphManager, LoggerGraphManager {
 
-    func graphScaleLabel(_ scale: AccelerometerGraphScale) -> String {
+    public func graphScaleLabel(_ scale: AccelerometerGraphScale) -> String {
         "\(scale.fullScale)"
     }
 
-    func setStreamGraphReference(_ graph: GraphObject) {
+    public func setStreamGraphReference(_ graph: GraphObject) {
         self.streamGraph = graph
     }
 
-    func setLoggerGraphReference(_ graph: GraphObject) {
+    public func setLoggerGraphReference(_ graph: GraphObject) {
         self.loggerGraph = graph
     }
 
-
-    func makeStreamDataConfig() -> GraphConfig {
+    public func makeStreamDataConfig() -> GraphConfig {
         .makeXYZLiveOverwriting(yAxisScale: Double(graphScaleSelected.fullScale), dataPoints: 300)
     }
 
-    func makeLoggedDataConfig() -> GraphConfig {
+    public func makeLoggedDataConfig() -> GraphConfig {
         .makeHistoricalScrollable(forTimePoints: data.logged.map(\.values), yAxisScale: Double(graphScaleSelected.fullScale))
     }
 

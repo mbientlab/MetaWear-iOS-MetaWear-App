@@ -154,4 +154,3 @@ private extension BarometerBlock {
         }
     }
 }
-

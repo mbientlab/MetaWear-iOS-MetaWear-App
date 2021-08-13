@@ -29,6 +29,7 @@ struct NaiveGraphFixedSize: View {
         .background(Labels(min: controller.yMin, max: controller.yMax))
         .frame(width: width, height: halfHeight)
         .accessibility(value: Text(makeAccessibilityValue()))
+        .padding(.vertical, 8)
     }
 
     func makeAccessibilityValue() -> String {

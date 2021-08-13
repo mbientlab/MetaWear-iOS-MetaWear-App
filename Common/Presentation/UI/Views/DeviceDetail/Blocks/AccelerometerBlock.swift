@@ -142,7 +142,7 @@ extension AccelerometerBlock {
 
             if vm.logDataIsReadyForDisplay {
 
-                StatsBlock(stats: vm.streamingStats, count: vm.data.loggedCount)
+                StatsBlock(stats: vm.loggerStats, count: vm.data.loggedCount)
 
 #if os(iOS)
                 AAGraphViewWrapper(initialConfig: vm.makeLoggedDataConfig(),
@@ -256,7 +256,7 @@ extension AccelerometerBlock {
             .contentShape(Rectangle())
 #if os(iOS)
             .pickerStyle(.menu)
-#else
+#elseif os(macOS)
             .pickerStyle(.segmented)
 #endif
             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -269,7 +269,7 @@ extension AccelerometerBlock {
         @EnvironmentObject private var vm: AccelerometerSUIVC
 
         var body: some View {
-            LabeledItem(label: samplingRowLabel, content: frequency)
+            LabeledItem(label: "Sample", content: osDependentContent)
         }
 
         private var frequencyBinding: Binding<AccelerometerSampleFrequency> {
@@ -277,11 +277,21 @@ extension AccelerometerBlock {
             set: { vm.userDidSelectSamplingFrequency($0) }
         }
 
-        private var samplingRowLabel: String {
+        private var osDependentContent: some View {
 #if os(iOS)
-            "Sample"
-#else
-            "Sample Hz"
+            frequency
+#elseif os(macOS)
+            HStack {
+                frequency
+
+                Text("Hz")
+                    .fontVerySmall()
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .foregroundColor(.secondary)
+                    .padding(.leading, 5)
+            }
 #endif
         }
 

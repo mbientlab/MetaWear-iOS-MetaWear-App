@@ -6,7 +6,7 @@ import Foundation
 
 public protocol MagenetometerVM: AnyObject, DetailConfiguring {
 
-    var delegate: MagenetometerVMDelegate? { get set }
+    var delegate: MagnetometerVMDelegate? { get set }
 
     var isLogging: Bool { get }
     var isStreaming :Bool { get }
@@ -26,7 +26,7 @@ public protocol MagenetometerVM: AnyObject, DetailConfiguring {
     func userRequestedLogExport()
 }
 
-public protocol MagenetometerVMDelegate {
+public protocol MagnetometerVMDelegate {
 
     func refreshView()
     func refreshStreamStats()

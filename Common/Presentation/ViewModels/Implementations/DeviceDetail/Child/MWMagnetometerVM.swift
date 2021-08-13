@@ -7,7 +7,7 @@ import MetaWear
 import MetaWearCpp
 import Combine
 
-public class MWMagnetometerVM: ObservableObject, MagenetometerVM {
+public class MWMagnetometerVM: MagenetometerVM {
 
     // Button states
     public private(set) var isLogging = false
@@ -35,7 +35,7 @@ public class MWMagnetometerVM: ObservableObject, MagenetometerVM {
     private lazy var downloadProgressHandler = ToastPresentingLogDownloader()
 
     // Identity
-    public var delegate: MagenetometerVMDelegate? = nil
+    public var delegate: MagnetometerVMDelegate? = nil
     private var parent: DeviceDetailsCoordinator? = nil
     private var device: MetaWear? = nil
     lazy private var model: AccelerometerModel? = .init(board: device?.board)

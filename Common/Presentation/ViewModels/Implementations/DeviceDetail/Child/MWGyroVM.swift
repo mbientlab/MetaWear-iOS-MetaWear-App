@@ -7,7 +7,7 @@ import MetaWear
 import MetaWearCpp
 import Combine
 
-public class MWGyroVM: ObservableObject, GyroVM {
+public class MWGyroVM: GyroVM {
 
     // Button states
     public private(set) var isLogging = false

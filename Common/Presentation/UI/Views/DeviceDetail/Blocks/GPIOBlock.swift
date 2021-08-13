@@ -71,9 +71,6 @@ struct GPIOBlock: View {
             }
         }
         .pickerStyle(.segmented)
-#if os(macOS)
-        .fixedSize()
-#endif
     }
 
     private var configuration: some View {
@@ -110,9 +107,6 @@ struct GPIOBlock: View {
             }
         }
         .pickerStyle(.segmented)
-#if os(macOS)
-        .fixedSize()
-#endif
     }
 
     // MARK: - Pin Change Output

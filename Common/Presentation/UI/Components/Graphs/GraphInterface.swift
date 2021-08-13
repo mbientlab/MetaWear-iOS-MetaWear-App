@@ -15,9 +15,11 @@ public protocol GraphObject: AnyObject {
 protocol LoggerGraphManager: AnyObject {
     /// Use weak reference
     var loggerGraph: GraphObject? { get set }
+    func setLoggerGraphReference(_ graph: GraphObject)
 }
 
 protocol StreamGraphManager: AnyObject {
     /// Use  weak reference
     var streamGraph: GraphObject? { get set }
+    func setStreamGraphReference(_ graph: GraphObject)
 }

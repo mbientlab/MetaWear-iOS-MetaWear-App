@@ -66,8 +66,11 @@ struct HapticBlock: View {
             Slider(value: $dutyBinding, in: (0...248)) { _ in
                 vm.userSetDutyCycle(cycle: Int(dutyBinding))
             }
+            .foregroundColor(Color.gray)
             .accentColor(Color.gray)
+            #if os(macOS)
             .controlSize(.small)
+            #endif
             .frame(width: .detailBlockWidth * 0.25)
             .onAppear { dutyBinding = Float(vm.dutyCycle) }
             .onChange(of: vm.dutyCycle) { newValue in dutyBinding = Float(newValue) }

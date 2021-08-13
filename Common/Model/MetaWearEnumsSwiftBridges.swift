@@ -139,11 +139,11 @@ enum Orientation: CaseIterable {
 // MARK: - Gyroscope
 
 public enum GyroscopeGraphRange: Int, CaseIterable, Identifiable {
-    case dps125
-    case dps250
-    case dps500
-    case dps1000
-    case dps2000
+    case dps125 = 125
+    case dps250 = 250
+    case dps500 = 500
+    case dps1000 = 1000
+    case dps2000 = 2000
 
     public var fullScale: Int {
         switch self {
@@ -166,31 +166,20 @@ public enum GyroscopeGraphRange: Int, CaseIterable, Identifiable {
         }
     }
 
+    public var displayName: String { String(rawValue) }
 
     public var id: Int { fullScale }
 
 }
 
 public enum GyroscopeFrequency: Int, CaseIterable, Identifiable {
-case hz1600
-case hz800
-case hz400
-case hs200
-case hz100
-case hz50
-case hz25
-
-    public var hertz: Int {
-        switch self {
-            case .hz1600: return 1600
-            case .hz800: return 800
-            case .hz400: return 400
-            case .hs200: return 200
-            case .hz100: return 100
-            case .hz50: return 50
-            case .hz25: return 25
-        }
-    }
+case hz1600 = 1600
+case hz800 = 800
+case hz400 = 400
+case hs200 = 200
+case hz100 = 100
+case hz50 = 50
+case hz25 = 25
 
     /// Raw Cpp constant
     public var cppEnumValue: MblMwGyroBoschOdr {
@@ -205,7 +194,9 @@ case hz25
         }
     }
 
-    public var id: Int { hertz }
+    var frequencyLabel: String { String(rawValue) }
+
+    public var id: Int { rawValue }
 
 }
 
