@@ -10,7 +10,7 @@ struct PlaceholderDeviceConnectionScreen: View {
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @State var isAnimating = false
 
-    private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+    private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect().dropFirst()
     @State private var iteration = 0
 
     var body: some View {
@@ -24,6 +24,9 @@ struct PlaceholderDeviceConnectionScreen: View {
                 metamotionS.opacity(iteration % 2 == 0 ? 1 : 0)
                 metamotionC.opacity(iteration % 2 != 0 ? 1 : 0)
             }
+            .onAppear { DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                iteration += 1
+            }}
             .onReceive(timer) { _ in
                 guard !reduceMotion else { return }
                 iteration += 1

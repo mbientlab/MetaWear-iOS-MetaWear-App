@@ -13,7 +13,9 @@ struct BlockBuilder: View  {
     @EnvironmentObject private var vc: DeviceDetailScreenSUIVC
 
     var body: some View {
-        DetailsBlockCard(group: group, content: content, namespace: namespace)
+        DetailsBlockCard(group: group,
+                         content: content,
+                         namespace: namespace)
     }
 
     @ViewBuilder var content: some View {

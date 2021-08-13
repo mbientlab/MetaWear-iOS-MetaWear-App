@@ -108,7 +108,7 @@ extension MagnetometerBlock {
                     CanvasGraph(controller: .init(stream: vm,
                                                   config: vm.makeStreamDataConfig(),
                                                   driver: ThrottledGraphDriver()),
-                                width: calculateGraphWidth())
+                                width: .detailBlockInnerContentSize)
                         .id(graphID)
                         .onAppear { scrollToGraph() }
 
@@ -116,7 +116,7 @@ extension MagnetometerBlock {
                     NaiveGraphFixedSize(controller: .init(stream: vm,
                                                           config: vm.makeStreamDataConfig(),
                                                           driver: ThrottledGraphDriver()),
-                                        width: calculateGraphWidth())
+                                        width: .detailBlockInnerContentSize)
                         .id(graphID)
                         .onAppear { scrollToGraph() }
                 }
@@ -128,13 +128,6 @@ extension MagnetometerBlock {
             withAnimation {
                 scroller?.scrollTo(graphID, anchor: .top)
             }
-        }
-
-        /// macOS only because on iOS graph width should be defined by the iOS device, not a constant
-        private func calculateGraphWidth() -> CGFloat {
-            let padding = CGFloat.detailBlockOuterPadding + .detailBlockContentPadding
-            let contentWidth = .detailBlockWidth - (padding * 2)
-            return contentWidth
         }
 
         private var buttons: some View {

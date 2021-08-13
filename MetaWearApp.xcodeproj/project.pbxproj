@@ -272,6 +272,8 @@
 		94BAA75426C3A8D10045E5E4 /* MWGPIOVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA75226C3A8D10045E5E4 /* MWGPIOVM.swift */; };
 		94BAA75626C3B8550045E5E4 /* MWSensorFusionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA75526C3B8550045E5E4 /* MWSensorFusionVM.swift */; };
 		94BAA75726C3B8550045E5E4 /* MWSensorFusionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BAA75526C3B8550045E5E4 /* MWSensorFusionVM.swift */; };
+		94BE0DC926C6D970000A6E2F /* VisualDebuggingHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BE0DC826C6D970000A6E2F /* VisualDebuggingHelp.swift */; };
+		94BE0DCA26C6D970000A6E2F /* VisualDebuggingHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BE0DC826C6D970000A6E2F /* VisualDebuggingHelp.swift */; };
 		94C07E8726BB2F35008D875B /* DividerPadded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C07E8626BB2F35008D875B /* DividerPadded.swift */; };
 		94C2788526C10732006772F6 /* iOSDetailLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2788426C10732006772F6 /* iOSDetailLayout.swift */; };
 		94C2788726C1076D006772F6 /* DeviceDetailScreenComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2788626C1076D006772F6 /* DeviceDetailScreenComponents.swift */; };
@@ -497,6 +499,7 @@
 		94BAA74F26C394370045E5E4 /* MWHumidityVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWHumidityVM.swift; sourceTree = "<group>"; };
 		94BAA75226C3A8D10045E5E4 /* MWGPIOVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGPIOVM.swift; sourceTree = "<group>"; };
 		94BAA75526C3B8550045E5E4 /* MWSensorFusionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSensorFusionVM.swift; sourceTree = "<group>"; };
+		94BE0DC826C6D970000A6E2F /* VisualDebuggingHelp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualDebuggingHelp.swift; sourceTree = "<group>"; };
 		94C07E8626BB2F35008D875B /* DividerPadded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerPadded.swift; sourceTree = "<group>"; };
 		94C2788426C10732006772F6 /* iOSDetailLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDetailLayout.swift; sourceTree = "<group>"; };
 		94C2788626C1076D006772F6 /* DeviceDetailScreenComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailScreenComponents.swift; sourceTree = "<group>"; };
@@ -618,6 +621,7 @@
 				94C07E8626BB2F35008D875B /* DividerPadded.swift */,
 				94A271F726C1C3EA00512626 /* GlintingMLogo.swift */,
 				941EFB6426BCE5980087F960 /* SignalDots.swift */,
+				94BE0DC826C6D970000A6E2F /* VisualDebuggingHelp.swift */,
 			);
 			path = Visuals;
 			sourceTree = "<group>";
@@ -1522,6 +1526,7 @@
 				941EFBBF26BCE79E0087F960 /* HumidityVM.swift in Sources */,
 				941EFC2426BE5ECD0087F960 /* AdaptiveFont.swift in Sources */,
 				941EFC2A26BE74600087F960 /* Fonts.swift in Sources */,
+				94BE0DCA26C6D970000A6E2F /* VisualDebuggingHelp.swift in Sources */,
 				948E61C826BF405700A387E7 /* ScannedDeviceCellSUIVC.swift in Sources */,
 				941EFB7A26BCE7440087F960 /* CrossPlatformAlertPresenter.swift in Sources */,
 				941EFBB426BCE79D0087F960 /* MagenetometerVM.swift in Sources */,
@@ -1726,6 +1731,7 @@
 				94A514CC26B8CDD7008707ED /* MWResetVM.swift in Sources */,
 				94AFED3526B875C6004326C8 /* MWldentifiersVM.swift in Sources */,
 				94BAA74A26C38B560045E5E4 /* MWiBeaconVM.swift in Sources */,
+				94BE0DC926C6D970000A6E2F /* VisualDebuggingHelp.swift in Sources */,
 				947979C026B99F0F00AEB5EA /* Dimensions.swift in Sources */,
 				947979ED26B9B5A200AEB5EA /* ToastServer.swift in Sources */,
 				94A514C826B8CCE6008707ED /* ResetVM.swift in Sources */,

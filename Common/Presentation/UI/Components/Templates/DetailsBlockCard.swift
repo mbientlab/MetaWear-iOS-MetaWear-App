@@ -56,6 +56,7 @@ struct DetailsBlockCard<Content: View>: View {
                 .frame(maxWidth: .infinity)
                 .blockify()
         }
+        .frame(width: .detailBlockWidth)
         .id(tag)
         .accessibilityElement(children: .contain)
         .accessibilitySortPriority(Double(DetailGroup.allCases.endIndex - (tag as? Int ?? 0)))

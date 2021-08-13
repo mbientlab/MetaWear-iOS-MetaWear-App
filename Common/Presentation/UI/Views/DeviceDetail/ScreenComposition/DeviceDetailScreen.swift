@@ -26,6 +26,7 @@ struct DeviceDetailScreen: View {
         .pickerStyle(.segmented)
         .environment(\.allowBluetoothRequests, vc.toast.allowBluetoothRequests)
         .animation(.easeOut, value: vc.toast.showToast)
+        .animation(.easeOut(duration: 0.25), value: vc.sortedVisibleGroups)
         .animation(.none)
         .accessibilityLabel("Details for Currently Connected Device")
         .accessibilityLinkedGroup(id: "details", in: chain)

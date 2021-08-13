@@ -57,7 +57,7 @@ extension AccelerometerBlock {
                     CanvasGraph(controller: .init(stream: vm,
                                                   config: vm.makeStreamDataConfig(),
                                                   driver: ThrottledGraphDriver()),
-                                width: calculateGraphWidth())
+                                width: .detailBlockInnerContentSize)
                         .id("AccelerometerGraph")
                         .onAppear { scrollToGraph() }
 
@@ -65,7 +65,7 @@ extension AccelerometerBlock {
                     NaiveGraphFixedSize(controller: .init(stream: vm,
                                                           config: vm.makeStreamDataConfig(),
                                                           driver: ThrottledGraphDriver()),
-                                        width: calculateGraphWidth())
+                                        width: .detailBlockInnerContentSize)
                         .id("AccelerometerGraph")
                         .onAppear { scrollToGraph() }
                 }
@@ -77,13 +77,6 @@ extension AccelerometerBlock {
             withAnimation {
                 scroller?.scrollTo("AccelerometerGraph", anchor: .top)
             }
-        }
-
-        /// macOS only because on iOS graph width should be defined by the iOS device, not a constant
-        private func calculateGraphWidth() -> CGFloat {
-            let padding = CGFloat.detailBlockOuterPadding + .detailBlockContentPadding
-            let contentWidth = .detailBlockWidth - (padding * 2)
-            return contentWidth
         }
 
         private var buttons: some View {

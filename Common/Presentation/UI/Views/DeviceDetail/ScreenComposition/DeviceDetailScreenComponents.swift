@@ -64,6 +64,6 @@ struct RightColumns: View {
             if !group.isInfo {
                 BlockBuilder(group: group, namespace: details)
             }
-        }.animation(.easeOut(duration: 0.15))
+        }.animation(.none)
     }
 }

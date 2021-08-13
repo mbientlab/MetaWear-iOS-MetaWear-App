@@ -8,6 +8,7 @@ public extension CGFloat {
     static let detailBlockCorners: CGFloat = 10
     static let detailBlockOuterPadding: CGFloat = 8
     static let detailBlockContentPadding: CGFloat = 17
+    static let detailBlockInnerContentSize: CGFloat = .detailBlockWidth - .detailBlockOuterPadding + .detailBlockContentPadding
 
     static let cardVSpacing: CGFloat = 13
 
@@ -21,12 +22,13 @@ public extension CGFloat {
     #endif
 
     static let standardVStackSpacing: CGFloat = 6
-    static let cardGridSpacing: CGFloat = 24
+    static let cardGridSpacing: CGFloat = 25
 }
 
 extension CGFloat {
     static let windowMinHeight: CGFloat = 400
-    static let windowWidthMin: CGFloat = 200 + 40 + detailBlockWidth + 10 + detailBlockWidth + 40
+    static let windowWidthMin: CGFloat = .sidebarEstimate + .cardGridSpacing + detailBlockWidth + .cardGridSpacing + detailBlockWidth + .cardGridSpacing
+    fileprivate static let sidebarEstimate = CGFloat(200)
 
     #if os(iOS)
     static let detailBlockWidth: CGFloat = 400
