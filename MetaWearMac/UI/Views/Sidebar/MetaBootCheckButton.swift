@@ -29,9 +29,9 @@ struct MetaBootCheckButton: View {
             Spacer()
 
             Toggle(isOn: isOn) {}
-            .toggleStyle(.switch)
-            .accessibilityLabel("MetaBoot Mode")
-            .accentColor(Color(.systemTeal))
+                .toggleStyle(SwitchToggleStyle(tint: Color(.systemTeal)))
+                .accessibilityLabel("MetaBoot Mode")
+                .accentColor(Color(.systemTeal))
         }
         .help("Forces boot loader mode (when the device is powering on)")
     }

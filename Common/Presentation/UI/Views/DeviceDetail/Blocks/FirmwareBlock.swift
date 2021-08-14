@@ -10,6 +10,7 @@ struct FirmwareBlock: View {
 
     var body: some View {
         VStack(spacing: .cardVSpacing) {
+            
             LabeledItem(
                 label: vm.offerUpdate ? "New Firmware" : "Status",
                 content: status

@@ -72,6 +72,9 @@ public extension MWTemperatureVM {
                 mbl_mw_baro_bosch_stop(device.board)
 
             case .external:
+                // Don't bother reading if no pins are set because
+                // reading w/o proper pins will throw an error popup.
+                guard !readPin.isEmpty && !enablePin.isEmpty else { return }
                 readExternalThermistor()
 
             default:
@@ -116,7 +119,7 @@ private extension MWTemperatureVM {
             return
         }
         let isActiveHigh = UInt8(1)
-#warning("Original App — Not implemented, but present in UI. Documentation unclear on Read vs Enable terminology. Is this correct? I'm unfamiliar with GPIO")
+#warning("Original App — Not implemented, but present in UI. Is this implementation correct? I'm unfamiliar with GPIO read/enable terms.")
         mbl_mw_multi_chnl_temp_configure_ext_thermistor(board, channel, dataPin, pulldownPin, isActiveHigh)
         readSensor()
 

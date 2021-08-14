@@ -24,7 +24,7 @@ struct MainWindow: View {
         // Styling
         .lineSpacing(6)
         .fontBody()
-        .menuStyle(.borderlessButton)
+        .menuStyle(BorderlessButtonMenuStyle())
         .buttonStyle(BorderlessHoverHighlightButtonStyle())
         .multilineTextAlignment(.leading)
         .environment(\.fontFace, prefs.font)

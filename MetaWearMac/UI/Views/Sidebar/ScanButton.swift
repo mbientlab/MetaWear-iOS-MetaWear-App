@@ -9,27 +9,27 @@
 import SwiftUI
 
 struct ScanButton: View {
-
+    
     @EnvironmentObject private var vc: MetaWearScanningSVC
-
+    
     var isOn: Binding<Bool>{
         Binding { vc.isScanning } set: { vc.userChangedScanningState(to: $0) }
     }
-
+    
     var body: some View {
         HStack {
-
+            
             Text("Scan")
                 .fontBody()
                 .fixedSize(horizontal: true, vertical: false)
                 .lineLimit(1)
                 .accessibilityHidden(true)
-
+            
             Spacer()
-
+            
             Toggle(isOn: isOn) {}
-            .toggleStyle(.switch)
-            .accessibilityLabel("Scanning for MetaWear Devices")
+                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                .accessibilityLabel("Scanning for MetaWear Devices")
         }
     }
 }

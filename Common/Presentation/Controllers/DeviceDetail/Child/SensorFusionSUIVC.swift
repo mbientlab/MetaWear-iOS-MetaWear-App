@@ -54,7 +54,7 @@ extension SensorFusionSUIVC: SensorFusionVMDelegate {
     
 }
 
-extension SensorFusionSUIVC:  StreamGraphManager, LoggerGraphManager {
+extension SensorFusionSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSectionDriver, StreamingSectionDriver {
     
     public func setStreamGraphReference(_ graph: GraphObject) {
         self.streamGraph = graph

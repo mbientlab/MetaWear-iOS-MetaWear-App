@@ -15,6 +15,8 @@ public class MWAccelerometerVM: AccelerometerVM {
     public private(set) var allowsNewLogging = false
     public private(set) var allowsNewStreaming = false
 
+    public var canOrientOrStep: Bool { model != .bmi270 }
+
     // Step count state
     public private(set) var isStepping = false
     public private(set) var stepCount = 0
@@ -70,6 +72,7 @@ extension MWAccelerometerVM: DetailConfiguring {
         allowsNewStreaming = true
 
         delegate?.refreshView()
+        print(model == .bmi270 ? "BMI270" : "NOT BMI ----------------------------")
     }
 }
 
@@ -201,7 +204,6 @@ public extension MWAccelerometerVM {
         let signal = mbl_mw_acc_bosch_get_acceleration_data_signal(board)!
         mbl_mw_datasignal_log(signal, bridge(obj: self)) { (context, logger) in
             let _self: MWAccelerometerVM = bridge(ptr: context!)
-
             let cString = mbl_mw_logger_generate_identifier(logger)!
             let identifier = String(cString: cString)
             _self.loggingKey = identifier
@@ -268,6 +270,10 @@ public extension MWAccelerometerVM {
 }
 
 extension MWAccelerometerVM: LogDownloadHandlerDelegate {
+
+    public func updateStats() {
+        delegate?.refreshLoggerStats()
+    }
 
     public func initialDataTransferDidComplete() {
         isDownloadingLog = false

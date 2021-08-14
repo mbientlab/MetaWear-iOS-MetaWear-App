@@ -19,4 +19,6 @@ public protocol LogDownloadHandlerDelegate: AnyObject {
     func receivedUnknownEntry(context: UnsafeMutableRawPointer?, id: UInt8, epoch: Int64, data: UnsafePointer<UInt8>?, length: UInt8)
     
     func receivedUnhandledEntry(context: UnsafeMutableRawPointer?, data: UnsafePointer<MblMwData>?)
+
+    func updateStats()
 }

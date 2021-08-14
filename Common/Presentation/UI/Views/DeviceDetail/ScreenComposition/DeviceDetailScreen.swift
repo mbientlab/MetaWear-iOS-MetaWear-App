@@ -9,69 +9,82 @@ struct DeviceDetailScreen: View {
 
     @EnvironmentObject private var vc: DeviceDetailScreenSUIVC
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.fontFace) private var fontFace
 
-    var chain: Namespace.ID
-    @Namespace var details
+    var chain: Namespace.ID // accessibility
+    @Namespace var details // accessibility
 
     // MARK: - Place Toast notifications. Wrap accessibility and styling.
 
     var body: some View {
         VStack(spacing: 0) {
+
+            #if os(iOS)
+
             scrollView
-#if os(iOS)
                 .ignoresSafeArea(.container, edges: [.bottom])
                 .background(bg.ignoresSafeArea())
-#endif
+                .overlay(
+                    toastServer
+                        .accessibilityHidden(true)
+                        .shadow(color: iOSToastShadowColor, radius: 15, x: 0, y: 10),
+                    alignment: .top)
+
+            #elseif os(macOS)
+
+            scrollView
+                .fontBody()
+                .padding(.leading)
+                .overlay(toastServer.accessibilityHidden(true), alignment: .top)
+
+            #endif
+
         }
-        .pickerStyle(.segmented)
+        .toolbar { Toolbar(vm: vc.vms.header as! DetailHeaderSUIVC) }
+
+        .pickerStyle(SegmentedPickerStyle())
         .environment(\.allowBluetoothRequests, vc.toast.allowBluetoothRequests)
+
         .animation(.easeOut, value: vc.toast.showToast)
         .animation(.easeOut(duration: 0.25), value: vc.sortedVisibleGroups)
         .animation(.none)
+
         .accessibilityLabel("Details for Currently Connected Device")
         .accessibilityLinkedGroup(id: "details", in: chain)
-#if canImport(AppKit)
-        .fontBody()
-        .padding(.leading)
-        .overlay(ToastServer(vm: vc.toast as! MWToastServerVM).accessibilityHidden(true), alignment: .top)
-#elseif os(iOS)
-        .overlay(ToastServer(vm: vc.toast as! MWToastServerVM)
-                    .accessibilityHidden(true)
-                    .shadow(color: colorScheme == .light
-                            ? .black.opacity(0.1)
-                            : .black.opacity(0.15), radius: 15, x: 0, y: 10)
-                 ,
-                 alignment: .top)
-#endif
-
     }
 
-    private var bg: some View {
-        Color.groupedListBackground
+    var toastServer: some View {
+        ToastServer(vm: vc.toast as! MWToastServerVM)
     }
 
-    // MARK: - Define content layout by platform in ScrollView
+    private var bg: some View { Color.groupedListBackground }
 
-    @Environment(\.fontFace) private var fontFace
+    // MARK: - Define content layout by platform
 
     var scrollView: some View {
         ScrollViewReader { scroll in
             ScrollView(.vertical) {
-#if os(macOS)
+                #if os(macOS)
                 MacGridLayout(
                     identitySection: IdentitySection(details: details),
                     sensors: SensorsSection(details: details)
                 )
-                    .padding(.bottom, 20)
-                    .padding(.top, fontFace == .openDyslexic ? 28 : 18)
-#else
+                .padding(.bottom, 20)
+                .padding(.top, fontFace == .openDyslexic ? 28 : 18)
+                #else
                 iOSDeviceDetailLayout(
                     chain: chain,
                     details: details
                 ).padding(.bottom, 20)
-#endif
+                #endif
             }
             .environment(\.scrollProxy, scroll)
         }
+    }
+
+    var iOSToastShadowColor: Color {
+        colorScheme == .light
+            ? .black.opacity(0.1)
+            : .black.opacity(0.15)
     }
 }

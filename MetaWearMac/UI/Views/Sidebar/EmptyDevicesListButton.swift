@@ -17,7 +17,7 @@ struct EmptyDevicesListButton: View {
             Text("Searching")
         } else {
             Button("Start Scanning") { vc.userChangedScanningState(to: true) }
-            .buttonStyle(.borderless)
+            .buttonStyle(BorderlessButtonStyle())
         }
     }
 

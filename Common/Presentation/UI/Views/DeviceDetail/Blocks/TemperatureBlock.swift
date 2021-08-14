@@ -39,11 +39,12 @@ struct TemperatureBlock: View {
     }
 
     private var channel: some View {
-        Picker(selection: channelBinding) {
+        Picker(selection: channelBinding, label: EmptyView()) {
             ForEach(vm.channelsIndexed, id: \.index) {
                 Text($0.label).tag($0.index)
             }
-        } label: { }
+        }
+        .pickerStyle(SegmentedPickerStyle())
     }
 
     private var temp: some View {

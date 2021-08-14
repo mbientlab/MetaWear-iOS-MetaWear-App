@@ -10,6 +10,7 @@ struct BatteryBlock: View {
 
     var body: some View {
         HStack(spacing: .cardVSpacing) {
+            
             Text("\(vm.batteryLevelPercentage)%")
                 .foregroundColor(color)
                 .fontWeight(.medium)
@@ -17,7 +18,7 @@ struct BatteryBlock: View {
                 .padding(.trailing, 8)
 
             ProgressView("", value: Float(vm.batteryLevelPercentage), total: Float(100))
-                .progressViewStyle(.linear)
+                .progressViewStyle(LinearProgressViewStyle(tint: .gray))
                 .accessibilityValue(String("\(vm.batteryLevelPercentage)%"))
                 .accentColor(color)
                 .foregroundColor(color)

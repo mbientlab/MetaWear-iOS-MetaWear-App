@@ -3,36 +3,48 @@
 //
 import SwiftUI
 
-// On iPad and Mac, there are multiple columns.
-// On iPhone, there is just one stacked column.
-
 struct Header: View {
 
     @EnvironmentObject private var vc: DeviceDetailScreenSUIVC
 
     var body: some View {
         #if os(iOS)
-        DeviceImage(vm: vc.vms.identifiers as! IdentifiersSUIVC,
-                             header: vc.vms.header as! DetailHeaderSUIVC,
-                    size: 155)
+        deviceImageHero
             .padding(.bottom, -20)
             .offset(y: 20)
-        #endif
 
+        headerCard
+
+        #elseif os(macOS)
+
+        headerCard
+            .overlay(deviceImageOverlay, alignment: .trailing)
+
+        #endif
+    }
+
+    var headerCard: some View {
         TitlelessDetailsBlockCard(
             tag: DetailGroup.headerInfoAndState.id,
             content: HeaderBlock(vm: vc.vms.header as! DetailHeaderSUIVC)
         )
-#if os(macOS)
-            .overlay(DeviceImage(vm: vc.vms.identifiers as! IdentifiersSUIVC,
-                                 header: vc.vms.header as! DetailHeaderSUIVC),
-                     alignment: .trailing)
-#endif
-            .accessibilityElement(children: .contain)
-            .accessibilityLabel("\(vc.vms.header.deviceName) is \(vc.vms.header.connectionState)")
-            .accessibilityHint("Edit device name")
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("\(vc.vms.header.deviceName) is \(vc.vms.header.connectionState)")
+        .accessibilityHint("Edit device name")
+    }
+
+    var deviceImageOverlay: some View {
+        DeviceImage(vm: vc.vms.identifiers as! IdentifiersSUIVC,
+                    header: vc.vms.header as! DetailHeaderSUIVC)
+    }
+
+    var deviceImageHero: some View {
+        DeviceImage(vm: vc.vms.identifiers as! IdentifiersSUIVC,
+                    header: vc.vms.header as! DetailHeaderSUIVC,
+                    size: 155)
     }
 }
+
 
 struct IdentitySection: View {
 

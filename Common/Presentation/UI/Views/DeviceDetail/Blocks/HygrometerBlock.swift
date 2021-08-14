@@ -10,6 +10,12 @@ struct HygrometerBlock: View {
 
     var body: some View {
         VStack(spacing: .cardVSpacing) {
+
+            LabeledItem(
+                label: "Oversampling",
+                content: oversampling
+            )
+
             LabeledItem(
                 label: "Live",
                 content: button
@@ -32,16 +38,12 @@ struct HygrometerBlock: View {
 
             Spacer()
 
-            Picker(vm.oversamplingSelected.displayName, selection: oversamplingOptions) {
+            MenuPicker(label: vm.oversamplingSelected.displayName,
+                                selection: oversamplingOptions) {
                 ForEach(vm.oversamplingOptions) {
                     Text(String($0.displayName)).tag($0)
                 }
             }
-            .pickerStyle(.menu)
-#if os(macOS)
-            .fixedSize()
-            .accentColor(.gray)
-#endif
         }
     }
 
@@ -67,7 +69,3 @@ struct HygrometerBlock: View {
         }
     }
 }
-
-
-// Oversampling : OpacityTextIsOversampling while streaming + MenuOptions + "x"
-// Live : humidityReadout Button "STream/Stop"

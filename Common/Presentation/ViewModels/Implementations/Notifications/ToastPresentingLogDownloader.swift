@@ -66,6 +66,8 @@ private extension ToastPresentingLogDownloader {
         DispatchQueue.main.async {
             guard percentage != _self.parent?.toast.percentComplete else { return }
             _self.parent?.toast.updateProgress(percentage: percentage)
+            guard percentage % 10 == 0 else { return }
+            _self.delegate?.updateStats()
         }
 
         guard remainingEntries == 0 else { return }

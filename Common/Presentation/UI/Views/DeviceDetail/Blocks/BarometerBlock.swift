@@ -43,77 +43,59 @@ struct BarometerBlock: View {
         .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }
     }
 
-    // MARK: - Pickers
+    // MARK: - Picker Bindings
 
     private var oversamplingBinding: Binding<BarometerOversampling> {
         Binding { vm.oversamplingSelected }
-        set: { vm.userSetOversampling($0) }
+            set: { vm.userSetOversampling($0) }
     }
 
-    private var oversampling: some View {
-            Picker("", selection: oversamplingBinding) {
-                ForEach(vm.oversamplingOptions) {
-                    Text($0.displayName).tag($0)
-                }
-            }
-            .pickerStyle(.menu)
-#if os(macOS)
-            .fixedSize()
-            .accentColor(.gray)
-#endif
-    }
-
-    private var iirFilterBinding: Binding<BarometerIIRFilter> {
+    private var averagingBinding: Binding<BarometerIIRFilter> {
         Binding { vm.iirFilterSelected }
-        set: { vm.userSetIIRFilter($0) }
-    }
-
-    private var averaging: some View {
-        HStack {
-            Picker("", selection: iirFilterBinding) {
-                ForEach(vm.iirTimeOptions) {
-                    Text($0.displayName).tag($0)
-                }
-            }
-            .pickerStyle(.menu)
-#if os(macOS)
-            .fixedSize()
-            .accentColor(.gray)
-#endif
-
-            Text("x")
-                .fontVerySmall()
-                .fixedSize(horizontal: true, vertical: false)
-                .foregroundColor(.secondary)
-                .padding(.leading, 5)
-                .matchWidths(to: UnitWidthKey.self, width: unitWidth, alignment: .leading)
-        }
+            set: { vm.userSetIIRFilter($0) }
     }
 
     private var standbyTimeBinding: Binding<BarometerStandbyTime> {
         Binding { vm.standbyTimeSelected }
-        set: { vm.userSetStandbyTime($0) }
+            set: { vm.userSetStandbyTime($0) }
+    }
+
+    // MARK: - Pickers
+
+    private var oversampling: some View {
+        MenuPicker(label: vm.oversamplingSelected.displayName,
+                   selection: oversamplingBinding) {
+            ForEach(vm.oversamplingOptions) {
+                Text($0.displayName).tag($0)
+            }
+        }
+    }
+
+    private var averaging: some View {
+        MenuPickerWithUnitsAligned(
+            label: vm.iirFilterSelected.displayName,
+            binding: averagingBinding,
+            unit: "x",
+            unitWidthKey: UnitWidthKey.self,
+            unitWidth: unitWidth
+        ) {
+            ForEach(vm.iirTimeOptions) {
+                Text($0.displayName).tag($0)
+            }
+        }
     }
 
     private var standbyTime: some View {
-        HStack {
-            Picker("", selection: standbyTimeBinding) {
-                ForEach(vm.standbyTimeOptions) {
-                    Text($0.displayName).tag($0)
-                }
+        MenuPickerWithUnitsAligned(
+            label: vm.standbyTimeSelected.displayName,
+            binding: standbyTimeBinding,
+            unit: "ms",
+            unitWidthKey: UnitWidthKey.self,
+            unitWidth: unitWidth
+        ) {
+            ForEach(vm.standbyTimeOptions) {
+                Text($0.displayName).tag($0)
             }
-            .pickerStyle(.menu)
-#if os(macOS)
-            .fixedSize()
-            .accentColor(.gray)
-#endif
-
-            Text("ms")
-                .fontVerySmall()
-                .fixedSize(horizontal: true, vertical: false)
-                .foregroundColor(.secondary)
-                .padding(.leading, 5)
-                .matchWidths(to: UnitWidthKey.self, width: unitWidth, alignment: .leading)
         }
     }
 
@@ -126,13 +108,7 @@ struct BarometerBlock: View {
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
 
-            Text("m")
-                .fontVerySmall()
-                .lineLimit(nil)
-                .multilineTextAlignment(.leading)
-                .fixedSize(horizontal: false, vertical: true)
-                .foregroundColor(.secondary)
-                .padding(.leading, 5)
+            SmallUnitLabelFixed("m")
                 .opacity(vm.altitudeString.isEmpty ? 0 : 1)
 
             Spacer()

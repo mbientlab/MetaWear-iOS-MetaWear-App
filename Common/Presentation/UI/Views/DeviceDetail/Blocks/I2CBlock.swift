@@ -13,7 +13,8 @@ struct I2CBlock: View {
 
             LabeledItem(
                 label: "Size",
-                content: size
+                content: size,
+                contentAlignment: .trailing
             )
 
             LabeledItem(
@@ -38,20 +39,10 @@ struct I2CBlock: View {
     // MARK: - Size
 
     private var size: some View {
-        HStack {
-
-            Spacer()
-
-            Picker("", selection: sizeChoice) {
-                ForEach(vm.sizeOptions) {
-                    Text($0.displayName).tag($0)
-                }
+        MenuPicker(label: vm.selectedSize.displayName, selection: sizeChoice) {
+            ForEach(vm.sizeOptions) {
+                Text($0.displayName).tag($0)
             }
-            .pickerStyle(.menu)
-#if os(macOS)
-            .fixedSize()
-            .accentColor(.gray)
-#endif
         }
     }
 
@@ -65,19 +56,19 @@ struct I2CBlock: View {
 
     private var device: some View {
         SmallTextField(smallest: true,
-            initialText: vm.deviceAddressInput,
-            placeholder: "0x12",
-            invalidEntry: vm.showDeviceInputInvalid,
-            onCommit: vm.userSetDeviceAddress(_:)
+                       initialText: vm.deviceAddressInput,
+                       placeholder: "0x12",
+                       invalidEntry: vm.showDeviceInputInvalid,
+                       onCommit: vm.userSetDeviceAddress(_:)
         )
     }
 
     private var register: some View {
         SmallTextField(smallest: true,
-            initialText: vm.deviceRegisterInput,
-            placeholder: "0x34",
-            invalidEntry: vm.showRegisterInputInvalid,
-            onCommit: vm.userSetRegisterAddress(_:)
+                       initialText: vm.deviceRegisterInput,
+                       placeholder: "0x34",
+                       invalidEntry: vm.showRegisterInputInvalid,
+                       onCommit: vm.userSetRegisterAddress(_:)
         )
     }
 

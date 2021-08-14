@@ -228,7 +228,7 @@ public extension MWGyroVM {
         delegate?.refreshView()
 
         guard let board = device?.board else { return }
-        guard let logger = parent?.removeLog(loggingKey) else { return }
+        downloadLogger = parent?.removeLog(loggingKey)
 
         switch model {
             case .bmi270:
@@ -242,8 +242,6 @@ public extension MWGyroVM {
 
             case .none: break
         }
-
-        downloadLogger = logger
     }
 
     func userRequestedDownloadLog() {
@@ -273,13 +271,12 @@ public extension MWGyroVM {
             let point = (obj!.pointee.epoch, acceleration)
             DispatchQueue.main.async {
                 _self.data.logged.append(.init(cartesian: point))
+                print(point.1.x)
             }
         }
 
         downloadProgressHandler = .init()
         downloadProgressHandler.reportProgress(board: board, to: self, parent: parent)
-
-        downloadLogger = nil
     }
 
     func userRequestedLogExport() {
@@ -294,7 +291,7 @@ private extension MWGyroVM {
         guard let board = device?.board else { return }
 
         let signal = mbl_mw_gyro_bmi270_get_rotation_data_signal(board)!
-        mbl_mw_datasignal_log(signal, bridge(obj: self), Self.loggingDidStartCallback)
+        startLogging(signal)
 
         mbl_mw_logging_start(board, 0)
         mbl_mw_gyro_bmi270_enable_rotation_sampling(board)
@@ -305,24 +302,32 @@ private extension MWGyroVM {
         guard let board = device?.board else { return }
 
         let signal = mbl_mw_gyro_bmi160_get_rotation_data_signal(board)!
-        mbl_mw_datasignal_log(signal, bridge(obj: self), Self.loggingDidStartCallback)
+        startLogging(signal)
 
         mbl_mw_logging_start(board, 0)
         mbl_mw_gyro_bmi160_enable_rotation_sampling(board)
         mbl_mw_gyro_bmi160_start(board)
     }
 
-    static let loggingDidStartCallback: MblMwFnDataLoggerPtr = { (context, logger) in
-        let _self: MWGyroVM = bridge(ptr: context!)
-        let cString = mbl_mw_logger_generate_identifier(logger)!
-        let identifier = String(cString: cString)
-        _self.loggingKey = identifier
-        _self.parent?.addLog(identifier, logger!)
+    func startLogging(_ signal: OpaquePointer) {
+        mbl_mw_datasignal_log(signal, bridge(obj: self)) { (context, logger) in
+            let _self: MWGyroVM = bridge(ptr: context!)
+
+            let cString = mbl_mw_logger_generate_identifier(logger)!
+            let identifier = String(cString: cString)
+            _self.loggingKey = identifier
+            _self.parent?.addLog(identifier, logger!)
+        }
     }
+
 }
 
 // Helpers
 extension MWGyroVM: LogDownloadHandlerDelegate {
+    
+    public func updateStats() {
+        delegate?.refreshLoggerStats()
+    }
 
     public func initialDataTransferDidComplete() {
         isDownloadingLog = false

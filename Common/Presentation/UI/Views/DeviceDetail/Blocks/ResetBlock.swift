@@ -11,9 +11,17 @@ struct ResetBlock: View {
     var body: some View {
         HStack {
             Spacer()
+
+            #if os(macOS)
+            reset.controlSize(.regular)
+            #else
             reset
+            #endif
+
             Spacer()
+
             sleep
+
             Spacer()
         }
     }
@@ -23,9 +31,6 @@ struct ResetBlock: View {
             Button("Soft") { vm.userRequestedSoftReset() }
             Button("Factory") { vm.userRequestedFactoryReset() }
         }
-#if os(macOS)
-        .controlSize(.regular)
-#endif
         .fixedSize()
     }
 

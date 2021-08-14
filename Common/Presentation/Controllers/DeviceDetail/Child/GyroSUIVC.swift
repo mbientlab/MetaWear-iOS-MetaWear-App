@@ -31,7 +31,6 @@ extension GyroSUIVC: GyroVMDelegate {
         objectWillChange.send()
     }
 
-
     public func drawNewStreamGraphPoint(_ point: TimeIdentifiedCartesianFloat) {
         streamGraph?.addPointInAllSeries([point.value.x, point.value.y, point.value.z])
     }

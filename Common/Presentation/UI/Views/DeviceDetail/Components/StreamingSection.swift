@@ -83,13 +83,13 @@ fileprivate struct IsConnectingToStreamIndicator<VM: StreamingSectionDriver>: Vi
     var platformSpecificView: some View {
         #if os(macOS)
         ProgressView()
-            .progressViewStyle(.circular)
+            .progressViewStyle(CircularProgressViewStyle())
             .transition(.opacity)
             .controlSize(.small)
             .offset(x: -35)
         #elseif os(iOS)
         ProgressView()
-            .progressViewStyle(.circular)
+            .progressViewStyle(CircularProgressViewStyle())
             .transition(.scale)
             .offset(x: -35)
         #endif
@@ -110,42 +110,48 @@ fileprivate struct Graph<VM: StreamingSectionDriver>: View {
     }
 
     var body: some View {
-#if os(iOS)
+        #if os(iOS)
         iOSGraph
-#elseif os(macOS)
+        #elseif os(macOS)
         macOSGraph.padding(.vertical, .standardVStackSpacing)
-#endif
+        #endif
     }
 
-#if os(iOS)
+    #if os(iOS)
     var iOSGraph: some View {
         AAGraphViewWrapper(initialConfig: vm.makeStreamDataConfig(),
                            graph: vm.setStreamGraphReference)
             .id(scrollViewGraphID)
             .onAppear { scrollToGraph() }
     }
-#endif
+    #endif
 
-#if os(macOS)
+    #if os(macOS)
     @ViewBuilder var macOSGraph: some View {
+        #if swift(>=5.5)
         if #available(macOS 12.0, *) {
-
             CanvasGraph(controller: .init(stream: vm,
                                           config: vm.makeStreamDataConfig(),
                                           driver: ThrottledGraphDriver()),
                         width: .detailBlockInnerContentSize - 70)
                 .id(scrollViewGraphID)
                 .onAppear { scrollToGraph() }
-
         } else {
-
-            NaiveGraphFixedSize(controller: .init(stream: vm,
-                                                  config: vm.makeStreamDataConfig(),
-                                                  driver: ThrottledGraphDriver()),
-                                width: .detailBlockInnerContentSize - 70)
-                .id(scrollViewGraphID)
-                .onAppear { scrollToGraph() }
+            macOS11Graph
         }
+        #else
+        macOS11Graph
+        #endif
+
     }
-#endif
+
+    var macOS11Graph: some View {
+        NaiveGraphFixedSize(controller: .init(stream: vm,
+                                              config: vm.makeStreamDataConfig(),
+                                              driver: ThrottledGraphDriver()),
+                            width: .detailBlockInnerContentSize - 70)
+            .id(scrollViewGraphID)
+            .onAppear { scrollToGraph() }
+    }
+    #endif
 }

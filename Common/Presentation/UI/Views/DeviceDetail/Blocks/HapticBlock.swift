@@ -19,7 +19,7 @@ struct HapticBlock: View {
 
             LabeledItem(
                 label: "Duty Cycle",
-                content: duty
+                content: osSpecificDuty
             )
 
             DividerPadded()
@@ -52,6 +52,16 @@ struct HapticBlock: View {
     }
 
     @State private var dutyBinding: Float = 248
+    private var osSpecificDuty: some View {
+        #if os(macOS)
+        duty
+            .controlSize(.small)
+            .blendMode(.luminosity)
+        #else
+        duty
+        #endif
+    }
+
     private var duty: some View {
         HStack {
             Spacer()
@@ -68,10 +78,6 @@ struct HapticBlock: View {
             }
             .foregroundColor(Color.gray)
             .accentColor(Color.gray)
-            #if os(macOS)
-            .controlSize(.small)
-            .blendMode(.luminosity)
-            #endif
             .frame(width: .detailBlockWidth * 0.25)
             .onAppear { dutyBinding = Float(vm.dutyCycle) }
             .onChange(of: vm.dutyCycle) { newValue in dutyBinding = Float(newValue) }
@@ -84,10 +90,10 @@ struct HapticBlock: View {
         HStack {
             Spacer()
             Button("Haptic") { vm.userRequestedStartHapticDriver() }
-            .modifier(ShakeEffect(shakes: hapticAnimation ? 50 : 0, effectSize: -4))
+                .modifier(ShakeEffect(shakes: hapticAnimation ? 50 : 0, effectSize: -4))
             Spacer()
             Button("Buzzer") { vm.userRequestedStartBuzzerDriver()  }
-            .modifier(ShakeEffect(shakes: buzzerAnimation ? 50 : 0, effectSize: -4))
+                .modifier(ShakeEffect(shakes: buzzerAnimation ? 50 : 0, effectSize: -4))
             Spacer()
         }
         .disabled(!vm.canSendCommand)

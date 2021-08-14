@@ -28,32 +28,37 @@ public class MagnetometerSUIVC: MWMagnetometerVM, ObservableObject {
 extension MagnetometerSUIVC: MagnetometerVMDelegate {
 
     public func refreshView() {
-
-    }
-
-    public func refreshStreamStats() {
-
-    }
-
-    public func refreshLoggerStats() {
-
-    }
-
-    public func drawNewLoggerGraphPoint(_ point: TimeIdentifiedCartesianFloat) {
-
+        objectWillChange.send()
     }
 
     public func drawNewStreamGraphPoint(_ point: TimeIdentifiedCartesianFloat) {
-
+        streamGraph?.addPointInAllSeries([point.value.x, point.value.y, point.value.z])
     }
 
     public func redrawStreamGraph() {
-        
+        streamingStats = .zero(for: data.streamKind)
+        streamGraph?.clearData()
+    }
+
+    // Stats
+
+    public func refreshLoggerStats() {
+        let stats = data.getLoggedStats()
+        DispatchQueue.main.async { [weak self] in
+            self?.loggerStats = stats
+        }
+    }
+
+    public func refreshStreamStats() {
+        let stats = data.getStreamedStats()
+        DispatchQueue.main.async { [weak self] in
+            self?.streamingStats = stats
+        }
     }
 
 }
 
-extension MagnetometerSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSectionDriver {
+extension MagnetometerSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSectionDriver, StreamingSectionDriver {
 
     public func setStreamGraphReference(_ graph: GraphObject) {
         self.streamGraph = graph

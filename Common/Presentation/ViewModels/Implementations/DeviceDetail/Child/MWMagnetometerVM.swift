@@ -217,9 +217,8 @@ public extension MWMagnetometerVM {
             acceleration.scaled(by: _self.loggingScaleFactor) // Original app specified two different scales
             let point = (obj!.pointee.epoch, acceleration)
             DispatchQueue.main.async {
-                _self.delegate?.drawNewLoggerGraphPoint(point)
+                _self.data.logged.append(.init(cartesian: point))
             }
-            _self.data.logged.append(.init(cartesian: point))
         }
 
         downloadProgressHandler = .init()
@@ -236,6 +235,10 @@ public extension MWMagnetometerVM {
 
 // Helpers
 extension MWMagnetometerVM: LogDownloadHandlerDelegate {
+
+    public func updateStats() {
+        delegate?.refreshLoggerStats()
+    }
 
     public func initialDataTransferDidComplete() {
         isDownloadingLog = false

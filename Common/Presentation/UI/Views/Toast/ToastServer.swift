@@ -23,32 +23,7 @@ struct ToastServer: View {
 
     private var toast: some View {
         HStack(alignment: .center) {
-            switch vm.type {
-
-                case .textOnly:
-                    EmptyView()
-
-                case .horizontalProgress:
-
-                    Text(String(vm.percentComplete))
-                        .fontSmall(weight: .medium, monospacedDigit: true)
-                        .fixedSize(horizontal: true, vertical: false)
-                        .padding(.leading, 10)
-
-                    ProgressView(value: Float(vm.percentComplete) / 100, total: 1)
-                        .progressViewStyle(.linear)
-                        .padding(.horizontal)
-                        .frame(width: 125)
-
-                case .foreverSpinner:
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .padding(.leading, 6)
-                        .padding(.trailing)
-                    #if os(macOS)
-                        .controlSize(.small)
-                    #endif
-            }
+            progressIndicator
 
             Text(vm.text)
                 .fontBody(weight: .medium)
@@ -67,9 +42,45 @@ struct ToastServer: View {
                 Capsule().stroke(Color.secondary.opacity(0.3))
                 #endif
             }
-                .compositingGroup()
-                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 10)
+            .compositingGroup()
+            .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 10)
         )
         .padding(15)
+        .onTapGesture { vm.userTappedToDismiss() }
+    }
+
+    @ViewBuilder private var progressIndicator: some View {
+        switch vm.type {
+
+            case .textOnly:
+                EmptyView()
+
+            case .horizontalProgress:
+
+                Text(String(vm.percentComplete))
+                    .fontSmall(weight: .medium, monospacedDigit: true)
+                    .fixedSize(horizontal: true, vertical: false)
+                    .padding(.leading, 10)
+
+                ProgressView(value: Float(vm.percentComplete) / 100, total: 1)
+                    .progressViewStyle(LinearProgressViewStyle(tint: .accentColor))
+                    .padding(.horizontal)
+                    .frame(width: 125)
+
+            case .foreverSpinner:
+                #if os(macOS)
+                circularSpinner
+                    .controlSize(.small)
+                #else
+                circularSpinner
+                #endif
+        }
+    }
+
+    private var circularSpinner: some View {
+        ProgressView()
+            .progressViewStyle(CircularProgressViewStyle())
+            .padding(.leading, 6)
+            .padding(.trailing)
     }
 }

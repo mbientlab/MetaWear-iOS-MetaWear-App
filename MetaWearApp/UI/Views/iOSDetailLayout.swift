@@ -30,8 +30,8 @@ struct iOSDeviceDetailLayout: View {
             } else {
                 iPadGridLayout(
                     width: width,
-                    identity: IdentitySection(details: details),
-                    sensors: SensorsSection(details: details)
+                    identity: IdentityDetailCards(details: details),
+                    sensors: SensorDetailCards(details: details)
                 )
                     .frame(maxWidth: .infinity, alignment: .center)
             }

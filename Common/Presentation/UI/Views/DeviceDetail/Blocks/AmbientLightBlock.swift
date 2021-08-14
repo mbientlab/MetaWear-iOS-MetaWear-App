@@ -51,24 +51,16 @@ struct AmbientLightBlock: View {
     }
 
     private var gain: some View {
-        HStack {
-            Picker("", selection: gainBinding) {
-                ForEach(vm.gainOptions) {
-                    Text($0.displayName).tag($0)
-                }
+        MenuPickerWithUnitsAligned(
+            label: vm.gainSelected.displayName,
+            binding: gainBinding,
+            unit: "x",
+            unitWidthKey: UnitWidthKey.self,
+            unitWidth: unitWidth
+        ) {
+            ForEach(vm.gainOptions) {
+                Text($0.displayName).tag($0)
             }
-            .pickerStyle(.menu)
-#if os(macOS)
-            .fixedSize()
-            .accentColor(.gray)
-#endif
-
-            Text("x")
-                .fontVerySmall()
-                .fixedSize(horizontal: true, vertical: false)
-                .foregroundColor(.secondary)
-                .padding(.leading, 5)
-                .matchWidths(to: UnitWidthKey.self, width: unitWidth, alignment: .leading)
         }
     }
 
@@ -78,24 +70,16 @@ struct AmbientLightBlock: View {
     }
 
     private var integration: some View {
-        HStack {
-            Picker("", selection: integrationBinding) {
-                ForEach(vm.integrationTimeOptions) {
-                    Text($0.displayName).tag($0)
-                }
+        MenuPickerWithUnitsAligned(
+            label: vm.integrationTimeSelected.displayName,
+            binding: integrationBinding,
+            unit: "ms",
+            unitWidthKey: UnitWidthKey.self,
+            unitWidth: unitWidth
+        ) {
+            ForEach(vm.integrationTimeOptions) {
+                Text($0.displayName).tag($0)
             }
-            .pickerStyle(.menu)
-#if os(macOS)
-            .fixedSize()
-            .accentColor(.gray)
-#endif
-
-            Text("ms")
-                .fontVerySmall()
-                .fixedSize(horizontal: true, vertical: false)
-                .foregroundColor(.secondary)
-                .padding(.leading, 5)
-                .matchWidths(to: UnitWidthKey.self, width: unitWidth, alignment: .leading)
         }
     }
 
@@ -105,24 +89,16 @@ struct AmbientLightBlock: View {
     }
 
     private var measurement: some View {
-        HStack {
-            Picker("", selection: measurementBinding) {
-                ForEach(vm.measurementRateOptions) {
-                    Text($0.displayName).tag($0)
-                }
+        MenuPickerWithUnitsAligned(
+            label: vm.measurementRateSelected.displayName,
+            binding: measurementBinding,
+            unit: "ms",
+            unitWidthKey: UnitWidthKey.self,
+            unitWidth: unitWidth
+        ) {
+            ForEach(vm.measurementRateOptions) {
+                Text($0.displayName).tag($0)
             }
-            .pickerStyle(.menu)
-#if os(macOS)
-            .fixedSize()
-            .accentColor(.gray)
-#endif
-
-            Text("ms")
-                .fontVerySmall()
-                .fixedSize(horizontal: true, vertical: false)
-                .foregroundColor(.secondary)
-                .padding(.leading, 5)
-                .matchWidths(to: UnitWidthKey.self, width: unitWidth, alignment: .leading)
         }
     }
 
@@ -135,13 +111,7 @@ struct AmbientLightBlock: View {
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
 
-            Text("lux")
-                .fontVerySmall()
-                .lineLimit(nil)
-                .multilineTextAlignment(.leading)
-                .fixedSize(horizontal: false, vertical: true)
-                .foregroundColor(.secondary)
-                .padding(.leading, 5)
+            SmallUnitLabelFixed("lux")
                 .opacity(vm.illuminanceString.isEmpty ? 0 : 1)
 
             Spacer()

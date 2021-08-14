@@ -19,7 +19,7 @@ struct MetaWearMacApp: App {
                        vc: store.ui.makeMetaWearScanningSVC())
                 .environmentObject(store)
         }
-        .windowToolbarStyle(.unified(showsTitle: true))
+        .windowToolbarStyle(UnifiedWindowToolbarStyle(showsTitle: true))
         .commands { Menus(prefs: store.preferences) }
     }
 }

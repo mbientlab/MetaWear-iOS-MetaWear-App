@@ -18,6 +18,8 @@ public protocol AccelerometerVM: AnyObject, DetailConfiguring {
     var logDataIsReadyForDisplay: Bool { get }
     var streamDataIsReadyForDisplay: Bool { get }
 
+    var canOrientOrStep: Bool { get }
+
     var isStepping: Bool { get }
     var stepCount: Int { get }
     var stepCountString: String { get }

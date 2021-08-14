@@ -20,6 +20,7 @@ struct SignalBlock: View {
                 content: txPicker,
                 contentAlignment: .trailing
             )
+            .help("Transmit power is only set, not read.")
         }
     }
 
@@ -45,23 +46,17 @@ struct SignalBlock: View {
 
     private var txPicker: some View {
         HStack {
-            Picker(txLabel, selection: txChoice) {
+            SmallUnitLabelFixed("Set to")
+
+            MenuPickerWithFixedUnits(
+                label: String(vm.transmissionPowerLevels[vm.chosenPowerLevelIndex]),
+                binding: txChoice,
+                unit: "dBm"
+            ) {
                 ForEach(vm.indexedTransmissionLevels, id: \.index) {
                     Text(String($0.value)).tag($0.index)
                 }
             }
-            .pickerStyle(.menu)
-#if os(macOS)
-            .fixedSize()
-            .accentColor(.gray)
-#endif
-
-#if os(macOS)
-            Text("dBm")
-                .fontVerySmall()
-                .foregroundColor(.secondary)
-                .padding(.leading, 5)
-#endif
         }
     }
 
@@ -69,13 +64,5 @@ struct SignalBlock: View {
         Binding { vm.chosenPowerLevelIndex } set: {
             vm.userChangedTransmissionPower(toIndex: $0)
         }
-    }
-
-    private var txLabel: String {
-#if os(iOS)
-        "\(vm.transmissionPowerLevels[vm.chosenPowerLevelIndex]) dBm"
-#else
-        ""
-#endif
     }
 }

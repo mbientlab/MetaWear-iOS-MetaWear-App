@@ -29,10 +29,10 @@ public protocol MagenetometerVM: AnyObject, DetailConfiguring {
 public protocol MagnetometerVMDelegate {
 
     func refreshView()
-    func refreshStreamStats()
-    func refreshLoggerStats()
 
-    func drawNewLoggerGraphPoint(_ point: TimeIdentifiedCartesianFloat)
     func drawNewStreamGraphPoint(_ point: TimeIdentifiedCartesianFloat)
     func redrawStreamGraph()
+
+    func refreshStreamStats()
+    func refreshLoggerStats()
 }

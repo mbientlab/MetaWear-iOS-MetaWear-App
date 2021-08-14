@@ -30,7 +30,7 @@ class NaiveGraphController: ObservableObject {
 
     init(config: GraphConfig, driver: GraphDriver) {
         self.driver = driver
-        self.rangeY = config.yAxisMax - config.yAxisMin
+        self.rangeY = CGFloat(config.yAxisMax - config.yAxisMin)
         self.seriesColors = config.channelColorsSwift
         self.yMin = config.yAxisMin
         self.yMax = config.yAxisMax
@@ -66,7 +66,7 @@ extension NaiveGraphController: GraphObject {
     }
 
     func updateYScale(min: Double, max: Double, data: [[Float]]) {
-        rangeY = max - min
+        rangeY = CGFloat(max - min)
         yMax = max
         yMin = min
         // No data update

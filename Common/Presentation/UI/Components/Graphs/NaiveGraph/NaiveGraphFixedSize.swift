@@ -98,7 +98,7 @@ struct NaiveGraphFixedSize: View {
     }
 }
 
-
+#if swift(>=5.5)
 @available(iOS 15.0, *)
 @available(macOS 12.0, *)
 struct CanvasGraph: View {
@@ -144,3 +144,4 @@ struct CanvasGraph: View {
         }.joined(separator: ", ")
     }
 }
+#endif

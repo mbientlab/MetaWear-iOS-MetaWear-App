@@ -91,8 +91,8 @@ extension DeviceDetailScreenUIKitContainer {
         var body: some View {
             DeviceDetailScreen(chain: chain)
                 .lineSpacing(6)
-                .menuStyle(.borderlessButton)
-                .buttonStyle(.borderless)
+                .menuStyle(BorderlessButtonMenuStyle())
+                .buttonStyle(BorderlessButtonStyle())
                 .multilineTextAlignment(.leading)
             
                 .environment(\.fontFace, prefs.font)

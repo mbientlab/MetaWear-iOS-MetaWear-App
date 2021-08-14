@@ -435,6 +435,10 @@ private extension MWSensorFusionVM {
 
 extension MWSensorFusionVM: LogDownloadHandlerDelegate {
 
+    public func updateStats() {
+        delegate?.refreshLoggerStats()
+    }
+
     public func initialDataTransferDidComplete() {
         isDownloadingLog = false
         delegate?.refreshLoggerStats()

@@ -23,19 +23,6 @@ struct HeaderBlock: View {
             ConnectionToggle(vm: vm)
             #endif
         }
-        .toolbar {
-            #if os(iOS)
-            ToolbarItem(placement: .navigationBarTrailing) {
-                ConnectionToolbarButton(vm: vm)
-                    .accentColor(.accentColor)
-                    .foregroundColor(.accentColor)
-            }
-            #else
-            ToolbarItemGroup(placement: .status) {
-                ConnectionToolbarButton(vm: vm)
-            }
-            #endif
-        }
     }
 }
 

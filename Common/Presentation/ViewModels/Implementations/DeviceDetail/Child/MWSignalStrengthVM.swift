@@ -10,7 +10,7 @@ public class MWSignalVM: SignalVM {
 
     public private(set) var rssiLevel = ""
     public private(set) var transmissionPowerLevels = [4, 0, -4, -8, -12, -16, -20, -30]
-    public private(set) var chosenPowerLevelIndex = 0
+    public private(set) var chosenPowerLevelIndex = 1
 
     // Identity
     public var delegate: SignalVMDelegate? = nil

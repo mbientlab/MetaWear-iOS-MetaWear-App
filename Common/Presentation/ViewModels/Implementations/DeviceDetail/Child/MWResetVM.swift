@@ -48,7 +48,6 @@ public extension MWResetVM {
         guard let device = device else { return }
         // Resetting causes a disconnection
         parent?.userIntentDidCauseDeviceDisconnect()
-        #warning("Original App — Had TODO: 'In case any pairing information is on the device mark it for removal.' I looked in settings/debug and didn't see methods that jumped out to overwrite this. Any pointers?")
         device.clearAndReset()
     }
 

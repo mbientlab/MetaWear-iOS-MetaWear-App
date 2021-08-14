@@ -70,7 +70,7 @@ struct GPIOBlock: View {
                 Text($0.displayName).tag($0)
             }
         }
-        .pickerStyle(.segmented)
+        .pickerStyle(SegmentedPickerStyle())
     }
 
     private var configuration: some View {
@@ -80,7 +80,7 @@ struct GPIOBlock: View {
             Spacer()
             Button("Down") { vm.userDidPressPull(.down) }
             Spacer()
-            Button("No Pull") { vm.userDidPressPull(.pullNone) }
+            Button("None") { vm.userDidPressPull(.pullNone) }
             Spacer()
         }
     }
@@ -106,7 +106,7 @@ struct GPIOBlock: View {
                 Text($0.displayName).tag($0)
             }
         }
-        .pickerStyle(.segmented)
+        .pickerStyle(SegmentedPickerStyle())
     }
 
     // MARK: - Pin Change Output
@@ -178,14 +178,3 @@ struct GPIOBlock: View {
         }
     }
 }
-
-/// Select pin segement 0-7
-/// Set Pull: Up / Down / No Pull
-/// Digital Output
-/// Pin  Set Clear
-/// Type Rising / falling / Any Segement
-/// Change Pin Start Stop
-/// Change Count
-/// Digital
-/// Analog Absolute
-/// Analog Ratio // Refresh

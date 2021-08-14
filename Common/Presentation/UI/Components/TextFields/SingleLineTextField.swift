@@ -61,15 +61,12 @@ struct SingleLineTextField: NSViewControllerRepresentable {
         vc.field.font = .adaptiveFont(for: config.font, size: config.size, weight: config.weight, design: config.design)
         switch config.alignment {
             case .left:
-                vc.placeholder.alignment = .left
                 vc.field.alignLeft(nil)
 
             case .right:
-                vc.placeholder.alignment = .right
                 vc.field.alignRight(nil)
 
             default:
-                vc.placeholder.alignment = .center
                 vc.field.alignCenter(nil)
         }
     }
@@ -85,19 +82,18 @@ final class SingleLineTextFieldVC: NSViewController {
     private var applyTextAlignment: NSTextAlignment
     private var subs: Set<AnyCancellable> = []
 
-    let field = FatRoundInsertionCaretTextView(frame: .zero)
-    let placeholder: NSTextField
+    let field = CustomCaretTextView(frame: .zero)
 
     init(initialText: String,
          placeholder: String,
          font: FontFace,
          size: CGFloat,
          alignment: NSTextAlignment) {
-        self.placeholder = NSTextField(string: placeholder)
         self.initialText = initialText
         self.font = .adaptiveFont(for: font, size: size)
         self.applyTextAlignment = alignment
         super.init(nibName: nil, bundle: nil)
+        field.setPlaceholder(placeholder, self.font, alignment)
     }
 
     override func resignFirstResponder() -> Bool {
@@ -113,16 +109,13 @@ final class SingleLineTextFieldVC: NSViewController {
 
     override func loadView() {
         view = field
+        field.frame = view.frame
         configureTextField()
-        configurePlaceholder()
-        placeholder.isHidden = !field.string.isEmpty
-        view.addSubview(placeholder)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         resignFirstResponderOnClickMonitor()
-        placeholder.frame = view.frame
     }
 
     private func configureTextField() {
@@ -136,17 +129,6 @@ final class SingleLineTextFieldVC: NSViewController {
         field.textContainer?.widthTracksTextView = true
         field.backgroundColor = .clear
         field.importsGraphics = false
-    }
-
-    private func configurePlaceholder() {
-        placeholder.font = font
-        placeholder.textColor = .secondaryLabelColor
-        placeholder.isBordered = false
-        placeholder.backgroundColor = .clear
-        placeholder.isSelectable = false
-        placeholder.isEnabled = false
-        placeholder.isEditable = false
-        placeholder.alignment = field.alignment
     }
 
     private func resignFirstResponderOnClickMonitor() {
@@ -195,10 +177,6 @@ extension SingleLineTextFieldVC: NSTextViewDelegate {
         view.window?.makeFirstResponder(nil)
     }
 
-    func textDidChange(_ notification: Notification) {
-        showOrHidePlaceholder()
-    }
-
     func textView(_ view: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         if commandSelector == #selector(NSResponder.insertNewline(_:)) {
             onCommit?(view.string)
@@ -208,17 +186,11 @@ extension SingleLineTextFieldVC: NSTextViewDelegate {
         }
         return false
     }
-
-    private func showOrHidePlaceholder() {
-        if self.field.string.isEmpty, self.placeholder.isHidden {
-            self.placeholder.isHidden = false
-        } else if !self.placeholder.isHidden {
-            self.placeholder.isHidden = true
-        }
-    }
 }
 
-class FatRoundInsertionCaretTextView: NSTextView {
+class CustomCaretTextView: NSTextView {
+
+    // MARK: - Caret Width
 
     var caretWidth: CGFloat = 3
 
@@ -244,6 +216,46 @@ class FatRoundInsertionCaretTextView: NSTextView {
         var rect = rect
         rect.size.width += displayAdjustment
         super.setNeedsDisplay(rect, avoidAdditionalLayout: flag)
+    }
+
+    // MARK: - Placeholder String
+
+    func setPlaceholder(_ string: String, _ font: NSFont, _ alignment: NSTextAlignment) {
+        let style = NSMutableParagraphStyle()
+        style.alignment = alignment
+        placeholder = NSAttributedString(
+            string: string, attributes: [
+                NSAttributedString.Key.foregroundColor : NSColor.placeholderTextColor,
+                NSAttributedString.Key.font : font,
+                NSAttributedString.Key.paragraphStyle : style
+            ]
+        )
+    }
+
+    private var placeholder: NSAttributedString? = NSAttributedString(
+        string: "", attributes: [NSAttributedString.Key.foregroundColor: NSColor.placeholderTextColor]
+    )
+
+    var placeholderInsets: NSEdgeInsets = NSEdgeInsets(top: 0.0, left: 8.0, bottom: 0.0, right: 8.0)
+
+    override func becomeFirstResponder() -> Bool {
+        self.needsDisplay = true
+        return super.becomeFirstResponder()
+    }
+
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
+
+        guard string.isEmpty else { return }
+        placeholder?.draw(in: dirtyRect.insetBy(placeholderInsets))
+    }
+}
+
+
+extension NSRect {
+    func insetBy(_ insets: NSEdgeInsets) -> NSRect {
+        return insetBy(dx: insets.left + insets.right, dy: insets.top + insets.bottom)
+        .applying(CGAffineTransform(translationX: insets.left - insets.right, y: insets.top - insets.bottom))
     }
 }
 #endif
