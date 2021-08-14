@@ -5,17 +5,6 @@
 import SwiftUI
 
 extension EnvironmentValues {
-    var allowBluetoothRequests: Bool {
-        get { return self[AllowBluetoothRequestsKey.self] }
-        set { self[AllowBluetoothRequestsKey.self] = newValue }
-    }
-}
-
-private struct AllowBluetoothRequestsKey: EnvironmentKey {
-    static let defaultValue: Bool = true
-}
-
-extension EnvironmentValues {
     var scrollProxy: ScrollViewProxy? {
         get { return self[ScrollViewProxyKey.self] }
         set { self[ScrollViewProxyKey.self] = newValue }
@@ -30,6 +19,11 @@ extension EnvironmentValues {
         get { return self[FontFaceKey.self] }
         set { self[FontFaceKey.self] = newValue }
     }
+
+    var keyboardIsShown: Bool {
+        get { return self[KeyboardIsShownEVK.self] }
+        set { self[KeyboardIsShownEVK.self] = newValue }
+    }
 }
 
 private struct ScrollViewProxyKey: EnvironmentKey {
@@ -42,4 +36,8 @@ private struct HasUserFocusKey: EnvironmentKey {
 
 private struct FontFaceKey: EnvironmentKey {
     static let defaultValue: FontFace = .system
+}
+
+private struct KeyboardIsShownEVK: EnvironmentKey {
+    static let defaultValue: Bool = false
 }

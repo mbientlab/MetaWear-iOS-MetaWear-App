@@ -28,11 +28,8 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
     // Services
     public private(set) var toast: ToastVM = MWToastServerVM()
     public private(set) var alerts: AlertPresenter = CrossPlatformAlertPresenter()
-
-    /// Tracks all streaming events (even for other devices).
-    private var streamingEvents: Set<OpaquePointer> = []
-    private var streamingCleanup: [OpaquePointer: () -> Void] = [:]
-    public private(set) var loggers: [String: OpaquePointer] = [:]
+    public var signals: SignalReferenceStore { signalsStore }
+    private var signalsStore: SignalReferenceStoreSetup & SignalReferenceStore = MWSignalsStore()
 
     /// Tracks device connection state
     private var isObserving = false {
@@ -47,6 +44,7 @@ public extension MWDeviceDetailsCoordinator {
 
     /// Called before view appears
     func start() {
+        signalsStore.setup(self, self.device)
         resetStreamingEvents()
         configureVMs()
         vms.header.start()
@@ -76,8 +74,8 @@ public extension MWDeviceDetailsCoordinator {
     func end() {
         device.cancelConnection()
         isObserving = false
-        streamingCleanup.forEach { $0.value() }
-        streamingCleanup.removeAll()
+        signalsStore.completeAllStreamingCleanups()
+        vms = DetailVMContainerA()
     }
 }
 
@@ -85,26 +83,10 @@ public extension MWDeviceDetailsCoordinator {
 
 public extension MWDeviceDetailsCoordinator {
 
-    func storeStream(_ signal: OpaquePointer, cleanup: (() -> Void)? ) {
-        streamingCleanup[signal] = cleanup ?? { mbl_mw_datasignal_unsubscribe(signal) }
-    }
-
-    func removeStream(_ signal: OpaquePointer) {
-        streamingCleanup.removeValue(forKey: signal)?()
-    }
-
-    func addLog(_ log: String, _ pointer: OpaquePointer) {
-        loggers[log] = pointer
-    }
-
-    @discardableResult
-    func removeLog(_ log: String) -> OpaquePointer? {
-        loggers.removeValue(forKey: log)
-    }
 
     /// After a user requests logging to stop, clean up device, then reconnect.
     func logCleanup(_ handler: @escaping (Error?) -> Void) {
-        // In order for the device to actaully erase the flash memory we can't be in a connection
+        // In order for the device to actually erase the flash memory we can't be in a connection
         // so temporally disconnect to allow flash to erase.
         isObserving = false
         device.connectAndSetup().continueOnSuccessWithTask { t -> Task<MetaWear> in
@@ -118,22 +100,26 @@ public extension MWDeviceDetailsCoordinator {
         }
     }
 
-    func export(_ data: Data, titled: String) {
+    func export(_ data: @escaping () -> Data, titled: String) {
         let fileName = getFilenameByDate(and: titled)
         let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
 
-        do {
-            try data.write(to: fileURL, options: .atomic)
-            delegate?.presentFileExportDialog(
-                fileURL: fileURL,
-                saveErrorTitle: "Save Error",
-                saveErrorMessage: "No programs installed that could save the file"
-            )
-        } catch let error {
-            self.alerts.presentAlert(
-                title: "Save Error",
-                message: error.localizedDescription
-            )
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                try data().write(to: fileURL, options: .atomic)
+                DispatchQueue.main.async { [weak self] in
+                    self?.delegate?.presentFileExportDialog(
+                        fileURL: fileURL,
+                        saveErrorTitle: "Save Error",
+                        saveErrorMessage: "No programs installed that could save the file"
+                    )
+                }
+            } catch let error {
+                self.alerts.presentAlert(
+                    title: "Save Error",
+                    message: error.localizedDescription
+                )
+            }
         }
     }
 
@@ -156,7 +142,7 @@ private extension MWDeviceDetailsCoordinator {
 
     /// Clear any existing references
     func resetStreamingEvents() {
-        streamingEvents = []
+        signalsStore.completeAllStreamingCleanups()
         delegate?.hideAndReloadAllCells()
     }
 
@@ -183,8 +169,8 @@ public extension MWDeviceDetailsCoordinator {
 
     func viewWillDisappear() {
         isObserving = false
-        streamingEvents.forEach(removeStream(_:))
-        loggers = [:]
+        signalsStore.completeAllStreamingCleanups()
+        signalsStore.removeAllLogs()
     }
 
     private func didSetIsObserving(_ oldValue: Bool) {
@@ -212,36 +198,37 @@ private extension MWDeviceDetailsCoordinator {
             self?.vms.header.refreshConnectionState()
         }
 
-        device.connectAndSetup().continueWith(.mainThread) { task in
-            self.toast.update(mode: .textOnly, text: nil, disablesBluetoothActions: nil, onDismiss: nil)
+        device.connectAndSetup().continueWith { [weak self] task in
+            DispatchQueue.main.async { [weak self] in
+                self?.toast.update(mode: .textOnly, text: nil, disablesBluetoothActions: nil, onDismiss: nil)
 
-            guard task.error == nil else {
-                self.alerts.presentAlert(
-                    title: "Connection Error",
-                    message: task.error!.localizedDescription
-                )
-                self.toast.dismiss(delay: 0)
-                return
+                if let error = task.error {
+                    self?.alerts.presentAlert(
+                        title: "Connection Error",
+                        message: error.localizedDescription
+                    )
+                    self?.toast.dismiss(delay: 0)
+                    return
+                }
+
+                self?.readAndDisplayDeviceCapabilities()
+                self?.loadAnonymousDataSignals()
+                self?.toast.dismiss(updatingText: "Connected", disablesInteraction: false, delay: 0.3)
             }
-
-            self.deviceDidConnect()
-            // Delay just enough to let initial data loading happen without being perceived as "lag"
-            self.toast.dismiss(updatingText: "Connected", disablesInteraction: false, delay: 0.3)
         }
     }
 
     /// Second step in connecting the currently focused device. Store pointers for anonymous logging signals.
-    func deviceDidConnect() {
+    func loadAnonymousDataSignals() {
         let task = device.createAnonymousDatasignals()
         task.continueWith(.mainThread) { [weak self] t in
             if let signals = t.result {
                 for signal in signals {
                     let cString = mbl_mw_anonymous_datasignal_get_identifier(signal)!
                     let identifier = String(cString: cString)
-                    self?.loggers[identifier] = signal
+                    self?.signals.addLog(identifier, signal)
                 }
             }
-            self?.readAndDisplayDeviceCapabilities()
         }
     }
 

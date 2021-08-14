@@ -36,6 +36,8 @@ extension AccelerometerBlock {
 
     struct OrientationAndStepsRows: View {
 
+
+
         @EnvironmentObject private var vm: AccelerometerSUIVC
 
         var body: some View {
@@ -75,6 +77,7 @@ extension AccelerometerBlock {
                     if vm.isOrienting { vm.userRequestedStopOrienting() }
                     else { vm.userRequestedStartOrienting() }
                 }
+
             }
         }
     }

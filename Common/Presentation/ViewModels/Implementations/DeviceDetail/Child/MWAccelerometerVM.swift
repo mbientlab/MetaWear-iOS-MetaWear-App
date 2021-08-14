@@ -38,7 +38,7 @@ public class MWAccelerometerVM: AccelerometerVM {
 
     public private(set) var isDownloadingLog = false
     public var canDownloadLog: Bool { downloadLogger != nil || isLogging }
-    public var logDataIsReadyForDisplay: Bool { !data.logged.isEmpty && !isDownloadingLog }
+    public var logDataIsReadyForDisplay: Bool { !data.logged.isEmpty }
 
     // Data transfer state
     private(set) var data = MWSensorDataStore()
@@ -48,7 +48,7 @@ public class MWAccelerometerVM: AccelerometerVM {
 
     // Identity
     lazy private var model: AccelerometerModel? = .init(board: device?.board)
-    public var delegate: AccelerometerVMDelegate? = nil
+    public weak var delegate: AccelerometerVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
     private weak var device: MetaWear? = nil
 }
@@ -64,7 +64,7 @@ extension MWAccelerometerVM: DetailConfiguring {
         guard device?.board != nil else { return }
         guard model == .bmi160 || model == .bmi270 else { return }
 
-        let loggerExists = parent?.loggers[loggingKey] != nil
+        let loggerExists = parent?.signals.loggers[loggingKey] != nil
 
         isLogging = loggerExists
         isStreaming = false
@@ -72,7 +72,6 @@ extension MWAccelerometerVM: DetailConfiguring {
         allowsNewStreaming = true
 
         delegate?.refreshView()
-        print(model == .bmi270 ? "BMI270" : "NOT BMI ----------------------------")
     }
 }
 
@@ -137,7 +136,7 @@ public extension MWAccelerometerVM {
             mbl_mw_datasignal_unsubscribe(signal)
         }
 
-        parent?.storeStream(signal, cleanup: cleanup)
+        parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
     func userRequestedStopStreaming() {
@@ -152,11 +151,11 @@ public extension MWAccelerometerVM {
 
         guard let board = device?.board else { return }
         let signal = mbl_mw_acc_bosch_get_acceleration_data_signal(board)!
-        parent?.removeStream(signal)
+        parent?.signals.removeStream(signal)
     }
 
     func userRequestedStreamExport() {
-        parent?.export(data.makeStreamData(), titled: "AccStreamData")
+        parent?.export(data.makeStreamData, titled: "AccStreamData")
     }
 
 }
@@ -201,13 +200,17 @@ public extension MWAccelerometerVM {
 
         guard let board = device?.board else { return }
 
+        if let downloader = downloadLogger {
+            parent?.signals.addLog(loggingKey, downloader)
+        }
+
         let signal = mbl_mw_acc_bosch_get_acceleration_data_signal(board)!
         mbl_mw_datasignal_log(signal, bridge(obj: self)) { (context, logger) in
             let _self: MWAccelerometerVM = bridge(ptr: context!)
             let cString = mbl_mw_logger_generate_identifier(logger)!
             let identifier = String(cString: cString)
             _self.loggingKey = identifier
-            _self.parent?.addLog(identifier, logger!)
+            _self.parent?.signals.addLog(identifier, logger!)
         }
         mbl_mw_logging_start(board, 0)
         mbl_mw_acc_enable_acceleration_sampling(board)
@@ -221,7 +224,8 @@ public extension MWAccelerometerVM {
         (allowsNewLogging, allowsNewStreaming) = (true, true)
         delegate?.refreshView()
 
-        guard let logger = parent?.removeLog(loggingKey) else { return }
+        guard let logger = parent?.signals.removeLog(loggingKey)
+        else { NSLog("No logger found for \(loggingKey)"); return }
         mbl_mw_acc_stop(board)
         mbl_mw_acc_disable_acceleration_sampling(board)
         if model == .bmi270 { mbl_mw_logging_flush_page(board) }
@@ -229,8 +233,11 @@ public extension MWAccelerometerVM {
         downloadLogger = logger
     }
 
+
+
     func userRequestedDownloadLog() {
         guard let board = device?.board else { return }
+        if isLogging { userRequestedStopLogging() }
         guard let logger = downloadLogger else {
             parent?.toast.present(mode: .textOnly,
                                   "No Logger Found",
@@ -251,12 +258,8 @@ public extension MWAccelerometerVM {
                               onDismiss: nil)
 
         mbl_mw_logger_subscribe(logger, bridge(obj: self)) { (context, obj) in
-            let acceleration: MblMwCartesianFloat = obj!.pointee.valueAs()
             let _self: MWAccelerometerVM = bridge(ptr: context!)
-            let point = TimeIdentifiedDataPoint(cartesian: (obj!.pointee.epoch, acceleration))
-            DispatchQueue.main.async {
-                _self.data.logged.append(point)
-            }
+            _self.recordLogEntry(_self: _self, obj: obj)
         }
 
         downloadProgressHandler = .init()
@@ -264,9 +267,16 @@ public extension MWAccelerometerVM {
     }
 
     func userRequestedLogExport() {
-        parent?.export(data.makeLogData(), titled: "AccLogData")
+        parent?.export(data.makeLogData, titled: "AccLogData")
     }
 
+    func recordLogEntry(_self: MWAccelerometerVM, obj: UnsafePointer<MblMwData>?) {
+        let acceleration: MblMwCartesianFloat = obj!.pointee.valueAs()
+        let point = TimeIdentifiedDataPoint(cartesian: (obj!.pointee.epoch, acceleration))
+        DispatchQueue.main.async {
+            _self.data.logged.append(point)
+        }
+    }
 }
 
 extension MWAccelerometerVM: LogDownloadHandlerDelegate {
@@ -279,6 +289,11 @@ extension MWAccelerometerVM: LogDownloadHandlerDelegate {
         isDownloadingLog = false
         delegate?.refreshLoggerStats()
         delegate?.refreshView()
+    }
+    
+    public func receivedUnhandledEntry(context: LogDownloadHandlerDelegate?, data: UnsafePointer<MblMwData>?) {
+        guard let _self = context as? Self else { return }
+        _self.recordLogEntry(_self: _self, obj: data)
     }
 
 }
@@ -314,7 +329,7 @@ public extension MWAccelerometerVM {
             mbl_mw_acc_bosch_disable_orientation_detection(board)
             mbl_mw_datasignal_unsubscribe(signal)
         }
-        parent?.storeStream(signal, cleanup: cleanup)
+        parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
     func userRequestedStopOrienting() {
@@ -325,7 +340,7 @@ public extension MWAccelerometerVM {
         delegate?.refreshView()
 
         let signal = mbl_mw_acc_bosch_get_orientation_detection_data_signal(board)!
-        parent?.removeStream(signal)
+        parent?.signals.removeStream(signal)
     }
 
 }
@@ -361,7 +376,7 @@ public extension MWAccelerometerVM {
             mbl_mw_acc_bmi160_disable_step_detector(board)
             mbl_mw_datasignal_unsubscribe(signal)
         }
-        parent?.storeStream(signal, cleanup: cleanup)
+        parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
     func userRequestedStopStepping() {
@@ -372,7 +387,7 @@ public extension MWAccelerometerVM {
         delegate?.refreshView()
 
         let signal = mbl_mw_acc_bmi160_get_step_detector_data_signal(board)!
-        parent?.removeStream(signal)
+        parent?.signals.removeStream(signal)
     }
 }
 

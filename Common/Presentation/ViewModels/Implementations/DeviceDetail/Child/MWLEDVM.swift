@@ -11,7 +11,7 @@ public class MWLedVM: LedVM {
     // No state in iOS implementation
 
     // Identity
-    public var delegate: LedVMDelegate? = nil
+    public weak var delegate: LedVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
     private weak var device: MetaWear? = nil
 

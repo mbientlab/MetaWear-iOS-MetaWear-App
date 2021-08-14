@@ -35,7 +35,7 @@ public class MWMagnetometerVM: MagenetometerVM {
     private lazy var downloadProgressHandler = ToastPresentingLogDownloader()
 
     // Identity
-    public var delegate: MagnetometerVMDelegate? = nil
+    public weak var delegate: MagnetometerVMDelegate? = nil
     private var parent: DeviceDetailsCoordinator? = nil
     private var device: MetaWear? = nil
     lazy private var model: AccelerometerModel? = .init(board: device?.board)
@@ -50,7 +50,7 @@ extension MWMagnetometerVM: DetailConfiguring {
 
     public func start() {
         guard device?.board != nil else { return }
-        let loggerExists = parent?.loggers[loggingKey] != nil
+        let loggerExists = parent?.signals.loggers[loggingKey] != nil
 
         isLogging = loggerExists
         isStreaming = false
@@ -104,7 +104,7 @@ public extension MWMagnetometerVM {
             mbl_mw_mag_bmm150_disable_b_field_sampling(board)
             mbl_mw_datasignal_unsubscribe(signal)
         }
-        parent?.storeStream(signal, cleanup: cleanup)
+        parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
     func userRequestedStopStreaming() {
@@ -119,11 +119,11 @@ public extension MWMagnetometerVM {
 
         guard let board = device?.board else { return }
         let signal = mbl_mw_mag_bmm150_get_b_field_data_signal(board)!
-        parent?.removeStream(signal)
+        parent?.signals.removeStream(signal)
     }
 
     func userRequestedStreamExport() {
-        parent?.export(data.makeStreamData(), titled: "GyroStreamData")
+        parent?.export(data.makeStreamData, titled: "GyroStreamData")
     }
 }
 
@@ -166,7 +166,7 @@ public extension MWMagnetometerVM {
             let cString = mbl_mw_logger_generate_identifier(logger)!
             let identifier = String(cString: cString)
             _self.loggingKey = identifier
-            _self.parent?.addLog(identifier, logger!)
+            _self.parent?.signals.addLog(identifier, logger!)
         }
         mbl_mw_logging_start(board, 0)
         mbl_mw_mag_bmm150_enable_b_field_sampling(board)
@@ -180,7 +180,7 @@ public extension MWMagnetometerVM {
         delegate?.refreshView()
 
         guard let board = device?.board else { return }
-        guard let logger = parent?.removeLog(loggingKey) else { return }
+        guard let logger = parent?.signals.removeLog(loggingKey) else { return }
 
         mbl_mw_mag_bmm150_stop(board)
         mbl_mw_mag_bmm150_disable_b_field_sampling(board)
@@ -213,12 +213,7 @@ public extension MWMagnetometerVM {
 
         mbl_mw_logger_subscribe(logger, bridge(obj: self)) { (context, obj) in
             let _self: MWMagnetometerVM = bridge(ptr: context!)
-            var acceleration: MblMwCartesianFloat = obj!.pointee.valueAs()
-            acceleration.scaled(by: _self.loggingScaleFactor) // Original app specified two different scales
-            let point = (obj!.pointee.epoch, acceleration)
-            DispatchQueue.main.async {
-                _self.data.logged.append(.init(cartesian: point))
-            }
+            _self.recordLogEntry(_self: _self, obj: obj)
         }
 
         downloadProgressHandler = .init()
@@ -228,7 +223,16 @@ public extension MWMagnetometerVM {
     }
 
     func userRequestedLogExport() {
-        parent?.export(data.makeLogData(), titled: "MagnetometerData")
+        parent?.export(data.makeLogData, titled: "MagnetometerData")
+    }
+
+    func recordLogEntry(_self: MWMagnetometerVM, obj: UnsafePointer<MblMwData>?) {
+        var acceleration: MblMwCartesianFloat = obj!.pointee.valueAs()
+        acceleration.scaled(by: _self.loggingScaleFactor) // Original app specified two different scales
+        let point = (obj!.pointee.epoch, acceleration)
+        DispatchQueue.main.async {
+            _self.data.logged.append(.init(cartesian: point))
+        }
     }
 
 }
@@ -244,6 +248,11 @@ extension MWMagnetometerVM: LogDownloadHandlerDelegate {
         isDownloadingLog = false
         delegate?.refreshLoggerStats()
         delegate?.refreshView()
+    }
+
+    public func receivedUnhandledEntry(context: LogDownloadHandlerDelegate?, data: UnsafePointer<MblMwData>?) {
+        guard let _self = context as? Self else { return }
+        _self.recordLogEntry(_self: _self, obj: data)
     }
 
 }

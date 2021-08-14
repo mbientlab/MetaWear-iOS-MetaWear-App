@@ -16,9 +16,6 @@ struct iOSDeviceDetailLayout: View {
         Group {
             if width < 1000 { // iPad vertical or iPhone
                 VStack(spacing: .cardGridSpacing) {
-
-                    Header()
-
                     ForEach(vc.sortedVisibleGroups) { group in
                         BlockBuilder(group: group, namespace: details)
                     }
@@ -28,12 +25,14 @@ struct iOSDeviceDetailLayout: View {
                 .frame(maxWidth: .infinity, alignment: .center)
 
             } else {
-                iPadGridLayout(
-                    width: width,
-                    identity: IdentityDetailCards(details: details),
-                    sensors: SensorDetailCards(details: details)
-                )
-                    .frame(maxWidth: .infinity, alignment: .center)
+                GridLayout(details: details, alignment: .center, forInfoPanels: true)
+                    .padding(.bottom, 20)
+                    .padding(.top, fontFace == .openDyslexic ? 28 : 18)
+                    .padding(.bottom, .cardGridSpacing)
+
+                GridLayout(details: details, alignment: .center, forInfoPanels: false)
+                    .padding(.bottom, 20)
+                    .padding(.top, fontFace == .openDyslexic ? 28 : 18)
             }
         }
         .background(readWidth)

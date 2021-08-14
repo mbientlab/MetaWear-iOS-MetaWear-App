@@ -25,7 +25,7 @@ public class MWHapticVM: HapticVM {
     public private(set) var hapticCount = 0
 
     // Identity
-    public var delegate: HapticVMDelegate? = nil
+    public weak var delegate: HapticVMDelegate? = nil
     private var parent: DeviceDetailsCoordinator? = nil
     private var device: MetaWear? = nil
 }

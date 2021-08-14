@@ -26,7 +26,7 @@ public protocol MagenetometerVM: AnyObject, DetailConfiguring {
     func userRequestedLogExport()
 }
 
-public protocol MagnetometerVMDelegate {
+public protocol MagnetometerVMDelegate: AnyObject {
 
     func refreshView()
 

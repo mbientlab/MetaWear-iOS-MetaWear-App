@@ -26,6 +26,6 @@ public protocol BarometerVM: AnyObject, DetailConfiguring {
     func userSetOversampling(_ newValue: BarometerOversampling)
 }
 
-public protocol MWBarometerVMDelegate {
+public protocol MWBarometerVMDelegate: AnyObject {
     func refreshView()
 }

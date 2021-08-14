@@ -111,25 +111,29 @@ struct CanvasGraph: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-
-            Canvas(opaque: true, colorMode: .nonLinear, rendersAsynchronously: true) { context, size in
-
-                controller.displayedPoints.forEach { timepoint in
-                    timepoint.heights.indices.forEach { seriesIndex in
-
-                        let x = timepoint.x / controller.displayablePointCount * width
-                        let y = (timepoint.heights[seriesIndex] / controller.rangeY * height) + (height / 2) - 1.5
-
-                        let path = makePoint(x: x, y: y)
-                        context.fill(path, with: .color(controller.seriesColors[seriesIndex]))
-                    }
-                }
-
-            }
-            .frame(width: width, height: height)
+            graph
+                .frame(width: width, height: height)
         }
         .background(NaiveGraphFixedSize.Labels(min: controller.yMin, max: controller.yMax))
         .accessibility(value: Text(makeAccessibilityValue()))
+        .accessibilityAddTraits(.updatesFrequently)
+    }
+
+    var graph: some View {
+        Canvas(opaque: true, colorMode: .nonLinear, rendersAsynchronously: true) { context, size in
+
+            controller.displayedPoints.forEach { timepoint in
+                timepoint.heights.indices.forEach { seriesIndex in
+
+                    let x = timepoint.x / controller.displayablePointCount * width
+                    let y = (timepoint.heights[seriesIndex] / controller.rangeY * height) + (height / 2) - 1.5
+
+                    let path = makePoint(x: x, y: y)
+                    context.fill(path, with: .color(controller.seriesColors[seriesIndex]))
+                }
+            }
+
+        }
     }
 
     func makePoint(x: CGFloat, y: CGFloat) -> Path {

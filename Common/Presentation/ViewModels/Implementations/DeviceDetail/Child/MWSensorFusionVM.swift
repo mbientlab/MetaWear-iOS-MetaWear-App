@@ -7,7 +7,7 @@ import MetaWear
 import MetaWearCpp
 import Combine
 
-public class MWSensorFusionVM: DetailSensorFusionVM {
+public class MWSensorFusionVM: SensorFusionVM {
 
     // Button states
     public private(set) var isLogging = false
@@ -16,7 +16,6 @@ public class MWSensorFusionVM: DetailSensorFusionVM {
     public private(set) var allowsNewStreaming = false
 
     // Data and graph state
-    private let graphScale = 8
     private(set) var data = MWSensorDataStore()
 
     // Stream UI state
@@ -26,7 +25,7 @@ public class MWSensorFusionVM: DetailSensorFusionVM {
     // Data transfer UI state
     public private(set) var isDownloadingLog = false
     public private(set) var canDownloadLog = false
-    public var logDataIsReadyForDisplay: Bool { !data.logged.isEmpty && !isDownloadingLog }
+    public var logDataIsReadyForDisplay: Bool { !data.logged.isEmpty }
 
     // Data transfer state
     private var downloadLogger: OpaquePointer? = nil
@@ -57,7 +56,7 @@ extension MWSensorFusionVM: DetailConfiguring {
     public func start() {
         guard device?.board != nil else { return }
 
-        let activeLoggers: Set<String> = Set(parent!.loggers.keys)
+        let activeLoggers: Set<String> = Set(parent!.signals.loggers.keys)
         if let outputTypeWithLogger = outputTypes.first(where: { activeLoggers.contains($0.loggerKey) }) {
             selectedOutputType = outputTypeWithLogger
             isLogging = true
@@ -145,11 +144,11 @@ public extension MWSensorFusionVM {
 
         guard let board = device?.board else { return }
         let signal = mbl_mw_sensor_fusion_get_data_signal(board, selectedOutputType.cppEnumValue)!
-        parent?.removeStream(signal)
+        parent?.signals.removeStream(signal)
     }
 
     func userRequestedStreamExport() {
-        parent?.export(data.makeStreamData(), titled: "\(selectedOutputType.shortFileName)StreamData")
+        parent?.export(data.makeStreamData, titled: "\(selectedOutputType.shortFileName)StreamData")
     }
 
 }
@@ -190,7 +189,7 @@ private extension MWSensorFusionVM {
             mbl_mw_sensor_fusion_clear_enabled_mask(board)
             mbl_mw_datasignal_unsubscribe(signal)
         }
-        parent?.storeStream(signal, cleanup: cleanup)
+        parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
     func streamEulerAngle() {
@@ -201,7 +200,7 @@ private extension MWSensorFusionVM {
                 let _self: MWSensorFusionVM = bridge(ptr: context!)
                 var euler: MblMwEulerAngles = obj!.pointee.valueAs()
 
-                let range = Float(_self.graphScale)
+                let range = Float(_self.selectedOutputType.scale)
                 euler.scaled(in: range)
 
                 let point = TimeIdentifiedDataPoint(euler: (obj!.pointee.epoch, euler))
@@ -219,10 +218,9 @@ private extension MWSensorFusionVM {
 
             mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
                 let _self: MWSensorFusionVM = bridge(ptr: context!)
-                var quaternion: MblMwQuaternion = obj!.pointee.valueAs()
+                let quaternion: MblMwQuaternion = obj!.pointee.valueAs()
 
-                let range = Float(_self.graphScale)
-                quaternion.scaled(in: range)
+                // Not scaled (range is +- 1)
 
                 let point = TimeIdentifiedDataPoint(quaternion: (obj!.pointee.epoch, quaternion))
                 DispatchQueue.main.async {
@@ -239,10 +237,9 @@ private extension MWSensorFusionVM {
 
             mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
                 let _self: MWSensorFusionVM = bridge(ptr: context!)
-                var acc: MblMwCartesianFloat = obj!.pointee.valueAs()
+                let acc: MblMwCartesianFloat = obj!.pointee.valueAs()
 
-                let range = Float(_self.graphScale)
-                acc.scaledGravity(in: range)
+                // Not scaled (range is +- 1)
 
                 let point = TimeIdentifiedDataPoint(cartesian: (obj!.pointee.epoch, acc))
                 DispatchQueue.main.async {
@@ -306,7 +303,7 @@ public extension MWSensorFusionVM {
             let _self: MWSensorFusionVM = bridge(ptr: context!)
 
             let identifier = String(cString: mbl_mw_logger_generate_identifier(logger)!)
-            _self.parent?.addLog(identifier, logger!)
+            _self.parent?.signals.addLog(identifier, logger!)
         }
         mbl_mw_logging_start(board, 0)
         mbl_mw_sensor_fusion_write_config(board)
@@ -320,15 +317,15 @@ public extension MWSensorFusionVM {
         (allowsNewLogging, allowsNewStreaming) = (true, true)
         delegate?.refreshView()
 
-        guard let logger = parent?.removeLog(selectedOutputType.loggerKey) else { return }
+        guard let logger = parent?.signals.removeLog(selectedOutputType.loggerKey) else { return }
         let dataHandler: MblMwFnData = { (context, obj) in
             let _self: MWSensorFusionVM = bridge(ptr: context!)
 
             switch _self.selectedOutputType {
-                case .eulerAngles: _self.processEulerLog((context, obj, _self))
-                case .quaternion: _self.processQuaternionLog((context, obj, _self))
-                case .gravity: _self.processGravityLog((context, obj, _self))
-                case .linearAcceleration: _self.processLinearAccelerationLog((context, obj, _self))
+                case .eulerAngles: _self.processEulerLog((obj, _self))
+                case .quaternion: _self.processQuaternionLog((obj, _self))
+                case .gravity: _self.processGravityLog((obj, _self))
+                case .linearAcceleration: _self.processLinearAccelerationLog((obj, _self))
             }
         }
 
@@ -370,7 +367,7 @@ public extension MWSensorFusionVM {
     }
 
     func userRequestedLogExport() {
-        parent?.export(data.makeLogData(), titled: "\(selectedOutputType.shortFileName)LogData")
+        parent?.export(data.makeLogData, titled: "\(selectedOutputType.shortFileName)LogData")
     }
 
 }
@@ -378,15 +375,13 @@ public extension MWSensorFusionVM {
 // Helper methods - Passing dynamic types is not allowed with C functions
 private extension MWSensorFusionVM {
 
-    typealias LogDataContext = (context: UnsafeMutableRawPointer?,
-                                            obj: UnsafePointer<MblMwData>?,
-                                            _self: MWSensorFusionVM)
+    typealias LogDataContext = (obj: UnsafePointer<MblMwData>?,_self: MWSensorFusionVM)
 
     func processEulerLog(_ log: LogDataContext) {
         let time = log.obj!.pointee.epoch
 
         var data: MblMwEulerAngles = log.obj!.pointee.valueAs()      // - Diffs
-        let range = Float(log._self.graphScale)
+        let range = Float(log._self.selectedOutputType.scale)
         data.scaled(in: range)                                       // - Diffs
 
         let point = TimeIdentifiedDataPoint(euler: (time, data))     // - Diffs
@@ -398,9 +393,8 @@ private extension MWSensorFusionVM {
     func processQuaternionLog(_ log: LogDataContext) {
         let time = log.obj!.pointee.epoch
 
-        var data: MblMwQuaternion = log.obj!.pointee.valueAs()        //
-        let range = Float(log._self.graphScale)
-        data.scaled(in: range)                                        //
+        let data: MblMwQuaternion = log.obj!.pointee.valueAs()         //
+        // Not scaled (range is +- 1)                                 //
 
         let point = TimeIdentifiedDataPoint(quaternion: (time, data)) //
         DispatchQueue.main.async {
@@ -411,9 +405,8 @@ private extension MWSensorFusionVM {
     func processGravityLog(_ log: LogDataContext) {
         let time = log.obj!.pointee.epoch
 
-        var data: MblMwCartesianFloat = log.obj!.pointee.valueAs()    //
-        let range = Float(log._self.graphScale)
-        data.scaledGravity(in: range)                                 //
+        let data: MblMwCartesianFloat = log.obj!.pointee.valueAs()    //
+        // Not scaled (range is +- 1)                                 //
 
         let point = TimeIdentifiedDataPoint(cartesian: (time, data))  //
         DispatchQueue.main.async {
@@ -434,6 +427,16 @@ private extension MWSensorFusionVM {
 }
 
 extension MWSensorFusionVM: LogDownloadHandlerDelegate {
+
+    public func receivedUnhandledEntry(context: LogDownloadHandlerDelegate?, data: UnsafePointer<MblMwData>?) {
+        guard let _self = context as? Self else { return }
+        switch _self.selectedOutputType {
+            case .eulerAngles: _self.processEulerLog((data, _self))
+            case .quaternion: _self.processQuaternionLog((data, _self))
+            case .gravity: _self.processGravityLog((data, _self))
+            case .linearAcceleration: _self.processLinearAccelerationLog((data, _self))
+        }
+    }
 
     public func updateStats() {
         delegate?.refreshLoggerStats()

@@ -32,23 +32,33 @@ public class SensorFusionSUIVC: MWSensorFusionVM, ObservableObject {
 extension SensorFusionSUIVC: SensorFusionVMDelegate {
     
     public func drawNewStreamGraphPoint(_ point: TimeIdentifiedDataPoint) {
-        
+        streamGraph?.addPointInAllSeries(point.values)
     }
     
     public func drawNewStreamGraph() {
-        
+        streamingStats = .zero(for: data.streamKind)
+        streamGraph?.clearData()
+        streamGraph?.changeGraphFormat(makeStreamDataConfig())
     }
     
     public func drawNewLogGraph() {
-        // check kind
+        loggerStats = .zero(for: data.loggedKind)
+        loggerGraph?.clearData()
+        loggerGraph?.changeGraphFormat(makeLoggedDataConfig())
     }
     
     public func refreshStreamStats() {
-        // check kind
+        let stats = data.getStreamedStats()
+        DispatchQueue.main.async { [weak self] in
+            self?.streamingStats = stats
+        }
     }
     
     public func refreshLoggerStats() {
-        
+        let stats = data.getLoggedStats()
+        DispatchQueue.main.async { [weak self] in
+            self?.loggerStats = stats
+        }
     }
     
     
@@ -63,14 +73,38 @@ extension SensorFusionSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSec
     public func setLoggerGraphReference(_ graph: GraphObject) {
         self.loggerGraph = graph
     }
-    
-#warning("SCALE FOR SENSOR FUSION")
+
     func makeStreamDataConfig() -> GraphConfig {
-        .makeXYZLiveOverwriting(yAxisScale: Double(1), dataPoints: 300)
+        .init(
+            chartType: .line,
+            functionality: .liveViewOverwriting,
+            channelLabels: selectedOutputType.channelLabels,
+            yAxisMin: -Double(selectedOutputType.scale),
+            yAxisMax: Double(selectedOutputType.scale),
+            initialData: [],
+            dataPointCount: 300
+        )
     }
     
     func makeLoggedDataConfig() -> GraphConfig {
-        .makeHistoricalScrollable(forTimePoints: data.logged.map(\.values), yAxisScale: Double(1))
+        var config = GraphConfig(
+            chartType: .line,
+            functionality: .historicalStaticScrolling,
+            channelLabels: selectedOutputType.channelLabels,
+            yAxisMin: -Double(selectedOutputType.scale),
+            yAxisMax: Double(selectedOutputType.scale),
+            initialData: [],
+            dataPointCount: 300
+        )
+
+        config.loadDataConvertingFromTimeSeries(data.logged.map(\.values))
+
+        return config
     }
     
+}
+
+fileprivate extension SensorFusionOutputType {
+
+
 }

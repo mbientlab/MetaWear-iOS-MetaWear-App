@@ -41,16 +41,15 @@ extension GyroSUIVC: GyroVMDelegate {
     }
 
     public func refreshGraphScale() {
-        #warning("Scale unclear. Test.")
         streamGraph?.updateYScale(
-            min: -Double(1),
-            max: Double(1),
+            min: -Double(graphRangeSelected.fullScale),
+            max: Double(graphRangeSelected.fullScale),
             data: data.stream.map(\.values)
         )
 
         loggerGraph?.updateYScale(
-            min: -Double(1),
-            max: Double(1),
+            min: -Double(graphRangeSelected.fullScale),
+            max: Double(graphRangeSelected.fullScale),
             data: data.logged.map(\.values)
         )
     }
@@ -85,11 +84,11 @@ extension GyroSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSectionDriv
     }
     
     func makeStreamDataConfig() -> GraphConfig {
-        .makeXYZLiveOverwriting(yAxisScale: Double(graphScaleFactor), dataPoints: 300)
+        .makeXYZLiveOverwriting(yAxisScale: Double(graphRangeSelected.fullScale), dataPoints: 300)
     }
 
     func makeLoggedDataConfig() -> GraphConfig {
-        .makeHistoricalScrollable(forTimePoints: data.logged.map(\.values), yAxisScale: Double(graphScaleFactor))
+        .makeHistoricalScrollable(forTimePoints: data.logged.map(\.values), yAxisScale: Double(graphRangeSelected.fullScale))
     }
 
 }

@@ -180,6 +180,11 @@
 		9438D95726B467FC0014FC91 /* DevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */; };
 		9438D95926B4692C0014FC91 /* MWDevicesScanningVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95826B4692C0014FC91 /* MWDevicesScanningVM.swift */; };
 		9438D95C26B47C990014FC91 /* String+Drop0xPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */; };
+		943AE64C26CA35E3001C1CD5 /* HideKeyboardGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943AE64B26CA35E3001C1CD5 /* HideKeyboardGesture.swift */; };
+		944A043526C9A1E70086318F /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC3126BE8F7E0087F960 /* GridLayout.swift */; };
+		944A043726C9C2470086318F /* SidebarToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944A043626C9C2470086318F /* SidebarToggle.swift */; };
+		944A043B26C9FFED0086318F /* MWSignalsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944A043A26C9FFED0086318F /* MWSignalsStore.swift */; };
+		944A043C26CA1A620086318F /* MWSignalsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944A043A26C9FFED0086318F /* MWSignalsStore.swift */; };
 		944EACB026C2FBD300B73814 /* MWGyroVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EACAF26C2FBD300B73814 /* MWGyroVM.swift */; };
 		944EACB126C2FBD300B73814 /* MWGyroVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EACAF26C2FBD300B73814 /* MWGyroVM.swift */; };
 		9453FD3926B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */; };
@@ -286,8 +291,8 @@
 		94BE0DD126C6F108000A6E2F /* StreamingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BE0DCF26C6F108000A6E2F /* StreamingSection.swift */; };
 		94C07E8726BB2F35008D875B /* DividerPadded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C07E8626BB2F35008D875B /* DividerPadded.swift */; };
 		94C2788526C10732006772F6 /* iOSDetailLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2788426C10732006772F6 /* iOSDetailLayout.swift */; };
-		94C2788726C1076D006772F6 /* DeviceDetailScreenComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2788626C1076D006772F6 /* DeviceDetailScreenComponents.swift */; };
-		94C2788826C11314006772F6 /* DeviceDetailScreenComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2788626C1076D006772F6 /* DeviceDetailScreenComponents.swift */; };
+		94C2788726C1076D006772F6 /* HeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2788626C1076D006772F6 /* HeaderLayout.swift */; };
+		94C2788826C11314006772F6 /* HeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C2788626C1076D006772F6 /* HeaderLayout.swift */; };
 		94C27C0726C4CBA10071E1D5 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C27C0626C4CBA10071E1D5 /* UserDefaults.swift */; };
 		94C27C0826C4CBA10071E1D5 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C27C0626C4CBA10071E1D5 /* UserDefaults.swift */; };
 		94C27C0D26C4CD4A0071E1D5 /* UIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C27C0C26C4CD4A0071E1D5 /* UIEnvironment.swift */; };
@@ -313,7 +318,7 @@
 		94C7511B26C1EB9A00AB3E47 /* MetaWearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7511A26C1EB9A00AB3E47 /* MetaWearTests.swift */; };
 		94CD3AA726B3ED1400854FBA /* MWScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */; };
 		94DABBC726C0F483004590E4 /* iPadGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DABBC626C0F483004590E4 /* iPadGridLayout.swift */; };
-		94DABBC826C0F4A3004590E4 /* MacGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC3126BE8F7E0087F960 /* MacGridLayout.swift */; };
+		94DABBC826C0F4A3004590E4 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC3126BE8F7E0087F960 /* GridLayout.swift */; };
 		94E155CB26C4DAE100B73487 /* MWToastServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */; };
 		94E155CC26C4DAE100B73487 /* MWToastServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */; };
 		94E155CE26C4DAF200B73487 /* ToastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CD26C4DAF200B73487 /* ToastVM.swift */; };
@@ -427,7 +432,7 @@
 		941EFC2B26BE7CCC0087F960 /* Menus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menus.swift; sourceTree = "<group>"; };
 		941EFC2D26BE8AAB0087F960 /* SpinEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinEffect.swift; sourceTree = "<group>"; };
 		941EFC2F26BE8EAE0087F960 /* MetaWearDeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWearDeviceModel.swift; sourceTree = "<group>"; };
-		941EFC3126BE8F7E0087F960 /* MacGridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacGridLayout.swift; sourceTree = "<group>"; };
+		941EFC3126BE8F7E0087F960 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
 		941EFC3626BE945B0087F960 /* DeviceImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceImage.swift; sourceTree = "<group>"; };
 		941EFC3826BE95EB0087F960 /* SharedAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedAssets.xcassets; sourceTree = "<group>"; };
 		941EFC3B26BEA0980087F960 /* OpenDyslexic3-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenDyslexic3-Bold.ttf"; sourceTree = "<group>"; };
@@ -441,6 +446,9 @@
 		9438D95626B467FC0014FC91 /* DevicesScanningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesScanningVM.swift; sourceTree = "<group>"; };
 		9438D95826B4692C0014FC91 /* MWDevicesScanningVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDevicesScanningVM.swift; sourceTree = "<group>"; };
 		9438D95B26B47C990014FC91 /* String+Drop0xPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Drop0xPrefix.swift"; sourceTree = "<group>"; };
+		943AE64B26CA35E3001C1CD5 /* HideKeyboardGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardGesture.swift; sourceTree = "<group>"; };
+		944A043626C9C2470086318F /* SidebarToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarToggle.swift; sourceTree = "<group>"; };
+		944A043A26C9FFED0086318F /* MWSignalsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSignalsStore.swift; sourceTree = "<group>"; };
 		944EACAF26C2FBD300B73814 /* MWGyroVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGyroVM.swift; sourceTree = "<group>"; };
 		9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDeviceDetailsCoordinator.swift; sourceTree = "<group>"; };
 		9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWearEnumsSwiftBridges.swift; sourceTree = "<group>"; };
@@ -517,7 +525,7 @@
 		94BE0DCF26C6F108000A6E2F /* StreamingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingSection.swift; sourceTree = "<group>"; };
 		94C07E8626BB2F35008D875B /* DividerPadded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerPadded.swift; sourceTree = "<group>"; };
 		94C2788426C10732006772F6 /* iOSDetailLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDetailLayout.swift; sourceTree = "<group>"; };
-		94C2788626C1076D006772F6 /* DeviceDetailScreenComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailScreenComponents.swift; sourceTree = "<group>"; };
+		94C2788626C1076D006772F6 /* HeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderLayout.swift; sourceTree = "<group>"; };
 		94C27C0626C4CBA10071E1D5 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserDefaults.swift; path = Common/Constants/UserDefaults.swift; sourceTree = SOURCE_ROOT; };
 		94C27C0C26C4CD4A0071E1D5 /* UIEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEnvironment.swift; sourceTree = "<group>"; };
 		94C5539126B7DF5A00E7B2DC /* IdentifiersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiersVM.swift; sourceTree = "<group>"; };
@@ -646,7 +654,8 @@
 			children = (
 				941EFC1A26BE05E40087F960 /* BlockBuilder.swift */,
 				947979B926B9985700AEB5EA /* DeviceDetailScreen.swift */,
-				94C2788626C1076D006772F6 /* DeviceDetailScreenComponents.swift */,
+				941EFC3126BE8F7E0087F960 /* GridLayout.swift */,
+				94C2788626C1076D006772F6 /* HeaderLayout.swift */,
 				941EFC1826BDD4E10087F960 /* DeviceDetailScreenHostingViews.swift */,
 				941EFC0626BDA87D0087F960 /* TableOfContentsMenuButton.swift */,
 				94273A6526C75C3900713524 /* Toolbar.swift */,
@@ -828,6 +837,7 @@
 			isa = PBXGroup;
 			children = (
 				941EFB5026BCDD620087F960 /* EnvironmentValues+.swift */,
+				943AE64B26CA35E3001C1CD5 /* HideKeyboardGesture.swift */,
 			);
 			path = Environment;
 			sourceTree = "<group>";
@@ -869,8 +879,8 @@
 				941EFB5A26BCE16B0087F960 /* MainWindow.swift */,
 				941EFC2B26BE7CCC0087F960 /* Menus.swift */,
 				94A271F526C1C2C600512626 /* PlaceholderDeviceConnectionScreen.swift */,
-				941EFBFF26BD89D70087F960 /* Detail */,
 				941EFB6B26BCE5E90087F960 /* Sidebar */,
+				944A043626C9C2470086318F /* SidebarToggle.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -910,14 +920,6 @@
 				9438D95A26B47C820014FC91 /* Helpers */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		941EFBFF26BD89D70087F960 /* Detail */ = {
-			isa = PBXGroup;
-			children = (
-				941EFC3126BE8F7E0087F960 /* MacGridLayout.swift */,
-			);
-			path = Detail;
 			sourceTree = "<group>";
 		};
 		941EFC0826BDB0780087F960 /* Factories */ = {
@@ -1169,6 +1171,7 @@
 				94FF670226BC8983009F7EB5 /* MWSensorDataStore.swift */,
 				94006FB326C4D27D0048C5AD /* Child */,
 				94006FB426C4D2920048C5AD /* Parent */,
+				944A043A26C9FFED0086318F /* MWSignalsStore.swift */,
 			);
 			path = DeviceDetail;
 			sourceTree = "<group>";
@@ -1574,6 +1577,7 @@
 				94BAA73F26C38A780045E5E4 /* MWI2CBusVM.swift in Sources */,
 				941EFBD326BCE7AD0087F960 /* MWBatteryVM.swift in Sources */,
 				941EFC1026BDB6390087F960 /* AppStore.swift in Sources */,
+				944A043B26C9FFED0086318F /* MWSignalsStore.swift in Sources */,
 				941EFB8F26BCE7890087F960 /* DetailHeaderSUIVC.swift in Sources */,
 				941EFC3026BE8EAE0087F960 /* MetaWearDeviceModel.swift in Sources */,
 				941EFC1926BDD4E10087F960 /* DeviceDetailScreenHostingViews.swift in Sources */,
@@ -1603,7 +1607,7 @@
 				941EFBC626BCE7A30087F960 /* DevicesScanningVM.swift in Sources */,
 				941EFBD526BCE7B30087F960 /* MWDevicesScanningVM.swift in Sources */,
 				941EFB7626BCE7380087F960 /* AccelerometerSampleFrequency.swift in Sources */,
-				94DABBC826C0F4A3004590E4 /* MacGridLayout.swift in Sources */,
+				94DABBC826C0F4A3004590E4 /* GridLayout.swift in Sources */,
 				941EFBC126BCE79E0087F960 /* FirmwareVM.swift in Sources */,
 				941EFBC826BCE7A80087F960 /* MWDeviceDetailsCoordinator.swift in Sources */,
 				94273A6026C7298600713524 /* SmallUnitLabels.swift in Sources */,
@@ -1684,11 +1688,12 @@
 				941EFB7F26BCE76E0087F960 /* UpdateButton.swift in Sources */,
 				941EFBAC26BCE7920087F960 /* HapticBlock.swift in Sources */,
 				9412EB3526C627CD0075808B /* MagnetometerSUIVC.swift in Sources */,
-				94C2788826C11314006772F6 /* DeviceDetailScreenComponents.swift in Sources */,
+				94C2788826C11314006772F6 /* HeaderLayout.swift in Sources */,
 				941EFBA626BCE7920087F960 /* TemperatureBlock.swift in Sources */,
 				941EFBBB26BCE79D0087F960 /* AmbientLightVM.swift in Sources */,
 				941EFBB226BCE79D0087F960 /* LEDVM.swift in Sources */,
 				941EFB7726BCE7380087F960 /* Images.swift in Sources */,
+				944A043726C9C2470086318F /* SidebarToggle.swift in Sources */,
 				941EFB9E26BCE7920087F960 /* LEDBlock.swift in Sources */,
 				94E155E226C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift in Sources */,
 				941EFB6F26BCE6640087F960 /* Sidebar.swift in Sources */,
@@ -1744,6 +1749,7 @@
 				947979C326B9A02D00AEB5EA /* AccelerometerBlock.swift in Sources */,
 				94A514B226B882B6008707ED /* MWLEDVM.swift in Sources */,
 				941EFBF726BD1CBE0087F960 /* SignalLevel.swift in Sources */,
+				944A043526C9A1E70086318F /* GridLayout.swift in Sources */,
 				947979DD26B9B49D00AEB5EA /* GyroscopeBlock.swift in Sources */,
 				947979C526B9A03700AEB5EA /* TemperatureBlock.swift in Sources */,
 				941EFC1726BDC1240087F960 /* ConnectionToolbarButton.swift in Sources */,
@@ -1757,7 +1763,7 @@
 				94A514AE26B87F17008707ED /* MWSignalStrengthVM.swift in Sources */,
 				94C553A626B7E0F700E7B2DC /* HapticVM.swift in Sources */,
 				94092E1526C0E3A600997C45 /* PreferencesStore.swift in Sources */,
-				94C2788726C1076D006772F6 /* DeviceDetailScreenComponents.swift in Sources */,
+				94C2788726C1076D006772F6 /* HeaderLayout.swift in Sources */,
 				AB19083425B9060100249906 /* StartViewController.swift in Sources */,
 				947979E726B9B4F800AEB5EA /* iBeaconBlock.swift in Sources */,
 				9412EB3426C627CD0075808B /* MagnetometerSUIVC.swift in Sources */,
@@ -1775,6 +1781,7 @@
 				94AFED3526B875C6004326C8 /* MWldentifiersVM.swift in Sources */,
 				94BAA74A26C38B560045E5E4 /* MWiBeaconVM.swift in Sources */,
 				94BE0DC926C6D970000A6E2F /* VisualDebuggingHelp.swift in Sources */,
+				944A043C26CA1A620086318F /* MWSignalsStore.swift in Sources */,
 				947979C026B99F0F00AEB5EA /* Dimensions.swift in Sources */,
 				947979ED26B9B5A200AEB5EA /* ToastServer.swift in Sources */,
 				94A514C826B8CCE6008707ED /* ResetVM.swift in Sources */,
@@ -1803,6 +1810,7 @@
 				94E155CE26C4DAF200B73487 /* ToastVM.swift in Sources */,
 				941EFB5126BCDD620087F960 /* EnvironmentValues+.swift in Sources */,
 				94C553AD26B7E0F700E7B2DC /* SensorFusionVM.swift in Sources */,
+				943AE64C26CA35E3001C1CD5 /* HideKeyboardGesture.swift in Sources */,
 				948E61C426BF3D2C00A387E7 /* CopyMacButton.swift in Sources */,
 				941EFC1626BDC1000087F960 /* Sort+RawRepresentable.swift in Sources */,
 				9488E57326B8F018006A6262 /* MWAccelerometerVM.swift in Sources */,

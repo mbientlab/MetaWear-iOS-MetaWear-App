@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct IdentifiableTimePoint: Identifiable {
 //    var id: UUID = UUID()
@@ -27,25 +28,33 @@ class NaiveGraphController: ObservableObject {
     private var currentPointIndex: CGFloat = 0
 
     private let driver: GraphDriver
+    private var colorUpdates: AnyCancellable? = nil
 
-    init(config: GraphConfig, driver: GraphDriver) {
+    init(config: GraphConfig, colorProvider: ColorsetProvider, driver: GraphDriver) {
         self.driver = driver
         self.rangeY = CGFloat(config.yAxisMax - config.yAxisMin)
-        self.seriesColors = config.channelColorsSwift
+        self.seriesColors = colorProvider.colorset.value.colors
         self.yMin = config.yAxisMin
         self.yMax = config.yAxisMax
         self.seriesNames = config.channelLabels
-        self.add(points: moveFromSeriesToTimePoints(config.initialData))
+        self.add(points: Self.moveFromSeriesToTimePoints(config.initialData))
         self.driver.delegate = self
+        updateColors(for: colorProvider)
     }
 
-    convenience init(logger: LoggerGraphManager, config: GraphConfig, driver: GraphDriver) {
-        self.init(config: config, driver: driver)
+    convenience init(logger: LoggerGraphManager,
+                     config: GraphConfig,
+                     driver: GraphDriver,
+                     colorProvider: ColorsetProvider) {
+        self.init(config: config, colorProvider: colorProvider, driver: driver)
         logger.loggerGraph = self
     }
 
-    convenience init(stream: StreamGraphManager, config: GraphConfig, driver: GraphDriver) {
-        self.init(config: config, driver: driver)
+    convenience init(stream: StreamGraphManager,
+                     config: GraphConfig,
+                     driver: GraphDriver,
+                     colorProvider: ColorsetProvider) {
+        self.init(config: config, colorProvider: colorProvider, driver: driver)
         stream.streamGraph = self
     }
 
@@ -57,9 +66,23 @@ class NaiveGraphController: ObservableObject {
         displayables.indices.forEach { displayables[$0].x = CGFloat($0) }
         displayedPoints = displayables
     }
+
+    func updateColors(for provider: ColorsetProvider) {
+        colorUpdates = provider.colorset
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] colorset in
+                self?.seriesColors = colorset.colors
+                self?.refreshGraph()
+        }
+    }
 }
 
 extension NaiveGraphController: GraphObject {
+
+    func changeGraphFormat(_ config: GraphConfig) {
+        self.displayablePointCount = CGFloat(config.dataPointCount)
+        updateYScale(min: config.yAxisMin, max: config.yAxisMax, data: config.initialData)
+    }
 
     func addPointInAllSeries(_ point: [Float]) {
         driver.addRequests.send(point)
@@ -69,7 +92,10 @@ extension NaiveGraphController: GraphObject {
         rangeY = CGFloat(max - min)
         yMax = max
         yMin = min
-        // No data update
+        let formattedData = IdentifiableTimePoint.enumerated(from: data)
+        clearData()
+        self.data = formattedData
+        refreshGraph()
     }
 
     func clearData() {
@@ -78,30 +104,11 @@ extension NaiveGraphController: GraphObject {
         currentPointIndex = 0
     }
 
-    private func moveFromSeriesToTimePoints(_ data: [[Float]]) -> [[Float]] {
-        guard !data.isEmpty else { return [] }
-
-        let seriesCount = data.count
-        let nearestEndIndex = data.map(\.endIndex).min() ?? 0
-        guard nearestEndIndex > 0 else { return [] }
-
-        var points: [[Float]] = []
-
-        for index in 0..<nearestEndIndex {
-
-            var heights: [Float] = []
-            for i in 0..<seriesCount {
-                heights.append(data[i][index])
-            }
-
-            points.append(heights)
-        }
-        return points
-    }
-
 }
 
 extension NaiveGraphController: GraphDriverDelegate {
+
+    /// From series to time points
     func add(points: [[Float]]) {
         points.forEach { point in
             data.append(.init(x: currentPointIndex, heights: point.map(CGFloat.init)))
@@ -110,4 +117,13 @@ extension NaiveGraphController: GraphDriverDelegate {
         refreshGraph()
     }
 
+}
+
+extension IdentifiableTimePoint {
+
+    static func enumerated(from timeseries: [[Float]]) -> [Self] {
+        zip(timeseries.indices, timeseries).map { (index, value) in
+            self.init(x: .init(index), heights: value.map(CGFloat.init))
+        }
+    }
 }

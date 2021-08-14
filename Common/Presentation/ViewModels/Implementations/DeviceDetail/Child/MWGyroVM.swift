@@ -37,7 +37,7 @@ public class MWGyroVM: GyroVM {
     private lazy var downloadProgressHandler = ToastPresentingLogDownloader()
 
     // Identity
-    public var delegate: GyroVMDelegate? = nil
+    public weak var delegate: GyroVMDelegate? = nil
     private var parent: DeviceDetailsCoordinator? = nil
     private var device: MetaWear? = nil
     lazy private var model: AccelerometerModel? = .init(board: device?.board)
@@ -52,7 +52,7 @@ extension MWGyroVM: DetailConfiguring {
 
     public func start() {
         guard device?.board != nil else { return }
-        let loggerExists = parent?.loggers[loggingKey] != nil
+        let loggerExists = parent?.signals.loggers[loggingKey] != nil
 
         isLogging = loggerExists
         isStreaming = false
@@ -125,11 +125,11 @@ public extension MWGyroVM {
             case .bmi160: signal = mbl_mw_gyro_bmi160_get_rotation_data_signal(board)!
             case .none: return
         }
-        parent?.removeStream(signal!)
+        parent?.signals.removeStream(signal!)
     }
 
     func userRequestedStreamExport() {
-        parent?.export(data.makeStreamData(), titled: "GyroStreamData")
+        parent?.export(data.makeStreamData, titled: "GyroStreamData")
     }
 }
 
@@ -150,7 +150,7 @@ private extension MWGyroVM {
             mbl_mw_gyro_bmi270_disable_rotation_sampling(board)
             mbl_mw_datasignal_unsubscribe(signal)
         }
-        parent?.storeStream(signal, cleanup: cleanup)
+        parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
     func startStreamingBMI160() {
@@ -167,7 +167,7 @@ private extension MWGyroVM {
             mbl_mw_gyro_bmi160_disable_rotation_sampling(board)
             mbl_mw_datasignal_unsubscribe(signal)
         }
-        parent?.storeStream(signal, cleanup: cleanup)
+        parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
     func subscribeToStreaming(signal: OpaquePointer) {
@@ -213,6 +213,10 @@ public extension MWGyroVM {
         delegate?.refreshView()
         delegate?.refreshLoggerStats()
 
+        if let downloader = downloadLogger {
+            parent?.signals.addLog(loggingKey, downloader)
+        }
+
         updateGyroscopeSettingsPriorToUse()
         switch model {
             case .bmi160: startLoggingBMI160()
@@ -228,7 +232,9 @@ public extension MWGyroVM {
         delegate?.refreshView()
 
         guard let board = device?.board else { return }
-        downloadLogger = parent?.removeLog(loggingKey)
+        guard let logger = parent?.signals.removeLog(loggingKey)
+        else { NSLog("No logger found for \(loggingKey)"); return }
+        downloadLogger = logger
 
         switch model {
             case .bmi270:
@@ -266,13 +272,7 @@ public extension MWGyroVM {
 
         mbl_mw_logger_subscribe(logger, bridge(obj: self)) { (context, obj) in
             let _self: MWGyroVM = bridge(ptr: context!)
-            var acceleration: MblMwCartesianFloat = obj!.pointee.valueAs()
-            acceleration.scaled(by: _self.graphScaleFactor)
-            let point = (obj!.pointee.epoch, acceleration)
-            DispatchQueue.main.async {
-                _self.data.logged.append(.init(cartesian: point))
-                print(point.1.x)
-            }
+            _self.recordLogEntry(_self: _self, obj: obj)
         }
 
         downloadProgressHandler = .init()
@@ -280,7 +280,7 @@ public extension MWGyroVM {
     }
 
     func userRequestedLogExport() {
-        parent?.export(data.makeLogData(), titled: "GyroData")
+        parent?.export(data.makeLogData, titled: "GyroData")
     }
 
 }
@@ -315,11 +315,20 @@ private extension MWGyroVM {
 
             let cString = mbl_mw_logger_generate_identifier(logger)!
             let identifier = String(cString: cString)
+
             _self.loggingKey = identifier
-            _self.parent?.addLog(identifier, logger!)
+            _self.parent?.signals.addLog(identifier, logger!)
         }
     }
 
+    func recordLogEntry(_self: MWGyroVM, obj: UnsafePointer<MblMwData>?) {
+        var acceleration: MblMwCartesianFloat = obj!.pointee.valueAs()
+        acceleration.scaled(by: _self.graphScaleFactor)
+        let point = (obj!.pointee.epoch, acceleration)
+        DispatchQueue.main.async {
+            _self.data.logged.append(.init(cartesian: point))
+        }
+    }
 }
 
 // Helpers
@@ -335,6 +344,10 @@ extension MWGyroVM: LogDownloadHandlerDelegate {
         delegate?.refreshView()
     }
 
+    public func receivedUnhandledEntry(context: LogDownloadHandlerDelegate?, data: UnsafePointer<MblMwData>?) {
+        guard let _self = context as? Self else { return }
+        _self.recordLogEntry(_self: _self, obj: data)
+    }
 }
 
 // MARK: - Helpers

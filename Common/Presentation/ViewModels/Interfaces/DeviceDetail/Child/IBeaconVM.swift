@@ -14,6 +14,6 @@ public protocol IBeaconVM: AnyObject, DetailConfiguring {
     func userRequestedStopIBeacon()
 }
 
-public protocol IBeaconVMDelegate {
+public protocol IBeaconVMDelegate: AnyObject {
     func refreshView()
 }

@@ -24,6 +24,6 @@ public protocol HapticVM: AnyObject, DetailConfiguring {
     func userSetDutyCycle(cycle: Int)
 }
 
-public protocol HapticVMDelegate {
+public protocol HapticVMDelegate: AnyObject {
     func refreshView()
 }

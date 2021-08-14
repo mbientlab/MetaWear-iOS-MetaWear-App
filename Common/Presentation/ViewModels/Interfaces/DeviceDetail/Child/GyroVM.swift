@@ -34,7 +34,7 @@ public protocol GyroVM: AnyObject, DetailConfiguring {
     func userDidSelectGraphScale(_ scale: GyroscopeGraphRange)
 }
 
-public protocol GyroVMDelegate {
+public protocol GyroVMDelegate: AnyObject {
 
     func refreshView()
 

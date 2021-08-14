@@ -12,10 +12,12 @@ import AAInfographics
 
 public class AAGraph: UIViewController, GraphObject {
 
-    public init(config: GraphConfig, driver: GraphDriver = ThrottledGraphDriver(interval: 0.017)) {
+    public init(config: GraphConfig, colorsProvider: ColorsetProvider, driver: GraphDriver = ThrottledGraphDriver(interval: 0.017)) {
         self.config = config
         self.driver = driver
+        self.colors = colorsProvider.colorset.value.hex
         super.init(nibName: nil, bundle: nil)
+        self.updateColors(for: colorsProvider)
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -23,6 +25,8 @@ public class AAGraph: UIViewController, GraphObject {
     private(set) var config: GraphConfig
     private var chart = AAChartView()
     private let driver: GraphDriver
+    private var colors: [String]
+    private var colorUpdates: AnyCancellable? = nil
 
     private var didFinishLoading = false
 
@@ -31,11 +35,25 @@ public class AAGraph: UIViewController, GraphObject {
         view.backgroundColor = .clear
         setupChart()
     }
+
+    private func updateColors(for provider: ColorsetProvider) {
+        colorUpdates = provider.colorset
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] colorset in
+                self?.colors = colorset.hex
+                self?.clearData()
+        }
+    }
 }
 
 public extension AAGraph {
 
-     func addPointInAllSeries(_ point: [Float]) {
+    func changeGraphFormat(_ config: GraphConfig) {
+        let newOptions = config.makeAAOptions(colors: colors)
+        chart.aa_refreshChartWholeContentWithChartOptions(newOptions)
+    }
+
+    func addPointInAllSeries(_ point: [Float]) {
          driver.addRequests.send(point)
     }
 
@@ -43,12 +61,12 @@ public extension AAGraph {
         config.yAxisMin = min
         config.yAxisMax = max
         config.loadDataConvertingFromTimeSeries(data)
-        let newOptions = config.makeAAOptions()
+        let newOptions = config.makeAAOptions(colors: colors)
         chart.aa_refreshChartWholeContentWithChartOptions(newOptions)
     }
 
     func clearData() {
-        chart.aa_drawChartWithChartOptions(config.makeAAOptions())
+        chart.aa_drawChartWithChartOptions(config.makeAAOptions(colors: colors))
     }
 }
 
@@ -86,10 +104,11 @@ extension AAGraph: GraphDriverDelegate {
 private extension AAGraph {
 
     func setupChart() {
-        chart.scrollEnabled = true
         view.addSubview(chart)
         chart.frame = view.frame
-        chart.scrollView.contentInsetAdjustmentBehavior = .never
+        chart.scrollView.contentInsetAdjustmentBehavior = config.functionality == .historicalStaticScrolling ? .always : .never
+        chart.scrollEnabled = true
+
         chart.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         view.isOpaque = false
@@ -97,7 +116,7 @@ private extension AAGraph {
         chart.backgroundColor = .clear
         chart.isClearBackgroundColor = true
 
-        let options = config.makeAAOptions()
+        let options = config.makeAAOptions(colors: colors)
         chart.delegate = self
         chart.aa_drawChartWithChartOptions(options)
         driver.delegate = self
@@ -126,11 +145,13 @@ public struct AAGraphViewWrapper: View {
 
 struct AAGraphViewRep: UIViewControllerRepresentable {
 
+    @EnvironmentObject private var prefs: PreferencesStore
+
     var config: GraphConfig
     var graphReferenceCallback: (AAGraph) -> Void
 
     func makeUIViewController(context: Context) -> AAGraph {
-        let vc = AAGraph(config: config)
+        let vc = AAGraph(config: config, colorsProvider: prefs)
         graphReferenceCallback(vc)
         return vc
     }

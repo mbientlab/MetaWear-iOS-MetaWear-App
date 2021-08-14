@@ -43,7 +43,6 @@ extension GyroscopeBlock {
             LabeledItem(
                 label: "Scale",
                 content: picker,
-                alignment: .center,
                 contentAlignment: .trailing
             )
         }
@@ -77,7 +76,6 @@ extension GyroscopeBlock {
             LabeledItem(
                 label: "Sample",
                 content: picker,
-                alignment: .center,
                 contentAlignment: .trailing
             )
         }

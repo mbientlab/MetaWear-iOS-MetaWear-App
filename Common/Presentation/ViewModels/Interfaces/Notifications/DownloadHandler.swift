@@ -16,9 +16,9 @@ public protocol LogDownloadHandlerDelegate: AnyObject {
     /// Data transferred, now cleaning up logs. You can mark the download as complete and refresh statistics about the data collected.
     func initialDataTransferDidComplete()
 
-    func receivedUnknownEntry(context: UnsafeMutableRawPointer?, id: UInt8, epoch: Int64, data: UnsafePointer<UInt8>?, length: UInt8)
+    func receivedUnknownEntry(context: LogDownloadHandlerDelegate?, id: UInt8, epoch: Int64, data: UnsafePointer<UInt8>?, length: UInt8)
     
-    func receivedUnhandledEntry(context: UnsafeMutableRawPointer?, data: UnsafePointer<MblMwData>?)
+    func receivedUnhandledEntry(context: LogDownloadHandlerDelegate?, data: UnsafePointer<MblMwData>?)
 
     func updateStats()
 }

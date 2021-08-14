@@ -112,7 +112,7 @@ public extension MWGPIOVM {
             mbl_mw_gpio_stop_pin_monitoring(board, pin)
             mbl_mw_datasignal_unsubscribe(signal)
         }
-        self.parent?.storeStream(signal, cleanup: cleanup)
+        self.parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
     func userRequestedPinChangeStop() {
@@ -123,7 +123,7 @@ public extension MWGPIOVM {
 
         let pin = pinSelected.pinValue
         let signal = mbl_mw_gpio_get_pin_monitor_data_signal(board, pin)!
-        parent?.removeStream(signal)
+        parent?.signals.removeStream(signal)
         delegate?.indicateCommandWasSentToBoard()
     }
 

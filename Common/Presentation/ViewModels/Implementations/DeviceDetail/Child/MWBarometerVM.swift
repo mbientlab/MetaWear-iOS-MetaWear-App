@@ -27,7 +27,7 @@ public class MWBarometerVM: BarometerVM {
     public let altitudeUnitLabel = "m"
 
     // Identity
-    public var delegate: MWBarometerVMDelegate? = nil
+    public weak var delegate: MWBarometerVMDelegate? = nil
     private var parent: DeviceDetailsCoordinator? = nil
     private var device: MetaWear? = nil
     private lazy var model: BarometerModel? = .init(board: device?.board)
@@ -106,7 +106,7 @@ public extension MWBarometerVM {
             mbl_mw_baro_bosch_stop(board)
             mbl_mw_datasignal_unsubscribe(signal)
         }
-        parent?.storeStream(signal, cleanup: cleanup)
+        parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
     func userRequestedStreamStop() {
@@ -115,7 +115,7 @@ public extension MWBarometerVM {
         guard let board = device?.board else { return }
 
         let signal = mbl_mw_baro_bosch_get_altitude_data_signal(board)!
-        parent?.removeStream(signal)
+        parent?.signals.removeStream(signal)
     }
 
 }

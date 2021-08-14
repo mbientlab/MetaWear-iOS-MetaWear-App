@@ -15,10 +15,9 @@ struct MainWindow: View {
                 .environmentObject(vc)
 
             PlaceholderDeviceConnectionScreen()
-
         }
         .onAppear { vc.startScanning() }
-        .frame(minWidth: .windowWidthMin, minHeight: .windowMinHeight)
+        .frame(minWidth: .windowWidthMin, maxWidth: .infinity, minHeight: .windowMinHeight, alignment: .topLeading)
         .environmentObject(prefs)
 
         // Styling

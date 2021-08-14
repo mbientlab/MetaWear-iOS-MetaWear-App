@@ -11,7 +11,7 @@ public class MWResetVM: ResetVM {
     // No state
 
     // Identity
-    public var delegate: ResetVMDelegate? = nil
+    public weak var delegate: ResetVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
     private weak var device: MetaWear? = nil
 

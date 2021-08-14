@@ -17,9 +17,6 @@ struct SensorFusionBlock: View {
             LoggingSectionStandardized(vm: vm)
             DividerPadded()
             LiveStreamSection(scrollViewGraphID: "SensorFusionStreamGraph", vm: vm)
-
-            Text("UI is Mockup -> Finishing Today")
-                .foregroundColor(.secondary)
         }
         .environmentObject(vm)
     }

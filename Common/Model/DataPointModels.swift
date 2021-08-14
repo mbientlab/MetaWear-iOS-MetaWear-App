@@ -80,10 +80,10 @@ public enum DataPointKind: Int {
 
 extension MblMwEulerAngles {
     mutating func scaled(in range: Float) {
-        pitch.scaled(min: -180, max: 180, in: range)
-        roll.scaled(min: -90, max: 90, in: range)
-        yaw.scaled(min: 0, max: 360, in: range)
-        heading.scaled(min: 0, max: 360, in: range)
+        pitch.scaled(min: -180, max: 180, in: 180)
+        roll.scaled(min: -90, max: 90, in: 90)
+        yaw.scaled(min: 0, max: 360, in: 360)
+        heading.scaled(min: 0, max: 360, in: 360)
     }
 }
 

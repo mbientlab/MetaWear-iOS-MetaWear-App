@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 
 #if canImport(AppKit)
 
@@ -15,7 +16,7 @@ struct DeviceDetailScreenMacContainer: View {
     var chain: Namespace.ID
 
     var body: some View {
-        DeviceDetailScreen(chain: chain)
+        DeviceDetailScreen(toast: vc.toast as! MWToastServerVM, chain: chain)
             .onAppear { vc.start() }
             .onDisappear { vc.end() }
             .environmentObject(vc)
@@ -88,17 +89,42 @@ extension DeviceDetailScreenUIKitContainer {
         @ObservedObject var prefs: PreferencesStore
         @ObservedObject var vc: DeviceDetailScreenSUIVC
         @Namespace var chain
+
+        @State private var keyboardIsShown = false
+        @State private var keyboardHideMonitor: AnyCancellable? = nil
+        @State private var keyboardShownMonitor: AnyCancellable? = nil
+
         var body: some View {
-            DeviceDetailScreen(chain: chain)
+            DeviceDetailScreen(toast: vc.toast as! MWToastServerVM, chain: chain)
                 .lineSpacing(6)
                 .menuStyle(BorderlessButtonMenuStyle())
                 .buttonStyle(BorderlessButtonStyle())
                 .multilineTextAlignment(.leading)
-            
+
+                .environment(\.keyboardIsShown, keyboardIsShown)
+                .onDisappear { dismantleKeyboarMonitors() }
+                .onAppear { setupKeyboardMonitors() }
+
                 .environment(\.fontFace, prefs.font)
                 .environmentObject(vc)
                 .environmentObject(app)
                 .environmentObject(app.preferences)
+        }
+
+
+        func setupKeyboardMonitors() {
+            keyboardShownMonitor = NotificationCenter.default
+                .publisher(for: UIWindow.keyboardWillShowNotification)
+                .sink { _ in if !keyboardIsShown { keyboardIsShown = true } }
+
+            keyboardHideMonitor = NotificationCenter.default
+                .publisher(for: UIWindow.keyboardWillHideNotification)
+                .sink { _ in if keyboardIsShown { keyboardIsShown = false } }
+        }
+
+        func dismantleKeyboarMonitors() {
+            keyboardHideMonitor?.cancel()
+            keyboardShownMonitor?.cancel()
         }
     }
 }

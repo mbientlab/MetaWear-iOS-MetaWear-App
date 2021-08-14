@@ -7,6 +7,7 @@ import SwiftUI
 public class DetailHeaderSUIVC: MWDetailHeaderVM, ObservableObject {
 
     @Published var didConnectOnce = false
+    @Published var didShowConnectionLED = false
 
     public override init() {
         super.init()
@@ -17,9 +18,15 @@ public class DetailHeaderSUIVC: MWDetailHeaderVM, ObservableObject {
 extension DetailHeaderSUIVC: HeaderVMDelegate {
 
     public func refreshView() {
-        self.objectWillChange.send()
+
         if connectionIsOn && didConnectOnce == false {
             didConnectOnce = true
         }
+
+        if !connectionIsOn {
+            didShowConnectionLED = false
+        }
+
+        self.objectWillChange.send()
     }
 }

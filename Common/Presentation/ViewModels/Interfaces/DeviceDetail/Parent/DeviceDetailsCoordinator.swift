@@ -22,7 +22,8 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     /// Present alerts
     var alerts: AlertPresenter { get }
 
-    var loggers: [String: OpaquePointer] { get }
+    /// Logs and streams
+    var signals: SignalReferenceStore { get }
 
 
     func setDevice(_ device: MetaWear)
@@ -42,18 +43,10 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     /// Side effect: An action such as a restart intent caused the device state to change
     func userIntentDidCauseDeviceDisconnect()
 
+    func export(_ data: @escaping () -> Data, titled: String)
+
     /// Handle disconnecting and reconnecting the device for log reset.
     func logCleanup(_ handler: @escaping (Error?) -> Void)
-    func addLog(_ log: String, _ pointer: OpaquePointer)
-    @discardableResult func removeLog(_ log: String) -> OpaquePointer?
-
-    func storeStream(_ signal: OpaquePointer, cleanup: (() -> Void)? )
-
-    func removeStream(_ signal: OpaquePointer)
-
-
-
-    func export(_ data: Data, titled: String)
 
     /// Call to cleanup KVO or other items
     func viewWillDisappear()
@@ -73,3 +66,27 @@ public protocol DeviceDetailsCoordinatorDelegate: AnyObject {
 
 }
 
+public protocol SignalReferenceStore: AnyObject {
+
+    var loggers: [String: OpaquePointer] { get }
+
+    func getLogSize()
+    func clearLog()
+    func stopLogging()
+    func startLogging()
+
+    func addLog(_ log: String, _ pointer: OpaquePointer)
+    @discardableResult func removeLog(_ log: String) -> OpaquePointer?
+
+    func storeStream(_ signal: OpaquePointer, cleanup: (() -> Void)? )
+    func removeStream(_ signal: OpaquePointer)
+
+}
+
+public protocol SignalReferenceStoreSetup: AnyObject {
+
+    func setup(_ parent: MWDeviceDetailsCoordinator, _ device: MetaWear)
+    func completeAllStreamingCleanups()
+    func removeAllLogs()
+
+}

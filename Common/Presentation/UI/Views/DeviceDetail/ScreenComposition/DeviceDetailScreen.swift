@@ -7,6 +7,7 @@ import MetaWear
 
 struct DeviceDetailScreen: View {
 
+    @ObservedObject var toast: MWToastServerVM
     @EnvironmentObject private var vc: DeviceDetailScreenSUIVC
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.fontFace) private var fontFace
@@ -40,10 +41,13 @@ struct DeviceDetailScreen: View {
             #endif
 
         }
-        .toolbar { Toolbar(vm: vc.vms.header as! DetailHeaderSUIVC) }
+        .toolbar {
+            Toolbar(store: vc.signals as! MWSignalsStore,
+                    vm: vc.vms.header as! DetailHeaderSUIVC)
+
+        }
 
         .pickerStyle(SegmentedPickerStyle())
-        .environment(\.allowBluetoothRequests, vc.toast.allowBluetoothRequests)
 
         .animation(.easeOut, value: vc.toast.showToast)
         .animation(.easeOut(duration: 0.25), value: vc.sortedVisibleGroups)
@@ -65,12 +69,15 @@ struct DeviceDetailScreen: View {
         ScrollViewReader { scroll in
             ScrollView(.vertical) {
                 #if os(macOS)
-                MacGridLayout(
-                    identitySection: IdentitySection(details: details),
-                    sensors: SensorsSection(details: details)
-                )
-                .padding(.bottom, 20)
-                .padding(.top, fontFace == .openDyslexic ? 28 : 18)
+                GridLayout(details: details, alignment: .topLeading, forInfoPanels: true)
+                    .padding(.bottom, 20)
+                    .padding(.top, fontFace == .openDyslexic ? 28 : 18)
+                    .padding(.bottom, .cardGridSpacing)
+
+                GridLayout(details: details, alignment: .topLeading, forInfoPanels: false)
+                    .padding(.bottom, 20)
+                    .padding(.top, fontFace == .openDyslexic ? 28 : 18)
+
                 #else
                 iOSDeviceDetailLayout(
                     chain: chain,

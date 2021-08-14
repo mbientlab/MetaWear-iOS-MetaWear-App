@@ -59,7 +59,7 @@ struct AmbientLightBlock: View {
             unitWidth: unitWidth
         ) {
             ForEach(vm.gainOptions) {
-                Text($0.displayName).tag($0)
+                Text($0.displayName).tag($0).fontBody()
             }
         }
     }
@@ -68,7 +68,7 @@ struct AmbientLightBlock: View {
         Binding { vm.integrationTimeSelected }
         set: { vm.userSetIntegrationTime($0) }
     }
-
+ 
     private var integration: some View {
         MenuPickerWithUnitsAligned(
             label: vm.integrationTimeSelected.displayName,

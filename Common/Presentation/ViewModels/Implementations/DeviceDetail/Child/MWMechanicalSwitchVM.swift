@@ -12,7 +12,7 @@ public class MWMechanicalSwitchVM: MechanicalSwitchVM {
     public private(set) var switchState = ""
 
     // Identity
-    public var delegate: MechanicalSwitchVMDelegate? = nil
+    public weak var delegate: MechanicalSwitchVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
     private weak var device: MetaWear? = nil
 
@@ -51,7 +51,7 @@ public extension MWMechanicalSwitchVM {
             }
         }
 
-        parent?.storeStream(signal, cleanup: nil)
+        parent?.signals.storeStream(signal, cleanup: nil)
     }
 
     func userStoppedMonitoringSwitch() {
@@ -73,6 +73,6 @@ private extension MWMechanicalSwitchVM {
     func stopReadingSignal() {
         guard let device = device else { return }
         let signal = mbl_mw_switch_get_state_data_signal(device.board)!
-        parent?.removeStream(signal)
+        parent?.signals.removeStream(signal)
     }
 }

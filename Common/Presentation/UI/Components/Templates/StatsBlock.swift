@@ -6,21 +6,23 @@ import SwiftUI
 
 struct StatsBlock: View {
 
+    var colors: [Color]
     var stats: MWDataStreamStats
     var count: Int
 
     var body: some View {
-        LabeledItem(
-            label: "Min",
-            content: mins,
-            alignment: .center
-        )
 
-        LabeledItem(
-            label: "Max",
-            content: maxs,
-            alignment: .center
-        )
+        ForEach(stats.kind.indexedChannelLabels, id: \.index) { (index, label) in
+            LabeledColorKeyedItem(
+                color: colors[index],
+                label: label,
+                content: StatsRow(
+                    min: stats.mins[index],
+                    max: stats.maxs[index]
+                ),
+                alignment: .center
+            )
+        }
 
         LabeledItem(
             label: "Points",
@@ -28,27 +30,23 @@ struct StatsBlock: View {
         )
     }
 
-    private var mins: some View {
-        GeometryReader { geo in
-            HStack {
-                ForEach(stats.kind.indexedChannelLabels, id: \.index) { (index, label) in
-                    Pair(label: label, stat: stats.mins[index])
-                }.frame(width: geo.size.width / CGFloat(stats.kind.channelCount))
-            }
-        }
-    }
+    struct StatsRow: View {
 
-    private var maxs: some View {
-        GeometryReader { geo in
+        var min: Float
+        var max: Float
+
+        var body: some View {
             HStack {
-                ForEach(stats.kind.indexedChannelLabels, id: \.index) { (index, label) in
-                    Pair(label: label, stat: stats.mins[index])
-                }.frame(width: geo.size.width / CGFloat(stats.kind.channelCount))
+                Pair(label: "Min", stat: min)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Pair(label: "Max", stat: max)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }
 
     struct Pair: View {
+
         let label: String
         let stat: Float
 
@@ -62,12 +60,18 @@ struct StatsBlock: View {
                     .lineLimit(nil)
                     .multilineTextAlignment(.leading)
 
-                Text(String(format: "%1.1f", stat))
+                Text(String(format: "%1.1f", clipOutMax()))
                     .fontSmall(monospacedDigit: true)
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(nil)
                     .multilineTextAlignment(.leading)
             }
+        }
+
+        func clipOutMax() -> Float {
+            guard stat != Float.greatestFiniteMagnitude || stat != Float.leastNormalMagnitude
+            else { return 0 }
+            return stat
         }
     }
 }

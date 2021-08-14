@@ -14,7 +14,7 @@ public class MWDetailFirmwareVM: FirmwareVM {
     public private(set) var offerUpdate = false
 
     // Identity
-    public var delegate: FirmwareVMDelegate? = nil
+    public weak var delegate: FirmwareVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
     private weak var device: MetaWear? = nil
 

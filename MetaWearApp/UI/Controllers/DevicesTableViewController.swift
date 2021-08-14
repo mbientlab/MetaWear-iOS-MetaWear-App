@@ -100,9 +100,9 @@ extension DevicesTableViewController {
         cell.vm = MWScannedDeviceCellVM()
 
         let setDevice = indexPath.section == 0
-        if setDevice {
+        if setDevice, vm.connectedDevices.indices.contains(indexPath.row) {
             cell.vm?.configure(cell, for: vm.connectedDevices[indexPath.row])
-        } else {
+        } else if vm.discoveredDevices.indices.contains(indexPath.row) {
             cell.vm?.configure(cell, for: vm.discoveredDevices[indexPath.row])
         }
 

@@ -11,7 +11,7 @@ public class MWiBeaconVM: IBeaconVM {
     public private(set) var iBeaconIsOn = false
 
     // Identity
-    public var delegate: IBeaconVMDelegate? = nil
+    public weak var delegate: IBeaconVMDelegate? = nil
     private var parent: DeviceDetailsCoordinator? = nil
     private var device: MetaWear? = nil
 }

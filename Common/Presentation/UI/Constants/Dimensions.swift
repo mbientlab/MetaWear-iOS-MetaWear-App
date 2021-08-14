@@ -31,7 +31,10 @@ extension CGFloat {
     fileprivate static let sidebarEstimate = CGFloat(200)
 
     #if os(iOS)
-    static let detailBlockWidth: CGFloat = 400
+    static let detailBlockWidth: CGFloat = {
+        if UIDevice.current.userInterfaceIdiom == .pad { return 400 }
+        else { return UIScreen.main.bounds.width }
+    }()
     #elseif os(macOS)
     static let detailBlockWidth: CGFloat = 370
     #endif

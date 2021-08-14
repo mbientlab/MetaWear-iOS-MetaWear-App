@@ -20,14 +20,12 @@ struct I2CBlock: View {
             LabeledItem(
                 label: "Device Address",
                 content: device,
-                alignment: .center,
                 contentAlignment: .trailing
             )
 
             LabeledItem(
                 label: "Register Address",
                 content: register,
-                alignment: .center,
                 contentAlignment: .trailing
             )
 

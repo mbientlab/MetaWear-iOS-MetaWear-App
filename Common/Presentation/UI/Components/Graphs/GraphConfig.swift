@@ -18,20 +18,12 @@ public struct GraphConfig {
     
     /// Names for series in graph. The number of names determines the number of channels (e.g., X, Y, Z). Data input should match this order.
     public var channelLabels: [String]
-
-    /// Hex for series in graph. ["#fe117c","#ffc069","#06caf4, #758374"]
-    public var channelColors: [String]
-
-    /// SwiftUI colors for graphs not using JS
-    public var channelColorsSwift: [Color] = [
-        .plotPink, .plotBlue, .plotGold, .plotGray
-    ]
     
     public var yAxisMin: Double
     public var yAxisMax: Double
     
     /// Optional. If empty, the dataPointCount will be used to generate zero-ed blank data.
-    /// If supplied, the dataPointCount will be ignored. Data should be BY SERIES and not in time sequence tuples.
+    /// If supplied, the dataPointCount will be ignored. Data should be BY SERIES (outer array) and not in time sequence tuples.
     public var initialData: [[Float]] = []
 
     /// Used to generate zero-ed data for a "overwriting" graph. Ignored if initial data supplied.
@@ -53,14 +45,14 @@ public extension GraphConfig {
         public var aaType: AAChartType {
             switch self {
                 case .line: return .line
-                case .scatter: return .scatter
+                case .scatter: return .line
             }
         }
 #endif
     }
     
 #if os(iOS)
-    func makeAAOptions() -> AAOptions {
+    func makeAAOptions(colors: [String]) -> AAOptions {
         let model = AAChartModel()
             .chartType(chartType.aaType)
             .animationType(.easeOutQuad)
@@ -69,15 +61,25 @@ public extension GraphConfig {
             .dataLabelsEnabled(false)
             .xAxisVisible(false)
             .markerSymbolStyle(.borderBlank)
+            .markerRadius(dataPointCount > 100 ? 2 : 3)
         
             .yAxisMax(yAxisMax)
             .yAxisMin(yAxisMin)
         
             .backgroundColor(AAColor.clear)
-            .colorsTheme(channelColors)
-        
+            .colorsTheme(colors)
+
             .series(makeDataSeries())
-        
+
+        if functionality == .historicalStaticScrolling {
+            let width = initialData.first?.countedByEndIndex() ?? dataPointCount
+            model.scrollablePlotArea(
+                .init()
+                    .minWidth(width)
+                    .scrollPositionX(Float(max(0, width - 1)))
+            )
+        }
+
         let options = model.aa_toAAOptions()
         return options
         
@@ -138,10 +140,9 @@ public extension GraphConfig {
     
     static func makeXYZLiveOverwriting(yAxisScale: Double, dataPoints: Double = 300) -> GraphConfig {
         GraphConfig(
-            chartType: .line,
+            chartType: .scatter,
             functionality: .liveViewOverwriting,
             channelLabels: ["X", "Y", "Z"],
-            channelColors: ["#FD127C", "#04CBF4", "#FBBE69"],
             yAxisMin: -yAxisScale,
             yAxisMax: yAxisScale,
             initialData: [],
@@ -151,10 +152,9 @@ public extension GraphConfig {
     
     static func makeHistoricalScrollable(forSeries data: [[Float]], yAxisScale: Double) -> GraphConfig {
         GraphConfig(
-            chartType: .line,
+            chartType: .scatter,
             functionality: .historicalStaticScrolling,
             channelLabels: ["X", "Y", "Z"],
-            channelColors: ["#FD127C", "#04CBF4", "#FBBE69"],
             yAxisMin: -yAxisScale,
             yAxisMax: yAxisScale,
             initialData: data,
@@ -164,10 +164,9 @@ public extension GraphConfig {
     
     static func makeHistoricalScrollable(forTimePoints data: [[Float]], yAxisScale: Double) -> GraphConfig {
         var config = GraphConfig(
-            chartType: .line,
+            chartType: .scatter,
             functionality: .historicalStaticScrolling,
             channelLabels: ["X", "Y", "Z"],
-            channelColors: ["#FD127C", "#04CBF4", "#FBBE69"],
             yAxisMin: -yAxisScale,
             yAxisMax: yAxisScale,
             initialData: [],
@@ -175,7 +174,6 @@ public extension GraphConfig {
         )
         
         config.loadDataConvertingFromTimeSeries(data)
-        
         return config
     }
 }
@@ -184,10 +182,9 @@ public extension GraphConfig {
 
     static func makeWXYZLiveOverwriting(yAxisScale: Double, dataPoints: Double = 300) -> GraphConfig {
         GraphConfig(
-            chartType: .line,
+            chartType: .scatter,
             functionality: .liveViewOverwriting,
             channelLabels: ["W", "X", "Y", "Z"],
-            channelColors: ["#FD127C", "#04CBF4", "#FBBE69", "#758374"],
             yAxisMin: -yAxisScale,
             yAxisMax: yAxisScale,
             initialData: [],
@@ -197,10 +194,9 @@ public extension GraphConfig {
 
     static func makeWXYZHistoricalScrollable(forSeries data: [[Float]], yAxisScale: Double) -> GraphConfig {
         GraphConfig(
-            chartType: .line,
+            chartType: .scatter,
             functionality: .historicalStaticScrolling,
             channelLabels: ["W", "X", "Y", "Z"],
-            channelColors: ["#FD127C", "#04CBF4", "#FBBE69", "#758374"],
             yAxisMin: -yAxisScale,
             yAxisMax: yAxisScale,
             initialData: data,
@@ -210,10 +206,9 @@ public extension GraphConfig {
 
     static func makeWXYZHistoricalScrollable(forTimePoints data: [[Float]], yAxisScale: Double) -> GraphConfig {
         var config = GraphConfig(
-            chartType: .line,
+            chartType: .scatter,
             functionality: .historicalStaticScrolling,
             channelLabels: ["W", "X", "Y", "Z"],
-            channelColors: ["#FD127C", "#04CBF4", "#FBBE69", "#758374"],
             yAxisMin: -yAxisScale,
             yAxisMax: yAxisScale,
             initialData: [],
@@ -221,7 +216,7 @@ public extension GraphConfig {
         )
 
         config.loadDataConvertingFromTimeSeries(data)
-
         return config
     }
+
 }

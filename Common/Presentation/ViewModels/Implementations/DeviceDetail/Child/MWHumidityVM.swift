@@ -73,7 +73,7 @@ public extension MWHumidityVM {
                 mbl_mw_timer_remove(timer)
                 mbl_mw_datasignal_unsubscribe(signal)
             }
-            self.parent?.storeStream(timer, cleanup: cleanup)
+            self.parent?.signals.storeStream(timer, cleanup: cleanup)
 
             mbl_mw_event_record_commands(timer)
             mbl_mw_datasignal_read(signal)
@@ -96,6 +96,6 @@ public extension MWHumidityVM {
         delegate?.refreshView()
 
         let signal = mbl_mw_humidity_bme280_get_percentage_data_signal(board)!
-        parent?.removeStream(signal)
+        parent?.signals.removeStream(signal)
     }
 }

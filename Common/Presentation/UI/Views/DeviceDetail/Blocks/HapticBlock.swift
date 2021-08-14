@@ -13,8 +13,7 @@ struct HapticBlock: View {
 
             LabeledItem(
                 label: "Pulse Width",
-                content: pulse,
-                alignment: .center
+                content: pulse
             )
 
             LabeledItem(

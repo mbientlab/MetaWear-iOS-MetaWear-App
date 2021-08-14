@@ -12,9 +12,8 @@ public extension View {
         to key: Key.Type,
         width: CGFloat, alignment: Alignment
     ) -> some View {
-
         measureWidth(key: key)
-            .frame(width: width, alignment: alignment)
+            .frame(width: max(20, width), alignment: alignment)
     }
 
     func measureWidth<Key: WidthKey>(key: Key.Type) -> some View {

@@ -20,6 +20,7 @@ struct MenuPicker<SelectionValue, Content>: View where SelectionValue : Hashable
     var body: some View {
         #if os(iOS)
         picker
+            .fontBody()
         #elseif os(macOS)
         picker
             .fixedSize()
@@ -61,7 +62,9 @@ struct MenuPickerForiOS<SelectionValue, Content, Style>: View where SelectionVal
 
     var body: some View {
         #if os(iOS)
-        picker.pickerStyle(MenuPickerStyle())
+        picker
+            .fontBody()
+            .pickerStyle(MenuPickerStyle())
         #elseif os(macOS)
         picker
             .pickerStyle(macOSStyle)
@@ -115,9 +118,12 @@ struct MenuPickerWithUnitsAligned<SelectionValue, Content, Key>: View where Sele
         self.content = content
     }
 
+    @ScaledMetric(relativeTo: .body) private var size = MWBody.fontSize
+
     var body: some View {
         #if os(iOS)
         picker
+            .fontBody()
         #elseif os(macOS)
         HStack {
             picker
@@ -173,6 +179,7 @@ struct MenuPickerWithFixedUnits<SelectionValue, Content>: View where SelectionVa
     var body: some View {
         #if os(iOS)
         picker
+            .fontBody()
         #elseif os(macOS)
         HStack {
             picker

@@ -62,6 +62,7 @@ struct SmallTextField: View {
         TextField(placeholder, text: $text) { _ in } onCommit: {
             onCommit(text)
         }
-        .font(.title2)
+        .fontBody()
+        .multilineTextAlignment(.trailing)
     }
 }

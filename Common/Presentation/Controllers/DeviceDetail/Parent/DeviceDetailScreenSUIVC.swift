@@ -15,10 +15,9 @@ public class DeviceDetailScreenSUIVC: MWDeviceDetailsCoordinator, ObservableObje
     /// State for available capabilities
     private(set) var visibleGroupsDict: [DetailGroup:Bool]  = [:]
 
-    /// For layout, capabilities with the Header removed
     public var sortedVisibleGroups: [DetailGroup] {
         visibleGroupsDict
-            .filter { $0.value && $0.key != .headerInfoAndState }
+            .filter { $0.value }
             .keys
             .sortedAsSpecified()
     }

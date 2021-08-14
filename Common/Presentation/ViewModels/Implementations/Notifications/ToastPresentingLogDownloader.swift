@@ -28,12 +28,13 @@ extension ToastPresentingLogDownloader: LogDownloadHandler {
 
         handlers.received_unknown_entry = { (context, id, epoch, data, length) in
             let _self: ToastPresentingLogDownloader = bridge(ptr: context!)
-            _self.delegate?.receivedUnknownEntry(context: context, id: id, epoch: epoch, data: data, length: length)
+            _self.delegate?.receivedUnknownEntry(context: _self.delegate, id: id, epoch: epoch, data: data, length: length)
         }
         handlers.received_unhandled_entry = { (context, data) in
             let _self: ToastPresentingLogDownloader = bridge(ptr: context!)
-            _self.delegate?.receivedUnhandledEntry(context: context, data: data)
+            _self.delegate?.receivedUnhandledEntry(context: _self.delegate, data: data)
         }
+
         mbl_mw_logging_download(board, 100, &handlers)
     }
 
@@ -41,13 +42,10 @@ extension ToastPresentingLogDownloader: LogDownloadHandler {
 
 public extension LogDownloadHandlerDelegate {
 
-    func receivedUnknownEntry(context: UnsafeMutableRawPointer?, id: UInt8, epoch: Int64, data: UnsafePointer<UInt8>?, length: UInt8) {
-        NSLog("received_unknown_entry \(self)")
+    func receivedUnknownEntry(context: LogDownloadHandlerDelegate?, id: UInt8, epoch: Int64, data: UnsafePointer<UInt8>?, length: UInt8) {
+        NSLog("received_unknown_entry \(self) \(id) \(String(describing: data))")
     }
 
-    func receivedUnhandledEntry(context: UnsafeMutableRawPointer?, data: UnsafePointer<MblMwData>?) {
-        NSLog("received_unhandled_entry \(self)")
-    }
 }
 
 
@@ -61,7 +59,7 @@ private extension ToastPresentingLogDownloader {
         let safeProgress = progress.isNaN ? 0 : progress
         let percentage = Int(safeProgress * 100)
 
-        guard safeProgress > 0 else { return }
+        guard safeProgress > 0  || totalEntries == 0 else { return }
 
         DispatchQueue.main.async {
             guard percentage != _self.parent?.toast.percentComplete else { return }

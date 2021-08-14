@@ -13,7 +13,7 @@ public class MWSignalVM: SignalVM {
     public private(set) var chosenPowerLevelIndex = 1
 
     // Identity
-    public var delegate: SignalVMDelegate? = nil
+    public weak var delegate: SignalVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
     private weak var device: MetaWear? = nil
 

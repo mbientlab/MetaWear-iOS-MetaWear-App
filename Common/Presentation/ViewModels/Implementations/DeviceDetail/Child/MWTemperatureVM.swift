@@ -20,7 +20,7 @@ public class MWTemperatureVM: TemperatureVM {
     public private(set) var enablePin = ""
 
     // Identity
-    public var delegate: TemperatureVMDelegate? = nil
+    public weak var delegate: TemperatureVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
     private weak var device: MetaWear? = nil
 
@@ -101,11 +101,14 @@ private extension MWTemperatureVM {
 
     func readSensor() {
         guard let device = device else { return }
-        let channel = UInt8(selectedChannelIndex)
+        let channel = UInt8(self.selectedChannelIndex)
         let selected = mbl_mw_multi_chnl_temp_get_temperature_data_signal(device.board, channel)!
 
-        selected.read().continueOnSuccessWith(.mainThread) { [weak self] obj in
-            self?.setTemperature((obj.valueAs() as Float))
+        selected.read().continueOnSuccessWith { [weak self] obj in
+            let value = obj.valueAs() as Float
+            DispatchQueue.main.async { [weak self] in
+                self?.setTemperature(value)
+            }
         }
     }
 

@@ -23,7 +23,7 @@ struct GPIOBlock: View {
             )
 
             LabeledItem(
-                label: "Digital Output",
+                label: "Digital Out",
                 content: digitalOutput
             )
 

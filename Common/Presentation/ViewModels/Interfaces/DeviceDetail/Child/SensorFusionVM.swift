@@ -4,7 +4,7 @@
 
 import Foundation
 
-public protocol DetailSensorFusionVM: AnyObject, DetailConfiguring {
+public protocol SensorFusionVM: AnyObject, DetailConfiguring {
 
     var delegate: SensorFusionVMDelegate? { get set }
 

@@ -47,6 +47,7 @@ struct Sidebar: View {
             .accessibilityLabel("Bluetooth Devices List")
             .accessibilitySortPriority(10)
         }
+        .toolbar { SidebarToggle() }
     }
 
     var connectedHeader: some View {

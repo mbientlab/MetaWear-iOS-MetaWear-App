@@ -29,6 +29,7 @@ struct ToastServer: View {
                 .fontBody(weight: .medium)
                 .multilineTextAlignment(.leading)
                 .lineLimit(nil)
+                .minimumScaleFactor(0.8)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal)
         }
@@ -57,7 +58,7 @@ struct ToastServer: View {
 
             case .horizontalProgress:
 
-                Text(String(vm.percentComplete))
+                Text(String(vm.percentComplete) + "%")
                     .fontSmall(weight: .medium, monospacedDigit: true)
                     .fixedSize(horizontal: true, vertical: false)
                     .padding(.leading, 10)
@@ -65,7 +66,7 @@ struct ToastServer: View {
                 ProgressView(value: Float(vm.percentComplete) / 100, total: 1)
                     .progressViewStyle(LinearProgressViewStyle(tint: .accentColor))
                     .padding(.horizontal)
-                    .frame(width: 125)
+                    .frame(maxWidth: 120)
 
             case .foreverSpinner:
                 #if os(macOS)

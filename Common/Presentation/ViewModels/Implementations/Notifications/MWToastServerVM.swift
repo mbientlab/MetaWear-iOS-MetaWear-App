@@ -21,6 +21,7 @@ public class MWToastServerVM: ObservableObject {
 extension MWToastServerVM: ToastVM {
 
     public func userTappedToDismiss() {
+        guard allowBluetoothRequests else { return }
         hideThenReset()
         didDismissCallback?()
     }

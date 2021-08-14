@@ -564,14 +564,14 @@ public enum SensorFusionOutputType: Int, CaseIterable, Identifiable {
         }
     }
 
-    public var channelCount: Int { channelLabels.endIndex - 1 }
+    public var channelCount: Int { channelLabels.endIndex }
 
     public var channelLabels: [String] {
         switch self {
-            case .eulerAngles: return ["heading", "pitch", "roll", "yaw"]
-            case .quaternion: return ["w", "x", "y", "z"]
-            case .gravity: return ["x", "y", "x"]
-            case .linearAcceleration: return ["x", "y", "x"]
+            case .eulerAngles: return ["Heading", "Pitch", "Roll", "Yaw"]
+            case .quaternion: return ["W", "X", "Y", "Z"]
+            case .gravity: return ["X", "Y", "Z"]
+            case .linearAcceleration: return ["X", "Y", "Z"]
         }
     }
 
@@ -599,6 +599,15 @@ public enum SensorFusionOutputType: Int, CaseIterable, Identifiable {
             case .quaternion: return "Quaternion"
             case .gravity: return "Gravity"
             case .linearAcceleration: return "LinearAcc"
+        }
+    }
+
+    public var scale: Float {
+        switch self {
+            case .eulerAngles: return 360
+            case .quaternion: return 1
+            case .gravity: return 1
+            case .linearAcceleration: return 8
         }
     }
 

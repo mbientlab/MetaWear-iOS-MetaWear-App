@@ -12,7 +12,7 @@ public class MWBatteryVM: BatteryVM {
     public private(set) var batteryLevelPercentage = 0
 
     // Identity
-    public var delegate: BatteryVMDelegate? = nil
+    public weak var delegate: BatteryVMDelegate? = nil
     private weak var parent: DeviceDetailsCoordinator? = nil
     private weak var device: MetaWear? = nil
 }

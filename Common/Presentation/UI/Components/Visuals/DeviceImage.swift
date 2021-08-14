@@ -55,7 +55,10 @@ struct DeviceImage: View {
             .opacity(showLED ? 1 : 0)
             .animation(.easeOut(duration: 0.15), value: showLED)
 
-            .onAppear { runFlashing() }
+            .onAppear { if !header.didShowConnectionLED {
+                runFlashing()
+                header.didShowConnectionLED = true
+            } }
             .transition(.opacity)
         }
     }

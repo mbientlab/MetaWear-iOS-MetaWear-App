@@ -26,6 +26,7 @@ struct LiveStreamSection<VM: StreamingSectionDriver>: View {
     var scrollViewGraphID: String
 
     @ObservedObject var vm: VM
+    @EnvironmentObject var prefs: PreferencesStore
 
     var body: some View {
         LabeledItem(
@@ -34,7 +35,9 @@ struct LiveStreamSection<VM: StreamingSectionDriver>: View {
         )
 
         if !vm.data.stream.isEmpty {
-            StatsBlock(stats: vm.streamingStats, count: vm.data.streamCount)
+            StatsBlock(colors: prefs.colorset.value.colors,
+                       stats: vm.streamingStats,
+                       count: vm.data.streamCount)
             Graph(vm: vm, scrollViewGraphID: scrollViewGraphID)
         }
     }
@@ -81,18 +84,18 @@ fileprivate struct IsConnectingToStreamIndicator<VM: StreamingSectionDriver>: Vi
     }
 
     var platformSpecificView: some View {
-        #if os(macOS)
+#if os(macOS)
         ProgressView()
             .progressViewStyle(CircularProgressViewStyle())
             .transition(.opacity)
             .controlSize(.small)
             .offset(x: -35)
-        #elseif os(iOS)
+#elseif os(iOS)
         ProgressView()
             .progressViewStyle(CircularProgressViewStyle())
             .transition(.scale)
             .offset(x: -35)
-        #endif
+#endif
     }
 
 }
@@ -101,6 +104,7 @@ fileprivate struct IsConnectingToStreamIndicator<VM: StreamingSectionDriver>: Vi
 
 fileprivate struct Graph<VM: StreamingSectionDriver>: View {
 
+    @EnvironmentObject private var prefs: PreferencesStore
     @ObservedObject var vm: VM
     var scrollViewGraphID: String
     @Environment(\.scrollProxy) private var scroller
@@ -110,48 +114,49 @@ fileprivate struct Graph<VM: StreamingSectionDriver>: View {
     }
 
     var body: some View {
-        #if os(iOS)
+#if os(iOS)
         iOSGraph
-        #elseif os(macOS)
+#elseif os(macOS)
         macOSGraph.padding(.vertical, .standardVStackSpacing)
-        #endif
+#endif
     }
 
-    #if os(iOS)
+#if os(iOS)
     var iOSGraph: some View {
         AAGraphViewWrapper(initialConfig: vm.makeStreamDataConfig(),
                            graph: vm.setStreamGraphReference)
             .id(scrollViewGraphID)
             .onAppear { scrollToGraph() }
     }
-    #endif
+#endif
 
-    #if os(macOS)
+#if os(macOS)
     @ViewBuilder var macOSGraph: some View {
-        #if swift(>=5.5)
+#if swift(>=5.5)
         if #available(macOS 12.0, *) {
             CanvasGraph(controller: .init(stream: vm,
                                           config: vm.makeStreamDataConfig(),
-                                          driver: ThrottledGraphDriver()),
+                                          driver: ThrottledGraphDriver(), colorProvider: prefs),
                         width: .detailBlockInnerContentSize - 70)
                 .id(scrollViewGraphID)
                 .onAppear { scrollToGraph() }
         } else {
             macOS11Graph
         }
-        #else
+#else
         macOS11Graph
-        #endif
+#endif
 
     }
 
     var macOS11Graph: some View {
         NaiveGraphFixedSize(controller: .init(stream: vm,
                                               config: vm.makeStreamDataConfig(),
-                                              driver: ThrottledGraphDriver()),
+                                              driver: ThrottledGraphDriver(),
+                                              colorProvider: prefs),
                             width: .detailBlockInnerContentSize - 70)
             .id(scrollViewGraphID)
             .onAppear { scrollToGraph() }
     }
-    #endif
+#endif
 }

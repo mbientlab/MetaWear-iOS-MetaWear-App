@@ -25,7 +25,7 @@ public class MWAmbientLightVM: AmbientLightVM {
     public let illuminanceUnitLabel = "lux"
 
     // Identity
-    public var delegate: AmbientLightVMDelegate? = nil
+    public weak var delegate: AmbientLightVMDelegate? = nil
     private var parent: DeviceDetailsCoordinator? = nil
     private var device: MetaWear? = nil
 
@@ -94,7 +94,7 @@ public extension MWAmbientLightVM {
             mbl_mw_als_ltr329_stop(board)
             mbl_mw_datasignal_unsubscribe(signal)
         }
-        parent?.storeStream(signal, cleanup: cleanup)
+        parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
     func userRequestedStreamStop() {
@@ -103,7 +103,7 @@ public extension MWAmbientLightVM {
         guard let board = device?.board else { return }
 
         let signal = mbl_mw_als_ltr329_get_illuminance_data_signal(board)!
-        parent?.removeStream(signal)
+        parent?.signals.removeStream(signal)
     }
 }
 
