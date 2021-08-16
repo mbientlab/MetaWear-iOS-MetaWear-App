@@ -21,6 +21,8 @@ extension Color {
     static let plotBlue = Color("plotBlue")
     static let plotGray = Color("plotGray")
 
+    static let startScreen = Color("StartScreen")
+
 #if os(iOS)
     static let groupedListBackground = Color(.systemGroupedBackground)
     static let reversedTextColor = Color(.systemBackground)

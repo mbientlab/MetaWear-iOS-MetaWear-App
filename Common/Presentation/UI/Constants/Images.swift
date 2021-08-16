@@ -17,15 +17,20 @@ public enum Images {
     case fiveBars
     case noSignal
 
+    case metamotionS
+    case metamotionC
+
     public var catalogName: String {
         switch self {
-            case .noBars:    return "wifi_d1"
-            case .oneBar:    return "wifi_d2"
-            case .twoBars:   return "wifi_d3"
-            case .threeBars: return "wifi_d4"
-            case .fourBars:  return "wifi_d5"
-            case .fiveBars:  return "wifi_d6"
-            case .noSignal:  return "wifi_not_connected"
+            case .noBars:      return "wifi_d1"
+            case .oneBar:      return "wifi_d2"
+            case .twoBars:     return "wifi_d3"
+            case .threeBars:   return "wifi_d4"
+            case .fourBars:    return "wifi_d5"
+            case .fiveBars:    return "wifi_d6"
+            case .noSignal:    return "wifi_not_connected"
+            case .metamotionC: return "metamotionC"
+            case .metamotionS: return "metamotionS"
         }
     }
 }

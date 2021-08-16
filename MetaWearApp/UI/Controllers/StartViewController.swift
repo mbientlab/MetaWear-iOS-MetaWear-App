@@ -50,9 +50,6 @@ extension StartViewController: UINavigationControllerDelegate {
     }
 }
 
-
-
-
 import SwiftUI
 
 struct AnimatedStart: View {
@@ -74,25 +71,35 @@ struct AnimatedStart: View {
 
                 instruction
                     .frame(width: min(300, geo.size.width * 0.5))
-                    .opacity(viewDidAppear ? 1 : 0)
-                    .offset(y: viewDidAppear ? 0 : 10)
 
                 Spacer()
 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            // Device images
             .background(
-                devices.squared(geo.size.longestSide() * 1.2,
-                                alignment: .bottom)
-                    .offset(y: -geo.size.height * 0.02)
+                metamotionS
+                    .frame(width: min(950, geo.size.width * scale))
+                    .position(x: 0, y: geo.size.height * 0.8)
+            )
+            .background(
+                metamotionC
+                    .frame(width: min(950, geo.size.width * scale))
+                    .position(x: geo.size.width, y: geo.size.height * 0.8)
             )
         }
         .animation(.easeIn.delay(0.75), value: viewDidAppear)
-        .background(Color("StartScreen").edgesIgnoringSafeArea(.all))
+        .background(Color.startScreen.edgesIgnoringSafeArea(.all))
         .onAppear { viewDidAppear = true }
 
     }
 
+    private var scale: CGFloat {
+        UIDevice.current.userInterfaceIdiom == .pad
+        ? 0.7
+        : 0.9
+    }
 
     private var instruction: some View {
         Text("Tap\nto connect\nyour nearby\nMetaWears")
@@ -100,6 +107,10 @@ struct AnimatedStart: View {
             .fixedSize(horizontal: false, vertical: true)
             .multilineTextAlignment(.center)
             .foregroundColor(logoColor)
+            .lineSpacing(5)
+
+            .opacity(viewDidAppear ? 1 : 0)
+            .offset(y: viewDidAppear ? 0 : 10)
     }
 
     private var logoColor: Color { contrast == .increased ? Color(.black) : .white }
@@ -111,37 +122,17 @@ struct AnimatedStart: View {
         )
     }
 
-    private var devices: some View {
-        HStack {
-            Image("metamotionS")
-                .resizable()
-                .scaledToFit()
-                .rotationEffect(.degrees(-10))
-                .frame(maxWidth: 700)
-
-            Spacer()
-
-            Image("metamotionC")
-                .resizable()
-                .scaledToFit()
-                .rotationEffect(.degrees(10))
-                .frame(maxWidth: 700)
-        }
-    }
-}
-
-extension CGSize {
-    func shortestSide() -> CGFloat {
-        min(width, height)
+    private var metamotionS: some View {
+        Image(Images.metamotionS.catalogName)
+            .resizable()
+            .scaledToFit()
+            .rotationEffect(.degrees(-10))
     }
 
-    func longestSide() -> CGFloat {
-        max(width, height)
-    }
-}
-
-extension View {
-    func squared(_ length: CGFloat, alignment: Alignment) -> some View {
-        frame(width: length, height: length, alignment: alignment)
+    private var metamotionC: some View {
+        Image(Images.metamotionC.catalogName)
+            .resizable()
+            .scaledToFit()
+            .rotationEffect(.degrees(10))
     }
 }

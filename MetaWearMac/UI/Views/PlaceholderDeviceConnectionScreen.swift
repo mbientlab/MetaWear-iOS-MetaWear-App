@@ -50,7 +50,7 @@ struct PlaceholderDeviceConnectionScreen: View {
     }
 
     var metamotionS: some View {
-        Image("metamotionS")
+        Image(Images.metamotionS.catalogName)
             .resizable()
             .scaledToFit()
             .frame(maxWidth: size, maxHeight: size)
@@ -58,7 +58,7 @@ struct PlaceholderDeviceConnectionScreen: View {
     }
 
     var metamotionC: some View {
-        Image("metamotionC")
+        Image(Images.metamotionC.catalogName)
             .resizable()
             .scaledToFit()
             .frame(maxWidth: size, maxHeight: size)
