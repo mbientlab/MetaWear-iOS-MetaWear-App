@@ -48,7 +48,8 @@ extension MWSignalsStore: SignalReferenceStoreSetup {
         self.device = device
 
         timer.sink { [weak self] _ in
-            self?.getLogSize()
+            guard let self = self else { return }
+            self.getLogSize()
         }.store(in: &updates)
     }
 
@@ -65,12 +66,13 @@ extension MWSignalsStore: SignalReferenceStoreSetup {
 extension MWSignalsStore: SignalReferenceStore {
 
     public func getLogSize() {
-        guard let board = device?.board else { return }
-        mbl_mw_logging_get_length_data_signal(board).read().continueWith(.mainThread) { [weak self] in
-            if let result = $0.result {
-                let number: UInt32 = result.valueAs()
-                self?.logSize = self?.formatter.string(from: .init(value: number)) ?? ""
-            }
+        guard let device = device else { return }
+        guard device.isConnectedAndSetup, device.peripheral.state == .connected else { return }
+        mbl_mw_logging_get_length_data_signal(device.board).read().continueWith(.mainThread) { [weak self] in
+            guard let result = $0.result else { return }
+            let number: UInt32 = result.valueAs()
+            guard let self = self else { return }
+            self.logSize = self.formatter.string(from: .init(value: number)) ?? ""
         }
     }
 
