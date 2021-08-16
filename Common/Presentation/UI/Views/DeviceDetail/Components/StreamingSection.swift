@@ -105,7 +105,7 @@ fileprivate struct IsConnectingToStreamIndicator<VM: StreamingSectionDriver>: Vi
 fileprivate struct Graph<VM: StreamingSectionDriver>: View {
 
     @EnvironmentObject private var prefs: PreferencesStore
-    @ObservedObject var vm: VM
+    var vm: VM
     var scrollViewGraphID: String
     @Environment(\.scrollProxy) private var scroller
 
@@ -134,7 +134,7 @@ fileprivate struct Graph<VM: StreamingSectionDriver>: View {
     @ViewBuilder var macOSGraph: some View {
 #if swift(>=5.5)
         if #available(macOS 12.0, *) {
-            CanvasGraph(controller: .init(stream: vm,
+           CanvasGraph(controller: .init(stream: vm,
                                           config: vm.makeStreamDataConfig(),
                                           driver: ThrottledGraphDriver(), colorProvider: prefs),
                         width: .detailBlockInnerContentSize - 70)

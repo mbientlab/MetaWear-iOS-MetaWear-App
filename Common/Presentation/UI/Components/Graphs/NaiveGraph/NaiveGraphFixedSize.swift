@@ -4,6 +4,8 @@
 
 import SwiftUI
 
+// MARK: - iOS 14- version
+
 struct NaiveGraphFixedSize: View {
 
     @StateObject var controller: NaiveGraphController
@@ -13,13 +15,7 @@ struct NaiveGraphFixedSize: View {
 
     var body: some View {
         ZStack(alignment: .leading) {
-            ForEach(controller.displayedPoints) { timepoint in
-                ForEach(timepoint.heights.indices) { seriesIndex in
-                    Dot(color: controller.seriesColors[seriesIndex])
-                        .offset(y: timepoint.heights[seriesIndex] / controller.rangeY * -height)
-                }
-                .offset(x: timepoint.x / controller.displayablePointCount * width)
-            }
+            graph
         }
         .offset(x: -width/2)
         .frame(width: width, height: height)
@@ -30,6 +26,16 @@ struct NaiveGraphFixedSize: View {
         .frame(width: width, height: height)
         .accessibility(value: Text(makeAccessibilityValue()))
         .padding(.vertical, 8)
+    }
+
+    var graph: some View {
+        ForEach(controller.displayedPoints) { timepoint in
+            ForEach(timepoint.heights.indices) { seriesIndex in
+                Dot(color: controller.seriesColors[seriesIndex])
+                    .offset(y: timepoint.heights[seriesIndex] / controller.rangeY * -height)
+            }
+            .offset(x: timepoint.x / controller.displayablePointCount * width)
+        }
     }
 
     func makeAccessibilityValue() -> String {
@@ -97,6 +103,8 @@ struct NaiveGraphFixedSize: View {
         }
     }
 }
+
+// MARK: - iOS 15+ Canvas Version
 
 #if swift(>=5.5)
 @available(iOS 15.0, *)
