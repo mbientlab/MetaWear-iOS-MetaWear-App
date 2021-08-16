@@ -20,7 +20,6 @@ public class MWGyroVM: GyroVM {
     public private(set) var graphRangeSelected = GyroscopeGraphRange.dps250
     public private(set) var samplingFrequencies = GyroscopeFrequency.allCases
     public private(set) var samplingFrequencySelected = GyroscopeFrequency.hz100
-#warning("Original App - Had TODO to scale value for better graphing")
     public private(set) var graphScaleFactor: Float = 0.008
 
     // Data transfer UI state
