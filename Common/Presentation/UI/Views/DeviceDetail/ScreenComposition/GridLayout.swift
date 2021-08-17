@@ -23,6 +23,8 @@ struct GridLayout: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: alignment)
         .ignoresSafeArea()
 
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(forInfoPanels ? "Device Identity and Status" : "Sensors")
         .measureWidth(key: ScreenWidthKey.self)
         .onPreferenceChange(ScreenWidthKey.self, perform: determineColumnCount(for:))
     }
@@ -34,10 +36,12 @@ struct GridLayout: View {
                 ForEach(getDetailGroups(for: column)) { group in
 
                     BlockBuilder(group: group, namespace: details)
+                        .accessibilityAddTraits(.isHeader)
                         .id(group)
                         .matchedGeometryEffect(id: group, in: details, properties: .position, anchor: .leading, isSource: forInfoPanels)
                 }
             }
+            .accessibilityLabel(getDetailGroups(for: column).map(\.title).joined(separator: ", "))
 
         }
         .frame(width: .detailBlockWidth)

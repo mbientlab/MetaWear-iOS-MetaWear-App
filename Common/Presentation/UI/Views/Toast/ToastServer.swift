@@ -48,7 +48,11 @@ struct ToastServer: View {
         )
         .padding(15)
         .onTapGesture { vm.userTappedToDismiss() }
+        .accessibilityAddTraits(.updatesFrequently)
+        .accessibilityLabel(accessibilityLabel)
     }
+
+    var accessibilityLabel: String { vm.text + (vm.type == .horizontalProgress ? String(vm.percentComplete) + "%" : "") }
 
     @ViewBuilder private var progressIndicator: some View {
         switch vm.type {

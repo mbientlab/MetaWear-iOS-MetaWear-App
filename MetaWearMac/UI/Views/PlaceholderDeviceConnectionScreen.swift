@@ -41,7 +41,7 @@ struct PlaceholderDeviceConnectionScreen: View {
         .animation(.spring(response: 0.8, dampingFraction: 0.79, blendDuration: 0.2).speed(1.4), value: iteration)
         .offset(y: -50)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-        .overlay(dyslexic.accessibilitySortPriority(-10).padding(30), alignment: .bottom)
+        .overlay(dyslexic.accessibilitySortPriority(10).padding(30), alignment: .bottom)
         .toolbar {
             // Ensure unified window titlebar styling in absence of any other buttons
             Button(" ") { }

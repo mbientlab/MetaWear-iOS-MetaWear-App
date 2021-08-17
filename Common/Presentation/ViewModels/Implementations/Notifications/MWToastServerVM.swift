@@ -16,6 +16,8 @@ public class MWToastServerVM: ObservableObject {
     private var canShowNewToast = true
     private var didDismissCallback: (() -> Void)? = nil
     private var queuedToast: (() -> Void)? = nil
+
+    var accessibilityLabel: String { text + (type == .horizontalProgress ? String(percentComplete) + " %" : "") }
 }
 
 extension MWToastServerVM: ToastVM {
@@ -27,9 +29,9 @@ extension MWToastServerVM: ToastVM {
     }
 
     public func present(mode: ToastType,
-                 _ text: String,
-                 disablesInteraction: Bool,
-                 onDismiss: (() -> Void)?) {
+                        _ text: String,
+                        disablesInteraction: Bool,
+                        onDismiss: (() -> Void)?) {
 
         guard canShowNewToast else {
             queuedToast = { [weak self] in
@@ -40,7 +42,7 @@ extension MWToastServerVM: ToastVM {
             }
             return
         }
-
+        postAccessibilityAnnouncement(text)
         self.canShowNewToast = false
         self.showToast = true
         self.text = text
@@ -48,17 +50,21 @@ extension MWToastServerVM: ToastVM {
         self.allowBluetoothRequests = !disablesInteraction
         self.didDismissCallback = onDismiss
         self.objectWillChange.send()
+
     }
 
     public func updateProgress(percentage: Int) {
         percentComplete = percentage
+        if percentage % 20 == 0 {
+            postAccessibilityAnnouncement(accessibilityLabel)
+        }
         objectWillChange.send()
     }
 
     public func update(mode: ToastType?,
-                text: String?,
-                disablesBluetoothActions: Bool?,
-                onDismiss: (() -> Void)?) {
+                       text: String?,
+                       disablesBluetoothActions: Bool?,
+                       onDismiss: (() -> Void)?) {
 
         if let updateMode = mode {
             self.type = updateMode
@@ -66,6 +72,7 @@ extension MWToastServerVM: ToastVM {
 
         if let updateText = text {
             self.text = updateText
+            postAccessibilityAnnouncement(updateText)
         }
 
         if let updateInteraction = disablesBluetoothActions {
@@ -83,6 +90,7 @@ extension MWToastServerVM: ToastVM {
 
         if let updateText = updatingText {
             self.text = updateText
+            postAccessibilityAnnouncement(updateText)
         }
 
         if let updateInteraction = disablesInteraction {
@@ -100,6 +108,24 @@ extension MWToastServerVM: ToastVM {
         didDismissCallback = nil
         queuedToast = nil
         hideThenReset()
+    }
+
+    private func postAccessibilityAnnouncement(_ string: String) {
+#if os(macOS)
+        if let keyWindow = NSApp.keyWindow {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                NSAccessibility.post(
+                    element: keyWindow,
+                    notification: .announcementRequested,
+                    userInfo: [.announcement : self.accessibilityLabel]
+                )
+            }
+        }
+#elseif os(iOS)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            UIAccessibility.post(notification: .announcement, argument: string)
+        }
+#endif
     }
 }
 

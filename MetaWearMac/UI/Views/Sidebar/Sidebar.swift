@@ -26,6 +26,8 @@ struct Sidebar: View {
                     ).accessibilityLinkedGroup(id: "details", in: chain)
                 }
             }.animation(.easeOut(duration: 0.25))
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel("Connected Devices")
 
             Section(header: discoveredHeader) {
                 ForEach(vc.discoveredDeviceIndexed, id: \.i) { (index, _) in
@@ -44,9 +46,9 @@ struct Sidebar: View {
             }
             .controlSize(.small)
             .accessibilityElement(children: .contain)
-            .accessibilityLabel("Bluetooth Devices List")
-            .accessibilitySortPriority(10)
+            .accessibilityLabel("Discovered Devices")
         }
+        .accessibilityLabel("Sidebar")
         .toolbar { SidebarToggle() }
     }
 
