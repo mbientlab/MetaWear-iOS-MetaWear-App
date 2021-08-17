@@ -43,7 +43,7 @@ extension MWGPIOVM: DetailConfiguring {
 
     public func start() {
         guard device?.board != nil else { return }
-#warning("Original App — Had TODO to vary the number of pins and their readibility status, but lacked any logic. Looking at Core/gpio I don't see a method that jumps out at me. Does one just cycle over possible pins and see if there is signal?")
+#warning("Original App — Had TODO to vary the number of pins and their readibility status. Collect reference material.")
         delegate?.refreshView()
     }
 }

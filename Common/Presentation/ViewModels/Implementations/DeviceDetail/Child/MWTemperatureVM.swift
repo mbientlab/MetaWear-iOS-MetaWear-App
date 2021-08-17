@@ -122,7 +122,7 @@ private extension MWTemperatureVM {
             return
         }
         let isActiveHigh = UInt8(1)
-#warning("Original App — Not implemented, but present in UI. Is this implementation correct? I'm unfamiliar with GPIO read/enable terms.")
+#warning("Original App — Not implemented, but present in UI. Is this implementation correct? I'm unfamiliar with GPIO read/enable terms and parameter for mbl_mw_multi_chnl_temp_configure_ext_thermistor.")
         mbl_mw_multi_chnl_temp_configure_ext_thermistor(board, channel, dataPin, pulldownPin, isActiveHigh)
         readSensor()
 
