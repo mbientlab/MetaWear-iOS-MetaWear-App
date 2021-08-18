@@ -6,9 +6,9 @@ import SwiftUI
 
 struct PlaceholderDeviceConnectionScreen: View {
 
-    @EnvironmentObject var prefs: PreferencesStore
-    @Environment(\.accessibilityReduceMotion) var reduceMotion
-    @State var isAnimating = false
+    @EnvironmentObject private var prefs: PreferencesStore
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var isAnimating = false
 
     private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect().dropFirst()
     @State private var iteration = 0
@@ -49,7 +49,7 @@ struct PlaceholderDeviceConnectionScreen: View {
         }
     }
 
-    var metamotionS: some View {
+    private var metamotionS: some View {
         Image(Images.metamotionS.catalogName)
             .resizable()
             .scaledToFit()
@@ -57,7 +57,7 @@ struct PlaceholderDeviceConnectionScreen: View {
             .modifier(SpinEffect(degrees: CGFloat(iteration) * 360))
     }
 
-    var metamotionC: some View {
+    private var metamotionC: some View {
         Image(Images.metamotionC.catalogName)
             .resizable()
             .scaledToFit()
@@ -75,7 +75,7 @@ struct PlaceholderDeviceConnectionScreen: View {
         }
     }
 
-    var dyslexic: some View {
+    private var dyslexic: some View {
         Menu("                       ") {
             ForEach(FontFace.allCases) { face in
                 Button(face.name) { binding.wrappedValue = face }
@@ -85,7 +85,8 @@ struct PlaceholderDeviceConnectionScreen: View {
             }
         }
         .accessibilityLabel("Dyslexic Font Options")
-        .frame(width: 95)
+        .frame(width: prefs.font == .openDyslexic ? 125 : 95)
+        .animation(.easeOut, value: prefs.font)
         .fixedSize()
         .controlSize(.large)
         .overlay(Text("Dyslexic?").accessibility(hidden: true).allowsHitTesting(false))
