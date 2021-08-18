@@ -27,8 +27,8 @@ public extension CGFloat {
 
 extension CGFloat {
     static let windowMinHeight: CGFloat = 400
-    static let windowWidthMin: CGFloat = .sidebarEstimate + .cardGridSpacing + detailBlockWidth + .cardGridSpacing + detailBlockWidth + .cardGridSpacing
-    fileprivate static let sidebarEstimate = CGFloat(200)
+    static let windowWidthMin: CGFloat = .sidebarMinWidth + .cardGridSpacing + detailBlockWidth + .cardGridSpacing + detailBlockWidth + .cardGridSpacing
+    static let sidebarMinWidth = CGFloat(205)
 
     #if os(iOS)
     static let detailBlockWidth: CGFloat = {

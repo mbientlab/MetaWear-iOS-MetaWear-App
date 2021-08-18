@@ -12,6 +12,7 @@ struct MainWindow: View {
     var body: some View {
         NavigationView {
             Sidebar()
+                .frame(minWidth: .sidebarMinWidth, alignment: .topLeading)
                 .environmentObject(vc)
 
             PlaceholderDeviceConnectionScreen()
