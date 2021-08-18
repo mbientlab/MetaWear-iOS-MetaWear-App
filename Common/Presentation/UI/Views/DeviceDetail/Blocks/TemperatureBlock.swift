@@ -8,9 +8,6 @@ struct TemperatureBlock: View {
 
     @ObservedObject var vm: TemperatureSUIVC
 
-    @State private var read = ""
-    @State private var enable = ""
-
     var body: some View {
         VStack(spacing: .cardVSpacing) {
             LabeledItem(
@@ -28,8 +25,19 @@ struct TemperatureBlock: View {
                 content: channel
             )
 
-            if vm.showPinDetail { pins }
+            if vm.showPinDetail {
+                LabeledItem(
+                    label: "Read Pin",
+                    content: read
+                )
+
+                LabeledItem(
+                    label: "Enable Pin",
+                    content: enable
+                )
+            }
         }
+        .animation(.easeOut, value: vm.showPinDetail)
     }
 
     private var channelBinding: Binding<Int> {
@@ -65,20 +73,35 @@ struct TemperatureBlock: View {
         Text(vm.selectedChannelType)
     }
 
+    // MARK: - External Thermistor
 
-    private var pins: some View {
-        HStack {
-            TextField("Read", text: $read) { _ in } onCommit: {
-                vm.setReadPin(read)
-            }
+    private var readBinding: Binding<GPIOPin> {
+        Binding { vm.readPin }
+        set: { vm.setReadPin($0) }
 
-            TextField("Enable", text: $enable) { _ in } onCommit: {
-                vm.setEnablePin(enable)
+    }
+
+    private var read: some View {
+        Picker(selection: readBinding, label: EmptyView()) {
+            ForEach(GPIOPin.allCases) {
+                Text($0.displayName).tag($0)
             }
         }
-        .onAppear { read = vm.readPin }
-        .onChange(of: vm.readPin) { read = $0 }
-        .onAppear { enable = vm.enablePin }
-        .onChange(of: vm.enablePin) { enable = $0 }
+        .pickerStyle(SegmentedPickerStyle())
+    }
+
+    private var enableBinding: Binding<GPIOPin> {
+        Binding { vm.enablePin }
+        set: { vm.setEnablePin($0) }
+
+    }
+
+    private var enable: some View {
+        Picker(selection: enableBinding, label: EmptyView()) {
+            ForEach(GPIOPin.allCases) {
+                Text($0.displayName).tag($0)
+            }
+        }
+        .pickerStyle(SegmentedPickerStyle())
     }
 }

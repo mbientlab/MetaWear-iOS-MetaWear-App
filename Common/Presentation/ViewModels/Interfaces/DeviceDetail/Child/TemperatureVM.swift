@@ -14,13 +14,13 @@ public protocol TemperatureVM: AnyObject, DetailConfiguring {
     var temperature: String { get }
 
     var showPinDetail: Bool { get }
-    var readPin: String { get }
-    var enablePin: String { get }
+    var readPin: GPIOPin { get }
+    var enablePin: GPIOPin { get }
 
     // User Intents
     func selectChannel(at index: Int)
-    func setReadPin(_ newValue: String)
-    func setEnablePin(_ newValue: String)
+    func setReadPin(_ newValue: GPIOPin)
+    func setEnablePin(_ newValue: GPIOPin)
     func readTemperature()
 }
 

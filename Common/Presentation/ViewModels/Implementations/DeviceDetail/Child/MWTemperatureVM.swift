@@ -16,8 +16,8 @@ public class MWTemperatureVM: TemperatureVM {
     public private(set) var temperatureCelcius = Float(0)
 
     public private(set) var showPinDetail = false
-    public private(set) var readPin = ""
-    public private(set) var enablePin = ""
+    public private(set) var readPin: GPIOPin = .zero
+    public private(set) var enablePin: GPIOPin = .zero
 
     // Identity
     public weak var delegate: TemperatureVMDelegate? = nil
@@ -72,24 +72,20 @@ public extension MWTemperatureVM {
                 mbl_mw_baro_bosch_stop(device.board)
 
             case .external:
-                // Don't bother reading if no pins are set because
-                // reading w/o proper pins will throw an error popup.
-                guard !readPin.isEmpty && !enablePin.isEmpty else { return }
                 readExternalThermistor()
 
             default:
                 readSensor()
         }
 
-
     }
 
-    func setReadPin(_ newValue: String) {
+    func setReadPin(_ newValue: GPIOPin) {
         readPin = newValue
         delegate?.refreshView()
     }
 
-    func setEnablePin(_ newValue: String) {
+    func setEnablePin(_ newValue: GPIOPin) {
         enablePin = newValue
         delegate?.refreshView()
     }
@@ -114,18 +110,15 @@ private extension MWTemperatureVM {
 
     func readExternalThermistor() {
         guard let board = device?.board else { return }
+
         let channel = UInt8(selectedChannelIndex)
-        guard let dataPin = UInt8(readPin),
-              let pulldownPin = UInt8(enablePin)
-        else {
-            parent?.alerts.presentAlert(title: "Invalid GPIO Pin", message: "Input must be representable as UInt8.")
-            return
-        }
+        let dataPin = readPin.pinValue
+        let pulldownPin = enablePin.pinValue
         let isActiveHigh = UInt8(1)
+        
 #warning("Original App — Not implemented, but present in UI. Is this implementation correct? I'm unfamiliar with GPIO read/enable terms and parameter for mbl_mw_multi_chnl_temp_configure_ext_thermistor.")
         mbl_mw_multi_chnl_temp_configure_ext_thermistor(board, channel, dataPin, pulldownPin, isActiveHigh)
         readSensor()
-
     }
 
     func setTemperature(_ temp: Float) {
