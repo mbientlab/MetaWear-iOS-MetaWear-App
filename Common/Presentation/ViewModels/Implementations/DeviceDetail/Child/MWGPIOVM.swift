@@ -12,10 +12,12 @@ public class MWGPIOVM: GPIOVM {
     public private(set) var digitalValue = ""
     public private(set) var analogAbsoluteValue = ""
     public private(set) var analogRatioValue = ""
-    public private(set) var showAnalogReadouts = false
 
     public private(set) var pinChangeCount = 0
     public var pinChangeCountString: String { String(pinChangeCount) }
+
+    public private(set) var mode: GPIOMode = .digital
+    public private(set) var modes = GPIOMode.allCases
 
     public private(set) var isChangingPins = false
     public private(set) var pinSelected = GPIOPin.zero
@@ -43,7 +45,6 @@ extension MWGPIOVM: DetailConfiguring {
 
     public func start() {
         guard device?.board != nil else { return }
-#warning("Original App — Had TODO to vary the number of pins and their readibility status. Collect reference material.")
         delegate?.refreshView()
     }
 }
@@ -52,9 +53,13 @@ extension MWGPIOVM: DetailConfiguring {
 
 public extension MWGPIOVM {
 
+    func userDidSelectMode(_ mode: GPIOMode) {
+        self.mode = mode
+        delegate?.refreshView()
+    }
+
     func userDidSelectPin(_ pin: GPIOPin) {
         pinSelected = pin
-        showAnalogReadouts = true
         delegate?.refreshView()
     }
 
@@ -100,6 +105,10 @@ public extension MWGPIOVM {
 
         let signal = mbl_mw_gpio_get_pin_monitor_data_signal(board, pin)!
         mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
+            let response: UInt32 = obj!.pointee.valueAs()
+            NSLog("PIN CHANGE RESPONSE: \(response)")
+            #warning("What are the response values represeting rise/fall/no change? 1 2 3? I'm a little confused regarding user input for mbl_mw_gpio_set_pin_change_type, it being a segemented picker, and then this readout. Let me map out what I think is happening on a call. Previously, this value wasn't applied to the UI.")
+
             let _self: MWGPIOVM = bridge(ptr: context!)
             DispatchQueue.main.async {
                 _self.pinChangeCount += 1

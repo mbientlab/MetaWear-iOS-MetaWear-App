@@ -18,13 +18,18 @@ struct GPIOBlock: View {
             )
 
             LabeledItem(
-                label: "Pull",
-                content: configuration
+                label: "Mode",
+                content: selectMode,
+                contentAlignment: .trailing
             )
 
+            analogOrDigitalPinOperations
+
+            DividerPadded()
+
             LabeledItem(
-                label: "Digital Out",
-                content: digitalOutput
+                label: "Pin Changes",
+                content: pinChanges
             )
 
             LabeledItem(
@@ -33,31 +38,32 @@ struct GPIOBlock: View {
                 contentAlignment: .trailing
             )
 
-            LabeledItem(
-                label: "Pin Changes",
-                content: pinChanges
-            )
-
             DividerPadded()
 
-            LabeledItem(
-                label: "Digital",
-                content: digitalRead
-            )
+            analogOrDigitalOutputs
 
-            LabeledItem(
-                label: "Analog Absolute",
-                content: analogAbsoluteRead
-            )
-
-            LabeledItem(
-                label: "Analog Ratio",
-                content: analogRatioRead
-            )
         }
+        .animation(.easeOut, value: vm.mode)
     }
 
     // MARK: - Pin Change
+
+    @ViewBuilder private var analogOrDigitalPinOperations: some View {
+        if vm.mode == .analog {
+            LabeledItem(
+                label: "Pull",
+                content: configuration
+            )
+        }
+
+        if vm.mode == .digital {
+            LabeledItem(
+                label: "Digital",
+                content: digitalOutput
+            )
+        }
+
+    }
 
     private var pinSelected: Binding<GPIOPin> {
         Binding { vm.pinSelected }
@@ -72,6 +78,22 @@ struct GPIOBlock: View {
         }
         .pickerStyle(SegmentedPickerStyle())
     }
+
+    private var modeSelected: Binding<GPIOMode> {
+        Binding { vm.mode }
+        set: { vm.userDidSelectMode($0) }
+    }
+
+    private var selectMode: some View {
+        Picker("", selection: modeSelected) {
+            ForEach(vm.modes) {
+                Text($0.displayName).tag($0)
+            }
+        }
+        .pickerStyle(SegmentedPickerStyle())
+    }
+
+    // Mark: - Mode-specific Changes
 
     private var configuration: some View {
         HStack {
@@ -135,6 +157,27 @@ struct GPIOBlock: View {
 
 
     // MARK: - Reads
+
+    @ViewBuilder private var analogOrDigitalOutputs: some View {
+        if vm.mode == .analog {
+            LabeledItem(
+                label: "Absolute",
+                content: analogAbsoluteRead
+            )
+
+            LabeledItem(
+                label: "Ratio",
+                content: analogRatioRead
+            )
+        }
+
+        if vm.mode == .digital {
+            LabeledItem(
+                label: "Digital",
+                content: digitalRead
+            )
+        }
+    }
 
     private var digitalRead: some View {
         HStack {

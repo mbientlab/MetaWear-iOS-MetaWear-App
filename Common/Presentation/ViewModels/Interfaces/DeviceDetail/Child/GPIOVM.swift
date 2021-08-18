@@ -13,10 +13,11 @@ public protocol GPIOVM: AnyObject, DetailConfiguring {
     var analogRatioValue: String { get }
 
     var isChangingPins: Bool { get }
-    var showAnalogReadouts: Bool { get }
 
     var pins: [GPIOPin] { get }
     var pinSelected: GPIOPin { get }
+    var mode: GPIOMode { get }
+    var modes: [GPIOMode] { get }
 
     var changeType: GPIOChangeType { get }
     var pullMode: GPIOPullMode { get }
@@ -27,8 +28,9 @@ public protocol GPIOVM: AnyObject, DetailConfiguring {
     var pinChangeCountString: String { get }
 
     // Intents
+    func userDidSelectMode(_ mode: GPIOMode)
+
     func userDidSelectPin(_ pin: GPIOPin)
-    func userDidChangeType(_ type: GPIOChangeType)
     func userDidPressPull(_ pull: GPIOPullMode)
 
     func userPressedSetPin()

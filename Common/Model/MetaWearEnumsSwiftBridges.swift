@@ -527,6 +527,21 @@ public enum GPIOChangeType: Int, CaseIterable, Identifiable {
 
 }
 
+public enum GPIOMode: Int, CaseIterable, Identifiable {
+    case digital
+    case analog
+
+    public var displayName: String {
+        switch self {
+            case .digital: return "Digital"
+            case .analog: return "Analog"
+        }
+    }
+
+    public var id: Int { rawValue }
+
+}
+
 public enum GPIOPin: Int, CaseIterable, Identifiable {
     case zero
     case one
