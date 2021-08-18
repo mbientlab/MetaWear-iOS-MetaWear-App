@@ -534,8 +534,6 @@ public enum GPIOPin: Int, CaseIterable, Identifiable {
     case three
     case four
     case five
-    case six
-    case seven
 
     public var pinValue: UInt8 { UInt8(rawValue) }
 
