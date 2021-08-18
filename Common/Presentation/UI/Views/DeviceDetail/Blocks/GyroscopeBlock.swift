@@ -41,7 +41,7 @@ extension GyroscopeBlock {
         
         var body: some View {
             LabeledItem(
-                label: "Scale",
+                label: "Frequency",
                 content: picker,
                 contentAlignment: .trailing
             )

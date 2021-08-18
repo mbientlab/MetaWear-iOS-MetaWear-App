@@ -121,7 +121,7 @@ extension AccelerometerBlock {
 
         var body: some View {
             LabeledItem(
-                label: "Sample",
+                label: "Frequency",
                 content: picker,
                 contentAlignment: .trailing
             )
