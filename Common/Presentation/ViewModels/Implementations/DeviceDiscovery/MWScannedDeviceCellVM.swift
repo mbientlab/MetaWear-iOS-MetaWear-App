@@ -69,9 +69,14 @@ private extension MWScannedDeviceCellVM {
 
     func update(from device: MetaWear?) {
         guard let device = device else { return }
+
+        // Use average RSSI to smooth out variability in text updates
         let rssi = device.averageRSSI() ?? Double(device.rssi)
         self.rssi = String(Int(rssi))
-        self.signal = .init(rssi: rssi)
+
+        // Use immediate RSSI for "signal dot" updates because
+        // the dot categories already mask variability
+        self.signal = .init(rssi: device.rssi)
 
         name = device.name
         uuid = device.mac ?? Self.uuidDefaultString
