@@ -103,7 +103,7 @@ extension AccelerometerBlock {
             MenuPickerWithUnitsAligned(
                 label: vm.graphScaleLabel(vm.graphScaleSelected),
                 binding: scaleBinding,
-                unit: "x",
+                unit: "Gs",
                 unitWidthKey: UnitWidthKey.self,
                 unitWidth: unitWidth) {
 
