@@ -336,6 +336,7 @@
 		94F3317126B5308B0015EE88 /* CrossPlatformAlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317026B5308B0015EE88 /* CrossPlatformAlertPresenter.swift */; };
 		94F3317326B530FF0015EE88 /* MWHeaderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317226B530FF0015EE88 /* MWHeaderVM.swift */; };
 		94F3317526B531C50015EE88 /* DeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317426B531C50015EE88 /* DeviceDetailsCoordinator.swift */; };
+		94F8672526CD919A009D8DB4 /* TapToConnectPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F8672426CD919A009D8DB4 /* TapToConnectPrompt.swift */; };
 		94FF66FF26BC7AD6009F7EB5 /* GraphConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF66FE26BC7AD6009F7EB5 /* GraphConfig.swift */; };
 		94FF670126BC8470009F7EB5 /* GraphInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF670026BC8470009F7EB5 /* GraphInterface.swift */; };
 		94FF670326BC8984009F7EB5 /* MWSensorDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF670226BC8983009F7EB5 /* MWSensorDataStore.swift */; };
@@ -561,6 +562,7 @@
 		94F3317026B5308B0015EE88 /* CrossPlatformAlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPlatformAlertPresenter.swift; sourceTree = "<group>"; };
 		94F3317226B530FF0015EE88 /* MWHeaderVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWHeaderVM.swift; sourceTree = "<group>"; };
 		94F3317426B531C50015EE88 /* DeviceDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsCoordinator.swift; sourceTree = "<group>"; };
+		94F8672426CD919A009D8DB4 /* TapToConnectPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapToConnectPrompt.swift; sourceTree = "<group>"; };
 		94FF66FE26BC7AD6009F7EB5 /* GraphConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphConfig.swift; sourceTree = "<group>"; };
 		94FF670026BC8470009F7EB5 /* GraphInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphInterface.swift; sourceTree = "<group>"; };
 		94FF670226BC8983009F7EB5 /* MWSensorDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWSensorDataStore.swift; sourceTree = "<group>"; };
@@ -894,6 +896,7 @@
 				941EFBFB26BD7D970087F960 /* ScanButton.swift */,
 				941EFB6E26BCE6640087F960 /* Sidebar.swift */,
 				94092E0D26C0CDBE00997C45 /* DeviceNavigationLink.swift */,
+				94F8672426CD919A009D8DB4 /* TapToConnectPrompt.swift */,
 			);
 			path = Sidebar;
 			sourceTree = "<group>";
@@ -1599,6 +1602,7 @@
 				941EFBC326BCE79E0087F960 /* SignalVM.swift in Sources */,
 				941EFC0C26BDB23C0087F960 /* UIFactory.swift in Sources */,
 				941EFC0126BD92750087F960 /* ConnectionToolbarButton.swift in Sources */,
+				94F8672526CD919A009D8DB4 /* TapToConnectPrompt.swift in Sources */,
 				941EFB8C26BCE77A0087F960 /* SFSymbol.swift in Sources */,
 				9406194126C0419A007BE281 /* NaiveGraphFixedSize.swift in Sources */,
 				941EFB9926BCE78E0087F960 /* DeviceDetailScreen.swift in Sources */,

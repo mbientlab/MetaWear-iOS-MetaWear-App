@@ -47,6 +47,8 @@ struct Sidebar: View {
             .controlSize(.small)
             .accessibilityElement(children: .contain)
             .accessibilityLabel("Discovered Devices")
+
+            TapToConnectPrompt(didNavigate: selection != nil)
         }
         .accessibilityLabel("Sidebar")
         .toolbar { SidebarToggle() }
