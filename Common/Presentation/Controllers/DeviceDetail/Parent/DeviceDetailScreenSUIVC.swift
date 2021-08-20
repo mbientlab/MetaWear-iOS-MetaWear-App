@@ -4,23 +4,17 @@
 
 import Foundation
 import MetaWear
+import Combine
 #if os(iOS)
 import UIKit
 #endif
 
-/// Wraps imperative calls for SwiftUI. Also supports UIKit storyboard entry.
+/// Wraps imperative calls for SwiftUI and (macOS) NSCollectionViewDiffableDataSource. Also supports UIKit storyboard entry.
 ///
 public class DeviceDetailScreenSUIVC: MWDeviceDetailsCoordinator, ObservableObject {
 
-    /// State for available capabilities
-    private(set) var visibleGroupsDict: [DetailGroup:Bool]  = [:]
-
-    public var sortedVisibleGroups: [DetailGroup] {
-        visibleGroupsDict
-            .filter { $0.value }
-            .keys
-            .sortedAsSpecified()
-    }
+    /// Present UI for available capabilities
+    @Published public private(set) var sortedVisibleGroups: [DetailGroup] = [.headerInfoAndState]
 
     /// For SwiftUI without a storyboard segue
     public convenience init(device: MetaWear?, vms: DetailVMContainer) {
@@ -35,9 +29,7 @@ public class DeviceDetailScreenSUIVC: MWDeviceDetailsCoordinator, ObservableObje
         self.delegate = self
     }
 
-#if os(iOS)
-    private var exportController: UIDocumentInteractionController? = nil
-#endif
+
 
 }
 
@@ -45,67 +37,24 @@ public class DeviceDetailScreenSUIVC: MWDeviceDetailsCoordinator, ObservableObje
 
 extension DeviceDetailScreenSUIVC: DeviceDetailsCoordinatorDelegate {
 
-    public func hideAndReloadAllCells() {
-        visibleGroupsDict = [:]
-        self.objectWillChange.send()
+    public func show(groups: [DetailGroup]) {
+        var newGroups = Set(sortedVisibleGroups)
+        newGroups.formUnion(Set(groups))
+        sortedVisibleGroups = newGroups.sortedAsSpecified()
+    }
+
+    public func hideAllCells() {
+        sortedVisibleGroups = [.headerInfoAndState]
     }
 
     public func reloadAllCells() {
+        /// Not implemented
         self.objectWillChange.send()
     }
 
     public func changeVisibility(of group: DetailGroup, shouldShow: Bool) {
-        visibleGroupsDict[group] = shouldShow
+        guard let index = sortedVisibleGroups.firstIndex(of: group) else { return }
+        sortedVisibleGroups.remove(at: index)
     }
-
-#if os(iOS)
-
-    public func presentFileExportDialog(fileURL: URL,
-                                        saveErrorTitle: String,
-                                        saveErrorMessage: String) {
-        guard let view = UIApplication.firstKeyWindow()?.rootViewController?.view else { return }
-
-        self.exportController = UIDocumentInteractionController(url: fileURL)
-
-        if self.exportController?.presentOptionsMenu(from: view.bounds, in: view, animated: true) == false {
-            self.alerts.presentAlert(title: saveErrorTitle,
-                                     message: saveErrorMessage)
-        }
-    }
-
-#elseif os(macOS)
-
-    public func presentFileExportDialog(fileURL: URL,
-                                        saveErrorTitle: String,
-                                        saveErrorMessage: String) {
-
-        guard let window = NSApp.keyWindow else { return }
-        let panel = configureSavePanel(prompt: "Save MetaWear Data", name: fileURL.lastPathComponent)
-
-        panel.beginSheetModal(for: window) { [weak self] (response) in
-            guard response == .OK,
-                  let url = panel.url else { return }
-
-            do {
-                try FileManager.default.copyItem(at: fileURL, to: url)
-            } catch let error {
-                NSLog(error.localizedDescription)
-                self?.alerts.presentAlert(title: saveErrorTitle, message: saveErrorMessage)
-            }
-        }
-
-    }
-
-    private func configureSavePanel(prompt: String, name: String) -> NSSavePanel {
-        let panel = NSSavePanel()
-        panel.canCreateDirectories = true
-        panel.showsHiddenFiles = true
-        panel.canSelectHiddenExtension = true
-        panel.prompt = prompt
-        panel.nameFieldStringValue = name
-        return panel
-    }
-
-#endif
 }
 

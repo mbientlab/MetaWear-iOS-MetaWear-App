@@ -9,29 +9,40 @@ struct I2CBlock: View {
     @ObservedObject var vm: I2CBusSUIVC
 
     var body: some View {
-        VStack(spacing: .cardVSpacing) {
+        PlatformSpecificOneColumnCardLayout(
+            optionViews: options,
+            mainColumn: main
+        )
+    }
 
-            LabeledItem(
-                label: "Size",
-                content: size,
-                contentAlignment: .trailing
-            )
+    @ViewBuilder private var main: some View {
+        write
+        read
+    }
 
-            LabeledItem(
-                label: "Device Address",
-                content: device,
-                contentAlignment: .trailing
-            )
+    @ViewBuilder private var options: some View {
+        LabeledItem(
+            label: "Size",
+            content: size,
+            alignment: .bottom,
+            contentAlignment: .bottomTrailing,
+            shouldCompressOnMac: true
+        )
 
-            LabeledItem(
-                label: "Register Address",
-                content: register,
-                contentAlignment: .trailing
-            )
+        LabeledItem(
+            label: "Device Address",
+            content: device,
+            contentAlignment: .trailing,
+            shouldCompressOnMac: true
+        )
 
-            write
-            read
-        }
+        LabeledItem(
+            label: "Register Address",
+            content: register,
+            contentAlignment: .trailing,
+            shouldCompressOnMac: true
+        )
+
     }
 
     // MARK: - Size

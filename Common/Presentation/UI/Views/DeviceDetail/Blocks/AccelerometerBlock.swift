@@ -11,32 +11,39 @@ struct AccelerometerBlock: View {
     @State private var unitWidth = CGFloat(0)
 
     var body: some View {
-        VStack(spacing: .cardVSpacing) {
-            
-            ScaleRow(unitWidth: unitWidth)
-            SamplingRow(unitWidth: unitWidth)
-            DividerPadded()
+        if vm.canOrientOrStep {
+            PlatformSpecificExtraRowCardLayout(
+                optionViews: options,
+                otherViews: OrientationAndStepsRows(),
+                leftColumn: LoggingSectionStandardized(vm: vm),
+                rightColumn: LiveStreamSection(scrollViewGraphID: "AccelStreamGraph", vm: vm)
+            )
+                .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }
+                .environmentObject(vm)
 
-            if vm.canOrientOrStep {
-                OrientationAndStepsRows()
-                DividerPadded()
-            }
+        } else {
 
-            LoggingSectionStandardized(vm: vm)
-            DividerPadded()
-            LiveStreamSection(scrollViewGraphID: "AccelStreamGraph", vm: vm)
+            PlatformSpecificTwoColumnCardLayout(
+                optionViews: options,
+                leftColumn: LoggingSectionStandardized(vm: vm),
+                rightColumn: LiveStreamSection(scrollViewGraphID: "AccelStreamGraph", vm: vm)
+            )
+                .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }
+                .environmentObject(vm)
         }
-        .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }
-        .environmentObject(vm)
+
+    }
+
+    @ViewBuilder private var options: some View {
+        ScaleRow(unitWidth: unitWidth)
+        SamplingRow(unitWidth: unitWidth)
     }
 }
 
-// MARK: - Options & Single Line Feeds
+// MARK: - Single Line Feeds
 extension AccelerometerBlock {
 
     struct OrientationAndStepsRows: View {
-
-
 
         @EnvironmentObject private var vm: AccelerometerSUIVC
 
@@ -45,6 +52,10 @@ extension AccelerometerBlock {
                 label: "Orientation",
                 content: orientation
             )
+
+#if os(macOS)
+            VerticalDivider()
+#endif
 
             LabeledItem(
                 label: "Steps",
@@ -77,10 +88,11 @@ extension AccelerometerBlock {
                     if vm.isOrienting { vm.userRequestedStopOrienting() }
                     else { vm.userRequestedStartOrienting() }
                 }
-
             }
         }
     }
+
+    // MARK: - Options
 
     struct ScaleRow: View {
 
@@ -90,12 +102,14 @@ extension AccelerometerBlock {
         var body: some View {
             LabeledItem(label: "Scale",
                         content: scale,
-                        contentAlignment: .trailing)
+                        contentAlignment: .trailing,
+                        shouldCompressOnMac: true
+            )
         }
 
         private var scaleBinding: Binding<AccelerometerGraphScale> {
             Binding { vm.graphScaleSelected }
-                set: { vm.userDidSelectGraphScale($0) }
+            set: { vm.userDidSelectGraphScale($0) }
 
         }
 
@@ -103,14 +117,13 @@ extension AccelerometerBlock {
             MenuPickerWithUnitsAligned(
                 label: vm.graphScaleLabel(vm.graphScaleSelected),
                 binding: scaleBinding,
-                unit: "Gs",
+                unit: "G",
                 unitWidthKey: UnitWidthKey.self,
                 unitWidth: unitWidth) {
-
-                ForEach(vm.graphScales) {
-                    Text(vm.graphScaleLabel($0)).tag($0)
+                    ForEach(vm.graphScales) {
+                        Text(vm.graphScaleLabel($0)).tag($0)
+                    }
                 }
-            }
         }
     }
 
@@ -123,13 +136,14 @@ extension AccelerometerBlock {
             LabeledItem(
                 label: "Frequency",
                 content: picker,
-                contentAlignment: .trailing
+                contentAlignment: .trailing,
+                shouldCompressOnMac: true
             )
         }
 
         private var frequencyBinding: Binding<AccelerometerSampleFrequency> {
             Binding { vm.samplingFrequencySelected }
-                set: { vm.userDidSelectSamplingFrequency($0) }
+            set: { vm.userDidSelectSamplingFrequency($0) }
         }
 
         private var picker: some View {
@@ -140,10 +154,10 @@ extension AccelerometerBlock {
                 unitWidthKey: UnitWidthKey.self,
                 unitWidth: unitWidth) {
 
-                ForEach(vm.samplingFrequencies) {
-                    Text($0.frequencyLabel).tag($0)
+                    ForEach(vm.samplingFrequencies) {
+                        Text($0.frequencyLabel).tag($0)
+                    }
                 }
-            }
         }
     }
 }

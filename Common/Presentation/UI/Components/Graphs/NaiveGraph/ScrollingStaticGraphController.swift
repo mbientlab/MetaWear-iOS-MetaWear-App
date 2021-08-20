@@ -6,13 +6,32 @@ import SwiftUI
 import Combine
 
 struct IdentifiableTimePoint: Identifiable {
-//    var id: UUID = UUID()
+
     var x: CGFloat
     var heights: [CGFloat]
+    /// Using x value
     var id: CGFloat { x }
 }
 
-class NaiveGraphController: ObservableObject {
+extension IdentifiableTimePoint {
+
+    static func enumerated(from timeseries: [[Float]]) -> [Self] {
+        zip(timeseries.indices, timeseries).map { (index, value) in
+            self.init(x: .init(index), heights: value.map(CGFloat.init))
+        }
+    }
+}
+
+class FocusedIndexVM: ObservableObject {
+
+    @Published var scrollOffset = CGFloat(0)
+    @Published var mousePosition = CGFloat(0)
+    @Published var index: Int? = nil
+
+    var showDataLabel: Bool { index != nil }
+}
+
+class ScrollingStaticGraphController: ObservableObject {
 
     /// List of timepoints where x starts at zero.
     @Published var displayedPoints: [IdentifiableTimePoint] = []
@@ -21,23 +40,23 @@ class NaiveGraphController: ObservableObject {
     @Published var rangeY: CGFloat = 2
     @Published var yMax: Double
     @Published var yMin: Double
-    @Published var displayablePointCount: CGFloat = 100
+
+    var focus: FocusedIndexVM = .init()
 
     /// Historical data store
-    private var data: [IdentifiableTimePoint] = []
     private var currentPointIndex: CGFloat = 0
 
     private let driver: GraphDriver
     private var colorUpdates: AnyCancellable? = nil
 
-    init(config: GraphConfig, colorProvider: ColorsetProvider, driver: GraphDriver) {
+    init(config: GraphConfig, colorProvider: ColorsetProvider, driver: GraphDriver = ThrottledGraphDriver(interval: 1.5)) {
         self.driver = driver
         self.rangeY = CGFloat(config.yAxisMax - config.yAxisMin)
         self.seriesColors = colorProvider.colorset.value.colors
         self.yMin = config.yAxisMin
         self.yMax = config.yAxisMax
         self.seriesNames = config.channelLabels
-        self.add(points: Self.moveFromSeriesToTimePoints(config.initialData))
+        self.add(points: config.initialData)
         self.driver.delegate = self
         updateColors(for: colorProvider)
     }
@@ -59,12 +78,7 @@ class NaiveGraphController: ObservableObject {
     }
 
     @objc func refreshGraph() {
-        guard !data.isEmpty else { return }
-        let endIndex = data.endIndex - 1
-        let startIndex = max(0, endIndex - Int(displayablePointCount))
-        var displayables = Array(data[startIndex...endIndex])
-        displayables.indices.forEach { displayables[$0].x = CGFloat($0) }
-        displayedPoints = displayables
+        objectWillChange.send()
     }
 
     func updateColors(for provider: ColorsetProvider) {
@@ -75,12 +89,39 @@ class NaiveGraphController: ObservableObject {
                 self?.refreshGraph()
         }
     }
+
+    func mouseMoved(to point: CGPoint?, width: CGFloat, dotSize: CGFloat) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+
+            guard let point = point else {
+                self.focus.index = nil
+                return
+            }
+            let pointCount = CGFloat(self.displayedPoints.countedByEndIndex())
+            guard pointCount > 0 else { self.focus.index = nil; return }
+            let contentWidth = pointCount * dotSize
+            let startPosition = (contentWidth / 2) - self.focus.scrollOffset
+            let mousePositionInPlot = point.x
+            let mouseIndexInData = ((startPosition + mousePositionInPlot) / contentWidth) * pointCount
+
+            self.focus.mousePosition = max(0, min(width, mousePositionInPlot))
+            self.focus.index = self.displayedPoints.indices.contains(Int(mouseIndexInData)) ? Int(mouseIndexInData) : nil
+        }
+    }
 }
 
-extension NaiveGraphController: GraphObject {
+extension ScrollingStaticGraphController: GraphObject {
+
+    func pauseRendering() {
+        // Not relevant
+    }
+
+    func restartRendering() {
+        // Not relevant
+    }
 
     func changeGraphFormat(_ config: GraphConfig) {
-        self.displayablePointCount = CGFloat(config.dataPointCount)
         updateYScale(min: config.yAxisMin, max: config.yAxisMax, data: config.initialData)
     }
 
@@ -94,36 +135,27 @@ extension NaiveGraphController: GraphObject {
         yMin = min
         let formattedData = IdentifiableTimePoint.enumerated(from: data)
         clearData()
-        self.data = formattedData
+        self.displayedPoints = formattedData
         refreshGraph()
     }
 
     func clearData() {
         displayedPoints = []
-        data = []
         currentPointIndex = 0
     }
 
 }
 
-extension NaiveGraphController: GraphDriverDelegate {
+extension ScrollingStaticGraphController: GraphDriverDelegate {
 
     /// From series to time points
     func add(points: [[Float]]) {
+        var displayables: [IdentifiableTimePoint] = []
         points.forEach { point in
-            data.append(.init(x: currentPointIndex, heights: point.map(CGFloat.init)))
+            displayables.append(.init(x: currentPointIndex, heights: point.map(CGFloat.init)))
             currentPointIndex += 1
         }
-        refreshGraph()
+        displayedPoints.append(contentsOf: displayables)
     }
 
-}
-
-extension IdentifiableTimePoint {
-
-    static func enumerated(from timeseries: [[Float]]) -> [Self] {
-        zip(timeseries.indices, timeseries).map { (index, value) in
-            self.init(x: .init(index), heights: value.map(CGFloat.init))
-        }
-    }
 }

@@ -9,14 +9,10 @@ struct MagnetometerBlock: View {
     @ObservedObject var vm: MagnetometerSUIVC
 
     var body: some View {
-        VStack(spacing: .cardVSpacing) {
-            LoggingSectionStandardized(vm: vm)
-            DividerPadded()
-            LiveStreamSection(scrollViewGraphID: "MagnetometerStreamGraph", vm: vm)
-            
-            Text("UI is Mockup -> Finishing Today")
-                .foregroundColor(.secondary)
-        }
+        PlatformSpecificTwoColumnNoOptionsLayout(
+            leftColumn: LoggingSectionStandardized(vm: vm),
+            rightColumn: LiveStreamSection(scrollViewGraphID: "MagnetometerStreamGraph", vm: vm)
+        )
         .environmentObject(vm)
     }
 }

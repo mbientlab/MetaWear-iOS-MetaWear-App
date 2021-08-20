@@ -13,34 +13,37 @@ struct AmbientLightBlock: View {
     @State private var unitWidth = CGFloat(0)
 
     var body: some View {
-        VStack(spacing: .cardVSpacing) {
-
-            LabeledItem(
-                label: "Gain",
-                content: gain,
-                contentAlignment: .trailing
-            )
-
-            LabeledItem(
-                label: "Integration Time",
-                content: integration,
-                contentAlignment: .trailing
-            )
-
-            LabeledItem(
-                label: "Sampling Rate",
-                content: measurement,
-                contentAlignment: .trailing
-            )
-
-            DividerPadded()
-
-            LabeledItem(
+        PlatformSpecificOneColumnCardLayout(
+            optionViews: options,
+            mainColumn: LabeledItem(
                 label: "Live",
                 content: stream
             )
-        }
+        )
         .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }
+    }
+
+    @ViewBuilder var options: some View {
+        LabeledItem(
+            label: "Gain",
+            content: gain,
+            contentAlignment: .trailing,
+            shouldCompressOnMac: true
+        )
+
+        LabeledItem(
+            label: "Integration Time",
+            content: integration,
+            contentAlignment: .trailing,
+            shouldCompressOnMac: true
+        )
+
+        LabeledItem(
+            label: "Sampling Rate",
+            content: measurement,
+            contentAlignment: .trailing,
+            shouldCompressOnMac: true
+        )
     }
 
     // MARK: - Pickers

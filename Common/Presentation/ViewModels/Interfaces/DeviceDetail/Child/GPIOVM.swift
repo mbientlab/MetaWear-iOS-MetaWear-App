@@ -22,7 +22,6 @@ public protocol GPIOVM: AnyObject, DetailConfiguring {
     var changeType: GPIOChangeType { get }
     var pullMode: GPIOPullMode { get }
     var pullModeOptions: [GPIOPullMode] { get }
-    var changeTypeOptions: [GPIOChangeType] { get }
 
     var pinChangeCount: Int { get }
     var pinChangeCountString: String { get }

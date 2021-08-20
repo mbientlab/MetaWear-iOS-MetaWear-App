@@ -10,17 +10,18 @@ struct GyroscopeBlock: View {
     @State private var unitLabelWidth = CGFloat(0)
     
     var body: some View {
-        VStack(spacing: .cardVSpacing) {
-            ScaleRow(unitLabelWidth: unitLabelWidth)
-            SamplingRow(unitLabelWidth: unitLabelWidth)
-            DividerPadded()
-            
-            LoggingSectionStandardized(vm: vm)
-            DividerPadded()
-            LiveStreamSection(scrollViewGraphID: "GyroStreamGraph", vm: vm)
-        }
+        PlatformSpecificTwoColumnCardLayout(
+            optionViews: options,
+            leftColumn: LoggingSectionStandardized(vm: vm),
+            rightColumn: LiveStreamSection(scrollViewGraphID: "GyroStreamGraph", vm: vm)
+        )
         .onPreferenceChange(UnitWidthKey.self) { unitLabelWidth = $0 }
         .environmentObject(vm)
+    }
+
+    @ViewBuilder var options: some View {
+        ScaleRow(unitLabelWidth: unitLabelWidth)
+        SamplingRow(unitLabelWidth: unitLabelWidth)
     }
 }
 
@@ -43,7 +44,8 @@ extension GyroscopeBlock {
             LabeledItem(
                 label: "Frequency",
                 content: picker,
-                contentAlignment: .trailing
+                contentAlignment: .trailing,
+                shouldCompressOnMac: true
             )
         }
         
@@ -76,7 +78,8 @@ extension GyroscopeBlock {
             LabeledItem(
                 label: "Sample",
                 content: picker,
-                contentAlignment: .trailing
+                contentAlignment: .trailing,
+                shouldCompressOnMac: true
             )
         }
         

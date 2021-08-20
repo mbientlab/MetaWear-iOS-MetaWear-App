@@ -40,6 +40,8 @@ public enum SFSymbol: String {
     case useMetaboot = "cross.case"
     case search = "magnifyingglass"
     case shortcutMenu = "list.dash"
+
+    case settings = "gearshape.fill"
 }
 
 public extension SFSymbol {
@@ -83,6 +85,8 @@ public extension SFSymbol {
             case .useMetaboot: return "MetaBoot Rescue"
             case .search: return "Search"
             case .shortcutMenu: return "Table of Contents"
+
+            case .settings: return "Options"
         }
     }
 }

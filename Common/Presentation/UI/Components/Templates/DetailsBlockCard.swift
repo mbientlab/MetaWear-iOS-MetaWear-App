@@ -9,13 +9,15 @@ struct DetailsBlockCard<Content: View>: View {
     @Environment(\.colorScheme) private var scheme
     var details: Namespace.ID
 
-    init(group: DetailGroup, content: Content, namespace: Namespace.ID) {
+    init(group: DetailGroup, content: Content, namespace: Namespace.ID, width: CGFloat, showTitle: Bool = true) {
         self.title = group.title
         self.image = group.symbol.image()
         self.iconDescription = group.symbol.accessibilityDescription
         self.content = content
         self.tag = group.id
         self.details = namespace
+        self.width = width
+        self.showTitle = showTitle
     }
 
     init(title: String,
@@ -23,7 +25,8 @@ struct DetailsBlockCard<Content: View>: View {
          iconDescription: String,
          content: Content,
          tag: AnyHashable,
-         namespace: Namespace.ID
+         namespace: Namespace.ID,
+         width: CGFloat
     ) {
         self.title = title
         self.image = image
@@ -31,15 +34,19 @@ struct DetailsBlockCard<Content: View>: View {
         self.content = content
         self.tag = tag
         self.details = namespace
+        self.width = width
+        self.showTitle = true
     }
 
-    init(title: String, symbol: SFSymbol, content: Content, tag: AnyHashable, namespace: Namespace.ID) {
+    init(title: String, symbol: SFSymbol, content: Content, tag: AnyHashable, namespace: Namespace.ID, width: CGFloat) {
         self.title = title
         self.image = symbol.image()
         self.iconDescription = symbol.accessibilityDescription
         self.content = content
         self.tag = tag
         self.details = namespace
+        self.width = width
+        self.showTitle = true
     }
 
     private var title: String
@@ -47,22 +54,26 @@ struct DetailsBlockCard<Content: View>: View {
     private var image: Image
     private var iconDescription: String
     private var tag: AnyHashable
+    private var width: CGFloat
+    private var showTitle: Bool
 
     var body: some View {
         VStack(spacing: 1) {
             cardTitle
+                .opacity(showTitle ? 1 : 0)
 
             content
                 .frame(maxWidth: .infinity)
                 .blockify()
         }
-        .frame(width: .detailBlockWidth)
+        .frame(width: width)
         .id(tag)
         .accessibilityElement(children: .contain)
         .accessibilitySortPriority(Double(DetailGroup.allCases.endIndex - (tag as? Int ?? 0)))
         .accessibilityLabel(title)
         .accessibilityLinkedGroup(id: "details", in: details)
     }
+
 
     private var cardTitle: some View {
         HStack {

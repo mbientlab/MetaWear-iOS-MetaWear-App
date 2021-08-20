@@ -9,26 +9,19 @@ struct LEDBlock: View {
     @ObservedObject var vm: LedSUIVC
 
     var body: some View {
-        VStack(spacing: .cardVSpacing) {
-            LabeledItem(
-                label: "Steady",
-                content: steady
-            )
+        PlatformSpecificThreeColumnNoOptionsLayout(
+            leftColumn:  LabeledItem(label: "Steady", content: steady),
+            middleColumn: LabeledItem(label: "Flash", content: flash),
+            rightColumn: off
+        )
+    }
 
-            DividerPadded()
-
-            LabeledItem(
-                label: "Flash",
-                content: flash
-            )
-
-            DividerPadded()
-
-            LabeledItem(
-                label: "",
-                content: off
-            )
-        }
+    var offButton: some View {
+        #if os(macOS)
+        off
+        #else
+        LabeledItem(label: "", content: off)
+        #endif
     }
 
     private var steady: some View {
@@ -85,14 +78,18 @@ struct LEDBlock: View {
 
     private var off: some View {
         HStack {
+            #if !os(macOS)
             Spacer()
+            #endif
             ColorButton(symbol: .solidCircle,
                         label: "  Off  ",
                         color: .ledOffPlatter,
                         fontColor: Color.primary,
                         onPress: vm.turnOffLEDs
             )
+            #if !os(macOS)
             Spacer()
+            #endif
         }
     }
 }

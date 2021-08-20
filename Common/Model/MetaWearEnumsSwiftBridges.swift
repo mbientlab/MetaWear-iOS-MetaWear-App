@@ -523,6 +523,31 @@ public enum GPIOChangeType: Int, CaseIterable, Identifiable {
         }
     }
 
+    init(previous: GPIOPullMode, next: GPIOPullMode) {
+        switch previous {
+            case .up:
+                switch next {
+                    case .pullNone: self = .any
+                    case .up: self = .any
+                    case .down: self = .falling
+                }
+
+            case .down:
+                switch next {
+                    case .pullNone: self = .any
+                    case .up: self = .rising
+                    case .down: self = .any
+                }
+
+            case .pullNone:
+                switch next {
+                    case .pullNone: self = .any
+                    case .up: self = .rising
+                    case .down: self = .falling
+                }
+        }
+    }
+
     public var id: Int { rawValue }
 
 }

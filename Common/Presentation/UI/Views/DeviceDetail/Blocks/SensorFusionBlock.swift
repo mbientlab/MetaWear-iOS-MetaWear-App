@@ -9,16 +9,17 @@ struct SensorFusionBlock: View {
     @ObservedObject var vm: SensorFusionSUIVC
 
     var body: some View {
-        VStack(spacing: .cardVSpacing) {
-            ScaleRow()
-            OutputType()
-            DividerPadded()
+        PlatformSpecificTwoColumnCardLayout(
+            optionViews: options,
+            leftColumn: LoggingSectionStandardized(vm: vm),
+            rightColumn: LiveStreamSection(scrollViewGraphID: "SensorFusionStreamGraph", vm: vm)
+        )
+            .environmentObject(vm)
+    }
 
-            LoggingSectionStandardized(vm: vm)
-            DividerPadded()
-            LiveStreamSection(scrollViewGraphID: "SensorFusionStreamGraph", vm: vm)
-        }
-        .environmentObject(vm)
+    @ViewBuilder var options: some View {
+        ScaleRow()
+        OutputType()
     }
 }
 
@@ -37,10 +38,13 @@ extension SensorFusionBlock {
         }
 
         var body: some View {
-            LabeledItem(label: "Mode",
-                        content: picker,
-                        alignment: .center,
-                        contentAlignment: .trailing)
+            LabeledItem(
+                label: "Mode",
+                content: picker,
+                alignment: .center,
+                contentAlignment: .trailing,
+                shouldCompressOnMac: true
+            )
         }
 
         private var picker: some View {
@@ -50,7 +54,7 @@ extension SensorFusionBlock {
                     Text($0.displayName).tag($0)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .trailing)
+                       .frame(maxWidth: .infinity, alignment: .trailing)
         }
     }
 
@@ -64,10 +68,13 @@ extension SensorFusionBlock {
         }
 
         var body: some View {
-            LabeledItem(label: "Output",
-                        content: picker,
-                        alignment: .center,
-                        contentAlignment: .trailing)
+            LabeledItem(
+                label: "Output",
+                content: picker,
+                alignment: .center,
+                contentAlignment: .trailing,
+                shouldCompressOnMac: true
+            )
         }
 
         private var picker: some View {
@@ -77,7 +84,7 @@ extension SensorFusionBlock {
                     Text($0.fullName).tag($0)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .trailing)
+                       .frame(maxWidth: .infinity, alignment: .trailing)
         }
     }
 }

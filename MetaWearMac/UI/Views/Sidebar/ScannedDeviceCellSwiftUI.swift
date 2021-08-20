@@ -21,12 +21,20 @@ struct ScannedDeviceCellSwiftUI: View {
         .padding(.horizontal, 6)
         .padding(.vertical, .standardVStackSpacing)
         .onDisappear { vc.cancelSubscriptions() }
+        .animation(.easeInOut, value: vc.isConnected)
     }
 
     private var identifier: some View {
         VStack(alignment: .leading, spacing: .standardVStackSpacing) {
 
-            Text(vc.name)
+            HStack {
+                if vc.isConnected {
+                    Image(systemName: SFSymbol.connected.rawValue)
+                        .foregroundColor(hasUserFocus ? .primary : Color.accentColor)
+                }
+
+                Text(vc.name)
+            }
 
 
             Text(vc.uuid)

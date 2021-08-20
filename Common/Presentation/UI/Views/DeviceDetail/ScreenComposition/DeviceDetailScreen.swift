@@ -7,7 +7,6 @@ import MetaWear
 
 struct DeviceDetailScreen: View {
 
-    @ObservedObject var toast: MWToastServerVM
     @EnvironmentObject private var vc: DeviceDetailScreenSUIVC
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.fontFace) private var fontFace
@@ -26,7 +25,7 @@ struct DeviceDetailScreen: View {
                 .ignoresSafeArea(.container, edges: [.bottom])
                 .background(bg.ignoresSafeArea())
                 .overlay(
-                    toastServer
+                    ToastServer(vm: vc.toast as! MWToastServerVM)
                         .accessibilityHidden(true)
                         .shadow(color: iOSToastShadowColor, radius: 15, x: 0, y: 10),
                     alignment: .top)
@@ -36,7 +35,7 @@ struct DeviceDetailScreen: View {
             scrollView
                 .fontBody()
                 .padding(.leading)
-                .overlay(toastServer.accessibilityHidden(true), alignment: .top)
+                .overlay(ToastServer(vm: vc.toast as! MWToastServerVM).accessibilityHidden(true), alignment: .top)
 
             #endif
 
@@ -48,17 +47,11 @@ struct DeviceDetailScreen: View {
         }
 
         .pickerStyle(SegmentedPickerStyle())
-
-        .animation(.easeOut, value: vc.toast.showToast)
         .animation(.easeOut(duration: 0.25), value: vc.sortedVisibleGroups)
         .animation(.none)
 
         .accessibilityLabel("Details for Currently Connected Device")
         .accessibilityLinkedGroup(id: "details", in: chain)
-    }
-
-    var toastServer: some View {
-        ToastServer(vm: vc.toast as! MWToastServerVM)
     }
 
     private var bg: some View { Color.groupedListBackground }
@@ -68,30 +61,54 @@ struct DeviceDetailScreen: View {
     var scrollView: some View {
         ScrollViewReader { scroll in
             ScrollView(.vertical) {
-                #if os(macOS)
-                GridLayout(details: details, alignment: .topLeading, forInfoPanels: true)
-                    .padding(.bottom, 20)
-                    .padding(.top, fontFace == .openDyslexic ? 28 : 18)
-                    .padding(.bottom, .cardGridSpacing)
-
-                GridLayout(details: details, alignment: .topLeading, forInfoPanels: false)
-                    .padding(.bottom, 20)
-                    .padding(.top, fontFace == .openDyslexic ? 28 : 18)
-
-                #else
+#if os(macOS)
+                macOSLayout
+#else
                 iOSDeviceDetailLayout(
                     chain: chain,
                     details: details
                 ).padding(.bottom, 20)
-                #endif
+#endif
+                //            .environment(\.scrollProxy, scroll)
             }
-            .environment(\.scrollProxy, scroll)
         }
+    }
+
+    var macOSLayout: some View {
+        VStack(alignment: .leading, spacing: .cardGridSpacing) {
+
+            HStack {
+                block(for: .headerInfoAndState)
+
+                if vc.sortedVisibleGroups.contains(.reset) {
+                    block(for: .reset)
+                        .padding(.leading, .detailBlockColumnSpacing)
+                } else {
+                    Spacer(minLength: .detailBlockWidth + .detailBlockColumnSpacing)
+                }
+            }
+
+            ForEach(vc.sortedVisibleGroups.filter { !$0.isInfo }) { group in
+                block(for: group)
+            }
+        }
+        .frame(width: .detailBlockWidth * 2 + .detailBlockColumnSpacing, alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.bottom, 20)
+            .padding(.top, fontFace == .openDyslexic ? 28 : 18)
+
     }
 
     var iOSToastShadowColor: Color {
         colorScheme == .light
             ? .black.opacity(0.1)
             : .black.opacity(0.15)
+    }
+
+    func block(for group: DetailGroup) -> some View {
+        BlockBuilder(group: group, namespace: details)
+            .accessibilityAddTraits(.isHeader)
+            .accessibilityLabel(group.title)
+            .matchedGeometryEffect(id: group, in: details, properties: .position, anchor: .leading, isSource: false)
     }
 }

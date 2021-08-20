@@ -13,6 +13,7 @@ import MetaWearCpp
 public enum MetaWearDeviceModel {
     case s
     case c
+    case rl
     case notFound
 
     public init(device: MetaWear) {
@@ -25,6 +26,8 @@ public enum MetaWearDeviceModel {
             self = .s
         } else if string.contains("MetaMotion C") {
             self = .c
+        } else if string.contains("MetaMotion RL") {
+            self = .rl
         } else {
             self = .notFound
         }
@@ -34,6 +37,7 @@ public enum MetaWearDeviceModel {
         switch self {
             case .s: return "MetaMotion S"
             case .c: return "MetaMotion C"
+            case .rl: return "MetaMotion RL"
             case .notFound: return "Model Unknown"
         }
     }
@@ -43,6 +47,7 @@ public extension MetaWearDeviceModel {
 
     var bundleName: String? {
         switch self {
+            case .rl: fallthrough
             case .s: return "metamotionS"
             case .c: return "metamotionC"
             case .notFound: return nil

@@ -24,6 +24,11 @@ extension EnvironmentValues {
         get { return self[KeyboardIsShownEVK.self] }
         set { self[KeyboardIsShownEVK.self] = newValue }
     }
+
+    var parentNamespace: Namespace.ID? {
+        get { return self[ParentNamespaceEVK.self] }
+        set { self[ParentNamespaceEVK.self] = newValue }
+    }
 }
 
 private struct ScrollViewProxyKey: EnvironmentKey {
@@ -40,4 +45,8 @@ private struct FontFaceKey: EnvironmentKey {
 
 private struct KeyboardIsShownEVK: EnvironmentKey {
     static let defaultValue: Bool = false
+}
+
+private struct ParentNamespaceEVK: EnvironmentKey {
+    static let defaultValue: Namespace.ID? = nil
 }

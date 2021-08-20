@@ -4,7 +4,6 @@ use_frameworks!
 target 'MetaWearApp' do
   platform :ios, '14.5'
   pod 'MetaWear', :subspecs => ['UI', 'AsyncUtils', 'Mocks', 'DFU']
-  pod 'AAInfographics', :git => 'https://github.com/AAChartModel/AAChartKit-Swift.git'
   pod 'StaticDataTableViewController'
 end
 

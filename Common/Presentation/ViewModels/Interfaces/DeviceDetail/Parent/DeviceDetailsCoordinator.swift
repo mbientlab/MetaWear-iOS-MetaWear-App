@@ -25,6 +25,8 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     /// Logs and streams
     var signals: SignalReferenceStore { get }
 
+    /// Present and move files for user requests
+    var exporter: FileExporter { get }
 
     func setDevice(_ device: MetaWear)
 
@@ -43,8 +45,6 @@ public protocol DeviceDetailsCoordinator: AnyObject {
     /// Side effect: An action such as a restart intent caused the device state to change
     func userIntentDidCauseDeviceDisconnect()
 
-    func export(_ data: @escaping () -> Data, titled: String)
-
     /// Handle disconnecting and reconnecting the device for log reset.
     func logCleanup(_ handler: @escaping (Error?) -> Void)
 
@@ -56,13 +56,13 @@ public protocol DeviceDetailsCoordinator: AnyObject {
 public protocol DeviceDetailsCoordinatorDelegate: AnyObject {
 
     /// When the device is changed, remove all displayed data and redisplay available cells.
-    func hideAndReloadAllCells()
+    func hideAllCells()
 
     func reloadAllCells()
 
     func changeVisibility(of group: DetailGroup, shouldShow: Bool)
 
-    func presentFileExportDialog(fileURL: URL, saveErrorTitle: String, saveErrorMessage: String)
+    func show(groups: [DetailGroup])
 
 }
 

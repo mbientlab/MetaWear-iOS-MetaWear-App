@@ -9,25 +9,28 @@ struct HapticBlock: View {
     @ObservedObject var vm: HapticSUIVC
 
     var body: some View {
-        VStack(spacing: .cardVSpacing) {
-
-            LabeledItem(
-                label: "Pulse Width",
-                content: pulse
-            )
-
-            LabeledItem(
-                label: "Duty Cycle",
-                content: osSpecificDuty
-            )
-
-            DividerPadded()
-
-            LabeledItem(
+        PlatformSpecificOneColumnCardLayout(
+            optionViews: options,
+            mainColumn: LabeledItem(
                 label: "Use Driver",
                 content: drivers
             )
-        }
+        )
+    }
+
+    @ViewBuilder var options: some View {
+        LabeledItem(
+            label: "Pulse Width",
+            content: pulse,
+            alignment: .center,
+            shouldCompressOnMac: true
+        )
+
+        LabeledItem(
+            label: "Duty Cycle",
+            content: osSpecificDuty,
+            shouldCompressOnMac: true
+        )
     }
 
     private var pulse: some View {

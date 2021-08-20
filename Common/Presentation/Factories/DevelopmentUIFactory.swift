@@ -32,14 +32,14 @@ public class DevelopmentUIFactory: UIFactory {
 
     private func makeDetailVMContainer() -> DetailVMContainer {
         switch environment {
-            case .swiftUIMinimumV2: return DetailVMContainerA()
+            case .swiftUIMinimumV2: return DetailVMContainerSUI()
         }
     }
 }
 
 // MARK: - VMs
 
-public class DetailVMContainerA: DetailVMContainer {
+public class DetailVMContainerSUI: DetailVMContainer, ObservableObject {
 
     public init() {}
 

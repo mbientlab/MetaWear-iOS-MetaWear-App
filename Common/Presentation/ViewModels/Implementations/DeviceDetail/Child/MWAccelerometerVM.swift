@@ -96,7 +96,7 @@ extension MWAccelerometerVM {
 
 public extension MWAccelerometerVM {
 
-    func userRequestedStartStreaming() {
+    @objc func userRequestedStartStreaming() {
         guard let board = device?.board else { return }
 
         if isLogging {
@@ -139,7 +139,7 @@ public extension MWAccelerometerVM {
         parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
-    func userRequestedStopStreaming() {
+    @objc func userRequestedStopStreaming() {
         isStreaming = false
         isLogging = false
         allowsNewStreaming = true
@@ -155,7 +155,17 @@ public extension MWAccelerometerVM {
     }
 
     func userRequestedStreamExport() {
-        parent?.export(data.makeStreamData, titled: "AccStreamData")
+        data.exportStreamData(filePrefix: "Acc") { [weak self] in
+            self?.delegate?.refreshView()
+        } completion: { [weak self] result in
+            self?.delegate?.refreshView()
+            switch result {
+                case .success(let url):
+                    self?.parent?.exporter.export(fileURL: url)
+                case .failure(let error):
+                    self?.parent?.alerts.presentAlert(title: "Accelerometer Stream", message: error.localizedDescription)
+            }
+        }
     }
 
 }
@@ -164,7 +174,7 @@ public extension MWAccelerometerVM {
 private extension MWAccelerometerVM {
 
     func startStreamingStatsUpdateTimer() {
-        streamingStatsTimer = Timer.publish(every: 3, tolerance: 1, on: .main, in: .default)
+        streamingStatsTimer = Timer.publish(every: 1, tolerance: 1, on: .main, in: .default)
                 .autoconnect()
                 .receive(on: DispatchQueue.global())
                 .sink { [weak self] _ in
@@ -233,8 +243,6 @@ public extension MWAccelerometerVM {
         downloadLogger = logger
     }
 
-
-
     func userRequestedDownloadLog() {
         guard let board = device?.board else { return }
         if isLogging { userRequestedStopLogging() }
@@ -267,7 +275,19 @@ public extension MWAccelerometerVM {
     }
 
     func userRequestedLogExport() {
-        parent?.export(data.makeLogData, titled: "AccLogData")
+        data.exportLogData(filePrefix: "Acc") { [weak self] in
+            self?.delegate?.refreshView()
+        } completion: { [weak self] result in
+            DispatchQueue.main.async { [weak self] in
+                self?.delegate?.refreshView()
+            }
+            switch result {
+                case .success(let url):
+                    self?.parent?.exporter.export(fileURL: url)
+                case .failure(let error):
+                    self?.parent?.alerts.presentAlert(title: "Accelerometer Log", message: error.localizedDescription)
+            }
+        }
     }
 
     func recordLogEntry(_self: MWAccelerometerVM, obj: UnsafePointer<MblMwData>?) {
@@ -286,6 +306,13 @@ extension MWAccelerometerVM: LogDownloadHandlerDelegate {
     }
 
     public func initialDataTransferDidComplete() {
+        data.exportLogData(filePrefix: "Acc") { [weak self] in
+            /// Update display state when file is ready
+            self?.delegate?.refreshView()
+        } completion: { [weak self] _ in
+            /// Simply get the file prepared in background, don't present export dialog
+            self?.delegate?.refreshView()
+        }
         isDownloadingLog = false
         delegate?.refreshLoggerStats()
         delegate?.refreshView()

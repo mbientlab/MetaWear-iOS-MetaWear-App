@@ -9,14 +9,9 @@ public class AccelerometerSUIVC: MWAccelerometerVM, ObservableObject {
     internal weak var loggerGraph: GraphObject? = nil
     internal weak var streamGraph: GraphObject? = nil
 
-    /// Refresh by manual call — as this is O(n)(m) over a long list
-    @Published public private(set) var streamingStats: MWDataStreamStats = .zero(for: .cartesianXYZ)
-    /// Refresh by manual call — as this is O(n)(m) over a long list
-    @Published public private(set) var loggerStats: MWDataStreamStats = .zero(for: .cartesianXYZ)
-
-    public var showStreamingStartupSpinner: Bool {
-        isStreaming && data.stream.isEmpty
-    }
+    var streamingStats = StatsVM(.zero(for: .cartesianXYZ), 0)
+    var loggerStats = StatsVM(.zero(for: .cartesianXYZ), 0)
+    @Published var showStreamingStartupSpinner = false
 
     public override init() {
         super.init()
@@ -26,7 +21,7 @@ public class AccelerometerSUIVC: MWAccelerometerVM, ObservableObject {
 }
 
 extension AccelerometerSUIVC: AccelerometerVMDelegate {
-    
+
     public func drawNewLogGraph() {
         // Write scrolling graph interface
     }
@@ -37,24 +32,28 @@ extension AccelerometerSUIVC: AccelerometerVMDelegate {
 
     public func drawNewStreamGraphPoint(_ point: TimeIdentifiedCartesianFloat) {
         streamGraph?.addPointInAllSeries([point.value.x, point.value.y, point.value.z])
+        if showStreamingStartupSpinner {
+            showStreamingStartupSpinner = false
+        }
     }
 
     public func redrawStreamGraph() {
-        streamingStats = .zero(for: data.streamKind)
+        streamingStats = .init(.zero(for: data.streamKind), 0)
         streamGraph?.clearData()
     }
 
     public func refreshStreamStats() {
-        let stats = data.getStreamedStats()
-        DispatchQueue.main.async { [weak self] in
-            self?.streamingStats = stats
-        }
+        let newPointCount = data.streamCount - streamingStats.count
+        let latest = data.stream.suffix(newPointCount)
+        let kind = data.streamKind
+        streamingStats.addNewPoints(latest, kind: kind)
     }
 
     public func refreshLoggerStats() {
         let stats = data.getLoggedStats()
         DispatchQueue.main.async { [weak self] in
-            self?.loggerStats = stats
+            self?.loggerStats.stats = stats
+            self?.loggerStats.count = self?.data.loggedCount ?? 0
         }
     }
 
@@ -76,6 +75,18 @@ extension AccelerometerSUIVC: AccelerometerVMDelegate {
 
 extension AccelerometerSUIVC: StreamGraphManager, LoggerGraphManager, LoggingSectionDriver, StreamingSectionDriver {
 
+    public override func userRequestedStopStreaming() {
+        super.userRequestedStopStreaming()
+        streamGraph?.pauseRendering()
+        showStreamingStartupSpinner = false
+    }
+
+    public override func userRequestedStartStreaming() {
+        super.userRequestedStartStreaming()
+        streamGraph?.restartRendering()
+        showStreamingStartupSpinner = true
+    }
+
     public func graphScaleLabel(_ scale: AccelerometerGraphScale) -> String {
         "\(scale.fullScale)"
     }
@@ -89,11 +100,14 @@ extension AccelerometerSUIVC: StreamGraphManager, LoggerGraphManager, LoggingSec
     }
 
     public func makeStreamDataConfig() -> GraphConfig {
-        .makeXYZLiveOverwriting(yAxisScale: Double(graphScaleSelected.fullScale), dataPoints: 300)
+        .makeXYZLiveOverwriting(yAxisScale: Double(graphScaleSelected.fullScale),
+                                timepoints: data.stream.map(\.values),
+                                dataPoints: 300)
     }
 
     public func makeLoggedDataConfig() -> GraphConfig {
-        .makeHistoricalScrollable(forTimePoints: data.logged.map(\.values), yAxisScale: Double(graphScaleSelected.fullScale))
+        .makeHistoricalScrollable(forTimePoints: data.logged.map(\.values),
+                                  yAxisScale: Double(graphScaleSelected.fullScale))
     }
 
 }

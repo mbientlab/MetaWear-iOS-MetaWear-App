@@ -10,9 +10,9 @@ public class MagnetometerSUIVC: MWMagnetometerVM, ObservableObject {
     internal weak var streamGraph: GraphObject? = nil
 
     /// Refresh by manual call — as this is O(n)(m) over a long list
-    @Published public private(set) var streamingStats: MWDataStreamStats = .zero(for: .cartesianXYZ)
+    @Published public private(set) var streamingStats = StatsVM(.zero(for: .cartesianXYZ), 0)
     /// Refresh by manual call — as this is O(n)(m) over a long list
-    @Published public private(set) var loggerStats: MWDataStreamStats = .zero(for: .cartesianXYZ)
+    @Published public private(set) var loggerStats = StatsVM(.zero(for: .cartesianXYZ), 0)
 
     public var showStreamingStartupSpinner: Bool {
         isStreaming && data.stream.isEmpty
@@ -36,29 +36,41 @@ extension MagnetometerSUIVC: MagnetometerVMDelegate {
     }
 
     public func redrawStreamGraph() {
-        streamingStats = .zero(for: data.streamKind)
+        streamingStats = .init(.zero(for: data.streamKind), 0)
         streamGraph?.clearData()
     }
 
     // Stats
 
-    public func refreshLoggerStats() {
-        let stats = data.getLoggedStats()
-        DispatchQueue.main.async { [weak self] in
-            self?.loggerStats = stats
-        }
-    }
-
     public func refreshStreamStats() {
         let stats = data.getStreamedStats()
         DispatchQueue.main.async { [weak self] in
-            self?.streamingStats = stats
+            self?.streamingStats.stats = stats
+            self?.streamingStats.count = self?.data.streamCount ?? 0
+        }
+    }
+
+    public func refreshLoggerStats() {
+        let stats = data.getLoggedStats()
+        DispatchQueue.main.async { [weak self] in
+            self?.loggerStats.stats = stats
+            self?.loggerStats.count = self?.data.loggedCount ?? 0
         }
     }
 
 }
 
 extension MagnetometerSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSectionDriver, StreamingSectionDriver {
+
+    public override func userRequestedStopStreaming() {
+        super.userRequestedStopStreaming()
+        streamGraph?.pauseRendering()
+    }
+
+    public override func userRequestedStartStreaming() {
+        super.userRequestedStartStreaming()
+        streamGraph?.restartRendering()
+    }
 
     public func setStreamGraphReference(_ graph: GraphObject) {
         self.streamGraph = graph
@@ -69,7 +81,7 @@ extension MagnetometerSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSec
     }
 
     public func makeStreamDataConfig() -> GraphConfig {
-        .makeXYZLiveOverwriting(yAxisScale: Double(graphScaleFactor), dataPoints: 300)
+        .makeXYZLiveOverwriting(yAxisScale: Double(graphScaleFactor), timepoints: data.stream.map(\.values), dataPoints: 300)
     }
 
     public func makeLoggedDataConfig() -> GraphConfig {

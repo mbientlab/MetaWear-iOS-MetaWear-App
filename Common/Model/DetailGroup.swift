@@ -13,35 +13,30 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
     // Minimum (reflecting existing iOS storyboard)
     case headerInfoAndState
     case identifiers
-    case firmware
-    case battery
     case signal
     case reset
 
     // Features
     case accelerometer
-    case gyroscope
-    case sensorFusion
-
     case ambientLight
     case barometer
     case gpio
+    case gyroscope
     case haptic
     case hygrometer
-    case i2c
     case ibeacon
+    case i2c
     case LED
     case magnetometer
     case mechanicalSwitch
+    case sensorFusion
     case temperature
 
     public var title: String {
         switch self {
             case .headerInfoAndState:   return "MetaWear"
-            case .identifiers:          return "Identity"
-            case .battery:              return "Battery"
+            case .identifiers:          return "Device"
             case .signal:               return "Signal"
-            case .firmware:             return "Firmware"
             case .reset:                return "Reset & Power"
             case .mechanicalSwitch:     return "Mechanical Switch"
             case .LED:                  return "LED"
@@ -63,10 +58,8 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
     public var symbol: SFSymbol {
         switch self {
             case .headerInfoAndState:   return .identity
-            case .identifiers:          return .identity
-            case .battery:              return .battery
+            case .identifiers:          return .firmware
             case .signal:               return .signal
-            case .firmware:             return .firmware
             case .reset:                return .reset
             case .mechanicalSwitch:     return .mechanicalSwitch
             case .LED:                  return .led
@@ -88,10 +81,8 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
     public var isInfo: Bool {
         switch self {
             case .headerInfoAndState:   return true
-            case .identifiers:          return true
-            case .battery:              return true
-            case .signal:               return true
-            case .firmware:             return true
+            case .identifiers:          return false
+            case .signal:               return false
             case .reset:                return true
             case .mechanicalSwitch:     return false
             case .LED:                  return false
@@ -102,7 +93,7 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
             case .magnetometer:         return false
             case .gpio:                 return false
             case .haptic:               return false
-            case .ibeacon:              return true
+            case .ibeacon:              return false
             case .barometer:            return false
             case .ambientLight:         return false
             case .hygrometer:           return false

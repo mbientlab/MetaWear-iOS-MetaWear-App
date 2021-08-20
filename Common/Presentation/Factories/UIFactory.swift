@@ -44,7 +44,7 @@ open class UIFactory {
     
     private func _makeDetailVMContainer() -> DetailVMContainer {
         switch environment {
-            case .swiftUIMinimumV2: return DetailVMContainerA()
+            case .swiftUIMinimumV2: return DetailVMContainerSUI()
         }
     }
 

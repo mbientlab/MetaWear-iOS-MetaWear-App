@@ -18,19 +18,17 @@ struct BlockBuilder: View  {
             case .headerInfoAndState: Header()
 
             case .identifiers:
-                block(IdentifiersBlock(vm: vc.vms.identifiers as! IdentifiersSUIVC))
-
-            case .battery:
-                block(BatteryBlock(vm: vc.vms.battery as! BatterySUIVC))
+                block(IdentifiersBlock(
+                    vm: vc.vms.identifiers as! IdentifiersSUIVC,
+                    firmware: vc.vms.firmware as! FirmwareSUIVC,
+                    battery: vc.vms.battery as! BatterySUIVC
+                ))
 
             case .signal:
                 block(SignalBlock(vm: vc.vms.signal as! SignalSUIVC))
 
-            case .firmware:
-                block(FirmwareBlock(vm: vc.vms.firmware as! FirmwareSUIVC))
-
             case .reset:
-                block(ResetBlock(vm: vc.vms.reset as! ResetSUIVC))
+                smallBlock(ResetBlock(vm: vc.vms.reset as! ResetSUIVC))
 
             case .mechanicalSwitch:
                 block(MechanicalSwitchBlock(vm: vc.vms.mechanical as! MechanicalSwitchSUIVC))
@@ -78,8 +76,28 @@ struct BlockBuilder: View  {
     }
 
     func block<Content: View>(_ content: Content) -> some View {
+        var width: CGFloat {
+#if os(macOS)
+            .detailBlockWidth * 2 + .detailBlockColumnSpacing
+#else
+            .detailBlockWidth
+#endif
+        }
+
+        return DetailsBlockCard(group: group,
+                                content: content,
+                                namespace: namespace,
+                                width: width)
+            .id(group)
+    }
+
+    func smallBlock<Content: View>(_ content: Content) -> some View {
         DetailsBlockCard(group: group,
                          content: content,
-                         namespace: namespace)
+                         namespace: namespace,
+                         width: .detailBlockWidth,
+                         showTitle: false
+        )
+            .id(group)
     }
 }

@@ -37,12 +37,12 @@ struct GridLayout: View {
 
                     BlockBuilder(group: group, namespace: details)
                         .accessibilityAddTraits(.isHeader)
+                        .accessibilityLabel(group.title)
                         .id(group)
                         .matchedGeometryEffect(id: group, in: details, properties: .position, anchor: .leading, isSource: forInfoPanels)
                 }
             }
-            .accessibilityLabel(getDetailGroups(for: column).map(\.title).joined(separator: ", "))
-
+            .accessibilityElement(children: .contain)
         }
         .frame(width: .detailBlockWidth)
     }
@@ -61,7 +61,8 @@ extension GridLayout {
         let columnCount = columns.countedByEndIndex()
 
         if forInfoPanels, let predefinedLayout = HeaderLayouts(rawValue: columnCount) {
-            return predefinedLayout.layout(for: column).filter { vc.visibleGroupsDict[$0] == true }
+            let supportedGroups = Set(vc.sortedVisibleGroups)
+            return predefinedLayout.layout(for: column).filter { supportedGroups.contains($0) }
         } else {
             return strideAcrossDetailGroups(columnCount, toBuild: column)
         }
@@ -94,10 +95,6 @@ fileprivate enum HeaderLayouts: Int {
     case oneColumns = 1
     case twoColumns
     case threeColumns
-    case fourColumns
-    case fiveColumns
-    case sixColumns
-    case sevenColumns
 
     func layout(for column: Int) -> [DetailGroup] {
         return layouts[column]
@@ -106,52 +103,18 @@ fileprivate enum HeaderLayouts: Int {
     var layouts: [[DetailGroup]] {
         switch self {
             case .oneColumns: return [
-                [.headerInfoAndState, .identifiers, .battery, .firmware, .ibeacon, .reset, .signal]
+                [.headerInfoAndState, .identifiers, .ibeacon, .reset, .signal]
             ]
 
             case .twoColumns: return [
-                [.headerInfoAndState, .identifiers, .firmware],
-                [.battery, .ibeacon, .reset, .signal]
+                [.headerInfoAndState, .identifiers],
+                [.ibeacon, .reset, .signal]
             ]
 
             case .threeColumns: return [
                 [.headerInfoAndState, .identifiers],
-                [.firmware, .signal],
-                [.battery, .ibeacon, .reset]
-            ]
-
-            case .fourColumns: return [
-                [.headerInfoAndState, .battery],
-                [.identifiers],
-                [.firmware, .ibeacon],
-                [.signal, .reset],
-            ]
-
-            case .fiveColumns: return [
-                [.headerInfoAndState, .battery],
-                [.identifiers],
-                [.firmware],
                 [.signal],
                 [.ibeacon, .reset]
-            ]
-
-            case .sixColumns: return [
-                [.headerInfoAndState],
-                [.identifiers],
-                [.firmware],
-                [.signal],
-                [.battery],
-                [.ibeacon, .reset]
-            ]
-
-            case .sevenColumns: return [
-                [.headerInfoAndState],
-                [.identifiers],
-                [.firmware],
-                [.signal],
-                [.battery],
-                [.ibeacon],
-                [.reset]
             ]
         }
     }

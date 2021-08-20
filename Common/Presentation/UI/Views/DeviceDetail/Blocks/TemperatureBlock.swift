@@ -9,35 +9,61 @@ struct TemperatureBlock: View {
     @ObservedObject var vm: TemperatureSUIVC
 
     var body: some View {
-        VStack(spacing: .cardVSpacing) {
-            LabeledItem(
-                label: "Reported",
-                content: temp
-            )
+        PlatformSpecificOneColumnCardLayout(
+            optionViews: options,
+            mainColumn: main
+        )
+            .animation(.easeOut, value: vm.showPinDetail)
+    }
 
-            LabeledItem(
-                label: "Type",
-                content: channelType
-            )
+    @ViewBuilder private var options: some View {
 
-            LabeledItem(
-                label: "Channel",
-                content: channel
-            )
+        LabeledItem(
+            label: "Type",
+            content: channelType,
+            shouldCompressOnMac: true
+        )
 
-            if vm.showPinDetail {
-                LabeledItem(
-                    label: "Read Pin",
-                    content: read
-                )
+        LabeledItem(
+            label: "Channel",
+            content: channel,
+            shouldCompressOnMac: true
+        )
+    }
 
-                LabeledItem(
-                    label: "Enable Pin",
-                    content: enable
-                )
+    @ViewBuilder private var main: some View {
+
+        if vm.showPinDetail {
+#if os(macOS)
+            HStack(spacing: .detailBlockColumnSpacing) {
+                pinDetailViews
             }
+            .frame(maxWidth: .infinity, alignment: .trailing)
+#else
+            pinDetailViews
+#endif
+
+            DividerPadded()
         }
-        .animation(.easeOut, value: vm.showPinDetail)
+
+        LabeledItem(label: "Reported", content: temp)
+    }
+
+    @ViewBuilder private var pinDetailViews: some View {
+        if vm.showPinDetail {
+
+            LabeledItem(
+                label: "Read Pin",
+                content: read,
+                shouldCompressOnMac: true
+            )
+
+            LabeledItem(
+                label: "Enable Pin",
+                content: enable,
+                shouldCompressOnMac: true
+            )
+        }
     }
 
     private var channelBinding: Binding<Int> {

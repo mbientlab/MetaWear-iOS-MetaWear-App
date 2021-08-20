@@ -7,7 +7,7 @@ protocol StreamingSectionDriver: StreamGraphManager, ObservableObject {
 
     var data: MWSensorDataStore { get }
 
-    var streamingStats: MWDataStreamStats { get }
+    var streamingStats: StatsVM { get }
     var isLogging: Bool { get }
     var isStreaming: Bool { get }
     var allowsNewStreaming: Bool { get }
@@ -30,14 +30,15 @@ struct LiveStreamSection<VM: StreamingSectionDriver>: View {
 
     var body: some View {
         LabeledItem(
-            label: "Live",
+            label: "Stream",
             content: StartStopExportControls(vm: vm)
         )
 
-        if !vm.data.stream.isEmpty {
+        if vm.isStreaming || vm.data.streamCount > 0 {
+
             StatsBlock(colors: prefs.colorset.value.colors,
-                       stats: vm.streamingStats,
-                       count: vm.data.streamCount)
+                       vm: vm.streamingStats)
+
             Graph(vm: vm, scrollViewGraphID: scrollViewGraphID)
         }
     }
@@ -55,11 +56,12 @@ fileprivate struct StartStopExportControls<VM: StreamingSectionDriver>: View {
 
             ExportDataButton(label: "",
                              isEnabled: !vm.isStreaming && !vm.data.stream.isEmpty,
+                             isPreparing: vm.data.isPreparingStreamFile,
                              action: vm.userRequestedStreamExport)
 
             Spacer()
 
-            Button(vm.isStreaming ? "Stop" : "Stream") {
+            Button(vm.isStreaming ? "Stop" : "Start") {
                 if vm.isStreaming { vm.userRequestedStopStreaming() }
                 else { vm.userRequestedStartStreaming() }
             }
@@ -79,23 +81,9 @@ fileprivate struct IsConnectingToStreamIndicator<VM: StreamingSectionDriver>: Vi
 
     var body: some View {
         if vm.showStreamingStartupSpinner {
-            platformSpecificView
+            SmallCircularProgressView()
+                .offset(x: -35)
         }
-    }
-
-    var platformSpecificView: some View {
-#if os(macOS)
-        ProgressView()
-            .progressViewStyle(CircularProgressViewStyle())
-            .transition(.opacity)
-            .controlSize(.small)
-            .offset(x: -35)
-#elseif os(iOS)
-        ProgressView()
-            .progressViewStyle(CircularProgressViewStyle())
-            .transition(.scale)
-            .offset(x: -35)
-#endif
     }
 
 }
@@ -105,58 +93,34 @@ fileprivate struct IsConnectingToStreamIndicator<VM: StreamingSectionDriver>: Vi
 fileprivate struct Graph<VM: StreamingSectionDriver>: View {
 
     @EnvironmentObject private var prefs: PreferencesStore
-    var vm: VM
+    @ObservedObject var vm: VM
     var scrollViewGraphID: String
     @Environment(\.scrollProxy) private var scroller
 
     private func scrollToGraph() {
-        withAnimation { scroller?.scrollTo(scrollViewGraphID, anchor: .center) }
+        withAnimation { scroller?.scrollTo(scrollViewGraphID, anchor: .top) }
     }
 
     var body: some View {
-#if os(iOS)
-        iOSGraph
-#elseif os(macOS)
-        macOSGraph.padding(.vertical, .standardVStackSpacing)
-#endif
-    }
+        if vm.isStreaming {
 
-#if os(iOS)
-    var iOSGraph: some View {
-        AAGraphViewWrapper(initialConfig: vm.makeStreamDataConfig(),
-                           graph: vm.setStreamGraphReference)
-            .id(scrollViewGraphID)
-            .onAppear { scrollToGraph() }
-    }
-#endif
+            FeedPlotFixedSize(controller: .init(stream: vm,
+                                                       config: vm.makeStreamDataConfig(),
+                                                       colorProvider: prefs),
+                                     width: .detailBlockGraphWidth)
+                       .padding(.top, .standardVStackSpacing)
+                       .id(scrollViewGraphID)
 
-#if os(macOS)
-    @ViewBuilder var macOSGraph: some View {
-#if swift(>=5.5)
-        if #available(macOS 12.0, *) {
-           CanvasGraph(controller: .init(stream: vm,
-                                          config: vm.makeStreamDataConfig(),
-                                          driver: ThrottledGraphDriver(), colorProvider: prefs),
-                        width: .detailBlockInnerContentSize - 70)
-                .id(scrollViewGraphID)
-                .onAppear { scrollToGraph() }
+        } else if !vm.data.stream.isEmpty {
+
+            ScrollingStaticGraph(controller: .init(stream: vm,
+                                                   config: vm.makeStreamDataConfig(),
+                                                   driver: ThrottledGraphDriver(interval: 1.5),
+                                                   colorProvider: prefs),
+                                 width: .detailBlockGraphWidth)
+                .padding(.top, .standardVStackSpacing)
         } else {
-            macOS11Graph
+            Text("Error")
         }
-#else
-        macOS11Graph
-#endif
-
     }
-
-    var macOS11Graph: some View {
-        NaiveGraphFixedSize(controller: .init(stream: vm,
-                                              config: vm.makeStreamDataConfig(),
-                                              driver: ThrottledGraphDriver(),
-                                              colorProvider: prefs),
-                            width: .detailBlockInnerContentSize - 70)
-            .id(scrollViewGraphID)
-            .onAppear { scrollToGraph() }
-    }
-#endif
 }

@@ -6,16 +6,14 @@ protocol LoggingSectionDriver: ObservableObject {
     
     var data: MWSensorDataStore { get }
     
-    var loggerStats: MWDataStreamStats { get }
+    var loggerStats: StatsVM { get }
     var isLogging: Bool { get }
     var isStreaming: Bool { get }
     var allowsNewLogging: Bool { get }
     var logDataIsReadyForDisplay: Bool { get }
     var isDownloadingLog: Bool { get }
-    
-#if os(iOS)
+
     func makeLoggedDataConfig() -> GraphConfig
-#endif
     
     func setLoggerGraphReference(_ ref: GraphObject)
     func userRequestedLogExport()
@@ -25,7 +23,7 @@ protocol LoggingSectionDriver: ObservableObject {
     
 }
 
-struct LoggingSectionStandardized<VC: LoggingSectionDriver>: View {
+struct LoggingSectionStandardized<VC: LoggingSectionDriver & LoggerGraphManager>: View {
     
     @EnvironmentObject private var prefs: PreferencesStore
     @ObservedObject var vm: VC
@@ -39,16 +37,15 @@ struct LoggingSectionStandardized<VC: LoggingSectionDriver>: View {
         if vm.logDataIsReadyForDisplay {
             
             StatsBlock(colors: prefs.colorset.value.colors,
-                       stats: vm.loggerStats,
-                       count: vm.data.loggedCount)
-            
-#if os(iOS)
-            
+                       vm: vm.loggerStats)
+
             if !vm.isDownloadingLog {
-                AAGraphViewWrapper(initialConfig: vm.makeLoggedDataConfig(),
-                                   graph: vm.setLoggerGraphReference)
+                ScrollingStaticGraph(controller: .init(logger: vm,
+                                                       config: vm.makeLoggedDataConfig(),
+                                                       driver: ThrottledGraphDriver(interval: 1.5),
+                                                       colorProvider: prefs),
+                                     width: .detailBlockGraphWidth)
             }
-#endif
         }
     }
     
@@ -59,6 +56,7 @@ struct LoggingSectionStandardized<VC: LoggingSectionDriver>: View {
             
             ExportDataButton(label: "",
                              isEnabled: vm.logDataIsReadyForDisplay,
+                             isPreparing: vm.data.isPreparingLogFile,
                              action: vm.userRequestedLogExport)
             
             Spacer()
@@ -68,7 +66,7 @@ struct LoggingSectionStandardized<VC: LoggingSectionDriver>: View {
             
             Spacer()
             
-            Button(vm.isLogging ? "Stop" : "Log") {
+            Button(vm.isLogging ? "Stop" : "Start") {
                 if vm.isLogging { vm.userRequestedStopLogging() }
                 else { vm.userRequestedStartLogging() }
             }

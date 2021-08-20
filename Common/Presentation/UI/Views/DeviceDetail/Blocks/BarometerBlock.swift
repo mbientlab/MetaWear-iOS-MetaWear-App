@@ -13,34 +13,38 @@ struct BarometerBlock: View {
     @State private var enable = ""
 
     var body: some View {
-        VStack(spacing: .cardVSpacing) {
-
-            LabeledItem(
-                label: "Oversampling",
-                content: oversampling,
-                contentAlignment: .trailing
-            )
-
-            LabeledItem(
-                label: "Averaging",
-                content: averaging,
-                contentAlignment: .trailing
-            )
-
-            LabeledItem(
-                label: "Standby Time",
-                content: standbyTime,
-                contentAlignment: .trailing
-            )
-
-            DividerPadded()
-
-            LabeledItem(
+        PlatformSpecificOneColumnCardLayout(
+            optionViews: options,
+            mainColumn: LabeledItem(
                 label: "Altitude",
                 content: stream
             )
-        }
+        )
         .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }
+    }
+
+    @ViewBuilder var options: some View {
+        LabeledItem(
+            label: "Oversampling",
+            content: oversampling,
+            contentAlignment: .trailing,
+            shouldCompressOnMac: true
+        )
+
+        LabeledItem(
+            label: "Averaging",
+            content: averaging,
+            contentAlignment: .trailing,
+            shouldCompressOnMac: true
+        )
+
+        LabeledItem(
+            label: "Standby Time",
+            content: standbyTime,
+            contentAlignment: .trailing,
+            shouldCompressOnMac: true
+        )
+
     }
 
     // MARK: - Picker Bindings

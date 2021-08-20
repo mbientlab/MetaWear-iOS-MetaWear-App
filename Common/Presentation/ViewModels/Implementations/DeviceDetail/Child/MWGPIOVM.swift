@@ -23,11 +23,9 @@ public class MWGPIOVM: GPIOVM {
     public private(set) var pinSelected = GPIOPin.zero
     public private(set) var pins = GPIOPin.allCases
 
-    public private(set) var changeType = GPIOChangeType.rising
-    public let changeTypeOptions = GPIOChangeType.allCases
-
     public private(set) var pullMode = GPIOPullMode.pullNone
     public let pullModeOptions = GPIOPullMode.allCases
+    public private(set) var changeType = GPIOChangeType.rising
 
     // Identity
     public weak var delegate: GPIOVMDelegate? = nil
@@ -63,13 +61,9 @@ public extension MWGPIOVM {
         delegate?.refreshView()
     }
 
-    func userDidChangeType(_ type: GPIOChangeType) {
-        changeType = type
-        delegate?.refreshView()
-    }
-
     func userDidPressPull(_ pull: GPIOPullMode) {
         guard let board = device?.board else { return }
+        changeType = .init(previous: pullMode, next: pull)
         pullMode = pull
         mbl_mw_gpio_set_pull_mode(board, pinSelected.pinValue, pullMode.cppEnumValue)
         delegate?.refreshView()
@@ -96,6 +90,7 @@ public extension MWGPIOVM {
 
     func userRequestedPinChangeStart() {
         guard let board = device?.board else { return }
+        guard !isChangingPins else { return }
         isChangingPins = true
         delegate?.refreshView()
         delegate?.indicateCommandWasSentToBoard()
@@ -107,7 +102,6 @@ public extension MWGPIOVM {
         mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
             let response: UInt32 = obj!.pointee.valueAs()
             NSLog("PIN CHANGE RESPONSE: \(response)")
-            #warning("What are the response values represeting rise/fall/no change? 1 2 3? I'm a little confused regarding user input for mbl_mw_gpio_set_pin_change_type, it being a segemented picker, and then this readout. Let me map out what I think is happening on a call. Previously, this value wasn't applied to the UI.")
 
             let _self: MWGPIOVM = bridge(ptr: context!)
             DispatchQueue.main.async {
@@ -126,6 +120,7 @@ public extension MWGPIOVM {
 
     func userRequestedPinChangeStop() {
         guard let board = device?.board else { return }
+        guard isChangingPins else { return }
         isChangingPins = false
         pinChangeCount = 0
         delegate?.refreshView()

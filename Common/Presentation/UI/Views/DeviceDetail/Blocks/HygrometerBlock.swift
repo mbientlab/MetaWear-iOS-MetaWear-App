@@ -9,18 +9,16 @@ struct HygrometerBlock: View {
     @ObservedObject var vm: HumiditySUIVC
 
     var body: some View {
-        VStack(spacing: .cardVSpacing) {
-
-            LabeledItem(
+        PlatformSpecificOneColumnCardLayout(
+            optionViews: LabeledItem(
                 label: "Oversampling",
                 content: oversampling
-            )
-
-            LabeledItem(
+            ),
+            mainColumn: LabeledItem(
                 label: "Live",
                 content: button
             )
-        }
+        )
     }
 
     private var oversampling: some View {
@@ -39,7 +37,7 @@ struct HygrometerBlock: View {
             Spacer()
 
             MenuPicker(label: vm.oversamplingSelected.displayName,
-                                selection: oversamplingOptions) {
+                       selection: oversamplingOptions) {
                 ForEach(vm.oversamplingOptions) {
                     Text(String($0.displayName)).tag($0)
                 }

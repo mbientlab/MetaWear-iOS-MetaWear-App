@@ -16,7 +16,7 @@ struct DeviceDetailScreenMacContainer: View {
     var chain: Namespace.ID
 
     var body: some View {
-        DeviceDetailScreen(toast: vc.toast as! MWToastServerVM, chain: chain)
+        DeviceDetailScreen(chain: chain)
             .onAppear { vc.start() }
             .onDisappear { vc.end() }
             .environmentObject(vc)

@@ -13,6 +13,7 @@ struct LabeledItem<Content: View>: View {
     var maxWidth: CGFloat = 100
     var alignment: VerticalAlignment = .center
     var contentAlignment: Alignment = .leading
+    var shouldCompressOnMac: Bool = false
 
     var body: some View {
         if typeSize.isAccessibilityCategory {
@@ -24,8 +25,17 @@ struct LabeledItem<Content: View>: View {
         } else {
 
             HStack(alignment: alignment, spacing: 10) {
-                textLabel.frame(width: maxWidth, alignment: .leading)
-                content.frame(maxWidth: .infinity, alignment: contentAlignment)
+                if shouldCompressOnMac {
+                    textLabel
+                        .frame(maxWidth: maxWidth, alignment: .leading)
+                        .fixedSize()
+                } else {
+                    textLabel
+                        .frame(width: maxWidth, alignment: .leading)
+                }
+                content
+                    .frame(maxWidth: .infinity, alignment: contentAlignment)
+                    .fixedSize(horizontal: shouldCompressOnMac, vertical: false)
             }
         }
     }
@@ -90,7 +100,7 @@ struct LabeledColorKeyedItem<Content: View>: View {
 }
 
 struct LabeledButtonItem<Content: View>: View {
-
+    
     @Environment(\.sizeCategory) private var typeSize
 
     var label: String
@@ -102,10 +112,10 @@ struct LabeledButtonItem<Content: View>: View {
     var body: some View {
         HStack(alignment: alignment, spacing: 10) {
             Button(label) { onTap() }
-                .fontSmall(weight: .medium)
+            .fontSmall(weight: .medium)
 
-                .multilineTextAlignment(.leading)
-                .frame(width: maxWidth, alignment: .leading)
+            .multilineTextAlignment(.leading)
+            .frame(width: maxWidth, alignment: .leading)
 
             content
                 .frame(maxWidth: .infinity, alignment: .leading)

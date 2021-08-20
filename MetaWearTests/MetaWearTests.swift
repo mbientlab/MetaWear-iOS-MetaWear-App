@@ -8,7 +8,7 @@ class NaiveGraphControllerTests: XCTestCase {
 
     func testDisplaysInitialDataOnInit() throws {
         let test = createTestDataAndConfig([[1, 2, 3], [4, 5, 6]])
-        let sut = NaiveGraphController(config: test.config, driver: driver)
+        let sut = ScrollingStaticGraph(config: test.config, driver: driver)
         let result = sut.displayedPoints.map { point -> [Float] in
             point.heights.map(Float.init)
         }
@@ -17,7 +17,7 @@ class NaiveGraphControllerTests: XCTestCase {
 
     func testDisplaysEmptyDataOnEmptyInit() throws {
         let test = createTestDataAndConfig([])
-        let sut = NaiveGraphController(config: test.config, driver: driver)
+        let sut = ScrollingStaticGraph(config: test.config, driver: driver)
         let result = sut.displayedPoints.map { point -> [Float] in
             point.heights.map(Float.init)
         }

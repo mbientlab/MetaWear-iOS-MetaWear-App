@@ -20,6 +20,7 @@ extension Color {
     static let plotGold = Color("plotGold")
     static let plotBlue = Color("plotBlue")
     static let plotGray = Color("plotGray")
+    static let plotBackground = Color("plotBackground")
 
     static let startScreen = Color("StartScreen")
 

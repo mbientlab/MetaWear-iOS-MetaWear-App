@@ -9,19 +9,17 @@ struct SignalBlock: View {
     @ObservedObject var vm: SignalSUIVC
 
     var body: some View {
-        VStack(spacing: .cardVSpacing) {
-            LabeledItem(
-                label: "RSSI",
-                content: rssi
-            )
-
-            LabeledItem(
-                label: "Tx Power",
-                content: txPicker,
-                contentAlignment: .trailing
-            )
-            .help("Transmit power is only set, not read.")
-        }
+        PlatformSpecificTwoColumnNoOptionsLayout(
+            leftColumn:
+                LabeledItem(label: "RSSI", content: rssi),
+            rightColumn:
+                LabeledItem(
+                    label: "Tx Power",
+                    content: txPicker,
+                    contentAlignment: .trailing
+                )
+                .help("Transmit power is only set, not read.")
+        )
     }
 
     // MARK: - RSSI

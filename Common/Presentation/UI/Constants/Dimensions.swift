@@ -9,6 +9,7 @@ public extension CGFloat {
     static let detailBlockOuterPadding: CGFloat = 8
     static let detailBlockContentPadding: CGFloat = 17
     static let detailBlockInnerContentSize: CGFloat = .detailBlockWidth - .detailBlockOuterPadding + .detailBlockContentPadding
+    static let detailBlockGraphWidth: CGFloat = .detailBlockInnerContentSize - 70
 
     static let cardVSpacing: CGFloat = 13
 
@@ -38,6 +39,8 @@ extension CGFloat {
     #elseif os(macOS)
     static let detailBlockWidth: CGFloat = 370
     #endif
+
+    static let detailBlockColumnSpacing: CGFloat = 35
 }
 
 

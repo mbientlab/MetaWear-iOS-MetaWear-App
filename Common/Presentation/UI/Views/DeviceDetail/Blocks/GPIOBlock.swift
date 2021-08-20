@@ -12,31 +12,14 @@ struct GPIOBlock: View {
         VStack(spacing: .cardVSpacing) {
 
             LabeledItem(
-                label: "Pin",
-                content: selectPin,
-                contentAlignment: .trailing
-            )
-
-            LabeledItem(
                 label: "Mode",
                 content: selectMode,
                 contentAlignment: .trailing
             )
 
-            analogOrDigitalPinOperations
-
             DividerPadded()
 
-            LabeledItem(
-                label: "Pin Changes",
-                content: pinChanges
-            )
-
-            LabeledItem(
-                label: "Type",
-                content: pinChangeType,
-                contentAlignment: .trailing
-            )
+            analogOrDigitalPinOperations
 
             DividerPadded()
 
@@ -46,13 +29,39 @@ struct GPIOBlock: View {
         .animation(.easeOut, value: vm.mode)
     }
 
+    // MARK: - Mode
+
+    private var modeSelected: Binding<GPIOMode> {
+        Binding { vm.mode }
+        set: { vm.userDidSelectMode($0) }
+    }
+
+    private var selectMode: some View {
+        Picker("", selection: modeSelected) {
+            ForEach(vm.modes) {
+                Text($0.displayName).tag($0)
+            }
+        }
+        .pickerStyle(SegmentedPickerStyle())
+    }
+
     // MARK: - Pin Change
 
     @ViewBuilder private var analogOrDigitalPinOperations: some View {
+
+        LabeledItem(
+            label: "Pin",
+            content: selectPin,
+            contentAlignment: .trailing
+        )
+
         if vm.mode == .analog {
             LabeledItem(
                 label: "Pull",
                 content: configuration
+                    .opacity(vm.isChangingPins ? 1 : 0.2)
+                    .allowsHitTesting(vm.isChangingPins)
+                    .disabled(!vm.isChangingPins)
             )
         }
 
@@ -60,9 +69,16 @@ struct GPIOBlock: View {
             LabeledItem(
                 label: "Digital",
                 content: digitalOutput
+                    .opacity(vm.isChangingPins ? 1 : 0.2)
+                    .allowsHitTesting(vm.isChangingPins)
+                    .disabled(!vm.isChangingPins)
             )
         }
 
+        LabeledItem(
+            label: "Changes",
+            content: pinChanges
+        )
     }
 
     private var pinSelected: Binding<GPIOPin> {
@@ -73,20 +89,6 @@ struct GPIOBlock: View {
     private var selectPin: some View {
         Picker("", selection: pinSelected) {
             ForEach(vm.pins) {
-                Text($0.displayName).tag($0)
-            }
-        }
-        .pickerStyle(SegmentedPickerStyle())
-    }
-
-    private var modeSelected: Binding<GPIOMode> {
-        Binding { vm.mode }
-        set: { vm.userDidSelectMode($0) }
-    }
-
-    private var selectMode: some View {
-        Picker("", selection: modeSelected) {
-            ForEach(vm.modes) {
                 Text($0.displayName).tag($0)
             }
         }
@@ -117,31 +119,21 @@ struct GPIOBlock: View {
         }
     }
 
-    private var changeType: Binding<GPIOChangeType> {
-        Binding { vm.changeType }
-        set: { vm.userDidChangeType($0) }
-    }
-
-    private var pinChangeType: some View {
-        Picker("", selection: changeType) {
-            ForEach(vm.changeTypeOptions) {
-                Text($0.displayName).tag($0)
-            }
-        }
-        .pickerStyle(SegmentedPickerStyle())
-    }
-
     // MARK: - Pin Change Output
 
     private var pinChanges: some View {
         HStack {
 
-            Spacer()
-
             Text(vm.pinChangeCountString)
                 .fixedSize(horizontal: true, vertical: false)
                 .lineLimit(nil)
                 .multilineTextAlignment(.leading)
+
+            Spacer()
+
+            if vm.mode == .analog, vm.isChangingPins {
+                Text(vm.changeType.displayName)
+            }
 
             Spacer()
 
@@ -160,6 +152,7 @@ struct GPIOBlock: View {
 
     @ViewBuilder private var analogOrDigitalOutputs: some View {
         if vm.mode == .analog {
+
             LabeledItem(
                 label: "Absolute",
                 content: analogAbsoluteRead
@@ -173,7 +166,7 @@ struct GPIOBlock: View {
 
         if vm.mode == .digital {
             LabeledItem(
-                label: "Digital",
+                label: "Readout",
                 content: digitalRead
             )
         }

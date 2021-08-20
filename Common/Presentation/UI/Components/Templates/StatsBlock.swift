@@ -7,27 +7,26 @@ import SwiftUI
 struct StatsBlock: View {
 
     var colors: [Color]
-    var stats: MWDataStreamStats
-    var count: Int
+    @ObservedObject var vm: StatsVM
 
     var body: some View {
 
-        ForEach(stats.kind.indexedChannelLabels, id: \.index) { (index, label) in
+        LabeledItem(
+            label: "Points",
+            content: Text(String(vm.count)).fontSmall()
+        )
+
+        ForEach(vm.stats.kind.indexedChannelLabels, id: \.index) { (index, label) in
             LabeledColorKeyedItem(
                 color: colors[index],
                 label: label,
                 content: StatsRow(
-                    min: stats.mins[index],
-                    max: stats.maxs[index]
+                    min: vm.stats.mins[index],
+                    max: vm.stats.maxs[index]
                 ),
                 alignment: .center
             )
         }
-
-        LabeledItem(
-            label: "Points",
-            content: Text(String(count))
-        )
     }
 
     struct StatsRow: View {

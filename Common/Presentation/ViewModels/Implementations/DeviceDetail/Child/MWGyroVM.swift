@@ -82,7 +82,7 @@ public extension MWGyroVM {
 
 public extension MWGyroVM {
 
-    func userRequestedStartStreaming() {
+    @objc func userRequestedStartStreaming() {
         if isLogging {
             userRequestedStopLogging()
         }
@@ -108,7 +108,7 @@ public extension MWGyroVM {
         }
     }
 
-    func userRequestedStopStreaming() {
+    @objc func userRequestedStopStreaming() {
         (isStreaming, isLogging) = (false, false)
         (allowsNewStreaming, allowsNewLogging) = (true, true)
 
@@ -128,7 +128,17 @@ public extension MWGyroVM {
     }
 
     func userRequestedStreamExport() {
-        parent?.export(data.makeStreamData, titled: "GyroStreamData")
+        data.exportStreamData(filePrefix: "Gyro") { [weak self] in
+            self?.delegate?.refreshView()
+        } completion: { [weak self] result in
+            self?.delegate?.refreshView()
+            switch result {
+                case .success(let url):
+                    self?.parent?.exporter.export(fileURL: url)
+                case .failure(let error):
+                    self?.parent?.alerts.presentAlert(title: "Gyroscope Stream", message: error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -279,7 +289,17 @@ public extension MWGyroVM {
     }
 
     func userRequestedLogExport() {
-        parent?.export(data.makeLogData, titled: "GyroData")
+        data.exportLogData(filePrefix: "Gyro") { [weak self] in
+            self?.delegate?.refreshView()
+        } completion: { [weak self] result in
+            self?.delegate?.refreshView()
+            switch result {
+                case .success(let url):
+                    self?.parent?.exporter.export(fileURL: url)
+                case .failure(let error):
+                    self?.parent?.alerts.presentAlert(title: "Gyroscope Log", message: error.localizedDescription)
+            }
+        }
     }
 
 }
@@ -338,6 +358,13 @@ extension MWGyroVM: LogDownloadHandlerDelegate {
     }
 
     public func initialDataTransferDidComplete() {
+        data.exportLogData(filePrefix: "Gyro") { [weak self] in
+            /// Update display state when file is ready
+            self?.delegate?.refreshView()
+        } completion: { [weak self] _ in
+            /// Simply get the file prepared in background, don't present export dialog
+            self?.delegate?.refreshView()
+        }
         isDownloadingLog = false
         delegate?.refreshLoggerStats()
         delegate?.refreshView()

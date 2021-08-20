@@ -12,6 +12,9 @@ public protocol GraphObject: AnyObject {
     func changeGraphFormat(_ config: GraphConfig)
     func clearData()
 
+    func pauseRendering()
+    func restartRendering()
+
 }
 
 protocol LoggerGraphManager: AnyObject {
@@ -63,3 +66,4 @@ public extension GraphObject {
         return ordered
     }
 }
+

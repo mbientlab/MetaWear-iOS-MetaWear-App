@@ -28,6 +28,7 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
     // Services
     public private(set) var toast: ToastVM = MWToastServerVM()
     public private(set) var alerts: AlertPresenter = CrossPlatformAlertPresenter()
+    public private(set) var exporter: FileExporter = FileExporter()
     public var signals: SignalReferenceStore { signalsStore }
     private var signalsStore: SignalReferenceStoreSetup & SignalReferenceStore = MWSignalsStore()
 
@@ -64,7 +65,7 @@ public extension MWDeviceDetailsCoordinator {
     func userRequestedDeviceDisconnect() {
         device.cancelConnection()
         vms.header.refreshConnectionState()
-        delegate?.hideAndReloadAllCells()
+        delegate?.hideAllCells()
     }
 
     func userIntentDidCauseDeviceDisconnect() {
@@ -75,7 +76,7 @@ public extension MWDeviceDetailsCoordinator {
         device.cancelConnection()
         isObserving = false
         signalsStore.completeAllStreamingCleanups()
-        vms = DetailVMContainerA()
+        vms = DetailVMContainerSUI()
     }
 }
 
@@ -100,38 +101,10 @@ public extension MWDeviceDetailsCoordinator {
         }
     }
 
-    func export(_ data: @escaping () -> Data, titled: String) {
-        let fileName = getFilenameByDate(and: titled)
-        let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try data().write(to: fileURL, options: .atomic)
-                DispatchQueue.main.async { [weak self] in
-                    self?.delegate?.presentFileExportDialog(
-                        fileURL: fileURL,
-                        saveErrorTitle: "Save Error",
-                        saveErrorMessage: "No programs installed that could save the file"
-                    )
-                }
-            } catch let error {
-                self.alerts.presentAlert(
-                    title: "Save Error",
-                    message: error.localizedDescription
-                )
-            }
-        }
-    }
-
 }
 
 // Helpers
 private extension MWDeviceDetailsCoordinator {
-
-    func getFilenameByDate(and name: String) -> String {
-        let dateString = dateFormatter.string(from: Date())
-        return "\(name)_\(dateString).csv"
-    }
 
     /// Set this parent instance and the target device as weak references in VMs
     func configureVMs() {
@@ -143,7 +116,7 @@ private extension MWDeviceDetailsCoordinator {
     /// Clear any existing references
     func resetStreamingEvents() {
         signalsStore.completeAllStreamingCleanups()
-        delegate?.hideAndReloadAllCells()
+        delegate?.hideAllCells()
     }
 
     /// Formerly called deviceConnected() and called by
@@ -236,8 +209,6 @@ private extension MWDeviceDetailsCoordinator {
     /// Third step in connecting the currently focused device. Parses the device's capabilities and instructs relevant view models to display UI.
     func readAndDisplayDeviceCapabilities() {
 
-        defer { delegate?.reloadAllCells() }
-
         signalConnectedToThisDevice()
         vms.header.refreshConnectionState() // ## Previously manually forced switch on
         logPeripheralIdentifier()
@@ -245,70 +216,73 @@ private extension MWDeviceDetailsCoordinator {
 
         let board = device.board
 
+        var supportedGroups = [DetailGroup]()
+        defer { delegate?.show(groups: supportedGroups) }
+
         if featureExists(for: MBL_MW_MODULE_LED, in: board) {
             vms.led.start()
-            delegate?.changeVisibility(of: .LED, shouldShow: true)
+            supportedGroups.append(.LED)
         }
 
         if featureExists(for: MBL_MW_MODULE_SWITCH, in: board) {
             vms.mechanical.start()
-            delegate?.changeVisibility(of: .mechanicalSwitch, shouldShow: true)
+            supportedGroups.append(.mechanicalSwitch)
         }
 
         if featureExists(for: MBL_MW_MODULE_TEMPERATURE, in: board) {
             vms.temperature.start()
-            delegate?.changeVisibility(of: .temperature, shouldShow: true)
+            supportedGroups.append(.temperature)
         }
 
         let accelerometer = mbl_mw_metawearboard_lookup_module(board, MBL_MW_MODULE_ACCELEROMETER)
         if AccelerometerModel.allCases.map(\.int32Value).contains(accelerometer) {
             vms.accelerometer.start()
-            delegate?.changeVisibility(of: .accelerometer, shouldShow: true)
+            supportedGroups.append(.accelerometer)
         }
 
         if featureExists(for: MBL_MW_MODULE_GYRO, in: board) {
             vms.gyroscope.start()
-            delegate?.changeVisibility(of: .gyroscope, shouldShow: true)
+            supportedGroups.append(.gyroscope)
         }
 
         if featureExists(for: MBL_MW_MODULE_IBEACON, in: board) {
             vms.ibeacon.start()
-            delegate?.changeVisibility(of: .ibeacon, shouldShow: true)
+            supportedGroups.append(.ibeacon)
         }
 
         if featureExists(for: MBL_MW_MODULE_HAPTIC, in: board) {
             vms.haptic.start()
-            delegate?.changeVisibility(of: .haptic, shouldShow: true)
+            supportedGroups.append(.haptic)
         }
 
         if featureExists(for: MBL_MW_MODULE_SENSOR_FUSION, in: board) {
             vms.sensorFusion.start()
-            delegate?.changeVisibility(of: .sensorFusion, shouldShow: true)
+            supportedGroups.append(.sensorFusion)
         }
 
         if featureExists(for: MBL_MW_MODULE_AMBIENT_LIGHT, in: board) {
             vms.ambientLight.start()
-            delegate?.changeVisibility(of: .ambientLight, shouldShow: true)
+            supportedGroups.append(.ambientLight)
         }
 
         if let _ = BarometerModel(board: board) {
             vms.barometer.start()
-            delegate?.changeVisibility(of: .barometer, shouldShow: true)
+            supportedGroups.append(.barometer)
         }
 
         if featureExists(for: MBL_MW_MODULE_HUMIDITY, in: board) {
             vms.hygrometer.start()
-            delegate?.changeVisibility(of: .hygrometer, shouldShow: true)
+            supportedGroups.append(.hygrometer)
         }
 
         if featureExists(for: MBL_MW_MODULE_GPIO, in: board) {
             vms.gpio.start()
-            delegate?.changeVisibility(of: .gpio, shouldShow: true)
+            supportedGroups.append(.gpio)
         }
 
         if featureExists(for: MBL_MW_MODULE_I2C, in: board) {
             vms.i2c.start()
-            delegate?.changeVisibility(of: .i2c, shouldShow: true)
+            supportedGroups.append(.i2c)
         }
 
     }
@@ -326,12 +300,12 @@ private extension MWDeviceDetailsCoordinator {
     }
 
     func showDefaultMinimumDeviceDetail() {
-        delegate?.changeVisibility(of: .headerInfoAndState, shouldShow: true)
-        delegate?.changeVisibility(of: .identifiers, shouldShow: true)
-        delegate?.changeVisibility(of: .battery, shouldShow: true)
-        delegate?.changeVisibility(of: .signal, shouldShow: true)
-        delegate?.changeVisibility(of: .firmware, shouldShow: true)
-        delegate?.changeVisibility(of: .reset, shouldShow: true)
+        delegate?.show(groups: [
+            .headerInfoAndState,
+            .identifiers,
+            .signal,
+            .reset
+        ])
 
         vms.identifiers.start()
         vms.battery.start()
@@ -361,9 +335,3 @@ private extension MWDeviceDetailsCoordinator {
     }
 }
 
-/// MM_dd_yyyy-HH_mm_ss
-let dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "MM_dd_yyyy-HH_mm_ss"
-    return formatter
-}()

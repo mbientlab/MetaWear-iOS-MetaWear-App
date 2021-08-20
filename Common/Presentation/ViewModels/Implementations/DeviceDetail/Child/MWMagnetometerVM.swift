@@ -65,7 +65,7 @@ extension MWMagnetometerVM: DetailConfiguring {
 
 public extension MWMagnetometerVM {
 
-    func userRequestedStartStreaming() {
+    @objc func userRequestedStartStreaming() {
         if isLogging {
             userRequestedStopLogging()
         }
@@ -107,7 +107,7 @@ public extension MWMagnetometerVM {
         parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
-    func userRequestedStopStreaming() {
+    @objc func userRequestedStopStreaming() {
         isStreaming = false
         isLogging = false
         allowsNewStreaming = true
@@ -123,7 +123,17 @@ public extension MWMagnetometerVM {
     }
 
     func userRequestedStreamExport() {
-        parent?.export(data.makeStreamData, titled: "GyroStreamData")
+        data.exportStreamData(filePrefix: "Mag") { [weak self] in
+            self?.delegate?.refreshView()
+        } completion: { [weak self] result in
+            self?.delegate?.refreshView()
+            switch result {
+                case .success(let url):
+                    self?.parent?.exporter.export(fileURL: url)
+                case .failure(let error):
+                    self?.parent?.alerts.presentAlert(title: "Magnetometer Stream", message: error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -223,7 +233,17 @@ public extension MWMagnetometerVM {
     }
 
     func userRequestedLogExport() {
-        parent?.export(data.makeLogData, titled: "MagnetometerData")
+        data.exportLogData(filePrefix: "Mag") { [weak self] in
+            self?.delegate?.refreshView()
+        } completion: { [weak self] result in
+            self?.delegate?.refreshView()
+            switch result {
+                case .success(let url):
+                    self?.parent?.exporter.export(fileURL: url)
+                case .failure(let error):
+                    self?.parent?.alerts.presentAlert(title: "Magnetometer Log", message: error.localizedDescription)
+            }
+        }
     }
 
     func recordLogEntry(_self: MWMagnetometerVM, obj: UnsafePointer<MblMwData>?) {
@@ -245,6 +265,13 @@ extension MWMagnetometerVM: LogDownloadHandlerDelegate {
     }
 
     public func initialDataTransferDidComplete() {
+        data.exportLogData(filePrefix: "Mag") { [weak self] in
+            /// Update display state when file is ready
+            self?.delegate?.refreshView()
+        } completion: { [weak self] _ in
+            /// Simply get the file prepared in background, don't present export dialog
+            self?.delegate?.refreshView()
+        }
         isDownloadingLog = false
         delegate?.refreshLoggerStats()
         delegate?.refreshView()
