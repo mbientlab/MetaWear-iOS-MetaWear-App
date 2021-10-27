@@ -8,7 +8,7 @@ struct AccelerometerBlock: View {
     
     @ObservedObject var vm: AccelerometerSUIVC
 
-    @State private var unitWidth = CGFloat(0)
+    @State private var unitWidth = CGFloat(10)
 
     var body: some View {
         if vm.canOrientOrStep {
@@ -22,7 +22,6 @@ struct AccelerometerBlock: View {
                 .environmentObject(vm)
 
         } else {
-
             PlatformSpecificTwoColumnCardLayout(
                 optionViews: options,
                 leftColumn: LoggingSectionStandardized(vm: vm),
@@ -80,8 +79,9 @@ extension AccelerometerBlock {
 
         private var orientation: some View {
             HStack {
-                Text(String(vm.orientation))
-                    .accessibilityValue(Text(vm.orientation))
+                Text(vm.orientation)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity, alignment: .center)
 
                 Button(vm.isOrienting ? "Stop" : "Stream") {
@@ -119,7 +119,8 @@ extension AccelerometerBlock {
                 binding: scaleBinding,
                 unit: "G",
                 unitWidthKey: UnitWidthKey.self,
-                unitWidth: unitWidth) {
+                unitWidth: unitWidth
+            ) {
                     ForEach(vm.graphScales) {
                         Text(vm.graphScaleLabel($0)).tag($0)
                     }
@@ -152,8 +153,8 @@ extension AccelerometerBlock {
                 binding: frequencyBinding,
                 unit: "Hz",
                 unitWidthKey: UnitWidthKey.self,
-                unitWidth: unitWidth) {
-
+                unitWidth: unitWidth
+            ) {
                     ForEach(vm.samplingFrequencies) {
                         Text($0.frequencyLabel).tag($0)
                     }

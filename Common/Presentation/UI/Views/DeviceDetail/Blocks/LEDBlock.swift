@@ -82,9 +82,10 @@ struct LEDBlock: View {
             Spacer()
             #endif
             ColorButton(symbol: .solidCircle,
-                        label: "  Off  ",
+                        label: "Off",
                         color: .ledOffPlatter,
                         fontColor: Color.primary,
+                        extraPadding: true,
                         onPress: vm.turnOffLEDs
             )
             #if !os(macOS)
@@ -100,6 +101,7 @@ private struct ColorButton: View {
     var label: String
     var color: Color
     var fontColor: Color = .reversedTextColor
+    var extraPadding: Bool = false
     var onPress: () -> Void
 
     var body: some View {
@@ -107,7 +109,7 @@ private struct ColorButton: View {
             Text(label)
                 .fontSmall(weight: .semibold)
                 .foregroundColor(fontColor)
-                .padding(.horizontal, 8)
+                .padding(.horizontal, extraPadding ? 16 : 8)
                 .padding(.vertical, 4)
                 .background(Capsule().foregroundColor(color))
         }

@@ -28,8 +28,8 @@ struct DetailsBlockPlatter: View {
             shape.fill(fill)
             shape.stroke(stroke, lineWidth: 1)
         }
-        .compositingGroup()
-        .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 0)
+//        .compositingGroup()
+//        .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 0)
     }
 
     private var shape: RoundedRectangle {

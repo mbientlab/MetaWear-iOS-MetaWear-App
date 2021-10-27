@@ -111,21 +111,21 @@ enum Orientation: CaseIterable {
     public var displayName: String {
         switch self {
             case .faceUpPortraitUpright:
-                return "Portrait Upright, Face Up"
+                return "Portrait Upright\nFace Up"
             case .faceUpPortraitUpsideDown:
-                return "Portrait Upsidedown, Face Up"
+                return "Portrait Upsidedown\nFace Up"
             case .faceUpLandscapeLeft:
-                return "Landscape Left, Face Up"
+                return "Landscape Left\nFace Up"
             case .faceUpLandscapeRight:
-                return "Landscape Right, Face Up"
+                return "Landscape Right\nFace Up"
             case .faceDownPortraitUpright:
-                return "Portrait Upright, Face Down"
+                return "Portrait Upright\nFace Down"
             case .faceDownPortraitUpsideDown:
-                return "Portrait Upsidedown, Face Down"
+                return "Portrait Upsidedown\nFace Down"
             case .faceDownLandscapeLeft:
-                return "Landscape Left, Face Down"
+                return "Landscape Left\nFace Down"
             case .faceDownLandscapeRight:
-                return "Landscape Right, Face Down"
+                return "Landscape Right\nFace Down"
         }
     }
 

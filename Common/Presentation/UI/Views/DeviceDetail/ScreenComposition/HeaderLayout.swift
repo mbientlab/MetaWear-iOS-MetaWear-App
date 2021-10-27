@@ -7,13 +7,8 @@ struct Header: View {
 
     @EnvironmentObject private var vc: DeviceDetailScreenSUIVC
     @Environment(\.fontFace) private var fontFace
-    private var imageSize: CGFloat {
-        #if os(macOS)
-        115
-        #else
-        UIDevice.current.userInterfaceIdiom == .pad ? 225 : 155
-        #endif
-    }
+
+    // MARK: - Device-Specific Layouts
 
     var body: some View {
 #if os(iOS)
@@ -28,11 +23,9 @@ struct Header: View {
 #endif
     }
 
-    // MARK: - Layouts
-
     var iOSImageAbove: some View {
         VStack(spacing: .cardGridSpacing) {
-            deviceImageHero
+            deviceImage
                 .padding(.bottom, -20)
                 .offset(y: 20)
                 .padding(.top, fontFace == .openDyslexic ? 26 : 16)
@@ -43,14 +36,22 @@ struct Header: View {
 
     var ipadOSImageOffCenterOverlaid: some View {
         headerCard
-            .overlay(deviceImageOverlay.offset(x: .detailBlockWidth * 0.15), alignment: .center)
+            .overlay(deviceImage.offset(x: .detailBlockWidth * 0.15), alignment: .center)
             .padding(.top, fontFace == .openDyslexic ? 26 : 16)
     }
 
     var macOSImageOverlaid: some View {
         headerCard
-            .overlay(deviceImageOverlay, alignment: .trailing)
+            .overlay(deviceImage, alignment: .trailing)
             .padding(.top, fontFace == .openDyslexic ? 26 : 16)
+    }
+
+    private var imageSize: CGFloat {
+        #if os(macOS)
+        115
+        #else
+        UIDevice.current.userInterfaceIdiom == .pad ? 225 : 155
+        #endif
     }
 
     // MARK: - Components
@@ -65,16 +66,10 @@ struct Header: View {
             .accessibilityHint("Edit device name")
     }
 
-    var deviceImageOverlay: some View {
+    var deviceImage: some View {
         DeviceImage(vm: vc.vms.identifiers as! IdentifiersSUIVC,
                     header: vc.vms.header as! DetailHeaderSUIVC,
                     size: imageSize
         )
-    }
-
-    var deviceImageHero: some View {
-        DeviceImage(vm: vc.vms.identifiers as! IdentifiersSUIVC,
-                    header: vc.vms.header as! DetailHeaderSUIVC,
-                    size: imageSize)
     }
 }

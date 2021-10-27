@@ -6,15 +6,14 @@ import SwiftUI
 
 struct Sidebar: View {
 
-    @EnvironmentObject private var vc: MetaWearScanningSVC
-    @Namespace var chain
+    @StateObject var vc: MetaWearScanningSVC
+    @Namespace private var chain
+    @State private var selection: String? = nil
 
-    @State var selection: String? = nil
     var body: some View {
         List {
-            ScanButton().animation(.easeOut(duration: 0.25))
-
-            MetaBootCheckButton().animation(.easeOut(duration: 0.25))
+            ScanButton()
+            MetaBootCheckButton()
 
             Section(header: discoveredHeader) {
                 ForEach(vc.discoveredDeviceIndexed, id: \.i) { (index, _) in
@@ -28,15 +27,17 @@ struct Sidebar: View {
                     if vc.discoveredDevices.isEmpty {
                         EmptyDevicesListButton()
                     }
-                }.animation(.easeOut(duration: 0.25))
-
+                }
             }
             .controlSize(.small)
             .accessibilityElement(children: .contain)
             .accessibilityLabel("Discovered Devices")
+            .animation(.easeOut(duration: 0.25), value: vc.discoveredDeviceIndexed.endIndex)
 
             TapToConnectPrompt(didNavigate: selection != nil)
         }
+        .environmentObject(vc)
+        .onAppear { vc.startScanning() }
         .accessibilityLabel("Sidebar")
         .toolbar { SidebarToggle() }
     }

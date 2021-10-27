@@ -36,9 +36,7 @@ struct LiveStreamSection<VM: StreamingSectionDriver>: View {
 
         if vm.isStreaming || vm.data.streamCount > 0 {
 
-            StatsBlock(colors: prefs.colorset.value.colors,
-                       vm: vm.streamingStats)
-
+            StatsBlock.LayoutPerformanceWorkaround(colors: prefs.colorset.value.colors, vm: vm.streamingStats)
             Graph(vm: vm, scrollViewGraphID: scrollViewGraphID)
         }
     }
@@ -102,25 +100,27 @@ fileprivate struct Graph<VM: StreamingSectionDriver>: View {
     }
 
     var body: some View {
-        if vm.isStreaming {
+        ZStack {
+            if vm.isStreaming {
 
-            FeedPlotFixedSize(controller: .init(stream: vm,
+                FeedPlotFixedSize(controller: .init(stream: vm,
+                                                           config: vm.makeStreamDataConfig(),
+                                                           colorProvider: prefs),
+                                         width: .detailBlockGraphWidth)
+                           .padding(.top, .standardVStackSpacing)
+                           .id(scrollViewGraphID)
+
+            } else if !vm.data.stream.isEmpty {
+
+                ScrollingStaticGraph(controller: .init(stream: vm,
                                                        config: vm.makeStreamDataConfig(),
+                                                       driver: ThrottledGraphDriver(interval: 1.5),
                                                        colorProvider: prefs),
                                      width: .detailBlockGraphWidth)
-                       .padding(.top, .standardVStackSpacing)
-                       .id(scrollViewGraphID)
-
-        } else if !vm.data.stream.isEmpty {
-
-            ScrollingStaticGraph(controller: .init(stream: vm,
-                                                   config: vm.makeStreamDataConfig(),
-                                                   driver: ThrottledGraphDriver(interval: 1.5),
-                                                   colorProvider: prefs),
-                                 width: .detailBlockGraphWidth)
-                .padding(.top, .standardVStackSpacing)
-        } else {
-            Text("Error")
+                    .padding(.top, .standardVStackSpacing)
+            } else {
+                Text("Error")
+            }
         }
     }
 }

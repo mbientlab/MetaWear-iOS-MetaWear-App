@@ -174,9 +174,9 @@ public extension MWAccelerometerVM {
 private extension MWAccelerometerVM {
 
     func startStreamingStatsUpdateTimer() {
-        streamingStatsTimer = Timer.publish(every: 1, tolerance: 1, on: .main, in: .default)
-                .autoconnect()
-                .receive(on: DispatchQueue.global())
+        streamingStatsTimer = Timer.publish(every: 1, tolerance: 1, on: .current, in: .default)
+            .autoconnect()
+            .receive(on: DispatchQueue.global())
                 .sink { [weak self] _ in
                     self?.delegate?.refreshStreamStats()
                 }

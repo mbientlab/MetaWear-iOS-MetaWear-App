@@ -16,7 +16,7 @@ struct SmallUnitLabel<Key: WidthKey>: View {
         Text(string)
             .fontVerySmall()
             .fixedSize(horizontal: true, vertical: false)
-            .foregroundColor(.secondary)
+            .foregroundColor(.mwSecondary)
             .padding(.leading, 5)
             .matchWidths(to: equalWidthKey, width: width, alignment: alignment)
     }
@@ -34,7 +34,7 @@ struct SmallUnitLabelFixed: View {
             .fontVerySmall()
             .fixedSize(horizontal: true, vertical: false)
             .multilineTextAlignment(.leading)
-            .foregroundColor(.secondary)
+            .foregroundColor(.mwSecondary)
             .padding(.leading, 5)
     }
 }

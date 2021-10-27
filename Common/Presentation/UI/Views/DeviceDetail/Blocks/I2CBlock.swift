@@ -20,31 +20,38 @@ struct I2CBlock: View {
         read
     }
 
+    #if os(iOS)
+    let maxWidth: CGFloat = 160
+#else
+    let maxWidth: CGFloat = 100
+#endif
+
     @ViewBuilder private var options: some View {
         LabeledItem(
             label: "Size",
             content: size,
+            maxWidth: maxWidth,
             alignment: .bottom,
-            contentAlignment: .bottomTrailing,
-            shouldCompressOnMac: true
+            contentAlignment: .trailing,
+            shouldCompressOnMac: false
         )
 
         LabeledItem(
             label: "Device Address",
             content: device,
+            maxWidth: maxWidth,
             contentAlignment: .trailing,
-            shouldCompressOnMac: true
+            shouldCompressOnMac: false
         )
 
         LabeledItem(
             label: "Register Address",
             content: register,
+            maxWidth: maxWidth,
             contentAlignment: .trailing,
-            shouldCompressOnMac: true
+            shouldCompressOnMac: false
         )
-
     }
-
     // MARK: - Size
 
     private var size: some View {

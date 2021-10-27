@@ -1,15 +1,9 @@
-//
-//  AAGraphConfig.swift
-//  AAGraphConfig
-//
+
 //  Created by Ryan Ferrell on 8/5/21.
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
 import SwiftUI
-#if os(iOS)
-import AAInfographics
-#endif
 
 public struct GraphConfig {
     

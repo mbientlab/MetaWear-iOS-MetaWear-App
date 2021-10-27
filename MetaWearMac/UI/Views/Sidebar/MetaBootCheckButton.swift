@@ -34,5 +34,6 @@ struct MetaBootCheckButton: View {
                 .accentColor(Color(.systemTeal))
         }
         .help("Forces boot loader mode (when the device is powering on)")
+        .animation(.easeOut(duration: 0.25), value: vc.useMetaBootMode)
     }
 }

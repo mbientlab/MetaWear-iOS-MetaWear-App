@@ -15,7 +15,6 @@ struct IdentifiersBlock: View {
             leftColumn: hardwareColumn,
             rightColumn: firmwareColumn
         )
-        .animation(.none)
     }
 
     // MARK: - Firmware

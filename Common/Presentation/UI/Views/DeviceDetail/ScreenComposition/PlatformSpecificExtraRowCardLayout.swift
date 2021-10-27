@@ -19,7 +19,7 @@ struct PlatformSpecificTwoColumnCardLayout<OptionViews: View, LogView: View, Str
     }
 
     var iOS: some View {
-        VStack(spacing: .cardVSpacing) {
+        VStack(alignment: .leading, spacing: .cardVSpacing) {
             optionViews
             DividerPadded()
             leftColumn
@@ -59,6 +59,7 @@ struct PlatformSpecificTwoColumnCardLayout<OptionViews: View, LogView: View, Str
     }
 }
 
+
 struct PlatformSpecificOneColumnCardLayout<OptionViews: View, MainColumn: View>: View {
 
     let optionViews: OptionViews
@@ -73,7 +74,7 @@ struct PlatformSpecificOneColumnCardLayout<OptionViews: View, MainColumn: View>:
     }
 
     var iOS: some View {
-        VStack(spacing: .cardVSpacing) {
+        VStack(alignment: .leading, spacing: .cardVSpacing) {
             optionViews
             DividerPadded()
             mainColumn
@@ -105,7 +106,7 @@ struct OptionsLabel: View {
     var body: some View {
         Text("Options")
             .fontSmall(weight: .medium)
-            .foregroundColor(.secondary)
+            .foregroundColor(.mwSecondary)
             .multilineTextAlignment(.leading)
             .fixedSize(horizontal: false, vertical: true)
             .lineLimit(nil)
@@ -118,7 +119,7 @@ struct OptionsSymbol: View {
     var body: some View {
         Image(systemName: SFSymbol.settings.rawValue)
             .fontSmall(weight: .medium)
-            .foregroundColor(.secondary)
+            .foregroundColor(.mwSecondary)
             .multilineTextAlignment(.leading)
             .fixedSize(horizontal: false, vertical: true)
             .lineLimit(nil)
@@ -143,7 +144,7 @@ struct PlatformSpecificExtraRowCardLayout<OptionViews: View, OtherViews: View, L
     }
 
     var iOS: some View {
-        VStack(spacing: .cardVSpacing) {
+        VStack(alignment: .leading, spacing: .cardVSpacing) {
             optionViews
             DividerPadded()
             otherViews

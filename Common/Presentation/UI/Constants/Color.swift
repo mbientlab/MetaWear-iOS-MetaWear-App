@@ -23,6 +23,7 @@ extension Color {
     static let plotBackground = Color("plotBackground")
 
     static let startScreen = Color("StartScreen")
+    static let mwSecondary = Color("secondary")
 
 #if os(iOS)
     static let groupedListBackground = Color(.systemGroupedBackground)

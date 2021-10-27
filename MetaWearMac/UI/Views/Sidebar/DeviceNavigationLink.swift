@@ -7,7 +7,7 @@ import MetaWear
 
 struct DeviceNavigationLink: View {
     
-    @EnvironmentObject private var app: AppStore
+    @EnvironmentObject private var ui: UIFactory
     @EnvironmentObject private var vc: MetaWearScanningSVC
     var chain: Namespace.ID
     @Binding var selection: String?
@@ -17,7 +17,6 @@ struct DeviceNavigationLink: View {
     var body: some View {
         if isValid {
             navigationLink
-
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel(getName())
                 .accessibilityHint(getSignalStrength())
@@ -71,7 +70,7 @@ private extension DeviceNavigationLink {
     }
 
     func getDetailSVC() -> DeviceDetailScreenSUIVC {
-        app.ui.makeDetailScreenVC(device: getDevice()) as! DeviceDetailScreenSUIVC
+        ui.makeDetailScreenVC(device: getDevice()) as! DeviceDetailScreenSUIVC
     }
     
     // Accessibility
@@ -98,8 +97,8 @@ private extension DeviceNavigationLink {
     
     func makeCellVC() -> ScannedDeviceCellSUIVC {
         isDiscoveredList
-            ? app.ui.makeScannedDeviceCellSVC(scannerItem: vc.discoveredDevices[index], parent: vc) as! ScannedDeviceCellSUIVC
-            : app.ui.makeScannedDeviceCellSVC(device: vc.connectedDevices[index], parent: vc) as! ScannedDeviceCellSUIVC
+            ? ui.makeScannedDeviceCellSVC(scannerItem: vc.discoveredDevices[index], parent: vc) as! ScannedDeviceCellSUIVC
+            : ui.makeScannedDeviceCellSVC(device: vc.connectedDevices[index], parent: vc) as! ScannedDeviceCellSUIVC
     }
 
 }

@@ -8,12 +8,13 @@ struct TapToConnectPrompt: View {
 
     var didNavigate: Bool
 
+    @EnvironmentObject private var prefs: PreferencesStore
     @EnvironmentObject private var vc: MetaWearScanningSVC
     @State private var didAppear = false
 
     var body: some View {
         VStack {
-            if !vc.discoveredDevices.isEmpty && !didNavigate {
+            if !prefs.didOnboard && !vc.discoveredDevices.isEmpty && !didNavigate {
                 VStack(alignment: .center) {
                     Arrow()
                         .stroke(arrowGradient)
@@ -33,6 +34,9 @@ struct TapToConnectPrompt: View {
             }
         }
         .animation(.easeOut(duration: 0.5), value: !vc.discoveredDevices.isEmpty && !didNavigate)
+        .onChange(of: didNavigate) { _ in
+            prefs.setDidOnboard(true)
+        }
     }
 
     var animation: Animation {

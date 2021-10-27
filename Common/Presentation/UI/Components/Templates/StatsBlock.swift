@@ -10,22 +10,23 @@ struct StatsBlock: View {
     @ObservedObject var vm: StatsVM
 
     var body: some View {
-
-        LabeledItem(
-            label: "Points",
-            content: Text(String(vm.count)).fontSmall()
-        )
-
-        ForEach(vm.stats.kind.indexedChannelLabels, id: \.index) { (index, label) in
-            LabeledColorKeyedItem(
-                color: colors[index],
-                label: label,
-                content: StatsRow(
-                    min: vm.stats.mins[index],
-                    max: vm.stats.maxs[index]
-                ),
-                alignment: .center
+        VStack(spacing: .standardVStackSpacing) {
+            LabeledItem(
+                label: "Points",
+                content: Text(String(vm.count)).fontSmall()
             )
+
+            ForEach(vm.stats.kind.indexedChannelLabels, id: \.index) { (index, label) in
+                LabeledColorKeyedItem(
+                    color: colors[index],
+                    label: label,
+                    content: StatsRow(
+                        min: vm.stats.mins[index],
+                        max: vm.stats.maxs[index]
+                    ),
+                    alignment: .center
+                )
+            }
         }
     }
 
@@ -53,7 +54,7 @@ struct StatsBlock: View {
             HStack {
                 Text(label)
                     .fontVerySmall(lowercaseSmallCaps: true)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.mwSecondary)
                     .minimumScaleFactor(0.6)
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(nil)
@@ -71,6 +72,36 @@ struct StatsBlock: View {
             guard stat != Float.greatestFiniteMagnitude || stat != Float.leastNormalMagnitude
             else { return 0 }
             return stat
+        }
+    }
+
+    /// Avoids unnecessary SwiftUI dimensions recalculation
+    struct LayoutPerformanceWorkaround: View {
+
+        let colors: [Color]
+        let vm: StatsVM
+
+        var body: some View {
+            VStack(spacing: .standardVStackSpacing) {
+                LabeledItem(
+                    label: "Points",
+                    content: Text(String(vm.count)).fontSmall()
+                )
+
+                ForEach(vm.stats.kind.indexedChannelLabels, id: \.index) { (index, label) in
+                    LabeledColorKeyedItem(
+                        color: colors[index],
+                        label: label,
+                        content: StatsRow(
+                            min: 0,
+                            max: 0
+                        ),
+                        alignment: .center
+                    )
+                }
+            }
+            .hidden()
+            .overlay(StatsBlock(colors: colors, vm: vm))
         }
     }
 }

@@ -33,11 +33,11 @@ class DeviceDetailScreenUIKitContainer: UIHostingController<DeviceDetailScreenUI
     private var vc: DeviceDetailsCoordinator
 
     required init?(coder aDecoder: NSCoder) {
-        var store: AppStore { (UIApplication.shared.delegate as! AppDelegate).store }
-        self.vc = store.ui.makeDetailScreenVC(device: nil)
+        var root: AppRoot { (UIApplication.shared.delegate as! AppDelegate).root }
+        self.vc = root.ui.makeDetailScreenVC(device: nil)
         let view = Wrapped(
-            app: store,
-            prefs: store.preferences,
+            app: root,
+            prefs: root.preferences,
             vc: vc as! DeviceDetailScreenSUIVC
         )
         super.init(coder: aDecoder, rootView: view)
@@ -85,7 +85,7 @@ extension DeviceDetailScreenUIKitContainer {
     /// Simply inject environment with objects from Mac's @main and MainWindow
     struct Wrapped: View {
 
-        @ObservedObject var app: AppStore
+        @ObservedObject var app: AppRoot
         @ObservedObject var prefs: PreferencesStore
         @ObservedObject var vc: DeviceDetailScreenSUIVC
         @Namespace var chain
@@ -95,7 +95,7 @@ extension DeviceDetailScreenUIKitContainer {
         @State private var keyboardShownMonitor: AnyCancellable? = nil
 
         var body: some View {
-            DeviceDetailScreen(toast: vc.toast as! MWToastServerVM, chain: chain)
+            DeviceDetailScreen(chain: chain)
                 .lineSpacing(6)
                 .menuStyle(BorderlessButtonMenuStyle())
                 .buttonStyle(BorderlessButtonStyle())

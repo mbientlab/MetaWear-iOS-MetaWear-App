@@ -37,10 +37,11 @@ struct HapticBlock: View {
         HStack {
             Text("< 10,000 ms")
                 .fontVerySmall()
-                .lineLimit(nil)
+                .lineLimit(1)
                 .multilineTextAlignment(.leading)
-                .fixedSize(horizontal: false, vertical: true)
-                .foregroundColor(.secondary)
+                .fixedSize(horizontal: true, vertical: false)
+                .padding(.horizontal, 6)
+                .foregroundColor(.mwSecondary)
 
             Spacer()
 
@@ -54,14 +55,24 @@ struct HapticBlock: View {
     }
 
     @State private var dutyBinding: Float = 248
-    private var osSpecificDuty: some View {
-        #if os(macOS)
+    @ViewBuilder private var osSpecificDuty: some View {
+#if os(macOS)
         duty
             .controlSize(.small)
             .blendMode(.luminosity)
-        #else
-        duty
-        #endif
+#else
+        HStack {
+            Spacer()
+            if #available(iOS 15.0, *) {
+                duty
+                    .controlSize(.small)
+                    .blendMode(.luminosity)
+            } else {
+                duty.blendMode(.luminosity)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .trailing)
+#endif
     }
 
     private var duty: some View {
@@ -92,10 +103,10 @@ struct HapticBlock: View {
         HStack {
             Spacer()
             Button("Haptic") { vm.userRequestedStartHapticDriver() }
-                .modifier(ShakeEffect(shakes: hapticAnimation ? 50 : 0, effectSize: -4))
+            .modifier(ShakeEffect(shakes: hapticAnimation ? 50 : 0, effectSize: -4))
             Spacer()
             Button("Buzzer") { vm.userRequestedStartBuzzerDriver()  }
-                .modifier(ShakeEffect(shakes: buzzerAnimation ? 50 : 0, effectSize: -4))
+            .modifier(ShakeEffect(shakes: buzzerAnimation ? 50 : 0, effectSize: -4))
             Spacer()
         }
         .disabled(!vm.canSendCommand)

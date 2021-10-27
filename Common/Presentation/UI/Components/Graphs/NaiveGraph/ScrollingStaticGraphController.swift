@@ -22,15 +22,6 @@ extension IdentifiableTimePoint {
     }
 }
 
-class FocusedIndexVM: ObservableObject {
-
-    @Published var scrollOffset = CGFloat(0)
-    @Published var mousePosition = CGFloat(0)
-    @Published var index: Int? = nil
-
-    var showDataLabel: Bool { index != nil }
-}
-
 class ScrollingStaticGraphController: ObservableObject {
 
     /// List of timepoints where x starts at zero.
@@ -41,13 +32,16 @@ class ScrollingStaticGraphController: ObservableObject {
     @Published var yMax: Double
     @Published var yMin: Double
 
-    var focus: FocusedIndexVM = .init()
+    private var scrollOffset = CGFloat(0)
+    let mouse = MouseVM()
+    let focus: FocusedPointsVM
 
     /// Historical data store
     private var currentPointIndex: CGFloat = 0
 
     private let driver: GraphDriver
     private var colorUpdates: AnyCancellable? = nil
+    private let updateQueue = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".staticGraph", qos: .userInteractive, attributes: .concurrent)
 
     init(config: GraphConfig, colorProvider: ColorsetProvider, driver: GraphDriver = ThrottledGraphDriver(interval: 1.5)) {
         self.driver = driver
@@ -56,6 +50,7 @@ class ScrollingStaticGraphController: ObservableObject {
         self.yMin = config.yAxisMin
         self.yMax = config.yAxisMax
         self.seriesNames = config.channelLabels
+        self.focus = .init(series: config.channelLabels.count)
         self.add(points: config.initialData)
         self.driver.delegate = self
         updateColors(for: colorProvider)
@@ -81,6 +76,10 @@ class ScrollingStaticGraphController: ObservableObject {
         objectWillChange.send()
     }
 
+    func updateScrollOffset(_ value: CGFloat) {
+        self.scrollOffset = value
+    }
+
     func updateColors(for provider: ColorsetProvider) {
         colorUpdates = provider.colorset
             .receive(on: DispatchQueue.main)
@@ -91,23 +90,59 @@ class ScrollingStaticGraphController: ObservableObject {
     }
 
     func mouseMoved(to point: CGPoint?, width: CGFloat, dotSize: CGFloat) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+        updateQueue.async {
+            let pointCount = CGFloat(self.displayedPoints.endIndex)
+            guard let point = point, pointCount > 0
+            else { self.show(false); return }
 
-            guard let point = point else {
-                self.focus.index = nil
-                return
-            }
-            let pointCount = CGFloat(self.displayedPoints.countedByEndIndex())
-            guard pointCount > 0 else { self.focus.index = nil; return }
+            // Compute mouse
             let contentWidth = pointCount * dotSize
-            let startPosition = (contentWidth / 2) - self.focus.scrollOffset
+            let startPosition = (contentWidth / 2) - self.scrollOffset
             let mousePositionInPlot = point.x
-            let mouseIndexInData = ((startPosition + mousePositionInPlot) / contentWidth) * pointCount
+            DispatchQueue.main.async {
+                self.mouse.position = max(0, min(width, mousePositionInPlot))
+            }
 
-            self.focus.mousePosition = max(0, min(width, mousePositionInPlot))
-            self.focus.index = self.displayedPoints.indices.contains(Int(mouseIndexInData)) ? Int(mouseIndexInData) : nil
+            let mouseIndexInData = Int( ((startPosition + mousePositionInPlot) / contentWidth) * pointCount )
+            guard mouseIndexInData < self.displayedPoints.endIndex, mouseIndexInData >= 0
+            else { self.show(false); return }
+
+
+            let pointValues = self.displayedPoints[mouseIndexInData].heights.map { value -> String in
+                let rounded = Float ( Int(value * 100) ) / 100
+                return String(format: "%1.2f", rounded)
+            }
+            if self.focus.points != pointValues {
+                DispatchQueue.main.async {
+                    self.focus.points = pointValues
+                }
+            }
+            self.show(true)
         }
+    }
+
+    func show(_ value: Bool) {
+        DispatchQueue.main.async {
+            if self.focus.show != value { self.focus.show = value }
+            if self.mouse.show != value { self.mouse.show = value }
+        }
+    }
+}
+
+// Isolate diffs to improve performance
+extension ScrollingStaticGraphController {
+
+    class MouseVM: ObservableObject {
+        @Published var position = CGFloat(0)
+        @Published var show = false
+    }
+
+    class FocusedPointsVM: ObservableObject {
+        init(series: Int) {
+            self.points = Array(repeating: "", count: series)
+        }
+        @Published var show = false
+        @Published var points: [String]
     }
 }
 

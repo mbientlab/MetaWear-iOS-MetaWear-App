@@ -30,7 +30,9 @@ struct iOSDeviceDetailLayout: View {
                     .padding(.top, fontFace == .openDyslexic ? 28 : 18)
                     .padding(.bottom, .cardGridSpacing)
 
-                GridLayout(details: details, alignment: .center, forInfoPanels: false)
+                DividerPadded().padding(.horizontal)
+
+                GridLayout(details: details, alignment: .top, forInfoPanels: false)
                     .padding(.bottom, 20)
                     .padding(.top, fontFace == .openDyslexic ? 28 : 18)
             }

@@ -5,19 +5,20 @@
 import Foundation
 import Combine
 
-public protocol ColorsetProvider {
-    var colorset: CurrentValueSubject<Colorset, Never> { get }
-}
 
 public class PreferencesStore: ObservableObject, ColorsetProvider {
 
+    @Published private(set) var didOnboard: Bool
+    @Published private(set) var font: FontFace
 
-    @Published private(set) var font: FontFace = .system
     private(set) public var colorset: CurrentValueSubject<Colorset, Never>
     private var diffs: Set<AnyCancellable> = []
+    private let persistence: PreferencesPersistence
 
     init(persistence: PreferencesPersistence) {
         self.persistence = persistence
+        self.font = persistence.retrieveFont()
+        self.didOnboard = persistence.retrieveDidOnboard()
         self.colorset = .init(.bright)
         colorset
             .receive(on: DispatchQueue.main)
@@ -25,13 +26,23 @@ public class PreferencesStore: ObservableObject, ColorsetProvider {
             .store(in: &diffs)
     }
 
-    private let persistence: PreferencesPersistence
-
     func setFont(face: FontFace) {
         font = face
         persistence.storeFont(face)
     }
+
+    func setDidOnboard(_ state: Bool) {
+        self.didOnboard = state
+        persistence.storeDidOnboard(state)
+    }
 }
+
+// MARK: - Colorset
+
+public protocol ColorsetProvider {
+    var colorset: CurrentValueSubject<Colorset, Never> { get }
+}
+
 
 public enum Colorset: String, CaseIterable, Identifiable {
     case bright = "Bright"

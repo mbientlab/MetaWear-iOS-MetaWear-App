@@ -38,51 +38,7 @@ struct MenuPicker<SelectionValue, Content>: View where SelectionValue : Hashable
 
     var pickerLabel: some View {
         #if os(iOS)
-        Text(label)
-        #else
-        EmptyView()
-        #endif
-    }
-}
-
-struct MenuPickerForiOS<SelectionValue, Content, Style>: View where SelectionValue : Hashable, Content : View, Style: PickerStyle {
-
-    /// Shown on iOS for hit testing, not added on macOS
-    var label: String
-    @Binding var selection: SelectionValue
-    var macOSStyle: Style
-    var content: () -> Content
-
-    init(label: String, selection: Binding<SelectionValue>, macOSStyle: Style, @ViewBuilder content: @escaping () -> Content) {
-        self.label = label
-        _selection = selection
-        self.content = content
-        self.macOSStyle = macOSStyle
-    }
-
-    var body: some View {
-        #if os(iOS)
-        picker
-            .fontBody()
-            .pickerStyle(MenuPickerStyle())
-        #elseif os(macOS)
-        picker
-            .pickerStyle(macOSStyle)
-            .fixedSize()
-            .accentColor(.gray)
-        #endif
-    }
-
-    private var picker: some View {
-        Picker(selection: $selection,
-               label: pickerLabel,
-               content: content
-        )
-    }
-
-    var pickerLabel: some View {
-        #if os(iOS)
-        Text(label)
+        Text(label).fontBody()
         #else
         EmptyView()
         #endif
@@ -121,23 +77,25 @@ struct MenuPickerWithUnitsAligned<SelectionValue, Content, Key>: View where Sele
     @ScaledMetric(relativeTo: .body) private var size = MWBody.fontSize
 
     var body: some View {
-        #if os(iOS)
-        picker
-            .fontBody()
-        #elseif os(macOS)
+
         HStack {
+#if os(macOS)
             picker
                 .fixedSize()
                 .accentColor(.gray)
-
-            SmallUnitLabel(
-                string: unitLabel,
-                equalWidthKey: unitWidthKey,
-                width: unitLabelWidth
-            )
+#else
+            Spacer()
+            picker
+                .fontBody()
+#endif
+            if #available(iOS 15.0, macOS 11.0, *) { // Behavior changed
+                SmallUnitLabel(
+                    string: unitLabel,
+                    equalWidthKey: unitWidthKey,
+                    width: unitLabelWidth
+                )
+            }
         }
-        #endif
-
     }
 
     private var picker: some View {
@@ -145,13 +103,13 @@ struct MenuPickerWithUnitsAligned<SelectionValue, Content, Key>: View where Sele
                label: pickerLabel,
                content: content
         )
-        .pickerStyle(MenuPickerStyle())
+            .pickerStyle(MenuPickerStyle())
     }
 
     var pickerLabel: some View {
-        #if os(iOS)
-        Text(label + " \(unitLabel)")
-        #else
+#if os(iOS)
+        Text(label + " \(unitLabel)").fontBody()
+#else
         EmptyView()
         #endif
     }
@@ -177,10 +135,13 @@ struct MenuPickerWithFixedUnits<SelectionValue, Content>: View where SelectionVa
     }
 
     var body: some View {
-        #if os(iOS)
+#if os(iOS)
         picker
             .fontBody()
-        #elseif os(macOS)
+        if #available(iOS 15.0, *) { // Behavior changed
+            SmallUnitLabelFixed(unitLabel)
+        }
+#elseif os(macOS)
         HStack {
             picker
                 .fixedSize()

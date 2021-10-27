@@ -28,7 +28,7 @@ struct ConnectionToolbarButton: View {
 
     @ViewBuilder var macOSLabel: some View {
         Text(macCommandLabel)
-            .foregroundColor(vm.connectionIsOn ? .secondary : .primary)
+            .foregroundColor(vm.connectionIsOn ? .mwSecondary : .primary)
             .opacity(vm.didConnectOnce ? 1 : 0)
 
         Image(systemName: vm.connectionIsOn ? SFSymbol.connected.rawValue : SFSymbol.disconnected.rawValue)

@@ -28,8 +28,9 @@ struct ScanButton: View {
             Spacer()
             
             Toggle(isOn: isOn) {}
-                .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                .accessibilityLabel("Scanning for MetaWear Devices")
+            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+            .accessibilityLabel("Scanning for MetaWear Devices")
         }
+        .animation(.easeOut(duration: 0.25), value: vc.isScanning)
     }
 }

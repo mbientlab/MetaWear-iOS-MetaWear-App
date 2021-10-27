@@ -8,16 +8,16 @@ import FeedPlot
 @main
 struct MetaWearMacApp: App {
 
-    @StateObject var store = AppStore()
+    @NSApplicationDelegateAdaptor(AppRoot.self) var root
 
     var body: some Scene {
         WindowGroup {
-            MainWindow(prefs: store.preferences,
-                       vc: store.ui.makeMetaWearScanningSVC())
-                .environmentObject(store)
+            MainWindow()
+                .environmentObject(root.preferences)
+                .environmentObject(root.ui)
                 .onAppear { DispatchQueue.main.async { setupGlobalMetal() } }
         }
         .windowToolbarStyle(UnifiedWindowToolbarStyle(showsTitle: true))
-        .commands { Menus(prefs: store.preferences) }
+        .commands { Menus(prefs: root.preferences) }
     }
 }

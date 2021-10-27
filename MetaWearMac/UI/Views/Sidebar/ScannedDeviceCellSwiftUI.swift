@@ -39,7 +39,7 @@ struct ScannedDeviceCellSwiftUI: View {
 
             Text(vc.uuid)
                 .font(.system(.subheadline, design: .monospaced))
-                .foregroundColor(vc.uuid == ScannedDeviceCellSUIVC.uuidDefaultString ? .secondary : nil)
+                .foregroundColor(vc.uuid == ScannedDeviceCellSUIVC.uuidDefaultString ? .mwSecondary : nil)
         }
     }
 

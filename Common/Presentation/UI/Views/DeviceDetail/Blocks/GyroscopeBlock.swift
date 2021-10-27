@@ -15,8 +15,8 @@ struct GyroscopeBlock: View {
             leftColumn: LoggingSectionStandardized(vm: vm),
             rightColumn: LiveStreamSection(scrollViewGraphID: "GyroStreamGraph", vm: vm)
         )
-        .onPreferenceChange(UnitWidthKey.self) { unitLabelWidth = $0 }
-        .environmentObject(vm)
+            .onPreferenceChange(UnitWidthKey.self) { unitLabelWidth = $0 }
+            .environmentObject(vm)
     }
 
     @ViewBuilder var options: some View {
@@ -36,7 +36,7 @@ extension GyroscopeBlock {
         
         private var scaleBinding: Binding<GyroscopeGraphRange> {
             Binding { vm.graphRangeSelected }
-                set: { vm.userDidSelectGraphScale($0) }
+            set: { vm.userDidSelectGraphScale($0) }
             
         }
         
@@ -71,7 +71,7 @@ extension GyroscopeBlock {
         
         private var frequencyBinding: Binding<GyroscopeFrequency> {
             Binding { vm.samplingFrequencySelected }
-                set: { vm.userDidSelectSamplingFrequency($0) }
+            set: { vm.userDidSelectSamplingFrequency($0) }
         }
         
         var body: some View {

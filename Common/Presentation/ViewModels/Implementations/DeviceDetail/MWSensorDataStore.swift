@@ -13,8 +13,8 @@ public class MWSensorDataStore {
     public private(set) var loggedKind: DataPointKind = .cartesianXYZ
     public private(set) var streamKind: DataPointKind = .cartesianXYZ
 
-    public var loggedCount: Int { logged.countedByEndIndex() }
-    public var streamCount: Int { stream.countedByEndIndex() }
+    public var loggedCount: Int { logged.endIndex }
+    public var streamCount: Int { stream.endIndex }
 
     public private(set) var isPreparingStreamFile = false
     public private(set) var isPreparingLogFile = false
@@ -186,8 +186,7 @@ public class FileExporter {
         self.exportController = UIDocumentInteractionController(url: fileURL)
 
         if self.exportController?.presentOptionsMenu(from: view.bounds, in: view, animated: true) == false {
-            self.alerts.presentAlert(title: saveErrorTitle,
-                                     message: saveErrorMessage)
+            self.alerts?.presentAlert(title: saveErrorTitle, message: saveErrorMessage)
         }
     }
 

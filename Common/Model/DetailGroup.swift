@@ -78,29 +78,6 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
         }
     }
 
-    public var isInfo: Bool {
-        switch self {
-            case .headerInfoAndState:   return true
-            case .identifiers:          return false
-            case .signal:               return false
-            case .reset:                return true
-            case .mechanicalSwitch:     return false
-            case .LED:                  return false
-            case .temperature:          return false
-            case .accelerometer:        return false
-            case .sensorFusion:         return false
-            case .gyroscope:            return false
-            case .magnetometer:         return false
-            case .gpio:                 return false
-            case .haptic:               return false
-            case .ibeacon:              return false
-            case .barometer:            return false
-            case .ambientLight:         return false
-            case .hygrometer:           return false
-            case .i2c:                  return false
-        }
-    }
-
     public var id: Int { rawValue }
 
     public var sortOrder: Int { rawValue }

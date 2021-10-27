@@ -7,6 +7,8 @@ import Foundation
 protocol PreferencesPersistence {
     func storeFont(_ face: FontFace)
     func retrieveFont() -> FontFace
+    func storeDidOnboard(_ state: Bool)
+    func retrieveDidOnboard() -> Bool
 }
 
 public class UserDefaultsPersistence {
@@ -30,9 +32,21 @@ extension UserDefaultsPersistence: PreferencesPersistence {
         else { return .system }
     }
 
-    private enum Keys: String {
-        case fontFace
+    func storeDidOnboard(_ state: Bool) {
+        defaults.set(state, forKey: Keys.didOnboard.rawValue)
     }
+
+    func retrieveDidOnboard() -> Bool {
+        defaults.bool(forKey: Keys.didOnboard.rawValue)
+    }
+
+    // MARK: - Keys
+
+    private enum Keys: String {
+        case fontFace, didOnboard
+    }
+
+    // MARK: - DTOs
 
     private enum FontFaceDTO1: String, CaseIterable {
         case system

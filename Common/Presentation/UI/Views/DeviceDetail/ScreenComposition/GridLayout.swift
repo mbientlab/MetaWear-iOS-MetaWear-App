@@ -22,7 +22,6 @@ struct GridLayout: View {
         .animation(.linear(duration: 0.2), value: vc.sortedVisibleGroups)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: alignment)
         .ignoresSafeArea()
-
         .accessibilityElement(children: .contain)
         .accessibilityLabel(forInfoPanels ? "Device Identity and Status" : "Sensors")
         .measureWidth(key: ScreenWidthKey.self)
@@ -32,19 +31,20 @@ struct GridLayout: View {
     var layout: some View {
         ForEach(columns, id:\.self) { column in
 
-            LazyVStack(alignment: .leading, spacing: .cardGridSpacing) {
+            VStack(alignment: .leading, spacing: .cardGridSpacing) {
                 ForEach(getDetailGroups(for: column)) { group in
 
                     BlockBuilder(group: group, namespace: details)
                         .accessibilityAddTraits(.isHeader)
                         .accessibilityLabel(group.title)
+                        .compositingGroup()
                         .id(group)
-                        .matchedGeometryEffect(id: group, in: details, properties: .position, anchor: .leading, isSource: forInfoPanels)
+                        .matchedGeometryEffect(id: group, in: details)
                 }
             }
             .accessibilityElement(children: .contain)
         }
-        .frame(width: .detailBlockWidth)
+        .frame(width: .detailBlockWidth, alignment: .top)
     }
 }
 
@@ -58,7 +58,7 @@ extension GridLayout {
     }
 
     func getDetailGroups(for column: Int) -> [DetailGroup] {
-        let columnCount = columns.countedByEndIndex()
+        let columnCount = columns.endIndex
 
         if forInfoPanels, let predefinedLayout = HeaderLayouts(rawValue: columnCount) {
             let supportedGroups = Set(vc.sortedVisibleGroups)
@@ -69,11 +69,10 @@ extension GridLayout {
     }
 
     func strideAcrossDetailGroups(_ columnCount: Int, toBuild column: Int) -> [DetailGroup] {
-        let items = vc.sortedVisibleGroups.filter { $0.isInfo == forInfoPanels }
-        let itemCount = items.countedByEndIndex()
+        let items = vc.sortedVisibleGroups.filter { HeaderLayouts.infoGroups.contains($0) == forInfoPanels }
+        let itemCount = items.endIndex
 
         var columnItems: [DetailGroup] = []
-
         for index in stride(from: column, to: itemCount, by: columnCount) {
             columnItems.append(items[index])
         }
@@ -90,11 +89,12 @@ fileprivate struct ScreenWidthKey: WidthKey {
     }
 }
 
-
 fileprivate enum HeaderLayouts: Int {
     case oneColumns = 1
     case twoColumns
     case threeColumns
+
+    static let infoGroups: Set<DetailGroup> = [.headerInfoAndState, .identifiers, .signal, .reset, .ibeacon]
 
     func layout(for column: Int) -> [DetailGroup] {
         return layouts[column]
@@ -112,8 +112,8 @@ fileprivate enum HeaderLayouts: Int {
             ]
 
             case .threeColumns: return [
-                [.headerInfoAndState, .identifiers],
-                [.signal],
+                [.headerInfoAndState, .signal],
+                [.identifiers],
                 [.ibeacon, .reset]
             ]
         }

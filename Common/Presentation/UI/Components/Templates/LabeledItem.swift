@@ -17,15 +17,13 @@ struct LabeledItem<Content: View>: View {
 
     var body: some View {
         if typeSize.isAccessibilityCategory {
-
             VStack(alignment: .leading, spacing: 10) {
                 textLabel.frame(maxWidth: .infinity, alignment: .leading)
                 content.frame(maxWidth: .infinity, alignment: contentAlignment)
             }
         } else {
-
             HStack(alignment: alignment, spacing: 10) {
-                if shouldCompressOnMac {
+                if shouldCompressOnMac, #available(macOS 1.0, *) {
                     textLabel
                         .frame(maxWidth: maxWidth, alignment: .leading)
                         .fixedSize()
@@ -35,7 +33,9 @@ struct LabeledItem<Content: View>: View {
                 }
                 content
                     .frame(maxWidth: .infinity, alignment: contentAlignment)
+                #if os(macOS)
                     .fixedSize(horizontal: shouldCompressOnMac, vertical: false)
+                #endif
             }
         }
     }
@@ -43,7 +43,7 @@ struct LabeledItem<Content: View>: View {
     private var textLabel: some View {
         Text(label)
             .fontSmall(weight: .medium)
-            .foregroundColor(.secondary)
+            .foregroundColor(.mwSecondary)
             .multilineTextAlignment(.leading)
             .fixedSize(horizontal: false, vertical: true)
             .lineLimit(nil)
@@ -92,7 +92,7 @@ struct LabeledColorKeyedItem<Content: View>: View {
     private var textLabel: some View {
         Text(label)
             .fontSmall(weight: .medium)
-            .foregroundColor(.secondary)
+            .foregroundColor(.mwSecondary)
             .multilineTextAlignment(.leading)
             .fixedSize(horizontal: false, vertical: true)
             .lineLimit(nil)

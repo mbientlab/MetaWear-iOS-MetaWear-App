@@ -46,7 +46,7 @@ public enum DataPointKind: Int {
     case eulerAngle
     case quaternion
 
-    public var channelCount: Int { channelLabels.countedByEndIndex() }
+    public var channelCount: Int { channelLabels.endIndex }
 
     public var channelLabels: [String] {
         switch self {

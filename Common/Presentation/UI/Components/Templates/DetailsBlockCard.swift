@@ -9,60 +9,40 @@ struct DetailsBlockCard<Content: View>: View {
     @Environment(\.colorScheme) private var scheme
     var details: Namespace.ID
 
-    init(group: DetailGroup, content: Content, namespace: Namespace.ID, width: CGFloat, showTitle: Bool = true) {
+    init(group: DetailGroup, namespace: Namespace.ID, content: @escaping () -> Content) {
         self.title = group.title
         self.image = group.symbol.image()
         self.iconDescription = group.symbol.accessibilityDescription
         self.content = content
         self.tag = group.id
         self.details = namespace
-        self.width = width
-        self.showTitle = showTitle
-    }
 
-    init(title: String,
-         image: Image,
-         iconDescription: String,
-         content: Content,
-         tag: AnyHashable,
-         namespace: Namespace.ID,
-         width: CGFloat
-    ) {
-        self.title = title
-        self.image = image
-        self.iconDescription = iconDescription
-        self.content = content
-        self.tag = tag
-        self.details = namespace
-        self.width = width
-        self.showTitle = true
-    }
-
-    init(title: String, symbol: SFSymbol, content: Content, tag: AnyHashable, namespace: Namespace.ID, width: CGFloat) {
-        self.title = title
-        self.image = symbol.image()
-        self.iconDescription = symbol.accessibilityDescription
-        self.content = content
-        self.tag = tag
-        self.details = namespace
-        self.width = width
-        self.showTitle = true
+        let compact = group == .reset
+        self.showTitle = !compact
+        self.width = {
+#if os(macOS)
+            if compact { return .detailBlockWidth }
+            else { return .detailBlockWidth * 2 + .detailBlockColumnSpacing }
+#else
+            .detailBlockWidth
+#endif
+        }()
     }
 
     private var title: String
-    private var content: Content
+    private var content: () -> Content
     private var image: Image
     private var iconDescription: String
     private var tag: AnyHashable
     private var width: CGFloat
     private var showTitle: Bool
 
-    var body: some View {
+    var body: some View { 
         VStack(spacing: 1) {
             cardTitle
                 .opacity(showTitle ? 1 : 0)
 
-            content
+            content()
                 .frame(maxWidth: .infinity)
                 .blockify()
         }
@@ -90,7 +70,7 @@ struct DetailsBlockCard<Content: View>: View {
             Spacer()
         }
         .frame(maxWidth: .infinity)
-        .foregroundColor(Color.secondary)
+        .foregroundColor(Color.mwSecondary)
         .padding(.horizontal, .detailBlockContentPadding + 5)
         .flipsForRightToLeftLayoutDirection(true)
         .accessibilityHidden(true)

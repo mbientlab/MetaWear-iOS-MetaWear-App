@@ -1,16 +1,21 @@
 //  Copyright © 2021 MbientLab. All rights reserved.
 //
 
-#if os(macOS)
+
 import SwiftUI
 
 extension View {
 
     func whenHoveredAtPoint(_ mouseLocation: @escaping (CGPoint?) -> Void) -> some View {
+#if os(macOS) && !targetEnvironment(macCatalyst)
         modifier(MouseInsideCGPointModifier(mouseLocation))
+#else
+        self
+#endif
     }
 }
 
+#if os(macOS)
 struct MouseInsideCGPointModifier: ViewModifier {
 
     let mouseLocation: (CGPoint?) -> Void

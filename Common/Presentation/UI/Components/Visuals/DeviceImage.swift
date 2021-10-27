@@ -12,29 +12,33 @@ struct DeviceImage: View {
 
     @ObservedObject var vm: IdentifiersSUIVC
     @ObservedObject var header: DetailHeaderSUIVC
-
     var size: CGFloat = 115
+
+    @State private var imageName: String?
+    @State private var showLED = false
+    private let ledColor = Color(.sRGB, red: 0, green: 1, blue: 0, opacity: 0.8)
+
     var body: some View {
         VStack(spacing: 0) {
-            if let image = vm.model.bundleName {
+            if let image = imageName {
                 Image(image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: size, height: size)
                     .shadow(color: .black.opacity(0.08), radius: 20, x: 0, y: 0)
-                    .overlay(ledMockup.animation(.easeIn(duration: 0.15)).offset(y: size * 0.4), alignment: .top)
-                    .transition(.scale)
+                    .overlay(ledMockup.animation(.easeIn(duration: 0.15), value: imageName).offset(y: size * 0.4), alignment: .top)
+                    .transition(.scale(scale: 0.75).combined(with: .opacity))
             }
         }
-        .animation(.spring(), value: header.connectionIsOn)
+        .onChange(of: vm.model.bundleName) { image in
+                imageName = image
+        }
+        .animation(.spring(), value: imageName)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(vm.model.isolatedModelName) Flashed LED Light On Connection")
         .accessibilityAddTraits(.isImage)
     }
 
-    @State private var showLED = false
-
-    let ledColor = Color(.sRGB, red: 0, green: 1, blue: 0, opacity: 0.8)
 
     @ViewBuilder var ledMockup: some View {
         if header.connectionIsOn {
@@ -56,8 +60,10 @@ struct DeviceImage: View {
             .animation(.easeOut(duration: 0.15), value: showLED)
 
             .onAppear { if !header.didShowConnectionLED {
-                runFlashing()
-                header.didShowConnectionLED = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                    runFlashing()
+                    header.didShowConnectionLED = true
+                }
             } }
             .transition(.opacity)
         }

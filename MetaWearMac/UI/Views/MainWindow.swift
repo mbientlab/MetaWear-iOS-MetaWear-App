@@ -6,21 +6,17 @@ import SwiftUI
 
 struct MainWindow: View {
 
-    @ObservedObject var prefs: PreferencesStore
-    @StateObject var vc: MetaWearScanningSVC
+    @EnvironmentObject var prefs: PreferencesStore
+    @EnvironmentObject var ui: UIFactory
 
     var body: some View {
         NavigationView {
-            Sidebar()
+            Sidebar(vc: ui.makeMetaWearScanningSVC())
                 .frame(minWidth: .sidebarMinWidth, alignment: .topLeading)
-                .environmentObject(vc)
 
             PlaceholderDeviceConnectionScreen()
         }
-        .onAppear { vc.startScanning() }
         .frame(minWidth: .windowWidthMin, maxWidth: .infinity, minHeight: .windowMinHeight, alignment: .topLeading)
-        .environmentObject(prefs)
-
         // Styling
         .lineSpacing(6)
         .fontBody()
