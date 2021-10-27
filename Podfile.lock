@@ -1,5 +1,6 @@
 PODS:
   - Bolts-Swift (1.5.0)
+  - CoreBluetoothMock (0.13.0)
   - iOSDFULibrary (4.10.3):
     - ZIPFoundation (= 0.9.11)
   - MetaWear/AsyncUtils (4.0.1):
@@ -18,6 +19,7 @@ PODS:
   - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
+  - CoreBluetoothMock
   - MetaWear/AsyncUtils
   - MetaWear/DFU
   - MetaWear/Mocks
@@ -27,6 +29,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Bolts-Swift
+    - CoreBluetoothMock
     - iOSDFULibrary
     - MetaWear
     - StaticDataTableViewController
@@ -34,11 +37,12 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Bolts-Swift: afbbaf8c8186e7f769be4afa656949c14087ba44
+  CoreBluetoothMock: 4659dc6a22f1b2c6b4a41b744c6adf4556913890
   iOSDFULibrary: 7aade51a907d01ca9a87055003cd232b09efd78f
   MetaWear: 35f29152e275456bdbfcd75eae8830f51cfec729
   StaticDataTableViewController: 0c5c4a47861446dd3cfd52530ae801ec7662ce26
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: 50e8a7b8812825bbf32e0e2645a5fd4358c45353
+PODFILE CHECKSUM: c27bbf07442cdabb9fef15aa5f82828490583f1c
 
 COCOAPODS: 1.10.2
