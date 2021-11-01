@@ -45,6 +45,7 @@ struct LoggingSectionStandardized<VC: LoggingSectionDriver & LoggerGraphManager>
                                                        driver: ThrottledGraphDriver(interval: 1.5),
                                                        colorProvider: prefs),
                                      width: .detailBlockGraphWidth)
+                    .padding(.leading, .detailBlockContentPadding)
             }
         }
     }

@@ -79,7 +79,6 @@ extension GridLayout {
 
         return columnItems
     }
-
 }
 
 fileprivate struct ScreenWidthKey: WidthKey {
@@ -94,7 +93,7 @@ fileprivate enum HeaderLayouts: Int {
     case twoColumns
     case threeColumns
 
-    static let infoGroups: Set<DetailGroup> = [.headerInfoAndState, .identifiers, .signal, .reset, .ibeacon]
+    static let infoGroups: Set<DetailGroup> = [.headerInfoAndState, .identifiers, .signal, .reset, .ibeacon, .logs]
 
     func layout(for column: Int) -> [DetailGroup] {
         return layouts[column]
@@ -103,18 +102,18 @@ fileprivate enum HeaderLayouts: Int {
     var layouts: [[DetailGroup]] {
         switch self {
             case .oneColumns: return [
-                [.headerInfoAndState, .identifiers, .ibeacon, .reset, .signal]
+                [.headerInfoAndState, .identifiers, .ibeacon, .reset, .signal, .logs]
             ]
 
             case .twoColumns: return [
                 [.headerInfoAndState, .identifiers],
-                [.ibeacon, .reset, .signal]
+                [.signal, .logs, .ibeacon, .reset]
             ]
 
             case .threeColumns: return [
-                [.headerInfoAndState, .signal],
+                [.headerInfoAndState, .reset, .ibeacon],
                 [.identifiers],
-                [.ibeacon, .reset]
+                [.signal, .logs]
             ]
         }
     }

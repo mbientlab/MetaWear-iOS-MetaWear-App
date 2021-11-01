@@ -22,7 +22,7 @@ struct TextFieldConfig {
     var alignment: NSTextAlignment = .left
 
     static func largeDeviceStyle(face: FontFace) -> Self {
-        self.init(font: face, size: 18)
+        self.init(font: face, size: MWLargeTitle.fontSize)
     }
 
     static func bodyStyle(face: FontFace, alignment: NSTextAlignment = .left) -> Self {

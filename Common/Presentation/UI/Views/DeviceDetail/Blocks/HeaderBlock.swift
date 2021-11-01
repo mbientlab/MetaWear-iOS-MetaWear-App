@@ -9,19 +9,19 @@ struct HeaderBlock: View {
     @ObservedObject var vm: DetailHeaderSUIVC
 
     var body: some View {
-        #if os(macOS)
-        header.navigationTitle(vm.deviceName)
-        #else
+#if os(macOS)
+        header
+#else
         header.navigationBarTitle(vm.deviceName, displayMode: .inline)
-        #endif
+#endif
     }
 
     var header: some View {
         VStack(alignment: .leading, spacing: .cardVSpacing) {
             DeviceTitleEditor(vm: vm)
-            #if os(iOS)
+#if os(iOS)
             ConnectionToggle(vm: vm)
-            #endif
+#endif
         }
     }
 }
@@ -33,13 +33,13 @@ struct ConnectionToggle: View {
 
     var body: some View {
         HStack {
-            #if os(iOS)
+#if os(iOS)
             stateLabel
             toggle
-            #else
+#else
             toggle
             stateLabel
-            #endif
+#endif
         }
     }
 
@@ -51,7 +51,6 @@ struct ConnectionToggle: View {
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-
     private var toggle: some View {
         Toggle("", isOn: isConnected)
             .fixedSize()
@@ -60,7 +59,7 @@ struct ConnectionToggle: View {
 
     private var isConnected: Binding<Bool> {
         Binding { vm.connectionIsOn }
-            set: { vm.userSetConnection(to: $0) }
+        set: { vm.userSetConnection(to: $0) }
     }
 }
 
@@ -77,11 +76,11 @@ struct DeviceTitleEditor: View {
 
     var body: some View {
         HStack {
-            #if os(macOS)
+#if os(macOS)
             macTextField
-            #else
+#else
             textField
-            #endif
+#endif
             save
         }
         .onAppear { deviceTitle = vm.deviceName }
@@ -94,7 +93,7 @@ struct DeviceTitleEditor: View {
         .animation(.easeIn, value: showValidationNotice)
 
     }
-    #if os(macOS)
+#if os(macOS)
     private var macTextField: some View {
         SingleLineTextField(initialText: vm.deviceName,
                             placeholderText: "Name",
@@ -102,33 +101,31 @@ struct DeviceTitleEditor: View {
                             onCommit: validateTextFieldCommit,
                             onCancel: { }
         )
-        .frame(width: .detailBlockWidth * 0.7,
-               height: fontFace == .openDyslexic ? 30 : 25,
-               alignment: .leading)
-        .offset(y: 2)
+            .frame(width: .macOSHSplitListWidth,
+                   height: fontFace == .openDyslexic ? 30 : 25,
+                   alignment: .leading)
+            .offset(y: 2)
     }
 
     func validateTextFieldCommit(_ string: String) {
         deviceTitle = string
         validateName()
     }
-    #endif
+#endif
 
     private var textField: some View {
         TextField("Device", text: $deviceTitle) { didEdit in
             self.didEdit = true
-        } onCommit: {
-            validateName()
-        }
+        } onCommit: { validateName() }
         .font(.title2)
     }
 
     private var save: some View {
         Button("Save") { validateName() }
-            .opacity(didEdit ? 1 : 0)
-            .allowsHitTesting(didEdit)
-            .disabled(!didEdit)
-            .accessibilityHidden(!didEdit)
+        .opacity(didEdit ? 1 : 0)
+        .allowsHitTesting(didEdit)
+        .disabled(!didEdit)
+        .accessibilityHidden(!didEdit)
     }
 
     @ViewBuilder
@@ -165,10 +162,10 @@ private extension DeviceTitleEditor {
             return
         }
         vm.userRenamedDevice(to: deviceTitle)
-        #if os(iOS)
+#if os(iOS)
         UIApplication.firstKeyWindow()?.resignFirstResponder()
-        #else
+#else
         NSApp.resignFirstResponder()
-        #endif
+#endif
     }
 }

@@ -14,7 +14,7 @@ struct MWLargeTitle: AdaptiveFontViewModifier {
 #if os(iOS)
 static let fontSize: CGFloat = 28
 #else
-static let fontSize: CGFloat = 22
+static let fontSize: CGFloat = 18
 #endif
     @ScaledMetric(relativeTo: .title) var size = Self.fontSize
     @Environment(\.fontFace) var face
@@ -37,7 +37,7 @@ extension View {
                         design: Font.Design = .rounded,
                         monospacedDigit: Bool = false
     ) -> some View {
-        self.modifier(MWBody(weight: weight, design: design, monospacedDigit: monospacedDigit))
+        self.modifier(MWLargeTitle(weight: weight, design: design, monospacedDigit: monospacedDigit))
     }
 }
 

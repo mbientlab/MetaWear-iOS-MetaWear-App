@@ -25,17 +25,14 @@ struct LabeledItem<Content: View>: View {
             HStack(alignment: alignment, spacing: 10) {
                 if shouldCompressOnMac, #available(macOS 1.0, *) {
                     textLabel
-                        .frame(maxWidth: maxWidth, alignment: .leading)
-                        .fixedSize()
+                        .lineLimit(2)
+                        .fixedSize(horizontal: true, vertical: false)
                 } else {
                     textLabel
                         .frame(width: maxWidth, alignment: .leading)
                 }
                 content
                     .frame(maxWidth: .infinity, alignment: contentAlignment)
-                #if os(macOS)
-                    .fixedSize(horizontal: shouldCompressOnMac, vertical: false)
-                #endif
             }
         }
     }

@@ -10,13 +10,13 @@ import Foundation
 
 public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
 
-    // Minimum (reflecting existing iOS storyboard)
     case headerInfoAndState
     case identifiers
     case signal
     case reset
+    case logs
 
-    // Features
+    // Modules
     case accelerometer
     case ambientLight
     case barometer
@@ -52,6 +52,7 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
             case .ambientLight:         return "Ambient Light"
             case .hygrometer:           return "Hygrometer"
             case .i2c:                  return "I2C Bus"
+            case .logs:                 return "Logs"
         }
     }
 
@@ -75,6 +76,7 @@ public enum DetailGroup: Int, CaseIterable, Identifiable, IntSortOrder {
             case .ambientLight:         return .ambientLight
             case .hygrometer:           return .hygrometer
             case .i2c:                  return .i2c
+            case .logs:                 return .logs
         }
     }
 

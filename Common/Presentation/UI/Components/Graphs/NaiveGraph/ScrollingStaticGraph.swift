@@ -14,15 +14,44 @@ struct ScrollingStaticGraph: View {
     static let dotSize = CGFloat(2.5)
 
     var body: some View {
+        ScrollViewReader { proxy in
+            VStack(spacing: 5) {
+                ScrollButtons(scroller: proxy)
+                graph
+            }
+        }
+    }
+
+    var graph: some View {
         ZStack(alignment: .topLeading) {
             ScrolledGraph(controller: controller, width: width, height: height)
                 .frame(width: width, height: height)
 
-#if os(macOS) && targetEnvironment(macCatalyst)
+#if os(macOS) && !targetEnvironment(macCatalyst)
             FocusedPointOverlay(width: width, height: height, controller: controller)
 #endif
         }
         .padding(.vertical, 8)
+    }
+
+    private struct ScrollButtons: View {
+        let scroller: ScrollViewProxy
+
+        var body: some View {
+            HStack {
+                Button { withAnimation {
+                    scroller.scrollTo("start", anchor: .leading)
+                } } label: { SFSymbol.start.image() }
+
+                Spacer()
+
+                Button { withAnimation {
+                    scroller.scrollTo("end", anchor: .trailing)
+                } } label: { SFSymbol.end.image() }
+            }
+            .fontSmall()
+            .padding(.horizontal, .detailBlockContentPadding)
+        }
     }
 
 }
@@ -40,7 +69,7 @@ extension ScrollingStaticGraph {
 
         var body: some View {
             ScrollView(.horizontal, showsIndicators: true) {
-#if os(macOS) && targetEnvironment(macCatalyst)
+#if os(macOS) && !targetEnvironment(macCatalyst)
                 ScrollOffsetMeasurer()
 #endif
                 Graph(controller: controller, width: width, height: height)
@@ -60,7 +89,8 @@ extension ScrollingStaticGraph {
         let pointSize = CGSize(width: ScrollingStaticGraph.dotSize, height: ScrollingStaticGraph.dotSize)
 
         var body: some View {
-            Group {
+            HStack(spacing: 0) {
+                Color.clear.frame(width: 0.1).id("start")
                 if #available(macOS 12.0, iOS 15.0, *) {
                     canvasGPU
                 } else if controller.displayedPoints.endIndex > 1400 {
@@ -72,6 +102,7 @@ extension ScrollingStaticGraph {
                         legacyCPU
                     }
                 }
+                Color.clear.frame(width: 0.1).id("end")
             }
             .frame(width: CGFloat(controller.displayedPoints.endIndex) * ScrollingStaticGraph.dotSize, height: height)
         }

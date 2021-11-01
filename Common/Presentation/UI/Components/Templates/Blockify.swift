@@ -7,7 +7,12 @@ import SwiftUI
 extension View {
 
     func blockify() -> some View {
+        #if os(iOS)
         modifier(Blockify())
+        #else
+        self
+            .padding(.horizontal, .detailBlockContentPadding)
+        #endif
     }
 }
 
@@ -25,22 +30,14 @@ struct DetailsBlockPlatter: View {
 
     var body: some View {
         ZStack {
-            shape.fill(fill)
-            shape.stroke(stroke, lineWidth: 1)
+            shape.fill(Color.blockPlatterFill)
+            shape.stroke(Color.blockPlatterStroke, lineWidth: 1)
         }
-//        .compositingGroup()
-//        .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 0)
+        .compositingGroup()
+        .shadow(color: .black.opacity(0.08), radius: 12, x: 0, y: 0)
     }
 
     private var shape: RoundedRectangle {
         RoundedRectangle(cornerRadius: .detailBlockCorners)
-    }
-
-    private var fill: Color {
-        .blockPlatterFill
-    }
-
-    private var stroke: Color {
-        .blockPlatterStroke
     }
 }

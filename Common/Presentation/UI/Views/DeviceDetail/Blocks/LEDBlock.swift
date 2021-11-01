@@ -9,7 +9,7 @@ struct LEDBlock: View {
     @ObservedObject var vm: LedSUIVC
 
     var body: some View {
-        PlatformSpecificThreeColumnNoOptionsLayout(
+        TripleColumnNoOptionsLayout(
             leftColumn:  LabeledItem(label: "Steady", content: steady),
             middleColumn: LabeledItem(label: "Flash", content: flash),
             rightColumn: off

@@ -13,9 +13,19 @@ struct iOSDeviceDetailLayout: View {
     @State private var width: CGFloat = 999
 
     @ViewBuilder var body: some View {
+        ScrollView(.vertical) {
+            layoutByWidth
+                .padding(.bottom, 20)
+        }
+        .ignoresSafeArea(.container, edges: [.bottom])
+        .background(Color.groupedListBackground.ignoresSafeArea())
+    }
+
+    var layoutByWidth: some View {
         Group {
-            if width < 1000 { // iPad vertical or iPhone
+            if width < 1000 { // iPhone or narrow screen
                 VStack(spacing: .cardGridSpacing) {
+                    Text(String("\(width)"))
                     ForEach(vc.sortedVisibleGroups) { group in
                         BlockBuilder(group: group, namespace: details)
                     }

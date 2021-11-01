@@ -19,7 +19,7 @@ public extension CGFloat {
     #if os(iOS)
     static let detailsBlockHeaderIcon: CGFloat = 19
     #elseif os(macOS)
-    static let detailsBlockHeaderIcon: CGFloat = 16
+    static let detailsBlockHeaderIcon: CGFloat = MWLarger.fontSize
     #endif
 
     static let standardVStackSpacing: CGFloat = 6
@@ -28,7 +28,7 @@ public extension CGFloat {
 
 extension CGFloat {
     static let windowMinHeight: CGFloat = 400
-    static let windowWidthMin: CGFloat = .sidebarMinWidth + .cardGridSpacing + detailBlockWidth + .cardGridSpacing + detailBlockWidth + .cardGridSpacing
+    static let windowWidthMin: CGFloat = .sidebarMinWidth + detailBlockWidth + macOSHSplitListWidth + (.cardGridSpacing * 4)
     static let sidebarMinWidth = CGFloat(205)
 
     #if os(iOS)
@@ -39,6 +39,7 @@ extension CGFloat {
     #elseif os(macOS)
     static let detailBlockWidth: CGFloat = 370
     #endif
+    static let macOSHSplitListWidth: CGFloat = 270
 
     static let detailBlockColumnSpacing: CGFloat = 35
 }

@@ -9,7 +9,7 @@ struct TemperatureBlock: View {
     @ObservedObject var vm: TemperatureSUIVC
 
     var body: some View {
-        PlatformSpecificOneColumnCardLayout(
+        OneSectionLayout(
             optionViews: options,
             mainColumn: main
         )
@@ -34,16 +34,7 @@ struct TemperatureBlock: View {
     @ViewBuilder private var main: some View {
 
         if vm.showPinDetail {
-#if os(macOS)
-            HStack(spacing: .detailBlockColumnSpacing) {
-                pinDetailViews
-            }
-            .frame(maxWidth: .infinity, alignment: .trailing)
-#else
             pinDetailViews
-#endif
-
-            DividerPadded()
         }
 
         LabeledItem(label: "Reported", content: temp)

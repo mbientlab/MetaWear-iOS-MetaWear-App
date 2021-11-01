@@ -12,7 +12,7 @@ struct AccelerometerBlock: View {
 
     var body: some View {
         if vm.canOrientOrStep {
-            PlatformSpecificExtraRowCardLayout(
+            ThreeSectionLayout(
                 optionViews: options,
                 otherViews: OrientationAndStepsRows(),
                 leftColumn: LoggingSectionStandardized(vm: vm),
@@ -22,7 +22,7 @@ struct AccelerometerBlock: View {
                 .environmentObject(vm)
 
         } else {
-            PlatformSpecificTwoColumnCardLayout(
+            TwoSectionLayout(
                 optionViews: options,
                 leftColumn: LoggingSectionStandardized(vm: vm),
                 rightColumn: LiveStreamSection(scrollViewGraphID: "AccelStreamGraph", vm: vm)
@@ -51,10 +51,6 @@ extension AccelerometerBlock {
                 label: "Orientation",
                 content: orientation
             )
-
-#if os(macOS)
-            VerticalDivider()
-#endif
 
             LabeledItem(
                 label: "Steps",

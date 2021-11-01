@@ -237,8 +237,8 @@
 		9493671426C5E57200631A08 /* GyroSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9493671326C5E57200631A08 /* GyroSUIVC.swift */; };
 		9493671526C5E57200631A08 /* GyroSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9493671326C5E57200631A08 /* GyroSUIVC.swift */; };
 		94939CE826E9749F009AC568 /* WhenHoveredAtPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94939CE626E9749E009AC568 /* WhenHoveredAtPoint.swift */; };
-		94939CEA26EAEB31009AC568 /* PlatformSpecificExtraRowCardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94939CE926EAEB31009AC568 /* PlatformSpecificExtraRowCardLayout.swift */; };
-		94939CEB26EAEB31009AC568 /* PlatformSpecificExtraRowCardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94939CE926EAEB31009AC568 /* PlatformSpecificExtraRowCardLayout.swift */; };
+		94939CEA26EAEB31009AC568 /* ThreeSectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94939CE926EAEB31009AC568 /* ThreeSectionLayout.swift */; };
+		94939CEB26EAEB31009AC568 /* ThreeSectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94939CE926EAEB31009AC568 /* ThreeSectionLayout.swift */; };
 		94A271F626C1C2C600512626 /* PlaceholderDeviceConnectionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A271F526C1C2C600512626 /* PlaceholderDeviceConnectionScreen.swift */; };
 		94A271F826C1C3EA00512626 /* GlintingMLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A271F726C1C3EA00512626 /* GlintingMLogo.swift */; };
 		94A271F926C1C42400512626 /* GlintingMLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A271F726C1C3EA00512626 /* GlintingMLogo.swift */; };
@@ -311,6 +311,10 @@
 		94CAB916272C64D4007BC30B /* FeedPlot in Frameworks */ = {isa = PBXBuildFile; productRef = 94CAB915272C64D4007BC30B /* FeedPlot */; };
 		94CAB917272C68D7007BC30B /* WhenHoveredAtPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94939CE626E9749E009AC568 /* WhenHoveredAtPoint.swift */; };
 		94CAB919272C9785007BC30B /* MacDeviceDetailLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB918272C9785007BC30B /* MacDeviceDetailLayout.swift */; };
+		94CAB91B272DBECC007BC30B /* LogsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB91A272DBECC007BC30B /* LogsBlock.swift */; };
+		94CAB91C272F54AE007BC30B /* LogsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB91A272DBECC007BC30B /* LogsBlock.swift */; };
+		94CAB91E272F5620007BC30B /* Background+Backport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB91D272F5620007BC30B /* Background+Backport.swift */; };
+		94CAB91F272F5648007BC30B /* Background+Backport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB91D272F5620007BC30B /* Background+Backport.swift */; };
 		94CB0BF926D5E04A0042B73C /* FeedPlotFixedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB0BF726D5DE820042B73C /* FeedPlotFixedSize.swift */; };
 		94CB0BFB26D5E06D0042B73C /* FeedPlot in Frameworks */ = {isa = PBXBuildFile; productRef = 94CB0BFA26D5E06D0042B73C /* FeedPlot */; };
 		94CD3AA726B3ED1400854FBA /* MWScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */; };
@@ -488,7 +492,7 @@
 		949362A326C5D3CE009A80B7 /* GPIOSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPIOSUIVC.swift; sourceTree = "<group>"; };
 		9493671326C5E57200631A08 /* GyroSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GyroSUIVC.swift; sourceTree = "<group>"; };
 		94939CE626E9749E009AC568 /* WhenHoveredAtPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhenHoveredAtPoint.swift; sourceTree = "<group>"; };
-		94939CE926EAEB31009AC568 /* PlatformSpecificExtraRowCardLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformSpecificExtraRowCardLayout.swift; sourceTree = "<group>"; };
+		94939CE926EAEB31009AC568 /* ThreeSectionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeSectionLayout.swift; sourceTree = "<group>"; };
 		94A271F526C1C2C600512626 /* PlaceholderDeviceConnectionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderDeviceConnectionScreen.swift; sourceTree = "<group>"; };
 		94A271F726C1C3EA00512626 /* GlintingMLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlintingMLogo.swift; sourceTree = "<group>"; };
 		94A514AB26B87BFB008707ED /* MWBatteryVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWBatteryVM.swift; sourceTree = "<group>"; };
@@ -544,6 +548,8 @@
 		94C7511A26C1EB9A00AB3E47 /* MetaWearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWearTests.swift; sourceTree = "<group>"; };
 		94CAB910272B2DDC007BC30B /* CoreBluetoothMock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CoreBluetoothMock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94CAB918272C9785007BC30B /* MacDeviceDetailLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacDeviceDetailLayout.swift; sourceTree = "<group>"; };
+		94CAB91A272DBECC007BC30B /* LogsBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsBlock.swift; sourceTree = "<group>"; };
+		94CAB91D272F5620007BC30B /* Background+Backport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Background+Backport.swift"; sourceTree = "<group>"; };
 		94CB0BF726D5DE820042B73C /* FeedPlotFixedSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPlotFixedSize.swift; sourceTree = "<group>"; };
 		94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScannedDeviceCellVM.swift; sourceTree = "<group>"; };
 		94DABBC626C0F483004590E4 /* iPadGridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGridLayout.swift; sourceTree = "<group>"; };
@@ -659,7 +665,7 @@
 				94C2788626C1076D006772F6 /* HeaderLayout.swift */,
 				941EFC1826BDD4E10087F960 /* DeviceDetailScreenHostingViews.swift */,
 				94273A6526C75C3900713524 /* Toolbar.swift */,
-				94939CE926EAEB31009AC568 /* PlatformSpecificExtraRowCardLayout.swift */,
+				94939CE926EAEB31009AC568 /* ThreeSectionLayout.swift */,
 			);
 			path = ScreenComposition;
 			sourceTree = "<group>";
@@ -943,6 +949,7 @@
 				941EFC1E26BE0F740087F960 /* WhenHovered.swift */,
 				949362A026C5C718009A80B7 /* Alignment.swift */,
 				94939CE626E9749E009AC568 /* WhenHoveredAtPoint.swift */,
+				94CAB91D272F5620007BC30B /* Background+Backport.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1063,6 +1070,7 @@
 				947979E626B9B4F800AEB5EA /* iBeaconBlock.swift */,
 				947979D226B9A07500AEB5EA /* IdentifiersBlock.swift */,
 				947979C626B9A04200AEB5EA /* LEDBlock.swift */,
+				94CAB91A272DBECC007BC30B /* LogsBlock.swift */,
 				947979DE26B9B4B500AEB5EA /* MagnetometerBlock.swift */,
 				947979C826B9A05000AEB5EA /* MechanicalSwitchBlock.swift */,
 				947979CA26B9A05600AEB5EA /* ResetBlock.swift */,
@@ -1614,6 +1622,7 @@
 				941EFC0C26BDB23C0087F960 /* UIFactory.swift in Sources */,
 				94939CE826E9749F009AC568 /* WhenHoveredAtPoint.swift in Sources */,
 				941EFC0126BD92750087F960 /* ConnectionToolbarButton.swift in Sources */,
+				94CAB91E272F5620007BC30B /* Background+Backport.swift in Sources */,
 				94F8672526CD919A009D8DB4 /* TapToConnectPrompt.swift in Sources */,
 				941EFB8C26BCE77A0087F960 /* SFSymbol.swift in Sources */,
 				9406194126C0419A007BE281 /* ScrollingStaticGraph.swift in Sources */,
@@ -1681,6 +1690,7 @@
 				941EFBA726BCE7920087F960 /* MechanicalSwitchBlock.swift in Sources */,
 				941EFBD426BCE7B30087F960 /* MWScannedDeviceCellVM.swift in Sources */,
 				941EFBC526BCE7A30087F960 /* ScannedDeviceCellVM.swift in Sources */,
+				94CAB91B272DBECC007BC30B /* LogsBlock.swift in Sources */,
 				941EFBA826BCE7920087F960 /* GPIOBlock.swift in Sources */,
 				941EFC3726BE945B0087F960 /* DeviceImage.swift in Sources */,
 				948E61C726BF400A00A387E7 /* CopyMacButton.swift in Sources */,
@@ -1688,7 +1698,7 @@
 				94BE0DCE26C6EE6B000A6E2F /* LoggingSection.swift in Sources */,
 				9493671526C5E57200631A08 /* GyroSUIVC.swift in Sources */,
 				941EFB8A26BCE77A0087F960 /* Color.swift in Sources */,
-				94939CEB26EAEB31009AC568 /* PlatformSpecificExtraRowCardLayout.swift in Sources */,
+				94939CEB26EAEB31009AC568 /* ThreeSectionLayout.swift in Sources */,
 				94BAA74226C38AD40045E5E4 /* MWAmbientLightVM.swift in Sources */,
 				94092E0E26C0CDBE00997C45 /* DeviceNavigationLink.swift in Sources */,
 				941EFBFE26BD7E720087F960 /* EmptyDevicesListButton.swift in Sources */,
@@ -1745,6 +1755,7 @@
 				94C553AC26B7E0F700E7B2DC /* BatteryVM.swift in Sources */,
 				9482DC4F26B5078A00DD19EB /* HeaderVM.swift in Sources */,
 				94F3317526B531C50015EE88 /* DeviceDetailsCoordinator.swift in Sources */,
+				94CAB91C272F54AE007BC30B /* LogsBlock.swift in Sources */,
 				94ACC9E126B9F5F700264F6E /* ExportDataButton.swift in Sources */,
 				94E155D826C4EC6C00B73487 /* I2CSize.swift in Sources */,
 				94C553B426B7E0F700E7B2DC /* GyroVM.swift in Sources */,
@@ -1849,7 +1860,8 @@
 				941EFC1126BDC0C00087F960 /* AppRoot.swift in Sources */,
 				947979CF26B9A06800AEB5EA /* SignalBlock.swift in Sources */,
 				94C553A726B7E0F700E7B2DC /* MechanicalSwitchVM.swift in Sources */,
-				94939CEA26EAEB31009AC568 /* PlatformSpecificExtraRowCardLayout.swift in Sources */,
+				94CAB91F272F5648007BC30B /* Background+Backport.swift in Sources */,
+				94939CEA26EAEB31009AC568 /* ThreeSectionLayout.swift in Sources */,
 				94ACC9DF26B9D10100264F6E /* UpdateButton.swift in Sources */,
 				948E61D026BF534000A387E7 /* MetaWearDeviceModel.swift in Sources */,
 				941EFC1326BDC0CB0087F960 /* UIFactory.swift in Sources */,

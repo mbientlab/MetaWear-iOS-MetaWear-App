@@ -11,7 +11,7 @@ struct IdentifiersBlock: View {
     @ObservedObject var battery: BatterySUIVC
 
     var body: some View {
-        PlatformSpecificTwoColumnNoOptionsLayout(
+        TwoSectionNoOptionsLayout(
             leftColumn: hardwareColumn,
             rightColumn: firmwareColumn
         )

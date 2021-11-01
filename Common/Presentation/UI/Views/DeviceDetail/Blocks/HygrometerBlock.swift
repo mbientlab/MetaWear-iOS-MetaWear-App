@@ -9,7 +9,7 @@ struct HygrometerBlock: View {
     @ObservedObject var vm: HumiditySUIVC
 
     var body: some View {
-        PlatformSpecificOneColumnCardLayout(
+        OneSectionLayout(
             optionViews: LabeledItem(
                 label: "Oversampling",
                 content: oversampling

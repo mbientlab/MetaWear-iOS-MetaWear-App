@@ -10,16 +10,20 @@ struct BlockBuilder: View  {
 
     var group: DetailGroup
     var namespace: Namespace.ID
+    var mustShowTitle: Bool = true
     @EnvironmentObject private var vc: DeviceDetailScreenSUIVC
 
     var body: some View {
         #if os(iOS)
-        if group == .headerInfoAndState { Header() }
+        /// Don't wrap the Header in the standard card
+        if group == .headerInfoAndState { Header(vm: vc.vms.identifiers as! IdentifiersSUIVC) }
         else { DetailsBlockCard(group: group, namespace: namespace) { content }.id(group) }
         #else
         DetailsBlockCard(group: group, namespace: namespace) { content }.id(group)
         #endif
     }
+
+    // Device, Signal, Reset Power, iBeacon
 
     @ViewBuilder var content: some View {
         switch group {
@@ -80,6 +84,9 @@ struct BlockBuilder: View  {
             case .i2c:
                 I2CBlock(vm: vc.vms.i2c as! I2CBusSUIVC)
 
+            case .logs:
+                LogsBlock(store: vc.signals as! MWSignalsStore)
         }
     }
 }
+

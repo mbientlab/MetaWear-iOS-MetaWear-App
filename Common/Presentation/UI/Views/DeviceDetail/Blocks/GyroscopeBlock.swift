@@ -10,7 +10,7 @@ struct GyroscopeBlock: View {
     @State private var unitLabelWidth = CGFloat(0)
     
     var body: some View {
-        PlatformSpecificTwoColumnCardLayout(
+        TwoSectionLayout(
             optionViews: options,
             leftColumn: LoggingSectionStandardized(vm: vm),
             rightColumn: LiveStreamSection(scrollViewGraphID: "GyroStreamGraph", vm: vm)

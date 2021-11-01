@@ -18,6 +18,9 @@ struct DeviceImage: View {
     @State private var showLED = false
     private let ledColor = Color(.sRGB, red: 0, green: 1, blue: 0, opacity: 0.8)
 
+    @Environment(\.colorScheme) private var colorScheme
+    var shadow: Color { colorScheme == .dark ? .black.opacity(0.08) : .white.opacity(0.5) }
+
     var body: some View {
         VStack(spacing: 0) {
             if let image = imageName {
@@ -25,7 +28,7 @@ struct DeviceImage: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: size, height: size)
-                    .shadow(color: .black.opacity(0.08), radius: 20, x: 0, y: 0)
+                    .shadow(color: shadow, radius: 20, x: 0, y: 0)
                     .overlay(ledMockup.animation(.easeIn(duration: 0.15), value: imageName).offset(y: size * 0.4), alignment: .top)
                     .transition(.scale(scale: 0.75).combined(with: .opacity))
             }

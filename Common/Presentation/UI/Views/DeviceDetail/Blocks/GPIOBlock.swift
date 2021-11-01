@@ -132,6 +132,11 @@ struct GPIOBlock: View {
             Spacer()
 
             if vm.mode == .analog, vm.isChangingPins {
+
+                SFSymbol.dc.image()
+                    .foregroundColor(.mwSecondary)
+                    .padding(.trailing, 7)
+
                 Text(vm.changeType.displayName)
             }
 

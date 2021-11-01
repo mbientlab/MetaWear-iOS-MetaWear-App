@@ -104,11 +104,11 @@ fileprivate struct Graph<VM: StreamingSectionDriver>: View {
             if vm.isStreaming {
 
                 FeedPlotFixedSize(controller: .init(stream: vm,
-                                                           config: vm.makeStreamDataConfig(),
-                                                           colorProvider: prefs),
-                                         width: .detailBlockGraphWidth)
-                           .padding(.top, .standardVStackSpacing)
-                           .id(scrollViewGraphID)
+                                                    config: vm.makeStreamDataConfig(),
+                                                    colorProvider: prefs),
+                                  width: .detailBlockGraphWidth)
+                    .padding(.top, .standardVStackSpacing)
+                    .id(scrollViewGraphID)
 
             } else if !vm.data.stream.isEmpty {
 
@@ -122,5 +122,12 @@ fileprivate struct Graph<VM: StreamingSectionDriver>: View {
                 Text("Error")
             }
         }
+        .padding(.leading, leadingPadding)
     }
+
+    #if os(iOS)
+    let leadingPadding: CGFloat = .detailBlockContentPadding
+    #else
+    let leadingPadding: CGFloat = .detailBlockContentPadding / 2
+    #endif
 }

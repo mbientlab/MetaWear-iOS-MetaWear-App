@@ -9,7 +9,7 @@ struct I2CBlock: View {
     @ObservedObject var vm: I2CBusSUIVC
 
     var body: some View {
-        PlatformSpecificOneColumnCardLayout(
+        OneSectionLayout(
             optionViews: options,
             mainColumn: main
         )

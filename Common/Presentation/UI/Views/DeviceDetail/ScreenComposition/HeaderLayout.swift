@@ -5,6 +5,7 @@ import SwiftUI
 
 struct Header: View {
 
+    @ObservedObject var vm: IdentifiersSUIVC
     @EnvironmentObject private var vc: DeviceDetailScreenSUIVC
     @Environment(\.fontFace) private var fontFace
 
@@ -17,11 +18,25 @@ struct Header: View {
         } else {
             iOSImageAbove
         }
-
 #elseif os(macOS)
         macOSImageOverlaid
 #endif
     }
+
+    var macOSImageOverlaid: some View {
+        HeaderBlock(vm: vc.vms.header as! DetailHeaderSUIVC)
+            .opacity(vm.model == .notFound ? 0 : 1)
+            .animation(.easeOut, value: vm.model == .notFound)
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel("\(vc.vms.header.deviceName) is \(vc.vms.header.connectionState)")
+            .accessibilityHint("Edit device name")
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(height: imageSize)
+            .overlay(deviceImage.offset(x: -20), alignment: .trailing)
+            .padding(.vertical, -5)
+            .padding(.bottom, -10)
+    }
+
 
     var iOSImageAbove: some View {
         VStack(spacing: .cardGridSpacing) {
@@ -40,15 +55,9 @@ struct Header: View {
             .padding(.top, fontFace == .openDyslexic ? 26 : 16)
     }
 
-    var macOSImageOverlaid: some View {
-        headerCard
-            .overlay(deviceImage, alignment: .trailing)
-            .padding(.top, fontFace == .openDyslexic ? 26 : 16)
-    }
-
     private var imageSize: CGFloat {
         #if os(macOS)
-        115
+        105
         #else
         UIDevice.current.userInterfaceIdiom == .pad ? 225 : 155
         #endif
@@ -67,7 +76,7 @@ struct Header: View {
     }
 
     var deviceImage: some View {
-        DeviceImage(vm: vc.vms.identifiers as! IdentifiersSUIVC,
+        DeviceImage(vm: vm,
                     header: vc.vms.header as! DetailHeaderSUIVC,
                     size: imageSize
         )

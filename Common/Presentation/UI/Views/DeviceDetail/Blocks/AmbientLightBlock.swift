@@ -13,7 +13,7 @@ struct AmbientLightBlock: View {
     @State private var unitWidth = CGFloat(0)
 
     var body: some View {
-        PlatformSpecificOneColumnCardLayout(
+        OneSectionLayout(
             optionViews: options,
             mainColumn: LabeledItem(
                 label: "Live",

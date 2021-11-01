@@ -13,7 +13,7 @@ struct BarometerBlock: View {
     @State private var enable = ""
 
     var body: some View {
-        PlatformSpecificOneColumnCardLayout(
+        OneSectionLayout(
             optionViews: options,
             mainColumn: LabeledItem(
                 label: "Altitude",

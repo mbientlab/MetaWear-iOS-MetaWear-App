@@ -9,7 +9,7 @@ struct SensorFusionBlock: View {
     @ObservedObject var vm: SensorFusionSUIVC
 
     var body: some View {
-        PlatformSpecificTwoColumnCardLayout(
+        TwoSectionLayout(
             optionViews: options,
             leftColumn: LoggingSectionStandardized(vm: vm),
             rightColumn: LiveStreamSection(scrollViewGraphID: "SensorFusionStreamGraph", vm: vm)

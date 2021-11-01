@@ -9,7 +9,7 @@ struct MagnetometerBlock: View {
     @ObservedObject var vm: MagnetometerSUIVC
 
     var body: some View {
-        PlatformSpecificTwoColumnNoOptionsLayout(
+        TwoSectionNoOptionsLayout(
             leftColumn: LoggingSectionStandardized(vm: vm),
             rightColumn: LiveStreamSection(scrollViewGraphID: "MagnetometerStreamGraph", vm: vm)
         )

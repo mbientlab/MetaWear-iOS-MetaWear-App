@@ -42,6 +42,12 @@ public enum SFSymbol: String {
     case shortcutMenu = "list.dash"
 
     case settings = "gearshape.fill"
+    case delete = "trash"
+    case logs = "doc.plaintext"
+    case dc = "directcurrent"
+
+    case start = "arrow.backward.to.line"
+    case end = "arrow.forward.to.line"
 }
 
 public extension SFSymbol {
@@ -87,6 +93,11 @@ public extension SFSymbol {
             case .shortcutMenu: return "Table of Contents"
 
             case .settings: return "Options"
+            case .delete: return "Delete"
+            case .logs: return "Logs"
+            case .dc: return "GPIO Edge"
+            case .start: return "Go to Start"
+            case .end: return "Go to End"
         }
     }
 }

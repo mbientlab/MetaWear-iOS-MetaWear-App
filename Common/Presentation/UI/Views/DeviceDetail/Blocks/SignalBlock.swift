@@ -9,7 +9,7 @@ struct SignalBlock: View {
     @ObservedObject var vm: SignalSUIVC
 
     var body: some View {
-        PlatformSpecificTwoColumnNoOptionsLayout(
+        TwoSectionNoOptionsLayout(
             leftColumn:
                 LabeledItem(label: "RSSI", content: rssi),
             rightColumn:

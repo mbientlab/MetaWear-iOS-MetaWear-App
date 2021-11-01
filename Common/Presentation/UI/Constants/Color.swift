@@ -24,6 +24,7 @@ extension Color {
 
     static let startScreen = Color("StartScreen")
     static let mwSecondary = Color("secondary")
+    static let optionsBackground = Color("optionsBackground")
 
 #if os(iOS)
     static let groupedListBackground = Color(.systemGroupedBackground)
@@ -33,7 +34,8 @@ extension Color {
     static let blockPlatterStroke = Color(.quaternaryLabel)
 #else
 
-    static let groupedListBackground = Color(.underPageBackgroundColor)
+    static let groupedListBackground = toastPillBackground
+
     static let reversedTextColor = Color(.textBackgroundColor)
     static let ledOffPlatter = Color(.quaternaryLabelColor)
     static let blockPlatterFill = Color("blockPlatterFill")

@@ -40,6 +40,9 @@ extension DeviceDetailScreenSUIVC: DeviceDetailsCoordinatorDelegate {
     public func show(groups: [DetailGroup]) {
         var newGroups = Set(sortedVisibleGroups)
         newGroups.formUnion(Set(groups))
+        if groups.contains(.signal) {
+            newGroups.insert(.logs)
+        }
         sortedVisibleGroups = newGroups.sortedAsSpecified()
     }
 

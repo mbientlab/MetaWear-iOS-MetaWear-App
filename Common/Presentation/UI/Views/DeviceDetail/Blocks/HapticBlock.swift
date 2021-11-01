@@ -9,7 +9,7 @@ struct HapticBlock: View {
     @ObservedObject var vm: HapticSUIVC
 
     var body: some View {
-        PlatformSpecificOneColumnCardLayout(
+        OneSectionLayout(
             optionViews: options,
             mainColumn: LabeledItem(
                 label: "Use Driver",

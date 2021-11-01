@@ -40,10 +40,18 @@ class FeedPlotController: ObservableObject {
         let colors = colorProvider.colorset.value.colors.map { $0.asFeedPlotColor() }
         self.rangeY = CGFloat(config.yAxisMax - config.yAxisMin)
         self.seriesColors = colors
+
+        #if os(iOS)
+        let streamingPointSize: Float = 3
+        #else
+        let streamingPointSize: Float = 2
+        #endif
+
         self.dataStore = FPStreaming2DDataStore(
             data: Self.makeInitialData(from: config, colors: colors),
             bounds: Self.makeBounds(from: config),
-            dataPointsPerFrame: config.dataPointCount
+            dataPointsPerFrame: config.dataPointCount,
+            pointSize: streamingPointSize
         )
         self.yMin = config.yAxisMin
         self.yMax = config.yAxisMax
