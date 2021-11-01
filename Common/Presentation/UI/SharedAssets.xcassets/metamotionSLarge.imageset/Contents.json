@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "MetaMotionS_Square100.png",
+      "filename" : "MetaMotionS_Square400.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "MetaMotionS_Square100@2x.png",
+      "filename" : "MetaMotionS_Square400@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "MetaMotionS_Square100@3x.png",
+      "filename" : "MetaMotionS_Square400@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

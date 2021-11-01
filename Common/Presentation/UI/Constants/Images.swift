@@ -19,6 +19,7 @@ public enum Images {
 
     case metamotionS
     case metamotionC
+    case metamotionSLarge
 
     public var catalogName: String {
         switch self {
@@ -31,6 +32,7 @@ public enum Images {
             case .noSignal:    return "wifi_not_connected"
             case .metamotionC: return "metamotionC"
             case .metamotionS: return "metamotionS"
+            case .metamotionSLarge: return "metamotionSLarge"
         }
     }
 }
