@@ -23,6 +23,22 @@ struct Header: View {
 #endif
     }
 
+    var iOSImageAbove: some View {
+        VStack(spacing: .cardGridSpacing) {
+            deviceImage
+                .compositingGroup()
+                .shadow(color: .black.opacity(0.11), radius: 3, x: 5, y: 7)
+
+            headerCard
+        }
+    }
+
+    var ipadOSImageOffCenterOverlaid: some View {
+        headerCard
+            .overlay(deviceImage.offset(x: .detailBlockWidth * 0.10), alignment: .center)
+            .padding(.top, fontFace == .openDyslexic ? 26 : 16)
+    }
+
     var macOSImageOverlaid: some View {
         HeaderBlock(vm: vc.vms.header as! DetailHeaderSUIVC)
             .opacity(vm.model == .notFound ? 0 : 1)
@@ -32,34 +48,16 @@ struct Header: View {
             .accessibilityHint("Edit device name")
             .frame(maxWidth: .infinity, alignment: .leading)
             .frame(height: imageSize)
-            .overlay(deviceImage.offset(x: -20), alignment: .trailing)
-            .padding(.vertical, -5)
-            .padding(.bottom, -10)
-    }
 
-
-    var iOSImageAbove: some View {
-        VStack(spacing: .cardGridSpacing) {
-            deviceImage
-                .padding(.bottom, -20)
-                .offset(y: 20)
-                .padding(.top, fontFace == .openDyslexic ? 26 : 16)
-
-            headerCard
-        }
-    }
-
-    var ipadOSImageOffCenterOverlaid: some View {
-        headerCard
-            .overlay(deviceImage.offset(x: .detailBlockWidth * 0.15), alignment: .center)
-            .padding(.top, fontFace == .openDyslexic ? 26 : 16)
+            .overlay(deviceImage.offset(x: -40), alignment: .trailing)
+            .padding(.top, 12)
     }
 
     private var imageSize: CGFloat {
         #if os(macOS)
-        105
+        75
         #else
-        UIDevice.current.userInterfaceIdiom == .pad ? 225 : 155
+        100
         #endif
     }
 
