@@ -55,7 +55,7 @@ struct Header: View {
 
     private var imageSize: CGFloat {
         #if os(macOS)
-        75
+        70
         #else
         100
         #endif
