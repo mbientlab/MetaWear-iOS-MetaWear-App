@@ -65,7 +65,7 @@ struct PlaceholderDeviceConnectionScreen: View {
             .modifier(SpinEffect(degrees: CGFloat(iteration) * 360))
     }
 
-    private let size = CGFloat(150)
+    private let size = CGFloat(100)
 
     private var binding: Binding<FontFace> {
         Binding { [weak prefs] in
