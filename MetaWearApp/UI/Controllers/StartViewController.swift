@@ -58,6 +58,9 @@ struct AnimatedStart: View {
     @State private var viewDidAppear = false
     var body: some View {
         GeometryReader { geo in
+            let imageWidth = imageWidth(in: geo.size.width)
+            let xPosition = xPosition(in: geo.size.width)
+            let yPosition = yPosition(forWidth: imageWidth, in: geo.size.height)
 
             VStack(alignment: .center) {
 
@@ -80,13 +83,13 @@ struct AnimatedStart: View {
             // Device images
             .background(
                 metamotionS
-                    .frame(width: min(950, geo.size.width * scale))
-                    .position(x: 0, y: geo.size.height * 0.8)
+                    .frame(width: imageWidth)
+                    .position(x: xPosition.leading, y: yPosition)
             )
             .background(
                 metamotionC
-                    .frame(width: min(950, geo.size.width * scale))
-                    .position(x: geo.size.width, y: geo.size.height * 0.8)
+                    .frame(width: imageWidth)
+                    .position(x: xPosition.trailing, y: yPosition)
             )
         }
         .animation(.easeIn.delay(0.75), value: viewDidAppear)
@@ -95,10 +98,20 @@ struct AnimatedStart: View {
 
     }
 
-    private var scale: CGFloat {
-        UIDevice.current.userInterfaceIdiom == .pad
-        ? 0.7
-        : 0.9
+    private func xPosition(in width: CGFloat) -> (leading: CGFloat, trailing: CGFloat) {
+        let offset: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 25 : -6
+        return (offset, width - offset + 20) // Visually the C device needs more offset
+    }
+
+    private func imageWidth(in frameWidth: CGFloat) -> CGFloat {
+        let max: CGFloat = 750
+        let scale = UIDevice.current.userInterfaceIdiom == .pad ? 0.6 : 0.5
+        return min(max, scale * frameWidth)
+    }
+
+    private func yPosition(forWidth imageWidth: CGFloat, in height: CGFloat) -> CGFloat {
+        let scale = UIDevice.current.userInterfaceIdiom == .pad ? 0.4 : 0.66
+        return height + (-imageWidth * scale)
     }
 
     private var instruction: some View {
@@ -123,14 +136,14 @@ struct AnimatedStart: View {
     }
 
     private var metamotionS: some View {
-        Image(Images.metamotionS.catalogName)
+        Image(Images.metamotionSLarge.catalogName)
             .resizable()
             .scaledToFit()
             .rotationEffect(.degrees(-10))
     }
 
     private var metamotionC: some View {
-        Image(Images.metamotionC.catalogName)
+        Image(Images.metamotionCLarge.catalogName)
             .resizable()
             .scaledToFit()
             .rotationEffect(.degrees(10))
