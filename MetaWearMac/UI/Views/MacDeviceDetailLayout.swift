@@ -14,11 +14,13 @@ struct MacDeviceDetailLayout: View {
             MacOSDeviceDetailList(chain: chain, details: details, focus: $focus)
                 .frame(width: .macOSHSplitListWidth + (.detailBlockOuterPadding * 2))
 
-            MacOSFocusedDetailView(focus: $focus, details: details)
+            MacOSFocusedModuleView(focus: $focus, details: details)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
         }
     }
 }
+
+// MARK: - List
 
 struct MacOSDeviceDetailList: View {
 
@@ -95,7 +97,9 @@ struct MacOSDeviceDetailList: View {
     }
 }
 
-struct MacOSFocusedDetailView: View {
+// MARK: - Focused Module
+
+struct MacOSFocusedModuleView: View {
 
     @EnvironmentObject private var vc: DeviceDetailScreenSUIVC
     @Binding var focus: DetailGroup?
@@ -117,6 +121,7 @@ struct MacOSFocusedDetailView: View {
             .padding(.top, MWLargeTitle.fontSize * 1.5)
             .padding(.horizontal, .detailBlockContentPadding)
             .padding(.leading, .detailBlockContentPadding)
+            .padding(.bottom, MWLargeTitle.fontSize * 1.5)
         }
     }
 
@@ -134,6 +139,7 @@ struct MacOSFocusedDetailView: View {
             .padding(.top, MWLargeTitle.fontSize * 1.5)
             .padding(.horizontal, .detailBlockContentPadding)
             .padding(.leading, .detailBlockContentPadding)
+            .padding(.bottom, MWLargeTitle.fontSize * 1.5)
         }
     }
 }
