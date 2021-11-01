@@ -19,6 +19,7 @@ public enum Images {
 
     case metamotionS
     case metamotionC
+    case metamotionCLarge
     case metamotionSLarge
 
     public var catalogName: String {
@@ -33,6 +34,7 @@ public enum Images {
             case .metamotionC: return "metamotionC"
             case .metamotionS: return "metamotionS"
             case .metamotionSLarge: return "metamotionSLarge"
+            case .metamotionCLarge: return "metamotionCLarge"
         }
     }
 }
