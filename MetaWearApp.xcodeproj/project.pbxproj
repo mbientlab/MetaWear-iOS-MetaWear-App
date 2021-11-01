@@ -179,6 +179,8 @@
 		944A043C26CA1A620086318F /* MWSignalsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944A043A26C9FFED0086318F /* MWSignalsStore.swift */; };
 		944EACB026C2FBD300B73814 /* MWGyroVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EACAF26C2FBD300B73814 /* MWGyroVM.swift */; };
 		944EACB126C2FBD300B73814 /* MWGyroVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EACAF26C2FBD300B73814 /* MWGyroVM.swift */; };
+		9452D3A5272F786900AD3D43 /* FeedPlot in Frameworks */ = {isa = PBXBuildFile; productRef = 9452D3A4272F786900AD3D43 /* FeedPlot */; };
+		9452D3A7272F787E00AD3D43 /* FeedPlot in Frameworks */ = {isa = PBXBuildFile; productRef = 9452D3A6272F787E00AD3D43 /* FeedPlot */; };
 		9453FD3926B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */; };
 		9473587926B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */; };
 		9473587B26B92D610032EE87 /* AccelerometerSampleFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */; };
@@ -308,7 +310,6 @@
 		94C7511B26C1EB9A00AB3E47 /* MetaWearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7511A26C1EB9A00AB3E47 /* MetaWearTests.swift */; };
 		94CAB911272B2DDC007BC30B /* CoreBluetoothMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94CAB910272B2DDC007BC30B /* CoreBluetoothMock.framework */; };
 		94CAB914272C648C007BC30B /* FeedPlotFixedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB0BF726D5DE820042B73C /* FeedPlotFixedSize.swift */; };
-		94CAB916272C64D4007BC30B /* FeedPlot in Frameworks */ = {isa = PBXBuildFile; productRef = 94CAB915272C64D4007BC30B /* FeedPlot */; };
 		94CAB917272C68D7007BC30B /* WhenHoveredAtPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94939CE626E9749E009AC568 /* WhenHoveredAtPoint.swift */; };
 		94CAB919272C9785007BC30B /* MacDeviceDetailLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB918272C9785007BC30B /* MacDeviceDetailLayout.swift */; };
 		94CAB91B272DBECC007BC30B /* LogsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB91A272DBECC007BC30B /* LogsBlock.swift */; };
@@ -316,7 +317,6 @@
 		94CAB91E272F5620007BC30B /* Background+Backport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB91D272F5620007BC30B /* Background+Backport.swift */; };
 		94CAB91F272F5648007BC30B /* Background+Backport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB91D272F5620007BC30B /* Background+Backport.swift */; };
 		94CB0BF926D5E04A0042B73C /* FeedPlotFixedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB0BF726D5DE820042B73C /* FeedPlotFixedSize.swift */; };
-		94CB0BFB26D5E06D0042B73C /* FeedPlot in Frameworks */ = {isa = PBXBuildFile; productRef = 94CB0BFA26D5E06D0042B73C /* FeedPlot */; };
 		94CD3AA726B3ED1400854FBA /* MWScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */; };
 		94DABBC726C0F483004590E4 /* iPadGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DABBC626C0F483004590E4 /* iPadGridLayout.swift */; };
 		94DABBC826C0F4A3004590E4 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC3126BE8F7E0087F960 /* GridLayout.swift */; };
@@ -482,7 +482,6 @@
 		9487921C26C335600066CD5E /* MWMagnetometerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMagnetometerVM.swift; sourceTree = "<group>"; };
 		9488E57026B8EF5B006A6262 /* AccelerometerSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerometerSUIVC.swift; sourceTree = "<group>"; };
 		9488E57226B8F018006A6262 /* MWAccelerometerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWAccelerometerVM.swift; sourceTree = "<group>"; };
-		948B5FEB26D5DD6100C5197B /* FeedPlot */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FeedPlot; path = ../../GraphingPackage/FeedPlot; sourceTree = "<group>"; };
 		948E48DA26C4551300CB9152 /* DataPointModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPointModels.swift; sourceTree = "<group>"; };
 		948E61C326BF3D2C00A387E7 /* CopyMacButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyMacButton.swift; sourceTree = "<group>"; };
 		948E61C526BF3FB700A387E7 /* ScannedDeviceCellSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedDeviceCellSUIVC.swift; sourceTree = "<group>"; };
@@ -595,8 +594,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				561C9CE7F6D32CF0E249D443 /* Pods_MetaWearMac.framework in Frameworks */,
-				94CB0BFB26D5E06D0042B73C /* FeedPlot in Frameworks */,
 				94CAB911272B2DDC007BC30B /* CoreBluetoothMock.framework in Frameworks */,
+				9452D3A5272F786900AD3D43 /* FeedPlot in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,7 +616,7 @@
 				AB5D5F5225B8A09A00D2591C /* CoreData.framework in Frameworks */,
 				916D60474F5A7EF7540EFC01 /* Pods_MetaWearApp.framework in Frameworks */,
 				01510B90062A4276CBFBDB65 /* Pods_MetaWearApp.framework in Frameworks */,
-				94CAB916272C64D4007BC30B /* FeedPlot in Frameworks */,
+				9452D3A7272F787E00AD3D43 /* FeedPlot in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1090,14 +1089,6 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		948B5FEA26D5DD6100C5197B /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				948B5FEB26D5DD6100C5197B /* FeedPlot */,
-			);
-			name = Packages;
-			sourceTree = "<group>";
-		};
 		94ACC9E526B9FC4C00264F6E /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1270,7 +1261,6 @@
 		AB5D5F2F25B7D47300D2591C = {
 			isa = PBXGroup;
 			children = (
-				948B5FEA26D5DD6100C5197B /* Packages */,
 				94CD3AA526B3ECF200854FBA /* Common */,
 				AB5D5F3A25B7D47300D2591C /* MetaWearApp */,
 				941EFB5726BCE16B0087F960 /* MetaWearMac */,
@@ -1350,7 +1340,7 @@
 			);
 			name = MetaWearMac;
 			packageProductDependencies = (
-				94CB0BFA26D5E06D0042B73C /* FeedPlot */,
+				9452D3A4272F786900AD3D43 /* FeedPlot */,
 			);
 			productName = MetaWearMac;
 			productReference = 941EFB5626BCE16B0087F960 /* MetaWearMac.app */;
@@ -1390,7 +1380,7 @@
 			);
 			name = MetaWearApp;
 			packageProductDependencies = (
-				94CAB915272C64D4007BC30B /* FeedPlot */,
+				9452D3A6272F787E00AD3D43 /* FeedPlot */,
 			);
 			productName = MetaWearApp;
 			productReference = AB5D5F3825B7D47300D2591C /* MetaWearApp.app */;
@@ -1428,6 +1418,9 @@
 				Base,
 			);
 			mainGroup = AB5D5F2F25B7D47300D2591C;
+			packageReferences = (
+				9452D3A3272F786900AD3D43 /* XCRemoteSwiftPackageReference "FeedPlot" */,
+			);
 			productRefGroup = AB5D5F3925B7D47300D2591C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -2264,13 +2257,26 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		9452D3A3272F786900AD3D43 /* XCRemoteSwiftPackageReference "FeedPlot" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/importRyan/FeedPlot";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		94CAB915272C64D4007BC30B /* FeedPlot */ = {
+		9452D3A4272F786900AD3D43 /* FeedPlot */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 9452D3A3272F786900AD3D43 /* XCRemoteSwiftPackageReference "FeedPlot" */;
 			productName = FeedPlot;
 		};
-		94CB0BFA26D5E06D0042B73C /* FeedPlot */ = {
+		9452D3A6272F787E00AD3D43 /* FeedPlot */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 9452D3A3272F786900AD3D43 /* XCRemoteSwiftPackageReference "FeedPlot" */;
 			productName = FeedPlot;
 		};
 /* End XCSwiftPackageProductDependency section */

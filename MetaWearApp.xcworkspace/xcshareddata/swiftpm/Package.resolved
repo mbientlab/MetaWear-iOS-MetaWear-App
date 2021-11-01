@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "FeedPlot",
+        "repositoryURL": "https://github.com/importRyan/FeedPlot",
+        "state": {
+          "branch": null,
+          "revision": "32d65dccef8a118dad1d37818d2c19e13edeed31",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
