@@ -118,7 +118,9 @@ extension ScrollingStaticGraph {
                     timepoint.heights.indices.forEach { seriesIndex in
 
                         let x = timepoint.x * ScrollingStaticGraph.dotSize
-                        let y = (timepoint.heights[seriesIndex] / controller.rangeY * height) + (height / 2) - 1.5
+                        let relativeY = 1 - (timepoint.heights[seriesIndex] / controller.rangeY * height)  // Flip for coordinate system
+                        let offsetToMiddle = (height / 2) - 1.5
+                        let y = relativeY + offsetToMiddle
 
                         let path = makePoint(x: x, y: y)
                         context.fill(path, with: .color(controller.seriesColors[seriesIndex]))
@@ -141,7 +143,7 @@ extension ScrollingStaticGraph {
         }
 
         func legacyOffsetY(value: CGFloat) -> CGFloat {
-            let relativeValue = value / controller.rangeY
+            let relativeValue = 1 - (value / controller.rangeY)  // Flip for coordinate system
             return relativeValue * height - (height / 2)
         }
     }
