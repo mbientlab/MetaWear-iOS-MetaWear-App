@@ -43,15 +43,23 @@ struct MacOSDeviceDetailList: View {
 
                     LogCell(store: vc.signals as! MWSignalsStore, isSelected: focus == .logs)
 
-                    Section("Modules") {
-                        ForEach(vc.sortedVisibleGroups.filter { !Self.infoGroups.contains($0) }) { group in
-                            Cell(group: group, isSelected: focus == group)
+                    if #available(macOS 12.0, *) {
+                        Section("Modules") {
+                            ForEach(vc.sortedVisibleGroups.filter { !Self.infoGroups.contains($0) }) { group in
+                                Cell(group: group, isSelected: focus == group)
+                            }
+                        }
+                    } else {
+                        Section(header: Text("Modules")) {
+                            ForEach(vc.sortedVisibleGroups.filter { !Self.infoGroups.contains($0) }) { group in
+                                Cell(group: group, isSelected: focus == group)
+                            }
                         }
                     }
                 }
             }
             .listRowInsets(.init(top: 6, leading: .detailBlockContentPadding * 2, bottom: 6, trailing: .detailBlockContentPadding))
-            .listStyle(.inset(alternatesRowBackgrounds: false))
+            .listStyle(InsetListStyle())
             .edgesIgnoringSafeArea(.all)
         }
         .animation(.easeOut, value: vc.sortedVisibleGroups)

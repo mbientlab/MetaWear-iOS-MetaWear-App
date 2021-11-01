@@ -82,7 +82,7 @@ struct DetailsBlockCard<Content: View>: View {
                 Spacer()
             }
             .padding(.detailBlockCorners * 1.25)
-            .background(Color.groupedListBackground, in: RoundedRectangle(cornerRadius: .detailBlockCorners, style: .continuous))
+            .background(color: .groupedListBackground, in: RoundedRectangle(cornerRadius: .detailBlockCorners, style: .continuous))
             .shadow(color: macShadowColor, radius: 11, x: 3, y: 7)
         }
         .frame(maxWidth: .infinity)
