@@ -25,7 +25,6 @@ struct iOSDeviceDetailLayout: View {
         Group {
             if width < 1000 { // iPhone or narrow screen
                 VStack(spacing: .cardGridSpacing) {
-                    Text(String("\(width)"))
                     ForEach(vc.sortedVisibleGroups) { group in
                         BlockBuilder(group: group, namespace: details)
                     }

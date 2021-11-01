@@ -28,7 +28,7 @@ extension MWDetailFirmwareVM: DetailConfiguring {
     }
 
     public func start() {
-        updateFirmwareRevision()
+        refreshFirmwareVersionUIState()
         delegate?.refreshView()
         userRequestedCheckForFirmwareUpdates()
     }
@@ -62,7 +62,7 @@ public extension MWDetailFirmwareVM {
                 : "Up To Date"
             }
 
-            self?.updateFirmwareRevision()
+            self?.refreshFirmwareVersionUIState()
             self?.delegate?.refreshView()
         }
     }
@@ -92,7 +92,7 @@ public extension MWDetailFirmwareVM {
             } else {
                 DispatchQueue.main.async { [weak self] in
                     self?.parent?.toast.dismiss(updatingText: "Success", disablesInteraction: false, delay: .defaultToastDismissalDelay)
-                    self?.updateFirmwareRevision()
+                    self?.refreshFirmwareVersionUIState()
                     self?.delegate?.refreshView()
                 }
             }
@@ -104,7 +104,7 @@ public extension MWDetailFirmwareVM {
 
 private extension MWDetailFirmwareVM {
 
-    func updateFirmwareRevision() {
+    func refreshFirmwareVersionUIState() {
         guard let device = device else { return }
         let na = "N/A"
         firmwareRevision = device.info?.firmwareRevision ?? na
