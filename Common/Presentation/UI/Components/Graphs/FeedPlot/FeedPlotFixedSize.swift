@@ -42,7 +42,7 @@ class FeedPlotController: ObservableObject {
         self.seriesColors = colors
 
         #if os(iOS)
-        let streamingPointSize: Float = 3
+        let streamingPointSize: Float = 7
         #else
         let streamingPointSize: Float = 2
         #endif
@@ -50,7 +50,7 @@ class FeedPlotController: ObservableObject {
         self.dataStore = FPStreaming2DDataStore(
             data: Self.makeInitialData(from: config, colors: colors),
             bounds: Self.makeBounds(from: config),
-            dataPointsPerFrame: config.dataPointCount,
+            dataPointsPerFrame: config.maxX,
             pointSize: streamingPointSize
         )
         self.yMin = config.yAxisMin
@@ -128,14 +128,14 @@ extension FeedPlotController: GraphObject {
     static func makeInitialData(from config: GraphConfig, colors: [FPColor]) -> [FPColoredDataPoint] {
 
         guard !config.initialData.isEmpty else {
-            return Self.blankData(color: colors[0], count: config.dataPointCount)
+            return Self.blankData(color: colors[0], count: config.maxX)
         }
 
         var x = Float(0)
         var points = [FPColoredDataPoint]()
 
-        if config.initialData.endIndex < config.dataPointCount {
-            let gap = config.dataPointCount - points.endIndex
+        if config.initialData.endIndex < config.maxX {
+            let gap = config.maxX - points.endIndex
             for _ in 0..<gap {
                 points.append(.init(point: .init(x, 0, 0), color: colors[0]))
                 x += 1
@@ -156,8 +156,8 @@ extension FeedPlotController: GraphObject {
     }
 
     static func makeBounds(from config: GraphConfig) -> FPBounds {
-        let xMax = Float(config.dataPointCount)
-        return .init(xAxis: (0...xMax / 3), yAxis: (Float(config.yAxisMin)...Float(config.yAxisMax)))
+        let xMax = Float(config.maxX / config.channelLabels.endIndex)
+        return .init(xAxis: (0...xMax), yAxis: (Float(config.yAxisMin)...Float(config.yAxisMax)))
     }
 
 }

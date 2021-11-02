@@ -35,6 +35,10 @@ public class PreferencesStore: ObservableObject, ColorsetProvider {
         self.didOnboard = state
         persistence.storeDidOnboard(state)
     }
+
+    func refreshGraphColorsetsOnColorSchemeChange() {
+        colorset.send(colorset.value)
+    }
 }
 
 // MARK: - Colorset

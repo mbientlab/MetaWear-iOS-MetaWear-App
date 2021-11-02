@@ -6,8 +6,9 @@ import SwiftUI
 
 struct MainWindow: View {
 
-    @EnvironmentObject var prefs: PreferencesStore
-    @EnvironmentObject var ui: UIFactory
+    @EnvironmentObject private var prefs: PreferencesStore
+    @EnvironmentObject private var ui: UIFactory
+    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         NavigationView {
@@ -24,5 +25,6 @@ struct MainWindow: View {
         .buttonStyle(BorderlessHoverHighlightButtonStyle())
         .multilineTextAlignment(.leading)
         .environment(\.fontFace, prefs.font)
+        .onChange(of: scheme) { _ in prefs.refreshGraphColorsetsOnColorSchemeChange() }
     }
 }

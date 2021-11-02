@@ -11,7 +11,7 @@ struct SensorFusionBlock: View {
     var body: some View {
         TwoSectionLayout(
             optionViews: options,
-            leftColumn: LoggingSectionStandardized(vm: vm),
+            leftColumn: LoggedDataSection(vm: vm),
             rightColumn: LiveStreamSection(scrollViewGraphID: "SensorFusionStreamGraph", vm: vm)
         )
             .environmentObject(vm)

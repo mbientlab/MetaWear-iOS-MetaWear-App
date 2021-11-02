@@ -11,113 +11,81 @@ struct ScrollingStaticGraph: View {
 
     let width: CGFloat
     let height: CGFloat = .detailsGraphHeight
-    static let dotSize = CGFloat(2.5)
+    let dotSize: CGFloat = {
+        return 3
+        if #available(macOS 12.0, iOS 15.0, *) { return 2.5 }
+        else { return 3 }
+    }()
 
     var body: some View {
         ScrollViewReader { proxy in
-            VStack(spacing: 5) {
-                ScrollButtons(scroller: proxy)
-                graph
+            ZStack(alignment: .topLeading) {
+                scrollView
+                FocusedPoints(width: width, height: height, dotSize: dotSize, controller: controller)
+
             }
+            .frame(width: width)
+            .padding(.vertical, 8)
+            .environmentObject(controller)
+            .environment(\.scrollProxy, proxy)
         }
     }
 
-    var graph: some View {
-        ZStack(alignment: .topLeading) {
-            ScrolledGraph(controller: controller, width: width, height: height)
-                .frame(width: width, height: height)
-
+    var scrollView: some View {
+        ScrollView(.horizontal, showsIndicators: true) {
 #if os(macOS) && !targetEnvironment(macCatalyst)
-            FocusedPointOverlay(width: width, height: height, controller: controller)
+            ScrollOffsetMeasurer()
 #endif
+            plottingMethod
+                .frame(width: CGFloat(controller.displayedPoints.endIndex) * dotSize, height: height)
+                .background(scrollTags)
         }
-        .padding(.vertical, 8)
+        .coordinateSpace(name: "scrollView")
+        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in controller.updateScrollOffset(offset.x) }
+        .background(PlotBackgroundLinesAndLabels(min: controller.yMin, max: controller.yMax))
+        .background(Color.plotBackground)
+        .frame(width: width, height: height)
     }
 
-    private struct ScrollButtons: View {
-        let scroller: ScrollViewProxy
-
-        var body: some View {
-            HStack {
-                Button { withAnimation {
-                    scroller.scrollTo("start", anchor: .leading)
-                } } label: { SFSymbol.start.image() }
-
-                Spacer()
-
-                Button { withAnimation {
-                    scroller.scrollTo("end", anchor: .trailing)
-                } } label: { SFSymbol.end.image() }
-            }
-            .fontSmall()
-            .padding(.horizontal, .detailBlockContentPadding)
-        }
+    var plottingMethod: some View {
+        //                if #available(macOS 12.0, iOS 15.0, *) {
+        //                    CanvasGPUPlot(width: width, height: height, dotSize: dotSize)
+        //                } else {
+        LegacyPlot(width: width, height: height, dotSize: dotSize)
+        //        }
     }
 
+    var scrollTags: some View {
+        HStack {
+            Color.clear.frame(width: 0.1).id("start")
+            Spacer()
+            Color.clear.frame(width: 0.1).id("end")
+        }.hidden()
+    }
 }
 
-// MARK: - Graph
+// MARK: - Plot Methods
 
-extension ScrollingStaticGraph {
+private extension ScrollingStaticGraph {
 
-    /// Graph points
-    struct ScrolledGraph: View {
+    @available(macOS 12.0, iOS 15.0, *)
+    struct CanvasGPUPlot: View {
 
-        @ObservedObject var controller: ScrollingStaticGraphController
+        @EnvironmentObject private var controller: ScrollingStaticGraphController
         let width: CGFloat
         let height: CGFloat
+        var dotSize: CGFloat
 
         var body: some View {
-            ScrollView(.horizontal, showsIndicators: true) {
-#if os(macOS) && !targetEnvironment(macCatalyst)
-                ScrollOffsetMeasurer()
-#endif
-                Graph(controller: controller, width: width, height: height)
-            }
-            .coordinateSpace(name: "scrollView")
-            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in controller.updateScrollOffset(offset.x) }
-            .background(PlotBackgroundLinesAndLabels(min: controller.yMin, max: controller.yMax))
-            .background(Color.plotBackground)
-        }
-    }
-
-    struct Graph: View {
-
-        @ObservedObject var controller: ScrollingStaticGraphController
-        let width: CGFloat
-        let height: CGFloat
-        let pointSize = CGSize(width: ScrollingStaticGraph.dotSize, height: ScrollingStaticGraph.dotSize)
-
-        var body: some View {
-            HStack(spacing: 0) {
-                Color.clear.frame(width: 0.1).id("start")
-                if #available(macOS 12.0, iOS 15.0, *) {
-                    canvasGPU
-                } else if controller.displayedPoints.endIndex > 1400 {
-                    LazyHStack(alignment: .bottom, spacing: 0) {
-                        legacyCPU
-                    }
-                } else {
-                    HStack(alignment: .bottom, spacing: 0) {
-                        legacyCPU
-                    }
-                }
-                Color.clear.frame(width: 0.1).id("end")
-            }
-            .frame(width: CGFloat(controller.displayedPoints.endIndex) * ScrollingStaticGraph.dotSize, height: height)
-        }
-
-        @available(macOS 12.0, iOS 15.0, *)
-        var canvasGPU: some View {
             Canvas(opaque: false, colorMode: .nonLinear, rendersAsynchronously: false) { context, size in
                 func makePoint(x: CGFloat, y: CGFloat) -> Path {
-                    Path(ellipseIn: .init(origin: CGPoint(x: x, y: y), size: pointSize))
+                    Path(ellipseIn: .init(origin: CGPoint(x: x, y: y), size: .init(width: dotSize, height: dotSize)))
                 }
 
                 controller.displayedPoints.forEach { timepoint in
                     timepoint.heights.indices.forEach { seriesIndex in
 
-                        let x = timepoint.x * ScrollingStaticGraph.dotSize
+                        let x = timepoint.x * dotSize
                         let relativeY = 1 - (timepoint.heights[seriesIndex] / controller.rangeY * height)  // Flip for coordinate system
                         let offsetToMiddle = (height / 2) - 1.5
                         let y = relativeY + offsetToMiddle
@@ -128,30 +96,50 @@ extension ScrollingStaticGraph {
                 }
             }
         }
+    }
 
-        var legacyCPU: some View {
+    struct LegacyPlot: View {
+        @EnvironmentObject private var controller: ScrollingStaticGraphController
+        let width: CGFloat
+        let height: CGFloat
+        var dotSize: CGFloat
+
+        var body: some View {
+            if controller.displayedPoints.endIndex > 1000 {
+                LazyHStack(alignment: .bottom, spacing: 0) { plot }
+            } else {
+#if os(iOS)
+                LazyHStack(alignment: .bottom, spacing: 0) { plot }
+#else
+                HStack(alignment: .bottom, spacing: 0) { plot }
+#endif
+            }
+        }
+
+        var plot: some View {
             ForEach(controller.displayedPoints) { timepoint in
-                ZStack(alignment: .bottom) {
+                ZStack(alignment: .top) {
                     ForEach(timepoint.heights.indices) { index in
-                        Circle().frame(width: ScrollingStaticGraph.dotSize, height: ScrollingStaticGraph.dotSize)
+                        Circle()
+                            .frame(width: dotSize, height: dotSize)
                             .foregroundColor(controller.seriesColors[index])
                             .offset(y: legacyOffsetY(value: timepoint.heights[index]))
                     }
                 }
-                .frame(width: ScrollingStaticGraph.dotSize, height: height, alignment: .bottom)
+                .frame(width: dotSize, height: height, alignment: .bottom)
             }
         }
 
-        func legacyOffsetY(value: CGFloat) -> CGFloat {
-            let relativeValue = 1 - (value / controller.rangeY)  // Flip for coordinate system
-            return relativeValue * height - (height / 2)
+        private func legacyOffsetY(value: CGFloat) -> CGFloat {
+            let relativeValue = 1 - (value / (controller.rangeY / 2) ) // Flip for coordinate system
+            return relativeValue * (height/2) - (height)
         }
     }
 }
 
 // MARK: - Scrolling
 
-extension ScrollingStaticGraph {
+private extension ScrollingStaticGraph {
 
     struct ScrollOffsetMeasurer: View {
 
@@ -165,6 +153,37 @@ extension ScrollingStaticGraph {
         }
     }
 
+
+    struct ScrollButtons: View {
+        @Environment(\.scrollProxy) private var scroller
+
+        var body: some View {
+            HStack {
+                Button { scrollToStart() } label: { SFSymbol.start.image() }
+
+                Spacer()
+
+                Button { scrollToEnd() } label: { SFSymbol.end.image() }
+            }
+            .fontSmall()
+            .padding(.trailing, .detailBlockContentPadding)
+            .onAppear { DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                scrollToEnd()
+            } }
+        }
+
+        func scrollToStart() {
+            withAnimation {
+                scroller?.scrollTo("start", anchor: .leading)
+            }
+        }
+
+        func scrollToEnd() {
+            withAnimation {
+                scroller?.scrollTo("end", anchor: .trailing)
+            }
+        }
+    }
 }
 
 private struct ScrollOffsetPreferenceKey: PreferenceKey {
@@ -173,7 +192,7 @@ private struct ScrollOffsetPreferenceKey: PreferenceKey {
 }
 
 
-// MARK: - Overlay Components
+// MARK: - Plot Components
 
 extension ScrollingStaticGraph {
 
@@ -236,20 +255,48 @@ extension ScrollingStaticGraph {
         }
     }
 
-    struct FocusedPointOverlay: View {
+}
+
+// MARK: - Focused Points
+
+extension ScrollingStaticGraph {
+
+    struct FocusedPoints: View {
 
         let width: CGFloat
         let height: CGFloat
-        init(width: CGFloat, height: CGFloat, controller: ScrollingStaticGraphController) {
+        init(width: CGFloat, height: CGFloat, dotSize: CGFloat, controller: ScrollingStaticGraphController) {
             self.width = width
             self.height = height
             self.mouse = controller.mouse
             self.controller = controller
+            self.dotSize = dotSize
         }
         @ObservedObject var mouse: ScrollingStaticGraphController.MouseVM
         let controller: ScrollingStaticGraphController
+        var dotSize: CGFloat
 
         var body: some View {
+#if os(macOS) && !targetEnvironment(macCatalyst)
+            macOS
+#else
+            iOS  // Stand-in for hover line (not supported currently)
+#endif
+        }
+
+        var iOS: some View {
+            VStack(alignment: .leading) {
+                Rectangle()
+                    .frame(height: height).hidden()
+                    .padding(.top, .cardVSpacing)
+
+                ScrollButtons()
+                    .padding(.leading, .detailBlockContentPadding)
+            }
+            .frame(width: width)
+        }
+
+        var macOS: some View {
             VStack(alignment: .leading) {
 
                 // Line
@@ -258,17 +305,31 @@ extension ScrollingStaticGraph {
                         .offset(x: mouse.position)
                 }
                 .frame(width: width, height: height, alignment: .leading)
-                .whenHoveredAtPoint { controller.mouseMoved(to: $0, width: width, dotSize: ScrollingStaticGraph.dotSize) }
+                .whenHoveredAtPoint { controller.mouseMoved(to: $0, width: width, dotSize: dotSize) }
 
                 // Spacer for data labels that are overlaid below
-                FocusPointDataLabelsSpacer(controller: controller)
-                    .padding(.top, 10)
+                YSpacer(controller: controller)
                     .hidden()
+                    .padding(.top, 20)
+                    .frame(maxWidth: .infinity)
+                    .overlay(ScrollButtons().offset(x: 7, y: 5), alignment: .top)
             }
             // Data labels rendered in Overlay to avoid view dimensions calculations for less CPU usage
-            .overlay(FocusedPointDataLabels(width: width - 20, controller: controller)
-                        .offset(x: 20, y: 10)
+            .overlay(DataLabels(width: width - 20, controller: controller)
+                        .offset(x: dataLabelXOffset, y: dataLabelYOffset)
                         .opacity(mouse.show ? 1 : 0), alignment: .bottom)
+        }
+        @Environment(\.sizeCategory) private var typeSize
+        private var dataLabelXOffset: CGFloat {
+            if typeSize.isAccessibilityCategory { return 10 }
+            if controller.seriesNames.endIndex > 3 { return -10 }
+            else { return 20 }
+        }
+
+        private var dataLabelYOffset: CGFloat {
+            if typeSize.isAccessibilityCategory { return 10 }
+            if controller.seriesNames.endIndex > 3 { return -10 }
+            else { return 10 }
         }
 
         var focusLine: some View {
@@ -277,43 +338,14 @@ extension ScrollingStaticGraph {
                 .foregroundColor(Color.gray).opacity(mouse.show ? 1 : 0)
         }
     }
+
 }
 
 // MARK: - Data Labels
 
-extension ScrollingStaticGraph {
+private extension ScrollingStaticGraph.FocusedPoints {
 
-    struct FocusPointDataLabelsSpacer: View {
-
-        @Environment(\.sizeCategory) private var typeSize
-        let controller: ScrollingStaticGraphController
-
-        var body: some View {
-            if typeSize.isAccessibilityCategory {
-                VStack {
-                    ForEach(controller.seriesNames, id: \.self) { _ in
-                        row
-                    }
-                }
-            } else if controller.seriesNames.endIndex > 3 {
-                VStack {
-                    row
-                    row
-                }
-            } else {
-                row
-            }
-        }
-
-        var row: some View {
-            HStack {
-                Circle().frame(width: 1, height: typeSize.isAccessibilityCategory ? 25 : 11)
-                Text("Spacer").fontSmall()
-            }
-        }
-    }
-
-    struct FocusedPointDataLabels: View {
+    struct DataLabels: View {
 
         let width: CGFloat
         let controller: ScrollingStaticGraphController
@@ -331,12 +363,12 @@ extension ScrollingStaticGraph {
                     }
                 } else if controller.seriesNames.endIndex > 3 {
                     VStack {
-                        HStack {
+                        HStack(spacing: .detailBlockContentPadding) {
                             ForEach(controller.seriesNames.indices.filter { $0 % 2 != 0 }, id: \.self) { index in
                                 PointLabel(width: width, color: controller.seriesColors[index], index: index, focus: controller.focus)
                             }
                         }
-                        HStack {
+                        HStack(spacing: .detailBlockContentPadding) {
                             ForEach(controller.seriesNames.indices.filter { $0 % 2 == 0 }, id: \.self) { index in
                                 PointLabel(width: width, color: controller.seriesColors[index], index: index, focus: controller.focus)
                             }
@@ -380,6 +412,38 @@ extension ScrollingStaticGraph {
                     Text(focus.points[index])
                         .fontSmall(monospacedDigit: true)
                 }
+            }
+        }
+
+    }
+
+    /// Performance workaround to correctly space the Y offset of the data labels overlay depending on DynamicType
+    struct YSpacer: View {
+
+        @Environment(\.sizeCategory) private var typeSize
+        let controller: ScrollingStaticGraphController
+
+        var body: some View {
+            if typeSize.isAccessibilityCategory {
+                VStack {
+                    ForEach(controller.seriesNames, id: \.self) { _ in
+                        row
+                    }
+                }
+            } else if controller.seriesNames.endIndex > 3 {
+                VStack {
+                    row
+                    row
+                }
+            } else {
+                row
+            }
+        }
+
+        private var row: some View {
+            HStack {
+                Circle().frame(width: 1, height: typeSize.isAccessibilityCategory ? 25 : MWSmall.fontSize + 3)
+                Text("Spacer").fontSmall()
             }
         }
     }

@@ -95,11 +95,14 @@ extension GyroSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSectionDriv
     }
     
     func makeStreamDataConfig() -> GraphConfig {
-        .makeXYZLiveOverwriting(yAxisScale: Double(graphRangeSelected.fullScale), timepoints: data.stream.map(\.values), dataPoints: 300)
+        .makeXYZLiveOverwriting(yAxisScale: Double(graphRangeSelected.fullScale),
+                                timepoints: data.stream.map(\.values),
+                                dataPoints: 300)
     }
 
     func makeLoggedDataConfig() -> GraphConfig {
-        .makeHistoricalScrollable(forTimePoints: data.logged.map(\.values), yAxisScale: Double(graphRangeSelected.fullScale))
+        .makeHistoricalScrollable(forTimePoints: data.logged.map(\.values),
+                                  yAxisScale: Double(graphRangeSelected.fullScale))
     }
 
 }

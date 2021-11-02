@@ -93,7 +93,7 @@ extension SensorFusionSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSec
             yAxisMin: -Double(selectedOutputType.scale),
             yAxisMax: Double(selectedOutputType.scale),
             initialData: data.stream.map(\.values),
-            dataPointCount: 300
+            maxX: selectedOutputType.channelCount * 100
         )
     }
     
@@ -105,10 +105,9 @@ extension SensorFusionSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSec
             yAxisMin: -Double(selectedOutputType.scale),
             yAxisMax: Double(selectedOutputType.scale),
             initialData: data.logged.map(\.values),
-            dataPointCount: 300
+            maxX: data.loggedCount
         )
     }
-    
 }
 
 fileprivate extension SensorFusionOutputType {

@@ -12,7 +12,7 @@ struct GyroscopeBlock: View {
     var body: some View {
         TwoSectionLayout(
             optionViews: options,
-            leftColumn: LoggingSectionStandardized(vm: vm),
+            leftColumn: LoggedDataSection(vm: vm),
             rightColumn: LiveStreamSection(scrollViewGraphID: "GyroStreamGraph", vm: vm)
         )
             .onPreferenceChange(UnitWidthKey.self) { unitLabelWidth = $0 }

@@ -23,7 +23,8 @@ public class AccelerometerSUIVC: MWAccelerometerVM, ObservableObject {
 extension AccelerometerSUIVC: AccelerometerVMDelegate {
 
     public func drawNewLogGraph() {
-        // Write scrolling graph interface
+        loggerGraph?.clearData()
+        loggerStats = .init(.zero(for: data.loggedKind), 0)
     }
 
     public func refreshView() {

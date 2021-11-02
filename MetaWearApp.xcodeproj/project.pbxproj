@@ -792,13 +792,13 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
-		9406193926C03DE5007BE281 /* NaiveGraph */ = {
+		9406193926C03DE5007BE281 /* ScrollingStaticGraph */ = {
 			isa = PBXGroup;
 			children = (
 				9406193A26C03DF3007BE281 /* ScrollingStaticGraph.swift */,
 				948E61D226BFA7C100A387E7 /* ScrollingStaticGraphController.swift */,
 			);
-			path = NaiveGraph;
+			path = ScrollingStaticGraph;
 			sourceTree = "<group>";
 		};
 		94092E0F26C0E37200997C45 /* Persistence */ = {
@@ -1216,7 +1216,7 @@
 				9406194226C0421F007BE281 /* GraphDriver.swift */,
 				94FF670026BC8470009F7EB5 /* GraphInterface.swift */,
 				94CB0BF626D5DE700042B73C /* FeedPlot */,
-				9406193926C03DE5007BE281 /* NaiveGraph */,
+				9406193926C03DE5007BE281 /* ScrollingStaticGraph */,
 			);
 			path = Graphs;
 			sourceTree = "<group>";

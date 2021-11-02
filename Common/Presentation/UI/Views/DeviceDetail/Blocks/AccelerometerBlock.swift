@@ -15,7 +15,7 @@ struct AccelerometerBlock: View {
             ThreeSectionLayout(
                 optionViews: options,
                 otherViews: OrientationAndStepsRows(),
-                leftColumn: LoggingSectionStandardized(vm: vm),
+                leftColumn: LoggedDataSection(vm: vm),
                 rightColumn: LiveStreamSection(scrollViewGraphID: "AccelStreamGraph", vm: vm)
             )
                 .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }
@@ -24,7 +24,7 @@ struct AccelerometerBlock: View {
         } else {
             TwoSectionLayout(
                 optionViews: options,
-                leftColumn: LoggingSectionStandardized(vm: vm),
+                leftColumn: LoggedDataSection(vm: vm),
                 rightColumn: LiveStreamSection(scrollViewGraphID: "AccelStreamGraph", vm: vm)
             )
                 .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }

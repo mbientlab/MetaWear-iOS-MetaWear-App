@@ -94,6 +94,8 @@ extension DeviceDetailScreenUIKitContainer {
         @State private var keyboardHideMonitor: AnyCancellable? = nil
         @State private var keyboardShownMonitor: AnyCancellable? = nil
 
+        @Environment(\.colorScheme) private var scheme
+
         var body: some View {
             DeviceDetailScreen(chain: chain)
                 .lineSpacing(6)
@@ -109,6 +111,7 @@ extension DeviceDetailScreenUIKitContainer {
                 .environmentObject(vc)
                 .environmentObject(app)
                 .environmentObject(app.preferences)
+                .onChange(of: scheme) { _ in prefs.refreshGraphColorsetsOnColorSchemeChange() }
         }
 
 

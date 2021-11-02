@@ -2,6 +2,8 @@
 
 import SwiftUI
 
+// MARK: - View Controller Interface
+
 protocol LoggingSectionDriver: ObservableObject {
     
     var data: MWSensorDataStore { get }
@@ -23,7 +25,9 @@ protocol LoggingSectionDriver: ObservableObject {
     
 }
 
-struct LoggingSectionStandardized<VC: LoggingSectionDriver & LoggerGraphManager>: View {
+// MARK: - View
+
+struct LoggedDataSection<VC: LoggingSectionDriver & LoggerGraphManager>: View {
     
     @EnvironmentObject private var prefs: PreferencesStore
     @ObservedObject var vm: VC
@@ -36,29 +40,37 @@ struct LoggingSectionStandardized<VC: LoggingSectionDriver & LoggerGraphManager>
         
         if vm.logDataIsReadyForDisplay {
             
-            StatsBlock(colors: prefs.colorset.value.colors,
-                       vm: vm.loggerStats)
+            StatsBlock(
+                colors: prefs.colorset.value.colors,
+                vm: vm.loggerStats
+            )
 
             if !vm.isDownloadingLog {
-                ScrollingStaticGraph(controller: .init(logger: vm,
-                                                       config: vm.makeLoggedDataConfig(),
-                                                       driver: ThrottledGraphDriver(interval: 1.5),
-                                                       colorProvider: prefs),
-                                     width: .detailBlockGraphWidth)
-                    .padding(.leading, .detailBlockContentPadding)
+                ScrollingStaticGraph(controller: .init(
+                    logger: vm,
+                    config: vm.makeLoggedDataConfig(),
+                    driver: ThrottledGraphDriver(interval: 1.5),
+                    colorProvider: prefs
+                ), width: .detailBlockGraphWidth)
+                    .padding(.top, .standardVStackSpacing)
+                    .padding(.leading, .detailBlockContentPadding / 2)
             }
         }
     }
+
+    // MARK: - Controls
     
     private var buttons: some View {
         
         HStack(alignment: .firstTextBaseline) {
             let disableLogging = vm.isStreaming || (!vm.isLogging && !vm.allowsNewLogging)
             
-            ExportDataButton(label: "",
-                             isEnabled: vm.logDataIsReadyForDisplay,
-                             isPreparing: vm.data.isPreparingLogFile,
-                             action: vm.userRequestedLogExport)
+            ExportDataButton(
+                label: "",
+                isEnabled: vm.logDataIsReadyForDisplay,
+                isPreparing: vm.data.isPreparingLogFile,
+                action: vm.userRequestedLogExport
+            )
             
             Spacer()
             

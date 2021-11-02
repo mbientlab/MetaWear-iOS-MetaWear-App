@@ -20,7 +20,7 @@ public struct GraphConfig {
     public var initialData: [[Float]] = []
 
     /// Used to generate zero-ed data for a "overwriting" graph. Ignored if initial data supplied.
-    public var dataPointCount: Int = 300
+    public var maxX: Int
 }
 
 public extension GraphConfig {
@@ -37,7 +37,7 @@ public extension GraphConfig {
 
 public extension GraphConfig {
     
-    static func makeXYZLiveOverwriting(yAxisScale: Double, timepoints: [[Float]], dataPoints: Double = 300) -> GraphConfig {
+    static func makeXYZLiveOverwriting(yAxisScale: Double, timepoints: [[Float]], dataPoints: Double) -> GraphConfig {
         GraphConfig(
             chartType: .scatter,
             functionality: .liveViewOverwriting,
@@ -45,7 +45,7 @@ public extension GraphConfig {
             yAxisMin: -yAxisScale,
             yAxisMax: yAxisScale,
             initialData: timepoints,
-            dataPointCount: 300
+            maxX: Int(dataPoints)
         )
     }
     
@@ -56,15 +56,15 @@ public extension GraphConfig {
             channelLabels: ["X", "Y", "Z"],
             yAxisMin: -yAxisScale,
             yAxisMax: yAxisScale,
-            initialData: [],
-            dataPointCount: 0
+            initialData: data,
+            maxX: data.endIndex
         )
     }
 }
 
 public extension GraphConfig {
 
-    static func makeWXYZLiveOverwriting(yAxisScale: Double, dataPoints: Double = 300) -> GraphConfig {
+    static func makeWXYZLiveOverwriting(yAxisScale: Double, dataPoints: Double) -> GraphConfig {
         GraphConfig(
             chartType: .scatter,
             functionality: .liveViewOverwriting,
@@ -72,7 +72,7 @@ public extension GraphConfig {
             yAxisMin: -yAxisScale,
             yAxisMax: yAxisScale,
             initialData: [],
-            dataPointCount: 300
+            maxX: Int(dataPoints)
         )
     }
 
@@ -84,7 +84,7 @@ public extension GraphConfig {
             yAxisMin: -yAxisScale,
             yAxisMax: yAxisScale,
             initialData: data,
-            dataPointCount: 0
+            maxX: data.endIndex
         )
     }
 

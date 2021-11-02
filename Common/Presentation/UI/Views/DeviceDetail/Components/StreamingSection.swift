@@ -3,6 +3,8 @@
 
 import SwiftUI
 
+// MARK: - View Controller Interface
+
 protocol StreamingSectionDriver: StreamGraphManager, ObservableObject {
 
     var data: MWSensorDataStore { get }
@@ -20,6 +22,8 @@ protocol StreamingSectionDriver: StreamGraphManager, ObservableObject {
     func userRequestedStopStreaming()
 }
 
+// MARK: - View
+
 struct LiveStreamSection<VM: StreamingSectionDriver>: View {
 
     /// "GyroscropeStreamGraph"
@@ -36,7 +40,11 @@ struct LiveStreamSection<VM: StreamingSectionDriver>: View {
 
         if vm.isStreaming || vm.data.streamCount > 0 {
 
-            StatsBlock.LayoutPerformanceWorkaround(colors: prefs.colorset.value.colors, vm: vm.streamingStats)
+            StatsBlock.LayoutPerformanceWorkaround(
+                colors: prefs.colorset.value.colors,
+                vm: vm.streamingStats
+            )
+
             Graph(vm: vm, scrollViewGraphID: scrollViewGraphID)
         }
     }
@@ -93,41 +101,34 @@ fileprivate struct Graph<VM: StreamingSectionDriver>: View {
     @EnvironmentObject private var prefs: PreferencesStore
     @ObservedObject var vm: VM
     var scrollViewGraphID: String
-    @Environment(\.scrollProxy) private var scroller
-
-    private func scrollToGraph() {
-        withAnimation { scroller?.scrollTo(scrollViewGraphID, anchor: .top) }
-    }
 
     var body: some View {
         ZStack {
             if vm.isStreaming {
 
-                FeedPlotFixedSize(controller: .init(stream: vm,
-                                                    config: vm.makeStreamDataConfig(),
-                                                    colorProvider: prefs),
+                FeedPlotFixedSize(controller: .init(
+                    stream: vm,
+                    config: vm.makeStreamDataConfig(),
+                    colorProvider: prefs
+                ),
                                   width: .detailBlockGraphWidth)
                     .padding(.top, .standardVStackSpacing)
                     .id(scrollViewGraphID)
 
             } else if !vm.data.stream.isEmpty {
 
-                ScrollingStaticGraph(controller: .init(stream: vm,
-                                                       config: vm.makeStreamDataConfig(),
-                                                       driver: ThrottledGraphDriver(interval: 1.5),
-                                                       colorProvider: prefs),
-                                     width: .detailBlockGraphWidth)
+                ScrollingStaticGraph(controller: .init(
+                    stream: vm,
+                    config: vm.makeStreamDataConfig(),
+                    driver: ThrottledGraphDriver(interval: 1.5),
+                    colorProvider: prefs
+                ), width: .detailBlockGraphWidth)
                     .padding(.top, .standardVStackSpacing)
+
             } else {
                 Text("Error")
             }
         }
-        .padding(.leading, leadingPadding)
+        .padding(.leading, .detailBlockContentPadding / 2)
     }
-
-    #if os(iOS)
-    let leadingPadding: CGFloat = .detailBlockContentPadding
-    #else
-    let leadingPadding: CGFloat = .detailBlockContentPadding / 2
-    #endif
 }

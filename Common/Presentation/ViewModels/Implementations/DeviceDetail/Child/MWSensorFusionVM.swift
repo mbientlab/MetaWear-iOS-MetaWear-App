@@ -296,9 +296,9 @@ public extension MWSensorFusionVM {
         isLogging = true
         (allowsNewLogging, allowsNewStreaming) = (false, false)
         
-        data.clearStreamed(newKind: selectedOutputType.dataPointKind)
+        data.clearLogged(newKind: selectedOutputType.dataPointKind)
         delegate?.refreshView()
-        delegate?.drawNewStreamGraph()
+        delegate?.drawNewLogGraph()
         
         updateSensorFusionSettings()
         

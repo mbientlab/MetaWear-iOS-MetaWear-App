@@ -26,7 +26,11 @@ struct ToastServer: View {
             progressIndicator
 
             Text(vm.text)
+#if os(iOS)
+                .fontSmall(weight: .medium)
+#else
                 .fontBody(weight: .medium)
+#endif
                 .multilineTextAlignment(.leading)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.8)
@@ -34,18 +38,7 @@ struct ToastServer: View {
                 .padding(.horizontal)
         }
         .padding(12)
-        .background(
-            ZStack {
-                Capsule().fill(Color.toastPillBackground)
-                #if os(iOS)
-                Capsule().stroke(Color.secondary.opacity(0.45))
-                #elseif os(macOS)
-                Capsule().stroke(Color.secondary.opacity(0.3))
-                #endif
-            }
-            .compositingGroup()
-            .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 10)
-        )
+        .background(toastBackground)
         .padding(15)
         .onTapGesture { vm.userTappedToDismiss() }
         .accessibilityAddTraits(.updatesFrequently)
@@ -53,6 +46,28 @@ struct ToastServer: View {
     }
 
     var accessibilityLabel: String { vm.text + (vm.type == .horizontalProgress ? String(vm.percentComplete) + "%" : "") }
+
+    // MARK: - Background
+
+    var toastBackground: some View {
+#if os(iOS)
+        let opacity = 0.45
+#elseif os(macOS)
+        let opacity = 0.3
+#endif
+        return ZStack {
+            if #available(macOS 12.0, iOS 15.0, *) {
+                Capsule().fill(.ultraThinMaterial)
+            } else {
+                Capsule().fill(Color.toastPillBackground)
+            }
+            Capsule().stroke(Color.secondary.opacity(opacity))
+        }
+        .compositingGroup()
+        .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 10)
+    }
+
+    // MARK: - Progress Spinner/Line
 
     @ViewBuilder private var progressIndicator: some View {
         switch vm.type {
@@ -73,12 +88,12 @@ struct ToastServer: View {
                     .frame(maxWidth: 120)
 
             case .foreverSpinner:
-                #if os(macOS)
+#if os(macOS)
                 circularSpinner
                     .controlSize(.small)
-                #else
+#else
                 circularSpinner
-                #endif
+#endif
         }
     }
 

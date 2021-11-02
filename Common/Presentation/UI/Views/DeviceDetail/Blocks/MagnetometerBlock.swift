@@ -10,7 +10,7 @@ struct MagnetometerBlock: View {
 
     var body: some View {
         TwoSectionNoOptionsLayout(
-            leftColumn: LoggingSectionStandardized(vm: vm),
+            leftColumn: LoggedDataSection(vm: vm),
             rightColumn: LiveStreamSection(scrollViewGraphID: "MagnetometerStreamGraph", vm: vm)
         )
         .environmentObject(vm)
