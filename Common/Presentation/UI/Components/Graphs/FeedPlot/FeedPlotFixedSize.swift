@@ -1,5 +1,6 @@
-//  © 2021 Ryan Ferrell. github.com/importRyan
-
+//  Created by Ryan Ferrell.
+//  Copyright © 2021 MbientLab. All rights reserved.
+//
 
 import SwiftUI
 import Combine
