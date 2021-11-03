@@ -111,6 +111,7 @@ extension DeviceDetailScreenUIKitContainer {
                 .environmentObject(vc)
                 .environmentObject(app)
                 .environmentObject(app.preferences)
+                .environmentObject(vc.exporter)
                 .onChange(of: scheme) { _ in prefs.refreshGraphColorsetsOnColorSchemeChange() }
         }
 

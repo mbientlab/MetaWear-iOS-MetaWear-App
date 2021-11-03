@@ -11,8 +11,11 @@ struct ExportDataButton: View {
     var isPreparing: Bool
     var action: () -> Void
 
-    var body: some View {
+    #if os(iOS)
+    @EnvironmentObject private var exporter: FileExporter
+    #endif
 
+    var body: some View {
         activeButton
                 .opacity(isPreparing ? 0 : 1)
                 .overlay(preparingSpinner)
@@ -24,6 +27,17 @@ struct ExportDataButton: View {
         .allowsHitTesting(isEnabled)
         .animation(.easeOut, value: isPreparing)
         .animation(.easeInOut, value: isEnabled)
+        #if os(iOS)
+        .fileExporter(isPresented: $exporter.showExportDialog,
+                      document: exporter.document,
+                      contentType: .spreadsheet,
+                      defaultFilename: exporter.defaultFilename) { result in
+            switch result {
+                case .failure(let error): print(error)
+                case .success(let urls): print(urls)
+            }
+        }
+        #endif
     }
 
     var activeButton: some View {

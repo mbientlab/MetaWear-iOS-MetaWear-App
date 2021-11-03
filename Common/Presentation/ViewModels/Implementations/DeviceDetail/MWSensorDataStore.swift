@@ -161,42 +161,35 @@ private extension MWSensorDataStore {
 
 import SwiftUI
 
-public class FileExporter {
+public class FileExporter: ObservableObject {
+
+    @Published var showExportDialog = false
+    var document: CSVDocument? = nil
+    var defaultFilename: String? = nil
+    var exportableFileURL: URL? = nil
 
     private var alerts: AlertPresenter? = nil
 
     func export(fileURL: URL) {
         DispatchQueue.main.async { [weak self] in
-            self?.presentFileExportDialog(
-                fileURL: fileURL,
-                saveErrorTitle: "Save Error",
-                saveErrorMessage: "No programs installed that could save the file"
-            )
+            guard let self = self else { return }
+            self.presentFileExportDialog(fileURL: fileURL)
         }
     }
 
 #if os(iOS)
-    private var exportController: UIDocumentInteractionController? = nil
-
-    public func presentFileExportDialog(fileURL: URL,
-                                        saveErrorTitle: String,
-                                        saveErrorMessage: String) {
-        guard let view = UIApplication.firstKeyWindow()?.rootViewController?.view else { return }
-
-        self.exportController = UIDocumentInteractionController(url: fileURL)
-
-        if self.exportController?.presentOptionsMenu(from: view.bounds, in: view, animated: true) == false {
-            self.alerts?.presentAlert(title: saveErrorTitle, message: saveErrorMessage)
-        }
+    public func presentFileExportDialog(fileURL: URL) {
+        self.document = try? CSVDocument(csvURL: fileURL)
+        self.defaultFilename = fileURL.deletingPathExtension().lastPathComponent.appending(".csv")
+        guard document != nil else { return }
+        showExportDialog = true
     }
 
 #elseif os(macOS)
 
     lazy var panel = configureSavePanel(prompt: "Save MetaWear Data", name: "")
 
-    public func presentFileExportDialog(fileURL: URL,
-                                        saveErrorTitle: String,
-                                        saveErrorMessage: String) {
+    public func presentFileExportDialog(fileURL: URL) {
 
         guard let window = NSApp.keyWindow else { return }
         panel.nameFieldStringValue = fileURL.lastPathComponent
@@ -212,7 +205,7 @@ public class FileExporter {
                     NSLog(error.localizedDescription)
                     DispatchQueue.main.async { [weak self] in
                         self?.panel.orderOut(nil)
-                        self?.alerts?.presentAlert(title: saveErrorTitle, message: saveErrorMessage)
+                        self?.alerts?.presentAlert(title: "Save Error", message: error.localizedDescription)
                     }
                 }
             }
@@ -234,3 +227,29 @@ public class FileExporter {
 
 }
 
+// MARK: - SwiftUI-style File Export
+
+#if canImport(SwiftUI)
+import SwiftUI
+import UniformTypeIdentifiers
+
+public struct CSVDocument: FileDocument {
+    public static var readableContentTypes: [UTType] { [.spreadsheet] }
+    var data: Data
+
+    public init(csvURL: URL) throws {
+        guard FileManager.default.fileExists(atPath: csvURL.path) else { throw CocoaError(.fileNoSuchFile) }
+        self.data = try Data(contentsOf: csvURL)
+    }
+
+    public init(configuration: ReadConfiguration) throws {
+        guard let data = configuration.file.regularFileContents
+        else { throw CocoaError(.fileReadCorruptFile) }
+        self.data = data
+    }
+
+    public func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        FileWrapper(regularFileWithContents: self.data)
+    }
+}
+#endif
