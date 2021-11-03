@@ -318,6 +318,8 @@
 		94CAB91F272F5648007BC30B /* Background+Backport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB91D272F5620007BC30B /* Background+Backport.swift */; };
 		94CB0BF926D5E04A0042B73C /* FeedPlotFixedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB0BF726D5DE820042B73C /* FeedPlotFixedSize.swift */; };
 		94CD3AA726B3ED1400854FBA /* MWScannedDeviceCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */; };
+		94D11601273303D800813DB8 /* ScrollOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D11600273303D800813DB8 /* ScrollOffset.swift */; };
+		94D11602273303D800813DB8 /* ScrollOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D11600273303D800813DB8 /* ScrollOffset.swift */; };
 		94DABBC726C0F483004590E4 /* iPadGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DABBC626C0F483004590E4 /* iPadGridLayout.swift */; };
 		94DABBC826C0F4A3004590E4 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC3126BE8F7E0087F960 /* GridLayout.swift */; };
 		94E155CB26C4DAE100B73487 /* MWToastServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */; };
@@ -551,6 +553,7 @@
 		94CAB91D272F5620007BC30B /* Background+Backport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Background+Backport.swift"; sourceTree = "<group>"; };
 		94CB0BF726D5DE820042B73C /* FeedPlotFixedSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPlotFixedSize.swift; sourceTree = "<group>"; };
 		94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScannedDeviceCellVM.swift; sourceTree = "<group>"; };
+		94D11600273303D800813DB8 /* ScrollOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffset.swift; sourceTree = "<group>"; };
 		94DABBC626C0F483004590E4 /* iPadGridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGridLayout.swift; sourceTree = "<group>"; };
 		94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWToastServerVM.swift; sourceTree = "<group>"; };
 		94E155CD26C4DAF200B73487 /* ToastVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastVM.swift; sourceTree = "<group>"; };
@@ -946,6 +949,7 @@
 				947979B126B98EC800AEB5EA /* UIKit+KeyWindow.swift */,
 				941EFC1E26BE0F740087F960 /* WhenHovered.swift */,
 				94939CE626E9749E009AC568 /* WhenHoveredAtPoint.swift */,
+				94D11600273303D800813DB8 /* ScrollOffset.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1703,6 +1707,7 @@
 				941EFB7F26BCE76E0087F960 /* UpdateButton.swift in Sources */,
 				941EFBAC26BCE7920087F960 /* HapticBlock.swift in Sources */,
 				9412EB3526C627CD0075808B /* MagnetometerSUIVC.swift in Sources */,
+				94D11602273303D800813DB8 /* ScrollOffset.swift in Sources */,
 				94C2788826C11314006772F6 /* HeaderLayout.swift in Sources */,
 				941EFBA626BCE7920087F960 /* TemperatureBlock.swift in Sources */,
 				941EFBBB26BCE79D0087F960 /* AmbientLightVM.swift in Sources */,
@@ -1767,6 +1772,7 @@
 				944A043526C9A1E70086318F /* GridLayout.swift in Sources */,
 				947979DD26B9B49D00AEB5EA /* GyroscopeBlock.swift in Sources */,
 				947979C526B9A03700AEB5EA /* TemperatureBlock.swift in Sources */,
+				94D11601273303D800813DB8 /* ScrollOffset.swift in Sources */,
 				941EFC1726BDC1240087F960 /* ConnectionToolbarButton.swift in Sources */,
 				948E61C626BF3FB700A387E7 /* ScannedDeviceCellSUIVC.swift in Sources */,
 				94CAB917272C68D7007BC30B /* WhenHoveredAtPoint.swift in Sources */,

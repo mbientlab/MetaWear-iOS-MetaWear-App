@@ -43,7 +43,7 @@ class FeedPlotController: ObservableObject {
         self.seriesColors = colors
 
         #if os(iOS)
-        let streamingPointSize: Float = 7
+        let streamingPointSize: Float = UIDevice.current.userInterfaceIdiom == .pad ? 4 : 7
         #else
         let streamingPointSize: Float = 2
         #endif

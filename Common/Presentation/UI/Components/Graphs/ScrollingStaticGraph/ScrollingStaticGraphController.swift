@@ -76,10 +76,6 @@ class ScrollingStaticGraphController: ObservableObject {
         objectWillChange.send()
     }
 
-    func updateScrollOffset(_ value: CGFloat) {
-        self.scrollOffset = value
-    }
-
     func updateColors(for provider: ColorsetProvider) {
         colorUpdates = provider.colorset
             .receive(on: DispatchQueue.main)
@@ -126,6 +122,12 @@ class ScrollingStaticGraphController: ObservableObject {
             if self.focus.show != value { self.focus.show = value }
             if self.mouse.show != value { self.mouse.show = value }
         }
+    }
+}
+
+extension ScrollingStaticGraphController: ScrollOffsetDelegate {
+    func updateScrollOffset(_ value: CGFloat) {
+        DispatchQueue.main.async { self.scrollOffset = value }
     }
 }
 

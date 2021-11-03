@@ -10,6 +10,11 @@ extension EnvironmentValues {
         set { self[ScrollViewProxyKey.self] = newValue }
     }
 
+    var contentHeight: CGFloat {
+        get { return self[ContentHeightEVK.self] }
+        set { self[ContentHeightEVK.self] = newValue }
+    }
+
     var hasUserFocus: Bool {
         get { return self[HasUserFocusKey.self] }
         set { self[HasUserFocusKey.self] = newValue }
@@ -33,6 +38,10 @@ extension EnvironmentValues {
 
 private struct ScrollViewProxyKey: EnvironmentKey {
     static let defaultValue: ScrollViewProxy? = nil
+}
+
+private struct ContentHeightEVK: EnvironmentKey {
+    static let defaultValue: CGFloat = 0
 }
 
 private struct HasUserFocusKey: EnvironmentKey {

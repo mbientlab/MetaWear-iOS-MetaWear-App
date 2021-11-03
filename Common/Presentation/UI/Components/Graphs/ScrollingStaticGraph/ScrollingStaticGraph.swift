@@ -11,18 +11,20 @@ struct ScrollingStaticGraph: View {
 
     let width: CGFloat
     let height: CGFloat = .detailsGraphHeight
-    let dotSize: CGFloat = {
-        return 3
-        if #available(macOS 12.0, iOS 15.0, *) { return 2.5 }
-        else { return 3 }
-    }()
+    let dotSize: CGFloat = Self.getDotSize()
 
     var body: some View {
         ScrollViewReader { proxy in
             ZStack(alignment: .topLeading) {
+#if os(iOS)
+                if Self.useLazyRenderingWorkaround { lazyRenderingWorkaround } else { scrollView }
+
+                FocusedPoints(width: width, height: height, dotSize: dotSize, controller: controller)
+                    .opacity(showGraph ? 1 : 0)
+#else
                 scrollView
                 FocusedPoints(width: width, height: height, dotSize: dotSize, controller: controller)
-
+#endif
             }
             .frame(width: width)
             .padding(.vertical, 8)
@@ -34,25 +36,24 @@ struct ScrollingStaticGraph: View {
     var scrollView: some View {
         ScrollView(.horizontal, showsIndicators: true) {
 #if os(macOS) && !targetEnvironment(macCatalyst)
-            ScrollOffsetMeasurer()
+            HorizontalScrollOffset(delegate: controller, coordinateSpace: .localGraphScrollView)
 #endif
             plottingMethod
                 .frame(width: CGFloat(controller.displayedPoints.endIndex) * dotSize, height: height)
                 .background(scrollTags)
         }
-        .coordinateSpace(name: "scrollView")
-        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { offset in controller.updateScrollOffset(offset.x) }
+        .coordinateSpace(name: CoordinateSpace.Names.LocalGraphScrollView)
         .background(PlotBackgroundLinesAndLabels(min: controller.yMin, max: controller.yMax))
         .background(Color.plotBackground)
         .frame(width: width, height: height)
     }
 
-    var plottingMethod: some View {
-        //                if #available(macOS 12.0, iOS 15.0, *) {
-        //                    CanvasGPUPlot(width: width, height: height, dotSize: dotSize)
-        //                } else {
-        LegacyPlot(width: width, height: height, dotSize: dotSize)
-        //        }
+    @ViewBuilder var plottingMethod: some View {
+        if #available(macOS 12.0, iOS 15.0, *) {
+            CanvasGPUPlot(width: width, height: height, dotSize: dotSize)
+        } else {
+            LegacyPlot(width: width, height: height, dotSize: dotSize)
+        }
     }
 
     var scrollTags: some View {
@@ -62,6 +63,63 @@ struct ScrollingStaticGraph: View {
             Color.clear.frame(width: 0.1).id("end")
         }.hidden()
     }
+
+    static func getDotSize() -> CGFloat {
+        if #available(macOS 12.0, iOS 15.0, *) { return 2.5 }
+        else { return 3 }
+    }
+
+    // MARK: - iOS Lazy Rendering on Scroll
+    ///
+    /// Issue: In iOS 14, several >3000 data point plots can degrade scroll view performance.
+    /// A LazyVStack actually is less performant than the current eager implementation.
+    ///
+    /// Workaround: With more than 2 graphs, this conditionally removes the plots from
+    /// the view hierarchy when scrolled out of view. There is a slight hitch during removal,
+    /// but otherwise performance is restored.
+
+#if os(iOS)
+    @Environment(\.contentHeight) private var contentHeight
+    @State private var showGraph = true
+    private static var totalGraphs = 0
+    private static let totalGraphLimit = 2
+    private static let useLazyRenderingWorkaround: Bool = {
+        if #available(iOS 15.0, *) { return false } // GPU-based seems performant
+        return UIDevice.current.userInterfaceIdiom == .phone
+    }()
+
+    private var lazyRenderingWorkaround: some View {
+        Group {
+            if showGraph { scrollView } else { revealGraphButton }
+        }
+        .frame(width: width, height: height)
+        .onAppear { Self.totalGraphs += 1 }
+        .onDisappear { Self.totalGraphs -= 1 }
+
+        // Measure offset in scroll view
+        .background(GeometryReader { geo in
+            Color.clear
+                .onChange(of: geo.frame(in: .iOSDetailScrollView), perform: hideGraphForSmootherScrolling)
+        })
+    }
+
+    private var revealGraphButton: some View {
+        Button { withAnimation { showGraph = true } } label: {
+            SFSymbol.refresh.image()
+                .font(.largeTitle)
+        }
+    }
+
+    private func hideGraphForSmootherScrolling(_ frame: CGRect) {
+        guard showGraph, Self.totalGraphs > Self.totalGraphLimit else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.16) {
+            guard showGraph, Self.totalGraphs > Self.totalGraphLimit else { return }
+            let isNotVisible = frame.minY > contentHeight || frame.maxY < 0
+            if isNotVisible, showGraph { showGraph = false }
+        }
+    }
+#endif
+
 }
 
 // MARK: - Plot Methods
@@ -141,19 +199,6 @@ private extension ScrollingStaticGraph {
 
 private extension ScrollingStaticGraph {
 
-    struct ScrollOffsetMeasurer: View {
-
-        var body: some View {
-            GeometryReader { geometry in
-                Color.clear.preference(
-                    key: ScrollOffsetPreferenceKey.self,
-                    value: geometry.frame(in: .named("scrollView")).origin
-                )
-            }.frame(width: 0, height: 0)
-        }
-    }
-
-
     struct ScrollButtons: View {
         @Environment(\.scrollProxy) private var scroller
 
@@ -184,11 +229,6 @@ private extension ScrollingStaticGraph {
             }
         }
     }
-}
-
-private struct ScrollOffsetPreferenceKey: PreferenceKey {
-    static var defaultValue: CGPoint = .zero
-    static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) {}
 }
 
 

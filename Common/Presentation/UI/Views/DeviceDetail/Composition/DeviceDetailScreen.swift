@@ -14,25 +14,27 @@ struct DeviceDetailScreen: View {
     @Namespace private var details // accessibility
 
     var body: some View {
-        VStack(spacing: 0) {
-            // Format bounds + place toast overlay by platform
+        screen
+            .toolbar { Toolbar(vm: vc.vms.header as! DetailHeaderSUIVC) }
+            .pickerStyle(SegmentedPickerStyle())
+            .accessibilityLabel("Details for Currently Connected Device")
+            .accessibilityLinkedGroup(id: "details", in: chain)
+    }
+
+    // Format bounds + place toast overlay by platform
+    var screen: some View {
 #if os(iOS)
-            iOSDeviceDetailLayout(chain: chain,details: details)
-                .overlay(
-                    ToastServer(vm: vc.toast as! MWToastServerVM)
-                        .accessibilityHidden(true)
-                        .shadow(color: iOSToastShadowColor, radius: 15, x: 0, y: 10),
-                    alignment: .top)
+        iOSDeviceDetailLayout(chain: chain,details: details)
+            .overlay(
+                ToastServer(vm: vc.toast as! MWToastServerVM)
+                    .accessibilityHidden(true)
+                    .shadow(color: iOSToastShadowColor, radius: 15, x: 0, y: 10),
+                alignment: .top)
 #elseif os(macOS)
-            MacDeviceDetailLayout(chain: chain, details: details)
-                .fontBody()
-                .overlay(ToastServer(vm: vc.toast as! MWToastServerVM).accessibilityHidden(true), alignment: .top)
+        MacDeviceDetailLayout(chain: chain, details: details)
+            .fontBody()
+            .overlay(ToastServer(vm: vc.toast as! MWToastServerVM).accessibilityHidden(true), alignment: .top)
 #endif
-        }
-        .toolbar { Toolbar(vm: vc.vms.header as! DetailHeaderSUIVC) }
-        .pickerStyle(SegmentedPickerStyle())
-        .accessibilityLabel("Details for Currently Connected Device")
-        .accessibilityLinkedGroup(id: "details", in: chain)
     }
 
     private var iOSToastShadowColor: Color {
