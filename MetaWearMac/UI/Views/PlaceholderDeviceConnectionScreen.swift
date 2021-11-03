@@ -10,7 +10,7 @@ struct PlaceholderDeviceConnectionScreen: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var isAnimating = false
 
-    private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect().dropFirst()
+    private let timer = Timer.publish(every: 4, on: .main, in: .common).autoconnect().dropFirst()
     @State private var iteration = 0
 
     var body: some View {
@@ -20,25 +20,22 @@ struct PlaceholderDeviceConnectionScreen: View {
                 .fontLarger()
                 .accessibilitySortPriority(10)
 
-            ZStack {
-                metamotionS.opacity(iteration % 2 == 0 ? 1 : 0)
-                metamotionC.opacity(iteration % 2 != 0 ? 1 : 0)
-            }
-            .onAppear { DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                iteration += 1
-            }}
-            .onReceive(timer) { _ in
-                guard !reduceMotion else { return }
-                iteration += 1
-            }
-            .accessibilityElement(children: .combine)
-            .accessibilityLabel("Spinning MetaMotion devices")
-            .accessibilityAddTraits(.isImage)
+            metamotionS
+                .onAppear { DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    iteration += 1
+                }}
+                .onReceive(timer) { _ in
+                    guard !reduceMotion else { return }
+                    iteration += 1
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Spinning MetaMotion devices")
+                .accessibilityAddTraits(.isImage)
 
-            .padding(.top, 70)
+                .padding(.top, 70)
 
         }
-        .animation(.spring(response: 0.8, dampingFraction: 0.79, blendDuration: 0.2).speed(1.4), value: iteration)
+        .animation(.spring(response: 0.8, dampingFraction: 0.79, blendDuration: 0.2).speed(1.1), value: iteration)
         .offset(y: -50)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .overlay(dyslexic.accessibilitySortPriority(10).padding(30), alignment: .bottom)
@@ -51,14 +48,6 @@ struct PlaceholderDeviceConnectionScreen: View {
 
     private var metamotionS: some View {
         Image(Images.metamotionS.catalogName)
-            .resizable()
-            .scaledToFit()
-            .frame(maxWidth: size, maxHeight: size)
-            .modifier(SpinEffect(degrees: CGFloat(iteration) * 360))
-    }
-
-    private var metamotionC: some View {
-        Image(Images.metamotionC.catalogName)
             .resizable()
             .scaledToFit()
             .frame(maxWidth: size, maxHeight: size)
@@ -80,7 +69,7 @@ struct PlaceholderDeviceConnectionScreen: View {
             ForEach(FontFace.allCases) { face in
                 Button(face.name) { binding.wrappedValue = face }
                 if face == .system {
-                   Divider()
+                    Divider()
                 }
             }
         }

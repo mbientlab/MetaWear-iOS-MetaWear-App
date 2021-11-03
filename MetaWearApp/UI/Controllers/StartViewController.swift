@@ -43,12 +43,15 @@ class StartViewController: UIViewController {
     }
     
 }
+
 extension StartViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         let shouldHide = viewController === self
         navigationController.setNavigationBarHidden(shouldHide, animated: animated)
     }
 }
+
+// MARK: - Orange Splash Screen
 
 import SwiftUI
 
@@ -87,7 +90,7 @@ struct AnimatedStart: View {
                     .position(x: xPosition.leading, y: yPosition)
             )
             .background(
-                metamotionC
+                mirroredMetamotionS
                     .frame(width: imageWidth)
                     .position(x: xPosition.trailing, y: yPosition)
             )
@@ -100,7 +103,7 @@ struct AnimatedStart: View {
 
     private func xPosition(in width: CGFloat) -> (leading: CGFloat, trailing: CGFloat) {
         let offset: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 25 : -6
-        return (offset, width - offset + 20) // Visually the C device needs more offset
+        return (offset, width - offset)
     }
 
     private func imageWidth(in frameWidth: CGFloat) -> CGFloat {
@@ -142,9 +145,10 @@ struct AnimatedStart: View {
             .rotationEffect(.degrees(-10))
     }
 
-    private var metamotionC: some View {
-        Image(Images.metamotionCLarge.catalogName)
+    private var mirroredMetamotionS: some View {
+        Image(Images.metamotionSLarge.catalogName)
             .resizable()
+            .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
             .scaledToFit()
             .rotationEffect(.degrees(10))
     }
