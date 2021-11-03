@@ -32,7 +32,7 @@ public extension TimeIdentifiedDataPoint {
 
     init(euler: TimeIdentifiedEulerAngles) {
         self.timepoint = euler.id
-        self.values = [euler.value.pitch, euler.value.roll, euler.value.yaw, euler.value.heading]
+        self.values = [euler.value.pitch, euler.value.roll, euler.value.yaw]
     }
 
     init(quaternion: TimeIdentifiedQuaternion) {
@@ -51,7 +51,7 @@ public enum DataPointKind: Int {
     public var channelLabels: [String] {
         switch self {
             case .cartesianXYZ: return ["X", "Y", "Z"]
-            case .eulerAngle: return ["Pitch", "Roll", "Yaw", "Heading"]
+            case .eulerAngle: return ["Pitch", "Roll", "Yaw"]
             case .quaternion: return ["W", "X", "Y", "Z"]
         }
     }
