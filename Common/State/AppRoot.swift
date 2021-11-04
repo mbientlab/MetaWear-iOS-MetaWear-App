@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import CoreBluetoothMock
 
 public class AppRoot: NSObject, ObservableObject {
 
@@ -23,30 +22,7 @@ public class AppRoot: NSObject, ObservableObject {
 }
 
 #if os(macOS)
-extension AppRoot: NSApplicationDelegate {
-
-    public func applicationWillFinishLaunching(_ notification: Notification) {
-        launchMockBluetooth()
-    }
-
-}
+extension AppRoot: NSApplicationDelegate {}
 #else
-extension AppRoot {
-
-    public func applicationWillFinishLaunching(_ application: UIApplication, options: [UIApplication.LaunchOptionsKey : Any]? = nil) {
-        launchMockBluetooth()
-    }
-}
+extension AppRoot {}
 #endif
-
-
-extension AppRoot {
-
-    func launchMockBluetooth() {
-#if DEBUG
-        if CommandLine.arguments.contains("mocking-enabled") {
-            launchMockBluetooth()
-        }
-#endif
-    }
-}

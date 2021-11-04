@@ -308,7 +308,6 @@
 		94C553B326B7E0F700E7B2DC /* FirmwareVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C553A226B7E0F700E7B2DC /* FirmwareVM.swift */; };
 		94C553B426B7E0F700E7B2DC /* GyroVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C553A326B7E0F700E7B2DC /* GyroVM.swift */; };
 		94C7511B26C1EB9A00AB3E47 /* MetaWearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7511A26C1EB9A00AB3E47 /* MetaWearTests.swift */; };
-		94CAB911272B2DDC007BC30B /* CoreBluetoothMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94CAB910272B2DDC007BC30B /* CoreBluetoothMock.framework */; };
 		94CAB914272C648C007BC30B /* FeedPlotFixedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CB0BF726D5DE820042B73C /* FeedPlotFixedSize.swift */; };
 		94CAB917272C68D7007BC30B /* WhenHoveredAtPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94939CE626E9749E009AC568 /* WhenHoveredAtPoint.swift */; };
 		94CAB919272C9785007BC30B /* MacDeviceDetailLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CAB918272C9785007BC30B /* MacDeviceDetailLayout.swift */; };
@@ -597,7 +596,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				561C9CE7F6D32CF0E249D443 /* Pods_MetaWearMac.framework in Frameworks */,
-				94CAB911272B2DDC007BC30B /* CoreBluetoothMock.framework in Frameworks */,
 				9452D3A5272F786900AD3D43 /* FeedPlot in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
