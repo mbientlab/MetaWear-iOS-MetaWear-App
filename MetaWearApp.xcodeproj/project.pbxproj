@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01510B90062A4276CBFBDB65 /* Pods_MetaWearApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB2CE4DF87BA663ECF7BF /* Pods_MetaWearApp.framework */; };
 		561C9CE7F6D32CF0E249D443 /* Pods_MetaWearMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01215C527F3A24A0D151C0F5 /* Pods_MetaWearMac.framework */; };
 		916D60474F5A7EF7540EFC01 /* Pods_MetaWearApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35BB2CE4DF87BA663ECF7BF /* Pods_MetaWearApp.framework */; };
 		94006FBB26C4D4170048C5AD /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94006FBA26C4D4170048C5AD /* AlertPresenter.swift */; };
@@ -616,7 +615,6 @@
 				AB5D5F5625B8A0B900D2591C /* Foundation.framework in Frameworks */,
 				AB5D5F5225B8A09A00D2591C /* CoreData.framework in Frameworks */,
 				916D60474F5A7EF7540EFC01 /* Pods_MetaWearApp.framework in Frameworks */,
-				01510B90062A4276CBFBDB65 /* Pods_MetaWearApp.framework in Frameworks */,
 				9452D3A7272F787E00AD3D43 /* FeedPlot in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1396,7 +1394,7 @@
 			attributes = {
 				CLASSPREFIX = MBL;
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = MbientLab;
 				TargetAttributes = {
 					941EFB5526BCE16B0087F960 = {
@@ -1936,6 +1934,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = MetaWearMac/MetaWearMac.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1970,6 +1969,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = MetaWearMac/MetaWearMac.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
