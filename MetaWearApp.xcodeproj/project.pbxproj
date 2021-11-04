@@ -37,7 +37,6 @@
 		941EFB6D26BCE5F70087F960 /* ScannedDeviceCellSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB6C26BCE5F70087F960 /* ScannedDeviceCellSwiftUI.swift */; };
 		941EFB6F26BCE6640087F960 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB6E26BCE6640087F960 /* Sidebar.swift */; };
 		941EFB7526BCE6B20087F960 /* MetaWearScanningSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFB7426BCE6B20087F960 /* MetaWearScanningSVC.swift */; };
-		941EFB7626BCE7380087F960 /* AccelerometerSampleFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */; };
 		941EFB7726BCE7380087F960 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438D94D26B453F30014FC91 /* Images.swift */; };
 		941EFB7926BCE7380087F960 /* MetaWearEnumsSwiftBridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */; };
 		941EFB7A26BCE7440087F960 /* CrossPlatformAlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F3317026B5308B0015EE88 /* CrossPlatformAlertPresenter.swift */; };
@@ -182,7 +181,6 @@
 		9452D3A7272F787E00AD3D43 /* FeedPlot in Frameworks */ = {isa = PBXBuildFile; productRef = 9452D3A6272F787E00AD3D43 /* FeedPlot */; };
 		9453FD3926B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */; };
 		9473587926B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */; };
-		9473587B26B92D610032EE87 /* AccelerometerSampleFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */; };
 		947979B226B98EC800AEB5EA /* UIKit+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B126B98EC800AEB5EA /* UIKit+KeyWindow.swift */; };
 		947979B426B98F0400AEB5EA /* DetailVMContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B326B98F0400AEB5EA /* DetailVMContainer.swift */; };
 		947979BA26B9985700AEB5EA /* DeviceDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947979B926B9985700AEB5EA /* DeviceDetailScreen.swift */; };
@@ -321,14 +319,14 @@
 		94DABBC726C0F483004590E4 /* iPadGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DABBC626C0F483004590E4 /* iPadGridLayout.swift */; };
 		94DABBC826C0F4A3004590E4 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC3126BE8F7E0087F960 /* GridLayout.swift */; };
 		94DADBF527348B8900AB75D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94DADBF727348B8900AB75D1 /* InfoPlist.strings */; };
+		94DADBF927348FE400AB75D1 /* StatsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DADBF827348FE400AB75D1 /* StatsVM.swift */; };
+		94DADBFA27348FE400AB75D1 /* StatsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DADBF827348FE400AB75D1 /* StatsVM.swift */; };
 		94E155CB26C4DAE100B73487 /* MWToastServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */; };
 		94E155CC26C4DAE100B73487 /* MWToastServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */; };
 		94E155CE26C4DAF200B73487 /* ToastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CD26C4DAF200B73487 /* ToastVM.swift */; };
 		94E155CF26C4DAF200B73487 /* ToastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CD26C4DAF200B73487 /* ToastVM.swift */; };
 		94E155D126C4E4FF00B73487 /* DataStreamStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155D026C4E4FF00B73487 /* DataStreamStats.swift */; };
 		94E155D226C4E4FF00B73487 /* DataStreamStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155D026C4E4FF00B73487 /* DataStreamStats.swift */; };
-		94E155D826C4EC6C00B73487 /* I2CSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155D726C4EC6C00B73487 /* I2CSize.swift */; };
-		94E155D926C4EC6C00B73487 /* I2CSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155D726C4EC6C00B73487 /* I2CSize.swift */; };
 		94E155E126C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155E026C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift */; };
 		94E155E226C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155E026C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift */; };
 		94E155E526C57CBB00B73487 /* I2CBusSUIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155E426C57CBB00B73487 /* I2CBusSUIVC.swift */; };
@@ -452,7 +450,6 @@
 		944EACAF26C2FBD300B73814 /* MWGyroVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWGyroVM.swift; sourceTree = "<group>"; };
 		9453FD3826B4EFE600239FDD /* MWDeviceDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWDeviceDetailsCoordinator.swift; sourceTree = "<group>"; };
 		9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaWearEnumsSwiftBridges.swift; sourceTree = "<group>"; };
-		9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerometerSampleFrequency.swift; sourceTree = "<group>"; };
 		947979B126B98EC800AEB5EA /* UIKit+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+KeyWindow.swift"; sourceTree = "<group>"; };
 		947979B326B98F0400AEB5EA /* DetailVMContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVMContainer.swift; sourceTree = "<group>"; };
 		947979B926B9985700AEB5EA /* DeviceDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailScreen.swift; sourceTree = "<group>"; };
@@ -555,10 +552,10 @@
 		94D11600273303D800813DB8 /* ScrollOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffset.swift; sourceTree = "<group>"; };
 		94DABBC626C0F483004590E4 /* iPadGridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGridLayout.swift; sourceTree = "<group>"; };
 		94DADBF627348B8900AB75D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		94DADBF827348FE400AB75D1 /* StatsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsVM.swift; sourceTree = "<group>"; };
 		94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWToastServerVM.swift; sourceTree = "<group>"; };
 		94E155CD26C4DAF200B73487 /* ToastVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastVM.swift; sourceTree = "<group>"; };
 		94E155D026C4E4FF00B73487 /* DataStreamStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStreamStats.swift; sourceTree = "<group>"; };
-		94E155D726C4EC6C00B73487 /* I2CSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = I2CSize.swift; sourceTree = "<group>"; };
 		94E155E026C4EF9F00B73487 /* PassthroughSwiftUIVCs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughSwiftUIVCs.swift; sourceTree = "<group>"; };
 		94E155E426C57CBB00B73487 /* I2CBusSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = I2CBusSUIVC.swift; sourceTree = "<group>"; };
 		94F3316626B518D30015EE88 /* DetailHeaderSUIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderSUIVC.swift; sourceTree = "<group>"; };
@@ -908,11 +905,9 @@
 		941EFBF526BD1CB20087F960 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9473587A26B92D610032EE87 /* AccelerometerSampleFrequency.swift */,
 				948E48DA26C4551300CB9152 /* DataPointModels.swift */,
 				94E155D026C4E4FF00B73487 /* DataStreamStats.swift */,
 				941EFC0426BDA7450087F960 /* DetailGroup.swift */,
-				94E155D726C4EC6C00B73487 /* I2CSize.swift */,
 				941EFC2F26BE8EAE0087F960 /* MetaWearDeviceModel.swift */,
 				9473587826B92D3E0032EE87 /* MetaWearEnumsSwiftBridges.swift */,
 				941EFBF626BD1CBE0087F960 /* SignalLevel.swift */,
@@ -1180,6 +1175,7 @@
 				94006FB326C4D27D0048C5AD /* Child */,
 				94006FB426C4D2920048C5AD /* Parent */,
 				944A043A26C9FFED0086318F /* MWSignalsStore.swift */,
+				94DADBF827348FE400AB75D1 /* StatsVM.swift */,
 			);
 			path = DeviceDetail;
 			sourceTree = "<group>";
@@ -1605,7 +1601,6 @@
 				941EFBBD26BCE79E0087F960 /* TemperatureVM.swift in Sources */,
 				941EFC2C26BE7CCC0087F960 /* Menus.swift in Sources */,
 				94BAA74526C38AFA0045E5E4 /* MWBarometerVM.swift in Sources */,
-				94E155D926C4EC6C00B73487 /* I2CSize.swift in Sources */,
 				948E48DC26C4551300CB9152 /* DataPointModels.swift in Sources */,
 				941EFB7D26BCE7500087F960 /* ShakeEffect.swift in Sources */,
 				94E155E626C57CBB00B73487 /* I2CBusSUIVC.swift in Sources */,
@@ -1628,7 +1623,6 @@
 				941EFB7926BCE7380087F960 /* MetaWearEnumsSwiftBridges.swift in Sources */,
 				941EFBC626BCE7A30087F960 /* DevicesScanningVM.swift in Sources */,
 				941EFBD526BCE7B30087F960 /* MWDevicesScanningVM.swift in Sources */,
-				941EFB7626BCE7380087F960 /* AccelerometerSampleFrequency.swift in Sources */,
 				94DABBC826C0F4A3004590E4 /* GridLayout.swift in Sources */,
 				941EFBC126BCE79E0087F960 /* FirmwareVM.swift in Sources */,
 				941EFBC826BCE7A80087F960 /* MWDeviceDetailsCoordinator.swift in Sources */,
@@ -1667,6 +1661,7 @@
 				941EFC0326BD973A0087F960 /* Sort+RawRepresentable.swift in Sources */,
 				941EFBBA26BCE79D0087F960 /* HeaderVM.swift in Sources */,
 				941EFC2E26BE8AAB0087F960 /* SpinEffect.swift in Sources */,
+				94DADBFA27348FE400AB75D1 /* StatsVM.swift in Sources */,
 				941EFB9726BCE7890087F960 /* SignalSUIVC.swift in Sources */,
 				941EFB9D26BCE7920087F960 /* MagnetometerBlock.swift in Sources */,
 				941EFBA126BCE7920087F960 /* BarometerBlock.swift in Sources */,
@@ -1755,7 +1750,6 @@
 				94F3317526B531C50015EE88 /* DeviceDetailsCoordinator.swift in Sources */,
 				94CAB91C272F54AE007BC30B /* LogsBlock.swift in Sources */,
 				94ACC9E126B9F5F700264F6E /* ExportDataButton.swift in Sources */,
-				94E155D826C4EC6C00B73487 /* I2CSize.swift in Sources */,
 				94C553B426B7E0F700E7B2DC /* GyroVM.swift in Sources */,
 				9420F83526C6BFDB00E88319 /* GPIOSUIVC.swift in Sources */,
 				9438D95726B467FC0014FC91 /* DevicesScanningVM.swift in Sources */,
@@ -1842,7 +1836,6 @@
 				947979C926B9A05000AEB5EA /* MechanicalSwitchBlock.swift in Sources */,
 				948E48DB26C4551300CB9152 /* DataPointModels.swift in Sources */,
 				94BE0DD026C6F108000A6E2F /* StreamingSection.swift in Sources */,
-				9473587B26B92D610032EE87 /* AccelerometerSampleFrequency.swift in Sources */,
 				94BAA73E26C38A780045E5E4 /* MWI2CBusVM.swift in Sources */,
 				9438D95C26B47C990014FC91 /* String+Drop0xPrefix.swift in Sources */,
 				9487921D26C335600066CD5E /* MWMagnetometerVM.swift in Sources */,
@@ -1881,6 +1874,7 @@
 				9420F83626C6C06E00E88319 /* SmallTextField.swift in Sources */,
 				94A514AC26B87BFB008707ED /* MWBatteryVM.swift in Sources */,
 				947979BA26B9985700AEB5EA /* DeviceDetailScreen.swift in Sources */,
+				94DADBF927348FE400AB75D1 /* StatsVM.swift in Sources */,
 				94FF670526BCA15D009F7EB5 /* DownloadButton.swift in Sources */,
 				9420F83426C6BF9F00E88319 /* SensorFusionSUIVC.swift in Sources */,
 				94006FBB26C4D4170048C5AD /* AlertPresenter.swift in Sources */,

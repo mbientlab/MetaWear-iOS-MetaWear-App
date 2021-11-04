@@ -136,6 +136,36 @@ enum Orientation: CaseIterable {
     }
 }
 
+public enum AccelerometerSampleFrequency: Int, CaseIterable, Identifiable {
+    case hz800
+    case hz400
+    case hz200
+    case hz100
+    case hz50
+    case hz12_5
+
+    public var frequency: Float {
+        switch self {
+            case .hz800: return 800
+            case .hz400: return 400
+            case .hz200: return 200
+            case .hz100: return 100
+            case .hz50: return 50
+            case .hz12_5: return 12.5
+        }
+    }
+
+    public var frequencyLabel: String {
+        switch self {
+            case .hz12_5: return "12.5"
+            default: return String(format: "%1.0f", frequency)
+        }
+    }
+
+    public var id: Int { rawValue }
+}
+
+
 // MARK: - Gyroscope
 
 public enum GyroscopeGraphRange: Int, CaseIterable, Identifiable {
@@ -584,6 +614,33 @@ public enum GPIOPin: Int, CaseIterable, Identifiable {
     public var id: Int { rawValue }
 
 }
+
+// MARK: - I2C
+
+public enum I2CSize: Int, CaseIterable, Identifiable {
+    case byte
+    case word
+    case dword
+
+    public var length: UInt8 {
+        switch self {
+            case .byte: return 1
+            case .word: return 2
+            case .dword: return 4
+        }
+    }
+
+    public var displayName: String {
+        switch self {
+            case .byte: return "byte"
+            case .word: return "word"
+            case .dword: return "dword"
+        }
+    }
+
+    public var id: Int { rawValue }
+}
+
 
 // MARK: - Sensor Fusion
 
