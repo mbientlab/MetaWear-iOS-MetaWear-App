@@ -1,9 +1,11 @@
 # MetaWear App for iOS/macOS/tvOS/watchOS by MBIENTLAB
 
-### Compared to MetaBase, the MetaWear app sends and receives more granular signals to help developers with debugging.
+### This app supports granular analysis of raw MetaWear sensor data. (For a simpler workflow for acquiring streamed or logged MetaWear sensor data, try the MetaBase app.)
 
-## Looking for sample snippets?
-For using, configuring, and connecting to MetaWears, try: `Common/Presentation/ViewModels/Implementations/`. These objects are written imperatively out of convenience for UIKit and AppKit. When using SwiftUI views, they can be naively wrapped.
+## Looking for sample code snippets?
+For using, configuring, and connecting to MetaWears, try: `Common/Presentation/ViewModels/Implementations/`. These objects are written imperatively for UIKit/AppKit. For a sample use with SwiftUI views, these VMs call delegate `ObservableObjects` suffixed with `SUIVC`.
+
+For C++ constants, try `MetaWearEnumsSwiftBridges.swift`. 
 
 ## More MetaWear Resources
 * [Swift API Tutorial](https://mbientlab.com/tutorials/SwApple.html#swift-apis)
