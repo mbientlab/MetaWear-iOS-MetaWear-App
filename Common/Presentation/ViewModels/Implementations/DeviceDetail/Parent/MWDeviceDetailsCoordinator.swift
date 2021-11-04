@@ -184,8 +184,14 @@ private extension MWDeviceDetailsCoordinator {
                     return
                 }
 
+                // Check to see if the user hasn't decided not to connect after all
+                guard self?.isObserving == true else { return }
                 self?.readAndDisplayDeviceCapabilities()
+
+                // Check to see if the user hasn't decided not to connect after all
+                guard self?.isObserving == true else { return }
                 self?.loadAnonymousDataSignals()
+
                 self?.toast.dismiss(updatingText: "Connected", disablesInteraction: false, delay: 0.3)
             }
         }
