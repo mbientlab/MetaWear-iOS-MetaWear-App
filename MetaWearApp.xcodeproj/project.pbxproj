@@ -320,6 +320,7 @@
 		94D11602273303D800813DB8 /* ScrollOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D11600273303D800813DB8 /* ScrollOffset.swift */; };
 		94DABBC726C0F483004590E4 /* iPadGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DABBC626C0F483004590E4 /* iPadGridLayout.swift */; };
 		94DABBC826C0F4A3004590E4 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941EFC3126BE8F7E0087F960 /* GridLayout.swift */; };
+		94DADBF527348B8900AB75D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94DADBF727348B8900AB75D1 /* InfoPlist.strings */; };
 		94E155CB26C4DAE100B73487 /* MWToastServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */; };
 		94E155CC26C4DAE100B73487 /* MWToastServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */; };
 		94E155CE26C4DAF200B73487 /* ToastVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E155CD26C4DAF200B73487 /* ToastVM.swift */; };
@@ -553,6 +554,7 @@
 		94CD3AA626B3ED1400854FBA /* MWScannedDeviceCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWScannedDeviceCellVM.swift; sourceTree = "<group>"; };
 		94D11600273303D800813DB8 /* ScrollOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffset.swift; sourceTree = "<group>"; };
 		94DABBC626C0F483004590E4 /* iPadGridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadGridLayout.swift; sourceTree = "<group>"; };
+		94DADBF627348B8900AB75D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94E155CA26C4DAE100B73487 /* MWToastServerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWToastServerVM.swift; sourceTree = "<group>"; };
 		94E155CD26C4DAF200B73487 /* ToastVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastVM.swift; sourceTree = "<group>"; };
 		94E155D026C4E4FF00B73487 /* DataStreamStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStreamStats.swift; sourceTree = "<group>"; };
@@ -846,6 +848,7 @@
 				941EFC3A26BEA0980087F960 /* Fonts */,
 				941EFB6926BCE5DC0087F960 /* UI */,
 				941EFB5E26BCE16C0087F960 /* Preview Content */,
+				94DADBF727348B8900AB75D1 /* InfoPlist.strings */,
 			);
 			path = MetaWearMac;
 			sourceTree = "<group>";
@@ -1438,6 +1441,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				941EFC3926BE95EB0087F960 /* SharedAssets.xcassets in Resources */,
+				94DADBF527348B8900AB75D1 /* InfoPlist.strings in Resources */,
 				941EFC3F26BEA0980087F960 /* OpenDyslexic3-Regular.ttf in Resources */,
 				941EFB6026BCE16C0087F960 /* Preview Assets.xcassets in Resources */,
 				941EFC3E26BEA0980087F960 /* OpenDyslexic3-Bold.ttf in Resources */,
@@ -1907,6 +1911,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		94DADBF727348B8900AB75D1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94DADBF627348B8900AB75D1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		AB5D5F4125B7D47300D2591C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1946,6 +1958,10 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MetaWearMac/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "We use Bluetooth to receive sensor data from the MetaWear device.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "We use Bluetooth to receive sensor data from the MetaWear device.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 MbientLab. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1981,6 +1997,10 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MetaWearMac/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "We use Bluetooth to receive sensor data from the MetaWear device.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "We use Bluetooth to receive sensor data from the MetaWear device.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2021 MbientLab. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
