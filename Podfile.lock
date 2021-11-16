@@ -1,48 +1,37 @@
 PODS:
   - Bolts-Swift (1.5.0)
-  - iOSDFULibrary (4.10.3):
+  - iOSDFULibrary (4.11.1):
     - ZIPFoundation (= 0.9.11)
-  - MBProgressHUD (1.2.0)
-  - MetaWear/AsyncUtils (4.0.1):
+  - MetaWear/AsyncUtils (4.1.0):
     - MetaWear/Core
-  - MetaWear/Core (4.0.1):
+  - MetaWear/Core (4.1.0):
     - Bolts-Swift (~> 1)
-  - MetaWear/DFU (4.0.1):
-    - iOSDFULibrary (= 4.10.3)
+  - MetaWear/DFU (4.1.0):
+    - iOSDFULibrary
     - MetaWear/Core
-  - MetaWear/Mocks (4.0.1):
-    - MetaWear/Core
-  - MetaWear/UI (4.0.1):
+  - MetaWear/UI (4.1.0):
     - MetaWear/AsyncUtils
     - MetaWear/Core
-  - StaticDataTableViewController (2.5.0)
   - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
-  - MBProgressHUD
   - MetaWear/AsyncUtils
   - MetaWear/DFU
-  - MetaWear/Mocks
   - MetaWear/UI
-  - StaticDataTableViewController
 
 SPEC REPOS:
   trunk:
     - Bolts-Swift
     - iOSDFULibrary
-    - MBProgressHUD
     - MetaWear
-    - StaticDataTableViewController
     - ZIPFoundation
 
 SPEC CHECKSUMS:
   Bolts-Swift: afbbaf8c8186e7f769be4afa656949c14087ba44
-  iOSDFULibrary: 7aade51a907d01ca9a87055003cd232b09efd78f
-  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
-  MetaWear: 35f29152e275456bdbfcd75eae8830f51cfec729
-  StaticDataTableViewController: 0c5c4a47861446dd3cfd52530ae801ec7662ce26
+  iOSDFULibrary: 3500ac00451aa7d8ec48a752e91099669a2c1d27
+  MetaWear: e8c068d82491c13da2d3eb90f2f31939840c6d5b
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: 111a39bb39b68e7bfb23357d5197cd39676f6d64
+PODFILE CHECKSUM: b4fc040da8543d3c847f51e434aec15954f69a9f
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
