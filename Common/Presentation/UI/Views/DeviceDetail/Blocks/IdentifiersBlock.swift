@@ -31,14 +31,25 @@ struct IdentifiersBlock: View {
             content: Text(firmware.firmwareRevision)
         )
 
-        LabeledItem(
-            label: firmware.offerUpdate ? "New Firmware" : "Status",
-            content: firmwareStatus
-        )
+        if firmware.hasInternetConnection {
+            LabeledItem(
+                label: firmware.offerUpdate ? "New Firmware" : "Status",
+                content: firmwareStatus
+            )
 
-        if firmware.offerUpdate {
-            Button("Update Firmware") { firmware.userRequestedUpdateFirmware() }
+            if firmware.offerUpdate {
+                Button("Update Firmware") { firmware.userRequestedUpdateFirmware() }
+            }
+        } else {
+            noInternetConnection
         }
+    }
+
+    private var noInternetConnection: some View {
+        LabeledItem(
+            label: "Update",
+            content: Text("Offline").foregroundColor(.secondary)
+        )
     }
 
     private var firmwareStatus: some View {
