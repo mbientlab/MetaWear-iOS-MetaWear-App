@@ -46,8 +46,8 @@ public enum SFSymbol: String {
     case logs = "doc.plaintext"
     case dc = "directcurrent"
 
-    case start = "arrow.backward.to.line"
-    case end = "arrow.forward.to.line"
+    case start = "arrow.left.to.line"
+    case end = "arrow.right.to.line"
 }
 
 public extension SFSymbol {
