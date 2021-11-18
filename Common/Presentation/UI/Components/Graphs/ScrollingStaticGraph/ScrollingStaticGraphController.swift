@@ -32,7 +32,8 @@ class ScrollingStaticGraphController: ObservableObject {
     @Published var yMax: Double
     @Published var yMin: Double
 
-    private var scrollOffset = CGFloat(0)
+    /// The position of the leftmost pixel of the scroll viewport, relative to total content width
+    private var scrollViewportOriginRatio = CGFloat(0)
     let mouse = MouseVM()
     let focus: FocusedPointsVM
 
@@ -85,24 +86,29 @@ class ScrollingStaticGraphController: ObservableObject {
         }
     }
 
-    func mouseMoved(to point: CGPoint?, width: CGFloat, dotSize: CGFloat) {
+    func mouseMoved(to point: CGPoint?, width viewportWidth: CGFloat, dotSize: CGFloat) {
         updateQueue.async {
             let pointCount = CGFloat(self.displayedPoints.endIndex)
             guard let point = point, pointCount > 0
             else { self.show(false); return }
 
+            let scrollContentWidth = pointCount * dotSize
+            let viewportOriginXOffset = self.scrollViewportOriginRatio * scrollContentWidth
+
             // Compute mouse
-            let contentWidth = pointCount * dotSize
-            let startPosition = (contentWidth / 2) - self.scrollOffset
-            let mousePositionInPlot = point.x
+            let mouseViewportXOffset = max(0, min(point.x, viewportWidth))
             DispatchQueue.main.async {
-                self.mouse.position = max(0, min(width, mousePositionInPlot))
+                // Sets a pixel offset for vertical line that indicates the "mouse hovering on this x-value column"
+                self.mouse.position = mouseViewportXOffset
             }
 
-            let mouseIndexInData = Int( ((startPosition + mousePositionInPlot) / contentWidth) * pointCount )
+            // Translates the mouse position into an index within the graphed dataset
+            let mousePositionInTotalScrollContent = viewportOriginXOffset + mouseViewportXOffset
+            let mouseRelativePositionInData = mousePositionInTotalScrollContent / scrollContentWidth
+            let mouseIndexInData = Int(mouseRelativePositionInData * pointCount)
+
             guard mouseIndexInData < self.displayedPoints.endIndex, mouseIndexInData >= 0
             else { self.show(false); return }
-
 
             let pointValues = self.displayedPoints[mouseIndexInData].heights.map { value -> String in
                 let rounded = Float ( Int(value * 100) ) / 100
@@ -126,8 +132,8 @@ class ScrollingStaticGraphController: ObservableObject {
 }
 
 extension ScrollingStaticGraphController: ScrollOffsetDelegate {
-    func updateScrollOffset(_ value: CGFloat) {
-        DispatchQueue.main.async { self.scrollOffset = value }
+    func updateScrollViewportOrigin(asPercentageOfContentWidth value: CGFloat) {
+        DispatchQueue.main.async { self.scrollViewportOriginRatio = value }
     }
 }
 

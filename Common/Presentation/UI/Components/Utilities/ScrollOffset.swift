@@ -32,7 +32,7 @@ struct ScrollOffsetPreferenceKey: PreferenceKey {
 // MARK: - Diffing Container Approach
 
 protocol ScrollOffsetDelegate: AnyObject {
-    func updateScrollOffset(_ update: CGFloat)
+    func updateScrollViewportOrigin(asPercentageOfContentWidth update: CGFloat)
 }
 
 struct HorizontalScrollOffset: View {
@@ -40,14 +40,27 @@ struct HorizontalScrollOffset: View {
     var delegate: ScrollOffsetDelegate
     var coordinateSpace: CoordinateSpace
 
+    @State private var scrollOriginOffset = CGFloat(0)
+
     var body: some View {
         GeometryReader { geometry in
-            Color.clear
-                .onAppear { delegate.updateScrollOffset(geometry.frame(in: coordinateSpace).origin.x) }
-                .onChange(of: geometry.frame(in: coordinateSpace).origin.x) { delegate.updateScrollOffset($0) }
-        }.frame(width: 0, height: 0)
+            Color.clear.hidden()
+                .frame(width: 1, height: 10, alignment: .leading)
+                .onAppear {
+                    // Find whatever SwiftUI has done for positioning this reporter within the content width
+                    let leftMostPixelLocation = geometry.frame(in: .localGraphScrollView).origin.x
+                    scrollOriginOffset = geometry.size.width - leftMostPixelLocation
+                    delegate.updateScrollViewportOrigin(asPercentageOfContentWidth: 0)
+                }
+                .onChange(of: geometry.frame(in: coordinateSpace).origin.x) { offsetPixelPosition in
+                    // Report the adjusted pixel offset as a percentage of progression through the scroll view
+                    let ratio = (offsetPixelPosition + scrollOriginOffset) / geometry.size.width
+                    delegate.updateScrollViewportOrigin(asPercentageOfContentWidth: 1 - ratio)
+                }
+        }
     }
 }
+
 
 // MARK: - Coordinate Spaces
 
