@@ -70,6 +70,7 @@ public extension MWDeviceDetailsCoordinator {
 
     func userIntentDidCauseDeviceDisconnect() {
         vms.header.refreshConnectionState()
+        delegate?.hideAllCells()
     }
 
     func end() {

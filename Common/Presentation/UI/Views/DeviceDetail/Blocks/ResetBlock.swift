@@ -13,25 +13,29 @@ struct ResetBlock: View {
             Spacer()
 
             #if os(macOS)
-            reset.controlSize(.regular)
+            reset_macOS
             #else
-            reset
+            reset_iOS
             #endif
 
             Spacer()
-
             sleep
-
             Spacer()
         }
     }
 
-    private var reset: some View {
+    private var reset_iOS: some View {
         Menu("Reset") {
             Button("Soft") { vm.userRequestedSoftReset() }
             Button("Factory") { vm.userRequestedFactoryReset() }
         }
         .fixedSize()
+    }
+
+    @ViewBuilder private var reset_macOS: some View {
+        Button("Soft Reset") { vm.userRequestedSoftReset() }
+        Spacer()
+        Button("Factory Wipe") { vm.userRequestedFactoryReset() }
     }
 
     private var sleep: some View {

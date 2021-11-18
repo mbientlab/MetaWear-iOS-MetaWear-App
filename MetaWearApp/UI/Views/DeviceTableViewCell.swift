@@ -27,6 +27,7 @@ extension DeviceTableViewCell: ScannedDeviceCell {
         guard let vm = vm else { return }
         (viewWithTag(1) as! UILabel).text = vm.uuid
         (viewWithTag(2) as! UILabel).text = vm.rssi
+        (viewWithTag(2) as! UILabel).isHidden = !vm.showRSSI
         (viewWithTag(3) as! UILabel).isHidden = !vm.isConnected
         (viewWithTag(4) as! UILabel).text = vm.name
         (viewWithTag(5) as! UIImageView).image = UIImage(named: vm.signalImage)

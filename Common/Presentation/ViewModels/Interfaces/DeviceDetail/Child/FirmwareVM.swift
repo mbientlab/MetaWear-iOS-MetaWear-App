@@ -11,6 +11,7 @@ public protocol FirmwareVM: AnyObject, DetailConfiguring {
     var firmwareUpdateStatus: String { get }
     var firmwareRevision: String { get }
     var offerUpdate: Bool { get }
+    var hasInternetConnection: Bool { get }
 
     // Intents
     func userRequestedCheckForFirmwareUpdates()

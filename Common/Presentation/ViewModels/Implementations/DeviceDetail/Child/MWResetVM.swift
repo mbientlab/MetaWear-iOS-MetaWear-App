@@ -35,28 +35,27 @@ public extension MWResetVM {
 
     func userRequestedSleep() {
         guard let device = device else { return }
-
-        // Sleep causes a disconnection
-        parent?.userIntentDidCauseDeviceDisconnect()
         // Set it to sleep after the next reset
         mbl_mw_debug_enable_power_save(device.board)
         // Preform the soft reset
         mbl_mw_debug_reset(device.board)
+        // Sleep causes a disconnection
+        parent?.userIntentDidCauseDeviceDisconnect()
     }
 
     func userRequestedFactoryReset() {
         guard let device = device else { return }
         // Resetting causes a disconnection
-        parent?.userIntentDidCauseDeviceDisconnect()
         device.clearAndReset()
+        parent?.userIntentDidCauseDeviceDisconnect()
     }
 
     func userRequestedSoftReset() {
         guard let device = device else { return }
-        // Resetting causes a disconnection
-        parent?.userIntentDidCauseDeviceDisconnect()
         // Preform the soft reset
         mbl_mw_debug_reset(device.board)
+        // Resetting causes a disconnection
+        parent?.userIntentDidCauseDeviceDisconnect()
     }
 
 }

@@ -18,7 +18,8 @@ public class MWScannedDeviceCellVM: ScannedDeviceCellVM {
     private weak var device: MetaWear?
 
     public private(set) var uuid:         String      = uuidDefaultString
-    public private(set) var rssi:         String      = "—"
+    public private(set) var rssi:         String      = " "
+    public private(set) var showRSSI:     Bool        = false
     public private(set) var isConnected:  Bool        = false
     public private(set) var name:         String      = "Not Connected"
     public private(set) var signal:       SignalLevel = .noBars
@@ -37,7 +38,8 @@ public extension MWScannedDeviceCellVM {
         metawearUpdateTimer = Timer
             .publish(every: 5, on: .main, in: .common)
             .autoconnect()
-            .receive(on: DispatchQueue.main).sink { [weak self] _ in
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self, weak device] _ in
                 self?.update(from: device)
             }
     }
@@ -71,8 +73,15 @@ private extension MWScannedDeviceCellVM {
         guard let device = device else { return }
 
         // Use average RSSI to smooth out variability in text updates
-        let rssi = device.averageRSSI() ?? Double(device.rssi)
-        self.rssi = String(Int(rssi))
+        let rssi = Int(device.averageRSSI() ?? Double(device.rssi))
+        self.rssi = String(rssi)
+        self.showRSSI = rssi != 0
+
+        if rssi == 0 {
+            device.apiAccessQueue.async { [weak device] in
+                device?.peripheral.readRSSI()
+            }
+        }
 
         // Use immediate RSSI for "signal dot" updates because
         // the dot categories already mask variability

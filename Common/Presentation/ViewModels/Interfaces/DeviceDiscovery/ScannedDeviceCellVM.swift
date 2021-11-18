@@ -16,6 +16,7 @@ public protocol ScannedDeviceCellVM: AnyObject {
 
     var uuid:         String        { get }
     var rssi:         String        { get }
+    var showRSSI:     Bool          { get }
     var isConnected:  Bool          { get }
     var name:         String        { get }
     var signalImage:  String        { get }
