@@ -68,9 +68,12 @@ struct StatsBlock: View {
             }
         }
 
+        private static let max = Float.greatestFiniteMagnitude * 0.9
+        private static let min = -max
+        private static let range = (min...max)
+
         func clipOutMax() -> Float {
-            guard stat != Float.greatestFiniteMagnitude || stat != Float.leastNormalMagnitude
-            else { return 0 }
+            guard Self.range.contains(stat) else { return 0 }
             return stat
         }
     }
