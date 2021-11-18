@@ -15,7 +15,7 @@ public class MWAccelerometerVM: AccelerometerVM {
     public private(set) var allowsNewLogging = false
     public private(set) var allowsNewStreaming = false
 
-    public var canOrientOrStep: Bool { model != .bmi270 }
+    public var canOrient: Bool { model != .bmi270 }
 
     // Step count state
     public private(set) var isStepping = false
@@ -330,9 +330,8 @@ extension MWAccelerometerVM: LogDownloadHandlerDelegate {
 public extension MWAccelerometerVM {
 
     func userRequestedStartOrienting() {
-        guard model != .bmi270 else { return }
         guard let board = device?.board else { return }
-
+        guard canOrient else { return }
         isOrienting = true
         delegate?.refreshView()
         updateAccelerometerSettingsPriorToStream()
@@ -360,9 +359,8 @@ public extension MWAccelerometerVM {
     }
 
     func userRequestedStopOrienting() {
-        guard model != .bmi270 else { return }
         guard let board = device?.board else { return }
-
+        guard canOrient else { return }
         isOrienting = false
         delegate?.refreshView()
 
@@ -377,14 +375,19 @@ public extension MWAccelerometerVM {
 public extension MWAccelerometerVM {
 
     func userRequestedStartStepping() {
-        guard model != .bmi270 else { return }
-        guard let board = device?.board else { return }
-
+        guard let model = model else { return }
         isStepping = true
         stepCount = 0
         delegate?.refreshView()
         updateAccelerometerSettingsPriorToStream()
+        switch model {
+            case .bmi160: _userRequestedStartStepping_BMI160()
+            case .bmi270: _userRequestedStartStepping_BMI270()
+        }
+    }
 
+    private func _userRequestedStartStepping_BMI160() {
+        guard let board = device?.board else { return }
         let signal = mbl_mw_acc_bmi160_get_step_detector_data_signal(board)!
         mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
             let _self: MWAccelerometerVM = bridge(ptr: context!)
@@ -397,7 +400,6 @@ public extension MWAccelerometerVM {
         mbl_mw_acc_bmi160_enable_step_detector(board)
         mbl_mw_acc_start(board)
 
-
         let cleanup = {
             mbl_mw_acc_stop(board)
             mbl_mw_acc_bmi160_disable_step_detector(board)
@@ -406,14 +408,41 @@ public extension MWAccelerometerVM {
         parent?.signals.storeStream(signal, cleanup: cleanup)
     }
 
+    private func _userRequestedStartStepping_BMI270() {
+        guard let board = device?.board else { return }
+        let signal = mbl_mw_acc_bmi270_get_step_detector_data_signal(board)!
+        mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
+            let _self: MWAccelerometerVM = bridge(ptr: context!)
+
+            DispatchQueue.main.async {
+                _self.stepCount += 1
+                _self.delegate?.refreshView()
+            }
+        }
+        mbl_mw_acc_bmi270_enable_step_detector(board)
+        mbl_mw_acc_start(board)
+
+        let cleanup: () -> Void = {
+            mbl_mw_acc_stop(board)
+            mbl_mw_acc_bmi270_disable_step_detector(board)
+            mbl_mw_datasignal_unsubscribe(signal)
+        }
+        parent?.signals.storeStream(signal, cleanup: cleanup)
+    }
+
     func userRequestedStopStepping() {
-        guard model != .bmi270 else { return }
+        guard let model = model else { return }
         guard let board = device?.board else { return }
 
         isStepping = false
         delegate?.refreshView()
 
-        let signal = mbl_mw_acc_bmi160_get_step_detector_data_signal(board)!
+        let signal: OpaquePointer = {
+            switch model {
+                case .bmi270: return mbl_mw_acc_bmi270_get_step_detector_data_signal(board)!
+                case .bmi160: return mbl_mw_acc_bmi160_get_step_detector_data_signal(board)!
+            }
+        }()
         parent?.signals.removeStream(signal)
     }
 }

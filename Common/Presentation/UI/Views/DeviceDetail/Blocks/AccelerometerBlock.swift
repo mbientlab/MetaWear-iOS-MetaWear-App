@@ -11,26 +11,14 @@ struct AccelerometerBlock: View {
     @State private var unitWidth = CGFloat(10)
 
     var body: some View {
-        if vm.canOrientOrStep {
-            ThreeSectionLayout(
-                optionViews: options,
-                otherViews: OrientationAndStepsRows(),
-                leftColumn: LoggedDataSection(vm: vm),
-                rightColumn: LiveStreamSection(scrollViewGraphID: "AccelStreamGraph", vm: vm)
-            )
-                .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }
-                .environmentObject(vm)
-
-        } else {
-            TwoSectionLayout(
-                optionViews: options,
-                leftColumn: LoggedDataSection(vm: vm),
-                rightColumn: LiveStreamSection(scrollViewGraphID: "AccelStreamGraph", vm: vm)
-            )
-                .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }
-                .environmentObject(vm)
-        }
-
+        ThreeSectionLayout(
+            optionViews: options,
+            otherViews: OrientationAndStepsRows(),
+            leftColumn: LoggedDataSection(vm: vm),
+            rightColumn: LiveStreamSection(scrollViewGraphID: "AccelStreamGraph", vm: vm)
+        )
+            .onPreferenceChange(UnitWidthKey.self) { unitWidth = $0 }
+            .environmentObject(vm)
     }
 
     @ViewBuilder private var options: some View {
@@ -47,10 +35,12 @@ extension AccelerometerBlock {
         @EnvironmentObject private var vm: AccelerometerSUIVC
 
         var body: some View {
-            LabeledItem(
-                label: "Orientation",
-                content: orientation
-            )
+            if vm.canOrient {
+                LabeledItem(
+                    label: "Orientation",
+                    content: orientation
+                )
+            }
 
             LabeledItem(
                 label: "Steps",

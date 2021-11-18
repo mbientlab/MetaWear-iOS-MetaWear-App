@@ -42,10 +42,10 @@ struct ScrollingStaticGraph: View {
                 .frame(width: CGFloat(controller.displayedPoints.endIndex) * dotSize, height: height)
                 .background(scrollTags)
         }
-        .coordinateSpace(name: CoordinateSpace.Names.LocalGraphScrollView)
         .background(PlotBackgroundLinesAndLabels(min: controller.yMin, max: controller.yMax))
         .background(Color.plotBackground)
         .frame(width: width, height: height)
+        .coordinateSpace(name: CoordinateSpace.Names.LocalGraphScrollView)
     }
 
     @ViewBuilder var plottingMethod: some View {
