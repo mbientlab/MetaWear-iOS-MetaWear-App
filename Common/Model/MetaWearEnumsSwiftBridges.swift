@@ -663,7 +663,7 @@ public enum SensorFusionOutputType: Int, CaseIterable, Identifiable {
 
     public var channelLabels: [String] {
         switch self {
-            case .eulerAngles: return ["Heading", "Pitch", "Roll", "Yaw"]
+            case .eulerAngles: return ["Pitch", "Roll", "Yaw"]
             case .quaternion: return ["W", "X", "Y", "Z"]
             case .gravity: return ["X", "Y", "Z"]
             case .linearAcceleration: return ["X", "Y", "Z"]
