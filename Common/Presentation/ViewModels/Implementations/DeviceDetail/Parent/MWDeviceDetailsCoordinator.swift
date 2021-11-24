@@ -247,6 +247,11 @@ private extension MWDeviceDetailsCoordinator {
             supportedGroups.append(.accelerometer)
         }
 
+        if featureExists(for: MBL_MW_MODULE_MAGNETOMETER, in: board) {
+            vms.magnetometer.start()
+            supportedGroups.append(.magnetometer)
+        }
+
         if featureExists(for: MBL_MW_MODULE_GYRO, in: board) {
             vms.gyroscope.start()
             supportedGroups.append(.gyroscope)
