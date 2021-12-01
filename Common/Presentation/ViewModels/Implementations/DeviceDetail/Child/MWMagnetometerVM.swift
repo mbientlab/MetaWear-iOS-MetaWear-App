@@ -16,8 +16,7 @@ public class MWMagnetometerVM: MagenetometerVM {
     public private(set) var allowsNewStreaming = false
 
     // Graph and data state
-    public private(set) var graphScaleFactor: Float = 4
-    public private(set) var loggingScaleFactor: Float = 20000.0
+    public private(set) var graphScaleFactor: Float = 2500
     private(set) var data = MWSensorDataStore()
 
     // Stream UI state
@@ -85,9 +84,8 @@ public extension MWMagnetometerVM {
         let signal = mbl_mw_mag_bmm150_get_b_field_data_signal(board)!
 
         mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
-            var magnetometerValue: MblMwCartesianFloat = obj!.pointee.valueAs()
+            let magnetometerValue: MblMwCartesianFloat = obj!.pointee.valueAs()
             let _self: MWMagnetometerVM = bridge(ptr: context!)
-            magnetometerValue.scaled(min: -100, max: 100, in: _self.graphScaleFactor)
 
             let point = (obj!.pointee.epoch, magnetometerValue)
             DispatchQueue.main.async {
@@ -247,9 +245,8 @@ public extension MWMagnetometerVM {
     }
 
     func recordLogEntry(_self: MWMagnetometerVM, obj: UnsafePointer<MblMwData>?) {
-        var acceleration: MblMwCartesianFloat = obj!.pointee.valueAs()
-        acceleration.scaled(by: _self.loggingScaleFactor) // Original app specified two different scales
-        let point = (obj!.pointee.epoch, acceleration)
+        let value: MblMwCartesianFloat = obj!.pointee.valueAs()
+        let point = (obj!.pointee.epoch, value)
         DispatchQueue.main.async {
             _self.data.logged.append(.init(cartesian: point))
         }

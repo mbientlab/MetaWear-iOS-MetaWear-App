@@ -9,14 +9,9 @@ public class MagnetometerSUIVC: MWMagnetometerVM, ObservableObject {
     internal weak var loggerGraph: GraphObject? = nil
     internal weak var streamGraph: GraphObject? = nil
 
-    /// Refresh by manual call — as this is O(n)(m) over a long list
     @Published public private(set) var streamingStats = StatsVM(.zero(for: .cartesianXYZ), 0)
-    /// Refresh by manual call — as this is O(n)(m) over a long list
     @Published public private(set) var loggerStats = StatsVM(.zero(for: .cartesianXYZ), 0)
-
-    public var showStreamingStartupSpinner: Bool {
-        isStreaming && data.stream.isEmpty
-    }
+    @Published var showStreamingStartupSpinner = false
 
     public override init() {
         super.init()
@@ -33,6 +28,9 @@ extension MagnetometerSUIVC: MagnetometerVMDelegate {
 
     public func drawNewStreamGraphPoint(_ point: TimeIdentifiedCartesianFloat) {
         streamGraph?.addPointInAllSeries([point.value.x, point.value.y, point.value.z])
+        if showStreamingStartupSpinner {
+            showStreamingStartupSpinner = false
+        }
     }
 
     public func redrawStreamGraph() {
@@ -43,11 +41,10 @@ extension MagnetometerSUIVC: MagnetometerVMDelegate {
     // Stats
 
     public func refreshStreamStats() {
-        let stats = data.getStreamedStats()
-        DispatchQueue.main.async { [weak self] in
-            self?.streamingStats.stats = stats
-            self?.streamingStats.count = self?.data.streamCount ?? 0
-        }
+        let newPointCount = data.streamCount - streamingStats.count
+        let latest = data.stream.suffix(newPointCount)
+        let kind = data.streamKind
+        streamingStats.addNewPoints(latest, kind: kind)
     }
 
     public func refreshLoggerStats() {
@@ -65,11 +62,13 @@ extension MagnetometerSUIVC:  StreamGraphManager, LoggerGraphManager, LoggingSec
     public override func userRequestedStopStreaming() {
         super.userRequestedStopStreaming()
         streamGraph?.pauseRendering()
+        showStreamingStartupSpinner = false
     }
 
     public override func userRequestedStartStreaming() {
         super.userRequestedStartStreaming()
         streamGraph?.restartRendering()
+        showStreamingStartupSpinner = true
     }
 
     public func setStreamGraphReference(_ graph: GraphObject) {

@@ -16,6 +16,7 @@ struct CopyButton: View {
     var body: some View {
         Button(label) {
             #if os(macOS)
+            NSPasteboard.general.clearContents()
             NSPasteboard.general.setString(string, forType: .string)
             #elseif os(iOS)
             UIPasteboard.general.string = string
