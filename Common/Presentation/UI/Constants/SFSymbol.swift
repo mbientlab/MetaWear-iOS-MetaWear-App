@@ -43,6 +43,7 @@ public enum SFSymbol: String {
 
     case settings = "gearshape.fill"
     case delete = "trash"
+    case wipe = "minus.rectangle"
     case logs = "doc.plaintext"
     case dc = "directcurrent"
 
@@ -94,6 +95,7 @@ public extension SFSymbol {
 
             case .settings: return "Options"
             case .delete: return "Delete"
+            case .wipe: return "Wipe Data"
             case .logs: return "Logs"
             case .dc: return "GPIO Edge"
             case .start: return "Go to Start"

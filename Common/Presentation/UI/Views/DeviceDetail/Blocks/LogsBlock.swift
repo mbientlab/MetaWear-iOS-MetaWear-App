@@ -37,9 +37,31 @@ struct LogsBlock: View {
         HStack {
             Text(store.logSize).fontBody(weight: .medium)
             Spacer(minLength: 5)
-            Button { store.clearLog() } label: { SFSymbol.delete.image() }
-            .accessibilityLabel(Text(SFSymbol.delete.accessibilityDescription))
+#if os(macOS)
+            delete_macOS
+#else
+            delete_iOS
+#endif
         }
+    }
+
+    private var delete_iOS: some View {
+        Menu {
+            Button("Clear data only") { store.clearEntries() }
+            Button("Remove data and loggers") { store.clearEntriesAndRemoveLoggers() }
+        } label: { SFSymbol.delete.image() }
+        .fixedSize()
+        .accessibilityLabel(Text(SFSymbol.delete.accessibilityDescription))
+    }
+
+    @ViewBuilder private var delete_macOS: some View {
+        Button { store.clearEntries() } label: { SFSymbol.wipe.image() }
+        .accessibilityLabel(Text(SFSymbol.wipe.accessibilityDescription))
+        .help(Text("Clear data only"))
+
+        Button { store.clearEntriesAndRemoveLoggers() } label: { SFSymbol.delete.image() }
+        .accessibilityLabel(Text(SFSymbol.delete.accessibilityDescription))
+        .help(Text("Remove data and loggers"))
     }
 
     var loggersList: some View {
