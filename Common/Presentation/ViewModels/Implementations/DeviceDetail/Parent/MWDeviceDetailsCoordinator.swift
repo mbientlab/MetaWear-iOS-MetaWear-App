@@ -23,6 +23,9 @@ public class MWDeviceDetailsCoordinator: NSObject, DeviceDetailsCoordinator {
 
     public func setDevice(_ newDevice: MetaWear) {
         self.device = newDevice
+        #if DEBUG
+        self.device.logDelegate = ConsoleLogger.shared
+        #endif
     }
 
     // Services

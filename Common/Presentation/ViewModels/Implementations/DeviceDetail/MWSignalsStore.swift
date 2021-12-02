@@ -58,6 +58,7 @@ extension MWSignalsStore: SignalReferenceStoreSetup {
         streamingCleanup.removeAll()
     }
 
+    /// Management only. Use clearEntries or clearEntriesAndRemoveLoggers for user intents.
     public func removeAllLogs() {
         loggers = [:]
     }
@@ -76,10 +77,17 @@ extension MWSignalsStore: SignalReferenceStore {
         }
     }
 
-    public func clearLog() {
+    public func clearEntries() {
         guard let board = device?.board else { return }
         mbl_mw_logging_clear_entries(board)
         getLogSize()
+        objectWillChange.send()
+    }
+
+    public func clearEntriesAndRemoveLoggers() {
+        guard let board = device?.board else { return }
+        mbl_mw_logging_clear_entries(board)
+        loggers.forEach { mbl_mw_logger_remove($0.value) }
         loggers = [:]
         objectWillChange.send()
     }

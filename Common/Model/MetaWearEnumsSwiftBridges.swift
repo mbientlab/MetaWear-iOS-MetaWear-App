@@ -41,16 +41,16 @@ public enum AccelerometerModel: CaseIterable {
     case bmi160
 
     /// Raw Cpp constant
-    public var int8Value: UInt8 {
+    public var intValue: Int {
         switch self {
-            case .bmi270: return MetaWearCpp.MBL_MW_MODULE_ACC_TYPE_BMI270
-            case .bmi160: return MetaWearCpp.MBL_MW_MODULE_ACC_TYPE_BMI160
+            case .bmi270: return MBL_MW_MODULE_ACC_TYPE_BMI270
+            case .bmi160: return MBL_MW_MODULE_ACC_TYPE_BMI160
         }
     }
 
     /// Cpp constant for Swift
     public var int32Value: Int32 {
-        Int32(int8Value)
+        Int32(intValue)
     }
 
     public init?(value: Int32) {
@@ -462,10 +462,10 @@ public enum BarometerModel: CaseIterable {
     case bme280
 
     /// Raw Cpp constant
-    public var int8Value: UInt8 {
+    public var int8Value: Int {
         switch self {
-            case .bmp280: return MetaWearCpp.MBL_MW_MODULE_BARO_TYPE_BMP280
-            case .bme280: return MetaWearCpp.MBL_MW_MODULE_BARO_TYPE_BME280
+            case .bmp280: return MBL_MW_MODULE_BARO_TYPE_BMP280
+            case .bme280: return MBL_MW_MODULE_BARO_TYPE_BME280
         }
     }
 

@@ -241,6 +241,7 @@ public extension MWGyroVM {
         delegate?.refreshView()
 
         guard let board = device?.board else { return }
+        mbl_mw_logging_stop(board)
         guard let logger = parent?.signals.removeLog(loggingKey)
         else { NSLog("No logger found for \(loggingKey)"); return }
         downloadLogger = logger
@@ -261,7 +262,9 @@ public extension MWGyroVM {
 
     func userRequestedDownloadLog() {
         guard let board = device?.board else { return }
-        guard let logger = downloadLogger else {
+        var _logger = downloadLogger
+        if _logger == nil { _logger = parent?.signals.removeLog(loggingKey) }
+        guard let logger = _logger else {
             parent?.toast.present(mode: .textOnly,
                                   "No Logger Found",
                                   disablesInteraction: false,
@@ -312,9 +315,9 @@ private extension MWGyroVM {
         let signal = mbl_mw_gyro_bmi270_get_rotation_data_signal(board)!
         startLogging(signal)
 
-        mbl_mw_logging_start(board, 0)
         mbl_mw_gyro_bmi270_enable_rotation_sampling(board)
         mbl_mw_gyro_bmi270_start(board)
+        mbl_mw_logging_start(board, 0)
     }
 
     func startLoggingBMI160() {
@@ -323,9 +326,9 @@ private extension MWGyroVM {
         let signal = mbl_mw_gyro_bmi160_get_rotation_data_signal(board)!
         startLogging(signal)
 
-        mbl_mw_logging_start(board, 0)
         mbl_mw_gyro_bmi160_enable_rotation_sampling(board)
         mbl_mw_gyro_bmi160_start(board)
+        mbl_mw_logging_start(board, 0)
     }
 
     func startLogging(_ signal: OpaquePointer) {

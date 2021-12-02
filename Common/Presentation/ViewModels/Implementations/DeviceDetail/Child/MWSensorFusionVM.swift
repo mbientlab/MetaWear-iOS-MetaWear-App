@@ -315,13 +315,14 @@ public extension MWSensorFusionVM {
             let identifier = String(cString: mbl_mw_logger_generate_identifier(logger)!)
             _self.parent?.signals.addLog(identifier, logger!)
         }
-        mbl_mw_logging_start(board, 0)
         mbl_mw_sensor_fusion_write_config(board)
         mbl_mw_sensor_fusion_start(board)
+        mbl_mw_logging_start(board, 0)
     }
     
     func userRequestedStopLogging() {
         guard let board = device?.board else { return }
+        mbl_mw_logging_stop(board)
         
         (isStreaming, isLogging) = (false, false)
         (allowsNewLogging, allowsNewStreaming) = (true, true)
@@ -350,7 +351,9 @@ public extension MWSensorFusionVM {
     func userRequestedDownloadLog() {
         
         guard let board = device?.board else { return }
-        guard let logger = downloadLogger,
+        var _logger = downloadLogger
+        if _logger == nil { _logger = parent?.signals.removeLog(loggingKey) }
+        guard let logger = _logger else {
               let dataHandler = downloadLoggerDataHandler else {
                   parent?.toast.present(mode: .textOnly,
                                         "No Logger Found",

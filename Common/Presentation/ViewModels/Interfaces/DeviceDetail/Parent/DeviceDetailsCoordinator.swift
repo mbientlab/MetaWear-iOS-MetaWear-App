@@ -71,9 +71,10 @@ public protocol SignalReferenceStore: AnyObject {
     var loggers: [String: OpaquePointer] { get }
 
     func getLogSize()
-    func clearLog()
+    func clearEntries()
     func stopLogging()
     func startLogging()
+    func clearEntriesAndRemoveLoggers()
 
     func addLog(_ log: String, _ pointer: OpaquePointer)
     @discardableResult func removeLog(_ log: String) -> OpaquePointer?
