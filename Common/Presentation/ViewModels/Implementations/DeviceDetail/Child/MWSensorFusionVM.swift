@@ -351,7 +351,9 @@ public extension MWSensorFusionVM {
     func userRequestedDownloadLog() {
         
         guard let board = device?.board else { return }
-        guard let logger = downloadLogger,
+        var _logger = downloadLogger
+        if _logger == nil { _logger = parent?.signals.removeLog(loggingKey) }
+        guard let logger = _logger else {
               let dataHandler = downloadLoggerDataHandler else {
                   parent?.toast.present(mode: .textOnly,
                                         "No Logger Found",

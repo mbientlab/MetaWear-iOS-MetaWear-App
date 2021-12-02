@@ -247,7 +247,9 @@ public extension MWAccelerometerVM {
     func userRequestedDownloadLog() {
         guard let board = device?.board else { return }
         if isLogging { userRequestedStopLogging() }
-        guard let logger = downloadLogger else {
+        var _logger = downloadLogger
+        if _logger == nil { _logger = parent?.signals.removeLog(loggingKey) }
+        guard let logger = _logger else {
             parent?.toast.present(mode: .textOnly,
                                   "No Logger Found",
                                   disablesInteraction: false,
