@@ -81,6 +81,7 @@ public extension MWMagnetometerVM {
         }
 
         guard let board = device?.board else { return }
+        mbl_mw_mag_bmm150_stop(board)
         let signal = mbl_mw_mag_bmm150_get_b_field_data_signal(board)!
 
         mbl_mw_datasignal_subscribe(signal, bridge(obj: self)) { (context, obj) in
@@ -168,6 +169,7 @@ public extension MWMagnetometerVM {
         delegate?.refreshLoggerStats()
 
         guard let board = device?.board else { return }
+        mbl_mw_mag_bmm150_stop(board)
         let signal = mbl_mw_mag_bmm150_get_b_field_data_signal(board)!
         mbl_mw_datasignal_log(signal, bridge(obj: self)) { (context, logger) in
             let _self: MWMagnetometerVM = bridge(ptr: context!)
@@ -176,9 +178,9 @@ public extension MWMagnetometerVM {
             _self.loggingKey = identifier
             _self.parent?.signals.addLog(identifier, logger!)
         }
-        mbl_mw_logging_start(board, 0)
         mbl_mw_mag_bmm150_enable_b_field_sampling(board)
         mbl_mw_mag_bmm150_start(board)
+        mbl_mw_logging_start(board, 0)
     }
 
     func userRequestedStopLogging() {
@@ -188,6 +190,7 @@ public extension MWMagnetometerVM {
         delegate?.refreshView()
 
         guard let board = device?.board else { return }
+        mbl_mw_logging_stop(board)
         guard let logger = parent?.signals.removeLog(loggingKey) else { return }
 
         mbl_mw_mag_bmm150_stop(board)
