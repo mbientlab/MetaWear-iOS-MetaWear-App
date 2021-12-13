@@ -352,16 +352,25 @@ public extension MWSensorFusionVM {
         
         guard let board = device?.board else { return }
         var _logger = downloadLogger
-        if _logger == nil { _logger = parent?.signals.removeLog(loggingKey) }
-        guard let logger = _logger else {
-              let dataHandler = downloadLoggerDataHandler else {
-                  parent?.toast.present(mode: .textOnly,
-                                        "No Logger Found",
-                                        disablesInteraction: false,
-                                        onDismiss: nil)
-                  parent?.toast.dismiss(delay: 1.5)
-                  return
-              }
+        if _logger == nil {
+            var names = ["euler-angle", "quaternion", "gravity", "linear-acceleration"]
+            while let name = names.popLast() {
+                if let foundLogger = parent?.signals.removeLog(name) {
+                    _logger = foundLogger
+                    break
+                }
+            }
+        }
+        guard let logger = _logger else { return }
+
+        guard let dataHandler = downloadLoggerDataHandler else {
+            parent?.toast.present(mode: .textOnly,
+                                  "No Logger Found",
+                                  disablesInteraction: false,
+                                  onDismiss: nil)
+            parent?.toast.dismiss(delay: 1.5)
+            return
+        }
         
         isDownloadingLog = true
         data.clearLogged(newKind: selectedOutputType.dataPointKind)
@@ -417,7 +426,7 @@ private extension MWSensorFusionVM {
         let time = log.obj!.pointee.epoch
         
         let data: MblMwQuaternion = log.obj!.pointee.valueAs()         //
-                                                                       // Not scaled (range is +- 1)                                 //
+                                                                       // Not scaled (range is +- 1)
         
         let point = TimeIdentifiedDataPoint(quaternion: (time, data)) //
         DispatchQueue.main.async {
@@ -429,7 +438,7 @@ private extension MWSensorFusionVM {
         let time = log.obj!.pointee.epoch
         
         let data: MblMwCartesianFloat = log.obj!.pointee.valueAs()    //
-                                                                      // Not scaled (range is +- 1)                                 //
+                                                                      // Not scaled (range is +- 1)
         
         let point = TimeIdentifiedDataPoint(cartesian: (time, data))  //
         DispatchQueue.main.async {
@@ -440,7 +449,7 @@ private extension MWSensorFusionVM {
     func processLinearAccelerationLog(_ log: LogDataContext) {
         let time = log.obj!.pointee.epoch
         let data: MblMwCartesianFloat = log.obj!.pointee.valueAs()     //
-                                                                       // No scaling                                                  //
+                                                                       // No scaling
         let point = TimeIdentifiedDataPoint(cartesian: (time, data))   //
         DispatchQueue.main.async {
             log._self.data.logged.append(point)
